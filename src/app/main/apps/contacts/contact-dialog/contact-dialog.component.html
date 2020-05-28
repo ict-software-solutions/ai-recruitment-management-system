@@ -1,0 +1,780 @@
+<div id="products" class="page-layout carded fullwidth inner-scroll">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+   
+      <!-- HEADER -->
+      <div class="header accent"
+           fxLayout="column" fxLayoutAlign="center center"
+           fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
+
+          <!-- APP TITLE -->
+          <div class="logo mb-24 mb-md-0"
+               fxLayout="row" fxLayoutAlign="start center">
+              <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                  account_circle
+              </mat-icon>
+              <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                  Mapped candidate
+
+              </span>
+          </div>
+          <!-- <button mat-raised-button
+[routerLink]="'apps/academy/courses'"
+class="add-product-button fuse-white mt-24 mt-md-0">
+<span>View Details</span>
+</button> -->
+
+          <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+          <!-- <button mat-flat-button color="primary" (click)="composeDialog">mail</button> -->
+          <!-- / APP TITLE -->
+
+          <!-- SEARCH -->
+          <!-- <div class="search-wrapper  ml-sm-32">
+            <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon>search</mat-icon>
+                <input #filter placeholder="Search ">
+            </div>
+        </div> -->
+          <!-- / SEARCH -->
+
+          <!-- ADD BUTTON -->
+          <!-- <button mat-raised-button
+                  [routerLink]="'/apps/e-commerce/products/new'"
+                  class="add-product-button fuse-white mt-24 mt-md-0">
+              <span>Add Company</span>
+          </button> -->
+          <!-- / ADD BUTTON -->
+
+      </div>
+  
+      <!-- / HEADER -->
+
+      <!-- CONTENT CARD -->
+      <div class="content-card" style="height: 200px;">
+        <!-- <div class="ex1 p-24"> -->
+          <!-- <div class="content-card" style="padding:5px;border:1px solid gray"> -->
+
+            <!-- <mat-grid-list cols="2" rowHeight="500px">
+              <mat-grid-tile style="margin-top:10px;"> -->
+                <div class="ex1 p-24">
+              <mat-accordion>
+           
+
+                  <mat-expansion-panel>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          <table class="table_acc">
+                            <tr><td style="width:100px;" fxHide fxShow.gt-xs><mat-icon>account_circle</mat-icon></td><td style="width:600px;">
+                          <mat-chip-list aria-label="Fish selection">
+                            <mat-chip style="width: 100%;">Berlin Francis   </mat-chip>
+                            
+                            
+                           
+                          </mat-chip-list></td>
+                          <td style="width:400px;" fxHide fxShow.gt-xs>7946 035721</td>
+                          <!-- <td style="text-align: center;width:600px;">berl@gmail.com</td> -->
+                          <!-- <td style="padding-right:10px;">Interview Status</td> -->
+
+                          <td style="text-align: center;width:300px;" fxHide fxShow.gt-xs><button mat-raised-button color="basic"style="color:green;
+                            ">selected</button></td>
+                          <!-- <td style="font-weight: bold;color:green;text-align: left;width: 300px;">Selected</td> -->
+                         
+                        
+                          <td style="font-weight: bold;color: blue;text-align:right;width:100px;" fxHide fxShow.gt-xs>90%</td>
+                          <td style="font-weight: bold;color: blue;text-align:right;width:100px" fxHide fxShow.gt-xs> <mat-progress-spinner  style="text-align: right;"
+                            class="example-margin"
+                           color="primary"
+                            value="90">
+                        </mat-progress-spinner></td>
+                        <!-- <td><mat-icon>visibility</mat-icon></td> -->
+                          </tr>
+                      </table>
+                        
+                         
+                        </mat-panel-title>
+                        <mat-panel-description style="text-align: right;">
+                         
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                  
+                    
+                      
+<!-- <mat-grid-list cols="2" rowheight="700px" gutterSize="10px">
+<mat-grid-tile rowspan="2" class="time_tile">
+
+  <div class="timeline">
+    <div class="timeline-body">
+      <div class="timeline-item">
+        <p class="time">JAN 2 ,2020</p>
+      <div class="content">
+        <h2 class="title">Proposed Resume</h2>
+       <table class="time_table">
+         <tr>
+           <td>Reply received on</td>
+           <td style="color:blue">05-01-2020</td>
+  
+         </tr>  -->
+        <!-- <tr><td>Pending</td>
+          <td style="color:red">No</td>
+          
+        </tr>  -->
+      <!-- <tr> -->
+        <!-- <td >Rejected</td>
+        <td style="color:red">No</td>
+      </tr>   -->
+    <!-- <tr>
+      <td>Selected for Interview</td>
+      <td style=" color:green">Yes</td>
+    </tr> </table>
+      </div>
+      
+      
+      </div>
+  
+      <div class="timeline-item">
+        <p class="time">JAN 09,2020</p>
+      <div class="content">
+        <h2 class="title">Interview </h2>
+        <table class="time_table">
+          <tr>
+            <td>Company</td>
+            <td>ATLAS Software Sollutions</td>
+          </tr>
+          <tr>
+            <td>Job TItle</td>
+            <td>Data Analyst</td>
+          </tr>
+          <tr>
+            <td>Time</td><td style="color:blue"> 11.00 am</td>
+          </tr> -->
+          <!-- <tr>
+            <td>Salary</td><td> $500</td>
+          </tr> -->
+          <!-- <tr>
+            <td>Attend?</td><td style="color:green">Yes</td>
+          </tr>
+          
+        </table>
+      </div>
+      
+      
+      </div>
+      <div class="timeline-item">
+        <p class="time">JAN 10,2020
+      <div class="content">
+        <h2 class="title">Received Feedback from Company</h2>
+        <table class="time_table">
+          <tr>
+            <td style="font-weight: bold;">Status </td><td style="color:maroon;font-size: large;">Selected</td>
+  
+          </tr>
+          <tr>
+            <td>Proposed JOining date</td><td>20-01-2020</td>
+          </tr>
+        </table>
+      </div>
+      
+      
+      </div> -->
+  
+      <!-- <div class="timeline-item">
+        <p class="time">JAN 20,2020</p>
+      <div class="content">
+        <h2 class="title">Join</h2>
+        <table class="time_table">
+          <tr>
+            <td>Join day</td><td>Monday</td></tr>
+            <tr>
+            <td>Joined?</td><td style="color:green">YES</td>
+            
+          </tr>
+        </table>
+      </div>
+      
+      
+      </div> -->
+<!-- 
+      <div class="timeline-item">
+        <p class="time">FEB 02,2020</p>
+      <div class="content">
+        <h2 class="title">On Board</h2>
+      <table class="time_table">
+        <tr><td>Process Completed?</td>
+        <td style="color:green">YES</td></tr>
+      </table>
+      </div>
+      
+      
+      </div>
+    </div>
+  </div> 
+
+
+
+</mat-grid-tile>
+<mat-grid-tile style="background-color:#d9d4c7;">
+
+  <mat-card class="example-card">
+    <mat-card-header> -->
+      <!-- <div mat-card-avatar class="example-header-image"></div> -->
+      <!-- <div mat-card-avatar class="example-header-image"></div> -->
+      <!-- <mat-card-title style="Padding: 10px; text-align: left;" >Berlin Francis</mat-card-title>
+      <mat-card-subtitle style="color:blue;text-align: left;margin-left: 10px;">berlin123@gmail.com</mat-card-subtitle>
+    </mat-card-header> -->
+    <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+    <!-- <mat-card-content  style="padding: 10px;">
+      <table style="padding: 10px;">
+        <tr>
+          <td>Name</td><td>Berline Fransis</td>
+        </tr>
+        <tr><td>Qualification</td><td>B.Sc.Computer Science</td></tr>
+        <tr><td>Work</td><td>Developer</td></tr>
+        <tr><td>Experience</td><td>2 Years</td></tr>
+        <tr><td>Skills</td><td>Angular,React,Javascript,Typescript</td></tr>
+        <tr><td>Location</td><td>Belmont</td></tr>
+        
+      </table>
+      -->
+      <!-- <p>
+        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+        bred for hunting.
+      </p> -->
+    <!-- </mat-card-content>
+    <mat-card-actions  style="padding: 10px;" > -->
+      <!-- <button mat-raised-button style="width:30%;">CONTACT</button> -->
+      <!-- <button mat-raised-button style="width:30%;"(click)="composeDialog()" >MAIL</button>
+    </mat-card-actions>
+  </mat-card>
+</mat-grid-tile>
+
+<mat-grid-tile> -->
+
+
+
+
+  <!-- <mat-card class="example-card">
+    <mat-card-header>
+   
+      <mat-card-title>Process</mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <table class="table_card">
+        <tr style="height:200px;border:1px solid gray;width:100%;"><td style="padding: 10px;">
+          <mat-progress-spinner value="90">sds</mat-progress-spinner></td>
+        
+         <td style="text-align: right;padding:10px;">     <mat-form-field appearance="fill">
+          <mat-label>Notes</mat-label>
+          <textarea matInput style="height:100%;"></textarea>
+        </mat-form-field></td> </tr>
+        <tr style="height: auto;"><td style="text-align: center;font-size:40px;font-weight: bold;">90%</td>
+        <td style="text-align: center;"> <button mat-raised-button style="width: 50%;">SAVE</button></td></tr>
+        
+      </table>
+   
+  
+    </mat-card-content>
+    <mat-card-actions>
+      
+    </mat-card-actions>
+  </mat-card> -->
+ 
+<!-- </mat-grid-tile> -->
+
+
+<!-- <mat-grid-tile>4</mat-grid-tile> -->
+
+
+<!-- </mat-grid-list> -->
+                      
+
+                      <!-- <div class="timeline">
+                        <div class="timeline-body">
+                          <div class="timeline-item">
+                            <p class="time">JAN 2 ,2020</p>
+                          <div class="content">
+                            <h2 class="title">Resume Posted</h2>
+                           <table class="time_table">
+                             <tr>
+                               <td>Reply received on</td>
+                               <td style="color:blue">05-01-2020</td>
+                      
+                             </tr> 
+                            <tr><td>Pending</td>
+                              <td style="color:red">No</td>
+                              
+                            </tr> 
+                          <tr>
+                            <td >Rejected</td>
+                            <td style="color:red">No</td>
+                          </tr>  
+                        <tr>
+                          <td>Selected</td>
+                          <td style=" color:green">Yes</td>
+                        </tr> </table>
+                          </div>
+                          
+                          
+                          </div>
+                      
+                          <div class="timeline-item">
+                            <p class="time">JAN 09,2020</p>
+                          <div class="content">
+                            <h2 class="title">Interview </h2>
+                            <table class="time_table">
+                              <tr>
+                                <td>Company</td>
+                                <td>ATLAS Software Sollutions</td>
+                              </tr>
+                              <tr>
+                                <td>Job TItle</td>
+                                <td>Data Analyst</td>
+                              </tr>
+                              <tr>
+                                <td>Time</td><td style="color:blue"> 11.00 am</td>
+                              </tr>
+                              <tr>
+                                <td>Salary</td><td> $500</td>
+                              </tr>
+                              <tr>
+                                <td>Attend?</td><td style="color:green">Yes</td>
+                              </tr>
+                              
+                            </table>
+                          </div>
+                          
+                          
+                          </div>
+                          <div class="timeline-item">
+                            <p class="time">JAN 10,2020
+                          <div class="content">
+                            <h2 class="title">Received Feedback from Company</h2>
+                            <table class="time_table">
+                              <tr>
+                                <td style="font-weight: bold;">Status </td><td style="color:maroon;font-size: large;">Selected</td>
+                      
+                              </tr>
+                            </table>
+                          </div>
+                          
+                          
+                          </div>
+                      
+                          <div class="timeline-item">
+                            <p class="time">JAN 20,2020</p>
+                          <div class="content">
+                            <h2 class="title">Join</h2>
+                            <table class="time_table">
+                              <tr>
+                                <td>Join day</td><td>Monday</td></tr>
+                                <tr>
+                                <td>Joined?</td><td style="color:green">YES</td>
+                                
+                              </tr>
+                            </table>
+                          </div>
+                          
+                          
+                          </div>
+                          <div class="timeline-item">
+                            <p class="time">FEB 2,2020</p>
+                          <div class="content">
+                            <h2 class="title">On Board</h2>
+                          <table class="time_table">
+                            <tr><td>Process Completed?</td>
+                            <td style="color:green">YES</td></tr>
+                          </table>
+                          </div>
+                          
+                          
+                          </div>
+                        </div>
+                      </div>  -->
+                      
+
+
+
+
+
+
+
+                      
+                      <!-- <mat-form-field>
+                        <mat-label>First name</mat-label>
+                        <input matInput>
+                      </mat-form-field>
+                  
+                      <mat-form-field>
+                        <mat-label>Age</mat-label>
+                        <input matInput type="number" min="1">
+                      </mat-form-field> -->
+                    </mat-expansion-panel>
+
+
+
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          <mat-panel-title >
+                            <table class="table_acc">
+                              <tr><td style="width:100px;" fxHide fxShow.gt-xs><mat-icon>account_circle</mat-icon></td><td style="width:600px;">
+                            <mat-chip-list aria-label="Fish selection">
+                              <mat-chip style="width:100%;">Harry Wilson</mat-chip>
+                              
+                              
+                             
+                            </mat-chip-list></td>
+                            <td style="width:400px;" fxHide fxShow.gt-xs>7946 051989</td>
+                         
+                            <td style="width:300px;" fxHide fxShow.gt-xs><button mat-raised-button color="basic" style="color:green;">Selected</button></td>
+                              <td style="font-weight: bold;color: blue;text-align:right;width:100px;" fxHide fxShow.gt-xs>90%</td>
+                              <td style="font-weight: bold;color: blue;text-align:right;width:100px;" fxHide fxShow.gt-xs><mat-progress-spinner  style="text-align: right;"
+                                class="example-margin"
+                               color="primary"
+                                value="90">
+                            </mat-progress-spinner></td>
+                              </tr>
+                          </table>
+                        
+                          </mat-panel-title>
+                        </mat-panel-title>
+                    
+                      </mat-expansion-panel-header>
+                  
+                                         
+                      <!-- <mat-grid-list cols="2" rowheight="700px" gutterSize="10px">
+                        <mat-grid-tile rowspan="2" class="time_tile">
+                      
+                          <div class="timeline">
+                            <div class="timeline-body">
+                              <div class="timeline-item">
+                                <p class="time">JAN 2 ,2020</p>
+                              <div class="content">
+                                <h2 class="title">Proposed Resume</h2>
+                               <table class="time_table">
+                                 <tr>
+                                   <td>Reply received on</td>
+                                   <td style="color:blue">05-01-2020</td>
+                          
+                                 </tr> 
+                               
+                            <tr>
+                              <td>Selected for Interview</td>
+                              <td style=" color:green">Yes</td>
+                            </tr> 
+                          </table>
+                              </div>
+                              
+                              
+                              </div>
+                          
+                              <div class="timeline-item">
+                                <p class="time">JAN 09,2020</p>
+                              <div class="content">
+                                <h2 class="title">Interview </h2>
+                                <table class="time_table">
+                                  <tr>
+                                    <td>Company</td>
+                                    <td>ATLAS Software Sollutions</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Job TItle</td>
+                                    <td>Data Analyst</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Time</td><td style="color:blue"> 11.00 am</td>
+                                  </tr>
+                                 
+                                  <tr>
+                                    <td>Attend?</td><td style="color:green">Yes</td>
+                                  </tr>
+                                  
+                                </table>
+                              </div>
+                              
+                              
+                              </div>
+                              <div class="timeline-item">
+                                <p class="time">JAN 10,2020
+                              <div class="content">
+                                <h2 class="title">Received Feedback from Company</h2>
+                                <table class="time_table">
+                                  <tr>
+                                    <td style="font-weight: bold;">Status </td><td style="color:maroon;font-size: large;">Selected</td>
+                          
+                                  </tr>
+                                </table>
+                              </div>
+                              
+                              
+                              </div>
+                          
+                              <div class="timeline-item">
+                                <p class="time">FEB 02,2020</p>
+                              <div class="content">
+                                <h2 class="title">On Board</h2>
+                              <table class="time_table">
+                                <tr><td>Process Completed?</td>
+                                <td style="color:green"></td></tr>
+                              </table>
+                              </div>
+                              
+                              
+                              </div>
+                            </div>
+                          </div> 
+                      
+                      
+                      
+                        </mat-grid-tile>
+                        <mat-grid-tile style="background-color:#d9d4c7;" >
+                      
+                          <mat-card class="example-card">
+                            <mat-card-header>
+                             
+                              <mat-card-title style="Padding: 10px; text-align: left;" >Harry Wilson</mat-card-title>
+                              <mat-card-subtitle style="color:blue;text-align: left;margin-left: 10px;">harry@gmail.com</mat-card-subtitle>
+                            </mat-card-header>
+                            <mat-card-content  style="padding: 10px;">
+                              <table style="padding: 10px;">
+                                <tr>
+                                  <td>Name</td><td>Harry Wilson </td>
+                                </tr>
+                                <tr><td>Qualification</td><td>BCA</td></tr>
+                                <tr><td>Work</td><td>Developer</td></tr>
+                                <tr><td>Experience</td><td>3 Years</td></tr>
+                                <tr><td>Skills</td><td>IOT</td></tr>
+                                <tr><td>Location</td><td>Belmont</td></tr>
+                                
+                              </table>
+                             
+                            
+                            </mat-card-content>
+                            <mat-card-actions  style="padding: 10px;" >
+                              <button mat-raised-button style="width:30%;"(click)="composeDialog()">MAIL</button>
+                            </mat-card-actions>
+                          </mat-card>
+                        </mat-grid-tile>
+                      
+                        <mat-grid-tile>
+                      
+                      
+                      
+
+                         
+                        </mat-grid-tile>
+                      
+                      
+                       
+                      
+                      
+                      </mat-grid-list> -->
+                                       
+                  
+
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header>
+
+
+                        <mat-panel-title>
+                          <mat-panel-title >
+                            <table class="table_acc">
+                              <tr><td style="width:100px;" fxHide fxShow.gt-xs><mat-icon>account_circle</mat-icon></td><td style="width:600px;">
+                            <mat-chip-list aria-label="Fish selection">
+                              <mat-chip style="width: 100%;">Choals   </mat-chip>
+                              
+                              
+                             
+                            </mat-chip-list></td>
+                            <td style="width:400px;" fxHide fxShow.gt-xs>7946 051965</td>
+                           
+                              <td style="width: 300px;"><button mat-raised-button color="basic"style="color:orange;" fxHide fxShow.gt-xs>Pending</button></td>
+                            
+                              <td style="font-weight: bold;color: blue;text-align:right;width:100px;" fxHide fxShow.gt-xs>20%</td>
+                              <td style="font-weight: bold;color: blue;text-align:right;width:100px;" fxHide fxShow.gt-xs> <mat-progress-spinner  style="text-align: right;"
+                                class="example-margin"
+                               color="primary"
+                                value="30">
+                            </mat-progress-spinner></td>
+                              </tr>
+                          </table>
+                          
+                          </mat-panel-title>
+                        </mat-panel-title>
+                       
+                      </mat-expansion-panel-header>
+                  
+                      <!-- <mat-grid-list cols="2" rowheight="700px" gutterSize="10px">
+                        <mat-grid-tile rowspan="2" class="time_tile">                                     
+<div class="timeline">
+<div class="timeline-body">
+  <div class="timeline-item">
+    <p class="time">JAN 02 ,2020</p>
+  <div class="content">
+    <h2 class="title">Proposed Resume</h2>
+   <table class="time_table">
+     <tr>
+       <td>Reply received on</td>
+       <td style="color:blue">05-01-2020</td>
+
+     </tr> 
+    <tr><td>Pending</td>
+      <td style="color:red">No</td>
+      
+    </tr> 
+  <tr>
+    <td >Rejected</td>
+    <td style="color:red">No</td>
+  </tr>  
+<tr>
+  <td>Selected for Intrview</td>
+  <td style=" color:green">Yes</td>
+</tr> </table>
+  </div>
+  
+  
+  </div>
+
+  <div class="timeline-item">
+    <p class="time">JAN 09,2020</p>
+  <div class="content">
+    <h2 class="title">Interview </h2>
+    <table class="time_table">
+      <tr>
+        <td>Company</td>
+        <td>ATLAS Software Sollutions</td>
+      </tr>
+      <tr>
+        <td>Job TItle</td>
+        <td>Data Analyst</td>
+      </tr>
+      <tr>
+        <td>Time</td><td style="color:blue"> 11.00 am</td>
+      </tr>
+    
+      <tr>
+        <td>Attend?</td><td style="color:green">Yes</td>
+      </tr>
+      
+    </table>
+  </div>
+  
+  
+  </div>
+  <div class="timeline-item">
+    <p class="time">
+  <div class="content">
+    <h2 class="title">Received Feedback from Company</h2>
+    <table class="time_table">
+      <tr>
+        <td style="font-weight: bold;">Status </td><td style="color:maroon;font-size: large;">Pending</td>
+
+      </tr>
+    </table>
+  </div>
+  
+  
+  </div>
+
+ 
+  <div class="timeline-item">
+    <p class="time"></p>
+  <div class="content">
+    <h2 class="title">On Board</h2>
+  <table class="time_table">
+    <tr><td>Process Completed?</td>
+    <td style="color:green">-</td></tr>
+  </table>
+  </div>
+  
+  
+  </div>
+</div>
+</div>
+</mat-grid-tile>
+<mat-grid-tile style="background-color:#d9d4c7;" >
+                      
+<mat-card class="example-card">
+  <mat-card-header>
+    
+    <mat-card-title style="Padding: 10px; text-align: left;" >Choals</mat-card-title>
+    <mat-card-subtitle style="color:blue;text-align: left;margin-left: 10px;">choals@gmail.com</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content  style="padding: 10px;">
+    <table style="padding: 10px;">
+      <tr>
+        <td>Name</td><td>Harry Wilson </td>
+      </tr>
+      <tr><td>Qualification</td><td>BCA</td></tr>
+      <tr><td>Work</td><td>Developer</td></tr>
+      <tr><td>Experience</td><td>3 Years</td></tr>
+      <tr><td>Skills</td><td>IOT</td></tr>
+      <tr><td>Location</td><td>Belmont</td></tr>
+      
+    </table>
+   
+    
+  </mat-card-content>
+  <mat-card-actions  style="padding: 10px;" >
+    
+    <button mat-raised-button style="width:30%;"(click)="composeDialog()">MAIL</button>
+  </mat-card-actions>
+</mat-card>
+</mat-grid-tile>
+<mat-grid-tile></mat-grid-tile>
+</mat-grid-list> -->
+
+
+                    </mat-expansion-panel>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
+                   
+                    
+                  
+
+                 
+                </mat-accordion>
+                
+                
+             
+          </div>
+       
+        
+      
+         
+          </div>
+          </div>
+          
+          <!-- </div> -->
+          

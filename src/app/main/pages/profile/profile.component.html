@@ -1,0 +1,66 @@
+<div id="profile" class="page-layout simple tabbed">
+    <div id="dashboard-analytics" class="page-layout blank">
+
+        <div class="header accent p-24 h-160" fxLayout="row" fxLayoutAlign="start center">
+                <div fxLayout="column" fxLayoutAlign="center start">
+                    <div class="logo mb-24 mb-sm-0"
+                 fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    account_circle
+                </mat-icon>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Candidate details</span>
+            </div>
+            <!-- <div class="info">{{about.general.name}}</div> -->
+
+                    <!-- <div fxLayout="row" fxLayoutAlign="start center">
+                        <mat-icon class="secondary-text s-18">home</mat-icon>
+                        <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
+                        <span class="secondary-text">User Interface</span>
+                    </div> -->
+                    <div class="h1 mt-16"></div>
+                </div>
+            </div>
+    <!-- HEADER -->
+    <!-- <div class="header p-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+         fxLayoutAlign.gt-sm="space-between end">
+
+        <div class="user-info" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+             fxLayoutAlign.gt-sm="start center">
+            <img class="profile-image avatar huge" src="assets/images/avatars/Nancy.jpg"
+                 [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+            <div class="name" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                Karthiga
+            </div>
+        </div>
+
+        <div class="actions" fxLayout="row" fxLayoutAlign="end center" [@animate]="{value:'*',params:{delay:'200ms'}}">
+            <button mat-raised-button color="accent" aria-label="Follow">Follow</button>
+            <button mat-raised-button color="primary" aria-label="Send Message">Send Message</button>
+        </div>
+
+    </div> -->
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <mat-tab-group dynamicHeight="true">
+
+            <!-- <mat-tab label="Timeline">
+                <profile-timeline></profile-timeline>
+            </mat-tab> -->
+
+            <mat-tab label="About">
+                <profile-about></profile-about>
+            </mat-tab>
+
+            <!-- <mat-tab label="Photos & Videos">
+                <profile-photos-videos></profile-photos-videos>
+            </mat-tab> -->
+
+        </mat-tab-group>
+
+    </div>
+    <!-- / CONTENT -->
+
+</div>

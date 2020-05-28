@@ -1,0 +1,1218 @@
+<div id="order" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent"
+             fxLayout="row" fxLayoutAlign="space-between center">
+
+            <!-- APP TITLE -->
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="mr-16" [routerLink]="'/apps/e-commerce/orders'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <div fxLayout="column" fxLayoutAlign="start start"
+                     [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2">
+                         {{order.reference}}
+                    </div>
+                    <div class="subtitle secondary-text">
+                        <span></span>
+                        <span><u>{{order.customer.email}}</u></span>
+                    </div>
+                </div>
+
+                
+            </div>
+            <div class="icon"align="right">
+                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                    <!-- <button mat-mini-fab color="light"><mat-icon>edit</mat-icon></button> -->
+                   
+                    <!-- <button mat-mini-fab color="light"style="margin-left:10px;"(click)="deleteContact()"><mat-icon>delete</mat-icon></button> -->
+                    <button mat-mini-fab color="light" style="margin-left:10px;"(click)="composeDialog()"><mat-icon>mail_outline</mat-icon></button>
+                    
+                       
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+        </div>
+        <!-- / HEADER -->
+<!-------------------------------------------------------------------------------------->
+<div class="content-card">
+
+    <div class="left mr-lg-32">
+        <div fxLayout="column" fxLayoutAlign="start"
+        fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+        <div class="widget" fxFlex="100" fxFlex.gt-sm="50">
+            <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+                <mat-tab-group >
+        
+                    <mat-tab label="General">
+                        <div class="ex1 p-24">
+                            <!-- <div fxLayout="row" fxLayoutAlign="space-between"> -->
+                         <mat-form-field appearance="outline" floatLabel="always"  class="w-100-p">
+                                                <mat-label>First Name</mat-label>
+                                                <input matInput placeholder="First Name"
+                                                       name="name"
+                                                       formControlName="name"
+                                                       required>
+                                            </mat-form-field> 
+                        
+                                            <mat-form-field appearance="outline" floatLabel="always"  class="w-100-p">
+                                                <mat-label>Last Name</mat-label>
+                                                <input matInput placeholder="last Name"
+                                                       name="name"
+                                                       formControlName="name"
+                                                       required>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline"  floatLabel="always" class="w-100-p">
+                                                <mat-label>Birth Day
+                                                    
+                                                </mat-label>
+                                               
+                                                <input matInput [matDatepicker]="picker">
+                                               
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                                <input matInput formControlName="dob">
+                                             
+                                              </mat-form-field>
+                                         
+                                    <mat-form-field appearance="outline"floatLabel="always" class="w-100-p">
+                                        <mat-label>Gender</mat-label>
+        
+                                        <mat-select formControlName="sex" required>
+                                            <mat-option [value]="'United States of America'">
+                                                Male
+                                            </mat-option>
+                                            <mat-option [value]="'United Kingdom'">
+                                                Female
+                                            </mat-option>
+                                            
+                                       
+        
+        
+                                        </mat-select>
+                                     
+                                    </mat-form-field>
+                                            
+                                            
+                                        </div>     
+                         </mat-tab>
+                    <mat-tab label="Education">
+                        <div class="ex1 p-24">
+                            <p>Higher Education</p>
+                            
+                            <mat-form-field appearance="outline" floatLabel="always"  class="w-100-p">
+                                <mat-label>Educational Qualification</mat-label>
+                                <mat-select formControlName="edu_qual" required>
+                                    <mat-option [value]="'United States of America'">
+                                        PG
+                                    </mat-option>
+                                    <mat-option [value]="'United Kingdom'">
+                                        UG
+                                    </mat-option>
+                                    <mat-option [value]="'Russia'">
+                                        Other UG Courses
+                                    </mat-option>
+                               
+                                   
+                                  
+                                </mat-select>
+                                
+                            </mat-form-field>
+                            <div fxLayout="row" fxLayoutAlign="space-between">
+                            <mat-form-field appearance="outline" floatLabel="always" class="w-45-p">
+                                <mat-label>Degree</mat-label>
+                                <mat-select formControlName="major" required>
+                                    <mat-option [value]="'United States of America'">
+                                        M.Sc
+                                    </mat-option>
+                                    <mat-option [value]="'United Kingdom'">
+                                       MCA
+                                    </mat-option>
+                                    <mat-option [value]="'Russia'">
+                                     M.Tech
+                                    </mat-option>
+                                   
+                                    
+                                </mat-select>
+                            
+                            </mat-form-field>
+       
+
+       
+                            <mat-form-field appearance="outline" floatLabel="always" class="w-45-p">
+                                <mat-label>Subject</mat-label>
+                                <mat-select formControlName="major" required>
+                                    <mat-option [value]="'United States of America'">
+                                     Computer Science
+                                    </mat-option>
+                                    <mat-option [value]="'United Kingdom'">
+                                    Information Technology
+                                    </mat-option>
+                                     
+                                </mat-select>
+                            
+                            </mat-form-field>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="space-between">
+                             <mat-form-field appearance="outline"floatLabel="always"class="w-45-p">
+                                <mat-label>From
+                                    
+                                </mat-label>
+                               
+                                <input matInput [matDatepicker]="picker1">
+                               
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                                <input matInput formControlName="from">
+                            
+                              </mat-form-field>
+                              <mat-form-field appearance="outline" floatLabel="always"class="w-45-p">
+                                <mat-label>To
+                                    
+                                </mat-label>
+                               
+                                <input matInput [matDatepicker]="picker2">
+                               
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                                <input matInput formControlName="to">
+                           
+                              </mat-form-field>
+                              </div>
+                              <div fxLayout="row" fxLayoutAlign="space-between">
+                              <mat-form-field appearance="outline" class="w-45-p">
+                                <mat-label>Grade</mat-label>
+                                <mat-select formControlName="grade" required>
+                                    <mat-option [value]="'United States of America'">
+                                        A
+                                    </mat-option>
+                                    <mat-option [value]="'United Kingdom'">
+                                        B
+                                    </mat-option>
+                                    <mat-option [value]="'Russia'">
+                                        C
+                                    </mat-option>
+                                    <mat-option [value]="'Russia'">
+                                        D
+                                    </mat-option>
+                                   
+                                    <mat-option [value]="'Russia'">
+                                        E
+                                    </mat-option>
+                                    <mat-option [value]="'Russia'">
+                                        F
+                                    </mat-option>
+                                    <mat-option [value]="'Russia'">
+                                        C
+                                    </mat-option>
+                                    
+                                </mat-select>
+                               
+                            </mat-form-field>
+        
+        
+                            <mat-form-field appearance="outline"  class="w-45-p">
+                                <mat-label>CGPA</mat-label>
+                                <input matInput formControlName="cgpa">
+                                <mat-error>CGPA Name is required!</mat-error>
+                            </mat-form-field>
+                            </div>
+                            <p>Secondary Education</p>
+                            <div fxLayout="row" fxLayoutAlign="space-between">
+                            <mat-form-field appearance="outline" class="w-45-p">
+                                <mat-label>School/Board</mat-label>
+                                <input matInput formControlName="school">
+                               
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="w-45-p">
+                                <mat-label>Grade</mat-label>
+                                <mat-select formControlName="sch_grade" required>
+                                    <mat-option [value]="'United States of America'">
+                                        A
+                                    </mat-option>
+                                    <mat-option [value]="'United Kingdom'">
+                                        B
+                                    </mat-option>
+                                    <mat-option [value]="'Russia'">
+                                        C
+                                    </mat-option>
+                                    <mat-option [value]="'Russia'">
+                                        D
+                                    </mat-option>
+                                   
+                                    <mat-option [value]="'Russia'">
+                                        E
+                                    </mat-option>
+                                    <mat-option [value]="'Russia'">
+                                        F
+                                    </mat-option>
+                                    <mat-option [value]="'Russia'">
+                                        C
+                                    </mat-option>
+                                    
+                                </mat-select>
+                            
+                            </mat-form-field> 
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between">
+                            <mat-form-field appearance="outline" floatLabel="always"class="w-45-p">
+                                <mat-label>From
+                                    
+                                </mat-label>
+                               
+                                <input matInput [matDatepicker]="picker3">
+                               
+                                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                <mat-datepicker #picker3></mat-datepicker>
+                                <input matInput formControlName="sec_from">
+                                <!-- <mat-error> DOB is required!</mat-error> -->
+                              </mat-form-field>
+                              <mat-form-field appearance="outline" floatLabel="always"class="w-45-p">
+                                <mat-label>To
+                                    
+                                </mat-label>
+                               
+                                <input matInput [matDatepicker]="picker4">
+                               
+                                <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                                <mat-datepicker #picker4></mat-datepicker>
+                                <input matInput formControlName="sec_to">
+                                <!-- <mat-error> DOB is required!</mat-error> -->
+                              </mat-form-field> 
+              
+                
+                
+                </div>
+                
+                </div>
+                </mat-tab>
+
+                <mat-tab label="Work"> 
+                    <div class="ex1 p-24">
+    
+                        <p>Job Details 1</p>
+                        <div fxLayout="row" fxLayoutAlign="space-between">
+                        <mat-form-field appearance="outline" class="w-45-p">
+                            <mat-label>Company</mat-label>
+                            <input matInput formControlName="comp" required>
+                            <mat-error>Company is required!</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="w-45-p">
+                            <mat-label>Position</mat-label>
+                            <input matInput formControlName="job" required>
+                            <mat-error>Job is required</mat-error>
+                        </mat-form-field>
+                       
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between">
+                        <mat-form-field appearance="outline"class="w-45-p">
+                            <mat-label>Domain</mat-label>
+                            <input matInput formControlName="domain" required>
+                            <mat-error>Domain is required!</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="w-45-p">
+                            <mat-label>Skills</mat-label>
+                            <input matInput formControlName="skill" required>
+                            <mat-error>Domain is required!</mat-error>
+                        </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="space-between">
+                        <mat-form-field appearance="outline"  floatLabel="always"class="w-45-p">
+                            <mat-label>From
+                                
+                            </mat-label>
+                           
+                            <input matInput [matDatepicker]="picker5">
+                           
+                            <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+                            <mat-datepicker #picker5></mat-datepicker>
+                            <input matInput formControlName="exp_from">
+                          
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" floatLabel="always"class="w-45-p">
+                            <mat-label>To
+                                
+                            </mat-label>
+                           
+                            <input matInput [matDatepicker]="picker6">
+                           
+                            <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
+                            <mat-datepicker #picker6></mat-datepicker>
+                            <input matInput formControlName="exp_to">
+                        
+                          </mat-form-field> 
+                    </div>
+                          <p>Job Details 2</p>
+                          <div fxLayout="row" fxLayoutAlign="space-between">
+                          <mat-form-field appearance="outline" class="w-45-p">
+                              <mat-label>Company</mat-label>
+                              <input matInput formControlName="comp2" required>
+                              <mat-error>Company is required!</mat-error>
+                          </mat-form-field>
+    
+                      <mat-form-field appearance="outline"  class="w-45-p">
+                          <mat-label>Position</mat-label>
+                          <input matInput formControlName="job2" required>
+                          <mat-error>Job is required</mat-error>
+                      </mat-form-field>
+                     </div>
+                     <div fxLayout="row" fxLayoutAlign="space-between">
+                      <mat-form-field appearance="outline"  class="w-45-p">
+                          <mat-label>Domain</mat-label>
+                          <input matInput formControlName="domain2" required>
+                          <mat-error>Domain is required!</mat-error>
+                      </mat-form-field>
+                       
+    
+                      <!-- <mat-form-field appearance="outline" floatLabel="always"  class="w-45-p" style="height: 70px;">
+                        <mat-label>Skills</mat-label>
+                        <textarea matInput placeholder="skills"></textarea>
+                       
+                               
+                    </mat-form-field> -->
+                      <mat-form-field appearance="outline" class="w-45-p">
+                          <mat-label>Skills</mat-label>
+                          <input matInput formControlName="skill2" required>
+                          <mat-error>Domain is required!</mat-error>
+                      </mat-form-field>
+                    
+                       </div>
+                       <div fxLayout="row" fxLayoutAlign="space-between">
+                          <mat-form-field appearance="outline"  floatLabel="always"class="w-45-p">
+                              <mat-label>From
+                                  
+                              </mat-label>
+                             
+                              <input matInput [matDatepicker]="picker7">
+                             
+                              <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
+                              <mat-datepicker #picker7></mat-datepicker>
+                              <input matInput formControlName="exp_from2">
+                            
+                            </mat-form-field>
+                            <mat-form-field appearance="outline"  floatLabel="always"class="w-45-p">
+                              <mat-label>To
+                                  
+                              </mat-label>
+                             
+                              <input matInput [matDatepicker]="picker8">
+                             
+                              <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
+                              <mat-datepicker #picker8></mat-datepicker>
+                              <input matInput formControlName="exp_to2">
+                              
+                            </mat-form-field>  
+                            </div>
+                  
+    
+    
+    
+    </div>
+                </mat-tab>
+
+                <mat-tab label="Contact">
+                    <div class="ex1 p-24">
+                    <mat-form-field appearance="outline" floatLabel="always"  class="w-100-p">
+                        <mat-label>Mobile </mat-label>
+                        <input matInput placeholder="mobile"
+                               name="name"
+                               formControlName="name"
+                               required>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" floatLabel="always"  class="w-100-p">
+                        <mat-label>Email </mat-label>
+                        <input matInput placeholder="email"
+                               name="name"
+                               formControlName="name"
+                               required>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" floatLabel="always"  class="w-100-p"style="height=3000px;">
+                        <mat-label>Address</mat-label>
+                        <textarea matInput placeholder="Address"></textarea>
+                       
+                               
+                    </mat-form-field>
+    </div>
+                </mat-tab>
+
+
+
+                </mat-tab-group>
+
+
+
+
+
+
+
+           </div>
+
+
+
+        </div>
+
+        <div class="widget" fxFlex="100" fxFlex.gt-sm="50">
+            <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+                <mat-tab-group >
+                  
+        
+                        <mat-tab label="Resume ">
+                    <div class="ex1">
+                        <iframe src="../../../../../assets/sample.pdf"  height="100%" width="500px"></iframe>
+                      
+            </div>
+           
+            </mat-tab>
+         
+                   
+                         </mat-tab-group>
+
+                </div>
+                </div>
+
+
+       </div>
+  </div>
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- CONTENT CARD -->
+        <!-- <div class="content-card"> -->
+           
+            <!-- CONTENT -->
+            <!-- <div class="content"> -->
+               
+                <!-- <mat-tab-group fxLayout="column" fxFlex>
+
+                    <mat-tab label="Candidate Details">
+
+                        <div class="order-details tab-content p-24" >
+                            <mat-grid-list cols="2" rowHeight="1000px">
+                                <mat-grid-tile style="align-items: flex-start;" fuseperfectscrollbar>
+                                   
+        
+                                    <div class="section pb-48" style="align-items: flex-start;"  >
+                                   
+                                    <mat-form-field appearance="outline" floatLabel="always"  class="w-100-p">
+                                        <mat-label>Company Name</mat-label>
+                                        <input matInput placeholder="Company Name"
+                                               name="name"
+                                               formControlName="name"
+                                               required>
+                                    </mat-form-field>  -->
+
+                                    <!-- <mat-form-field appearance="outline" floatLabel="always"  class="w-100-p">
+                                        <mat-label>Company Name</mat-label>
+                                        <input matInput placeholder="Company Name"
+                                               name="name"
+                                               formControlName="name"
+                                               required>
+                                    </mat-form-field>  
+                                    <mat-form-field appearance="outline" floatLabel="always"  class="w-100-p">
+                                        <mat-label>Company Name</mat-label>
+                                        <input matInput placeholder="Company Name"
+                                               name="name"
+                                               formControlName="name"
+                                               required>
+                                    </mat-form-field>   -->
+                                  
+<!-- </div>
+                                </mat-grid-tile>
+                                <mat-grid-tile>2</mat-grid-tile>
+                                
+                              </mat-grid-list> -->
+                              
+                              
+                            <!-- <div class="section pb-48">
+
+                                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                                    <mat-icon class="m-0 mr-16 secondary-text">account_circle</mat-icon>
+                                    <div class="h2 secondary-text">Personal Details</div>
+                                </div>
+                                <mat-form-field appearance="outline" floatLabel="always"  class="w-100-p">
+                                    <mat-label>Company Name</mat-label>
+                                    <input matInput placeholder="Company Name"
+                                           name="name"
+                                           formControlName="name"
+                                           required>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" floatLabel="always"  class="w-100-p">
+                                    <mat-label>Company Name</mat-label>
+                                    <input matInput placeholder="Company Name"
+                                           name="name"
+                                           formControlName="name"
+                                           required>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" floatLabel="always"  class="w-100-p">
+                                    <mat-label>Company Name</mat-label>
+                                    <input matInput placeholder="Company Name"
+                                           name="name"
+                                           formControlName="name"
+                                           required>
+                                </mat-form-field>
+                                <div class="customer mb-32">
+                                    <table class="simple">
+                                        <thead>
+                                            <tr>
+                                                <th >Name</th>
+                                                <th>DOB</th>
+                                                <th>Gender</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div fxLayout="row" fxLayoutAlign="start center"> -->
+                                                        <!-- <img class="avatar" [src]="order.customer.avatar"> -->
+                                                        <!-- <span class="name text-truncate">{{order.customer.
+                                                            firstName}}
+                                                            {{order.customer.lastName}}
+                                                        </span>
+                                                    </div>
+                                                </td> -->
+                                                <!-- <td>
+                                                    <span class="email text-truncate">{{order.customer.DOB}}</span>
+                                                </td> -->
+                                                <!-- <td>
+                                                    <span class="DOB text-truncate">{{order.customer.DOB}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="gender text-truncate">{{order.customer.gender}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="email text-truncate">{{order.customer.email}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="phone text-truncate">{{order.customer.phone}}</span>
+                                                </td>
+                                               
+                                            </tr>
+                                        </tbody>
+                                    </table> -->
+
+
+
+                                    
+                                <!-- </div>
+
+
+                                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                                    <mat-icon class="m-0 mr-16 secondary-text">location_city</mat-icon>
+                                    <div class="h2 secondary-text">Address</div>
+                                </div>
+
+                                <div class="customer mb-32">
+                                    <table class="simple">
+                                        <thead>
+                                            <tr>
+                                                <th>Address</th>
+                                                <th>Country</th>
+                                                <th>State</th>
+                                                <th>City</th>
+                                                <th>Postel Code</th>
+                                                <th>Company</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div fxLayout="row" fxLayoutAlign="start center"> -->
+                                                        <!-- <img class="avatar" [src]="order.customer.avatar"> -->
+                                                        <!-- <span class="address text-truncate">{{order.customer.
+                                                            address}}
+                                                          
+                                                        </span>
+                                                    </div>
+                                                </td> -->
+                                                <!-- <td>
+                                                    <span class="email text-truncate">{{order.customer.DOB}}</span>
+                                                </td> -->
+                                                <!-- <td>
+                                                    <span class="country text-truncate">{{order.customer.country}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="state text-truncate">{{order.customer.state}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="city text-truncate">{{order.customer.city}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="postal_code text-truncate">{{order.customer.postal_code}}</span>
+                                                </td> -->
+                                                <!-- <td>
+                                                    <span class="company text-truncate">{{order.customer.company}}
+                                                    </span>
+                                                </td> -->
+                                            <!-- </tr>
+                                        </tbody>
+                                    </table> -->
+
+
+
+<!--                                     
+                                </div>
+                                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                                    <mat-icon class="m-0 mr-16 secondary-text">school</mat-icon>
+                                    <div class="h2 secondary-text">Educational Qualification</div>
+                                </div>
+                                <div class="customer mb-32">
+                                    <table class="simple">
+                                        <thead>
+                                            <tr>
+                                                <th>Educational Qualification</th>
+                                                <th>Major</th>
+                                                <th>University</th>
+                                                <th>Grade</th>
+                                                <th>CGPA</th>
+                                                 -->
+                                                <!-- <th>Company</th> -->
+                                            <!-- </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div fxLayout="row" fxLayoutAlign="start center"> -->
+                                                        <!-- <img class="avatar" [src]="order.customer.avatar"> -->
+                                                        <!-- <span class="edu_qual text-truncate">{{order.customer.
+                                                            edu_qual}}
+                                                          
+                                                        </span>
+                                                    </div>
+                                                </td> -->
+                                                <!-- <td>
+                                                    <span class="email text-truncate">{{order.customer.DOB}}</span>
+                                                </td> -->
+                                                <!-- <td>
+                                                    <span class="major text-truncate">{{order.customer.major}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="university text-truncate">{{order.customer.university}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="grade text-truncate">{{order.customer.grade}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="cgpa text-truncate">{{order.customer.cgpa}}</span>
+                                                </td>
+                                                 -->
+                                                <!-- <td>
+                                                    <span class="company text-truncate">{{order.customer.company}}
+                                                    </span>
+                                                </td> -->
+                                            <!-- </tr>
+                                        </tbody>
+                                    </table>
+
+
+
+                                    
+                                </div>
+                                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                                    <mat-icon class="m-0 mr-16 secondary-text">work_outline</mat-icon>
+                                    <div class="h2 secondary-text">Work Experience</div>
+                                </div>
+                                <div class="customer mb-32">
+                                    <table class="simple">
+                                        <thead>
+                                            <tr>
+                                                <th>Designation</th>
+                                                <th>Company</th>
+                                                <th>Technology</th>
+                                                <th>Experience</th>
+                                                <th>Expertise </th> -->
+                                                <!-- <th>Company</th> -->
+                                            <!-- </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div fxLayout="row" fxLayoutAlign="start center"> -->
+                                                        <!-- <img class="avatar" [src]="order.customer.avatar"> -->
+                                                        <!-- <span class="job text-truncate">{{order.customer.
+                                                            job}}
+                                                          
+                                                        </span>
+                                                    </div>
+                                                </td> -->
+                                                <!-- <td>
+                                                    <span class="email text-truncate">{{order.customer.DOB}}</span>
+                                                </td> -->
+                                                <!-- <td>
+                                                    <span class="company text-truncate">{{order.customer.company}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="domain text-truncate">{{order.customer.domain}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="exp text-truncate">{{order.customer.exp}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="expertise text-truncate">{{order.customer.expertise}}</span>
+                                                </td> -->
+                                                <!-- <td>
+                                                    <span class="company text-truncate">{{order.customer.company}}
+                                                    </span>
+                                                </td> -->
+                                            <!-- </tr>
+                                        </tbody>
+                                    </table>
+
+
+
+                                    
+                                </div> -->
+
+
+                                <!-- <mat-accordion class="addresses">
+
+                                    <mat-expansion-panel>
+
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>Shipping Address</mat-panel-title>
+                                        </mat-expansion-panel-header>
+
+                                        <div fxFlex fxLayout="column">
+                                            <div class="address h4 py-24">{{order.customer.shippingAddress.address}}
+                                            </div>
+                                            <agm-map class="w-100-p h-400" [zoom]="15"
+                                                     [latitude]="order.customer.shippingAddress.lat"
+                                                     [longitude]="order.customer.shippingAddress.lng">
+                                                <agm-marker [latitude]="order.customer.shippingAddress.lat"
+                                                            [longitude]="order.customer.shippingAddress.lng">
+                                                </agm-marker>
+                                            </agm-map>
+                                        </div>
+
+                                    </mat-expansion-panel>
+
+                                    <mat-expansion-panel>
+
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>Invoice Address</mat-panel-title>
+                                        </mat-expansion-panel-header>
+
+                                        <div fxFlex fxLayout="column">
+                                            <div class="address h4 py-24">{{order.customer.invoiceAddress.address}}
+                                            </div>
+                                            <agm-map class="w-100-p h-400" [zoom]="15"
+                                                     [latitude]="order.customer.invoiceAddress.lat"
+                                                     [longitude]="order.customer.invoiceAddress.lng">
+                                                <agm-marker [latitude]="order.customer.invoiceAddress.lat"
+                                                            [longitude]="order.customer.invoiceAddress.lng">
+                                                </agm-marker>
+                                            </agm-map>
+                                        </div>
+
+                                    </mat-expansion-panel>
+
+                                </mat-accordion> -->
+
+                            <!-- </div> -->
+
+                            <!-- <div class="section pb-48">
+
+                                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                                    <mat-icon class="m-0 mr-16 secondary-text">access_time</mat-icon>
+                                    <div class="h2 secondary-text">Order Status</div>
+                                </div>
+
+                                <table class="simple">
+                                    <thead>
+                                        <tr>
+                                            <th>Status</th>
+                                            <th>Updated On</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr *ngFor="let status of order.status">
+                                            <td>
+                                                <span class="status h6 p-4" [ngClass]="status.color">
+                                                    {{status.name}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span>
+                                                    {{status.date | date}}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <form class="update-status p-24"
+                                      (ngSubmit)="updateStatus()"
+                                      [formGroup]="statusForm"
+                                      fxLayout="row" fxLayoutAlign="start center">
+
+                                    <mat-form-field appearance="outline" class="mr-16" fxFlex>
+                                        <mat-label>Status</mat-label>
+                                        <mat-select formControlName="newStatus"
+                                                    required>
+                                            <mat-option *ngFor="let status of orderStatuses"
+                                                        [value]="status.id">
+                                                {{status.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <button mat-raised-button class="mat-accent"
+                                            [disabled]="statusForm.invalid">
+                                        Update Status
+                                    </button>
+                                </form>
+
+                            </div> -->
+
+                            <!-- <div class="section pb-48"> -->
+
+                                <!-- <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                                    <mat-icon class="m-0 mr-16 secondary-text">attach_money</mat-icon>
+                                    <div class="h2 secondary-text">Payment</div>
+                                </div> -->
+
+                                <!-- <table class="simple">
+                                    <thead>
+                                        <tr>
+                                            <th>TransactionID</th>
+                                            <th>Payment Method</th>
+                                            <th>Amount</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span class="text-truncate">
+                                                    {{order.payment.transactionId}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="text-truncate">
+                                                    {{order.payment.method}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="text-truncate">
+                                                    {{order.payment.amount}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="text-truncate">
+                                                    {{order.payment.date | date}}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table> -->
+                            <!-- </div>
+
+
+                            <div class="section pb-48"> -->
+
+                                <!-- <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                                    <mat-icon class="m-0 mr-16 secondary-text">local_shipping</mat-icon>
+                                    <div class="h2 secondary-text">Shipping</div>
+                                </div> -->
+
+                                <!-- <table class="simple">
+                                    <thead>
+                                        <tr>
+                                            <th>Tracking Code</th>
+                                            <th>Carrier</th>
+                                            <th>Weight</th>
+                                            <th>Fee</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let shipping of order.shippingDetails">
+                                            <td class="tracking-code">
+                                                {{shipping.tracking}}
+                                            </td>
+                                            <td>
+                                                {{shipping.carrier}}
+                                            </td>
+                                            <td>
+                                                {{shipping.weight}}
+                                            </td>
+                                            <td>
+                                                {{shipping.fee}}
+                                            </td>
+                                            <td>
+                                                {{shipping.date}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>-->
+                            <!-- </div>
+
+                        </div>
+                    </mat-tab>  -->
+
+                    <!-- <mat-tab label="Products">
+                        <div class="products tab-content p-24" fusePerfectScrollbar>
+                            <table class="simple">
+                                <thead>
+                                    <tr>
+                                        <th class="w-80">ID</th>
+                                        <th class="w-120">Image</th>
+                                        <th>Name</th>
+                                        <th class="w-120">Price</th>
+                                        <th class="w-80">Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="product-row"
+                                        *ngFor="let product of order.products"
+                                        [routerLink]="'/apps/e-commerce/products/'+product.id+'/'+product.handle">
+                                        <td>
+                                            {{product.id}}
+                                        </td>
+                                        <td>
+                                            <img class="product-image" [src]="product.image">
+                                        </td>
+                                        <td>
+                                            {{product.name}}
+                                        </td>
+                                        <td>
+                                            {{product.price}}
+                                        </td>
+                                        <td>
+                                            {{product.quantity}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </mat-tab> -->
+
+                    <!-- <mat-tab label="Resume">
+
+                        <div class="invoice tab-content p-24" fusePerfectScrollbar>
+
+                            <div id="invoice" class="compact page-layout blank" fxLayout="row" fusePerfectScrollbar>
+
+                                <div class="invoice-container"> -->
+
+                                    <!-- INVOICE -->
+                                    <!-- <div class="card">
+
+                                        <div class="header">
+                                            <div class="invoice-date">{{order.date}}</div>
+
+                                            <div fxLayout="row" fxLayoutAlign="space-between stretch">
+                                                <div class="client">
+                                                    <div class="invoice-number" fxLayout="row"
+                                                         fxLayoutAlign="start center">
+                                                        <span class="title"></span>
+                                                        <span class="number">{{order.reference}}</span>
+                                                    </div>
+
+                                                    <div class="info">
+                                                        <div class="title">
+                                                            {{order.customer.firstName}}
+                                                            {{order.customer.lastName}}
+                                                        </div>
+                                                        <div class="address">
+                                                            {{order.customer.invoiceAddress.address}}
+                                                        </div>
+                                                        <div class="phone">{{order.customer.phone}}</div>
+                                                        <div class="email">{{order.customer.email}}</div>
+                                                    </div>
+                                                </div> -->
+
+                                                <!-- <div class="issuer accent" fxLayout="row" fxLayoutAlign="start center"> -->
+                                                    <!-- <div class="logo">
+                                                        <img src="assets/images/logos/fuse.svg">
+                                                    </div> -->
+
+                                                    <!-- <div class="info">
+                                                        <div class="title">FUSE INC.</div>
+                                                        <div class="address">2810 Country Club Road Cranford, NJ 07016
+                                                        </div>
+                                                        <div class="phone">+66 123 455 87</div>
+                                                        <div class="email">hello@fuseinc.com</div>
+                                                        <div class="website">www.fuseinc.com</div>
+                                                    </div> -->
+                                                <!-- </div> -->
+                                            <!-- </div>
+                                        </div>
+<div class="content">
+    <h3>
+        Carrier Objective
+    </h3>
+    <p>
+        Seeking to use backend development experience in an entry-level position at  Software.Possess more than ! year of hands-on experience building and testing
+        application for Android.IOS and Windows.
+    </p>
+</div>
+                                        <div class="content">
+
+                                            <table class="simple invoice-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Educational Qualification</th>
+                                                        <th class="text-center">University</th>
+                                                        <th class="text-center">Grade</th>
+                                                        <th class="text-center">CGPA</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let product of order.products">
+                                                        <td>
+                                                            <div class="title">
+                                                                {{product.name}}
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{product.university}}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{product.grade}}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{product.cgpa}}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table> -->
+
+                                            <!-- <table class="simple invoice-table-footer">
+                                                <tbody>
+                                                    <tr class="subtotal">
+                                                        <td>SUBTOTAL</td>
+                                                        <td>{{order.subtotal | currency:'USD':'symbol'}}</td>
+                                                    </tr>
+                                                    <tr class="tax">
+                                                        <td>TAX</td>
+                                                        <td>{{order.tax | currency:'USD':'symbol'}}</td>
+                                                    </tr>
+                                                    <tr class="discount">
+                                                        <td>DISCOUNT</td>
+                                                        <td>-{{order.discount | currency:'USD':'symbol'}}</td>
+                                                    </tr>
+                                                    <tr class="total">
+                                                        <td>TOTAL</td>
+                                                        <td>{{order.total | currency:'USD':'symbol'}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table> -->
+                                        </div>
+<!-- <div class="resume">
+    <h2>Web Developement Intern</h2>
+    <p>
+        Fixed 300 Bugs on the website and implemented numerous enhancement to improve  the overall user experience
+    </p>
+    <p>
+        Used HTML,CSS and Jscript to contribute to a full revamp of the flagship app's homepage. leading to a 16% increse in click rates.
+    </p>
+    <p>
+        Python, Java, and/or MATLAB programming experience are plusses
+    </p>
+    <p>
+        Assisted in developing a widget to help cyclists locate the nearest bike lane,which is now one of Spin.io's most popular products
+    </p>
+</div>
+        <div >
+        <h2>
+            Software Engineering Intern
+        </h2>
+        <p>
+            Used Swift to develop a productivity app for IOS to help architects render and edit bluprints.
+
+        </p>
+        <p>
+            Worked with development team to refinr the debugging process
+        </p>
+        <p>
+            Leverged my Knowledge  of java and Python to wite interface to manage backup log data
+        </p>
+        </div>                                 -->
+
+<!-- <div class="footer">
+                                            <div class="note">Please pay within 15 days. Thank you for your business.
+                                            </div>
+                                            <div fxLayout="row" fxLayoutAlign="start start">
+                                                <div class="logo">
+                                                    <img src="assets/images/logos/fuse.svg">
+                                                </div>
+                                                <div class="small-note">
+                                                    In condimentum malesuada efficitur. Mauris volutpat placerat auctor.
+                                                    Ut ac congue dolor. Quisque scelerisque lacus sed feugiat fermentum.
+                                                    Cras aliquet facilisis pellentesque. Nunc hendrerit quam at leo
+                                                    commodo, a suscipit tellus dapibus. Etiam at felis volutpat est
+                                                    mollis lacinia. Mauris placerat sem sit amet velit mollis, in
+                                                    porttitor ex finibus. Proin eu nibh id libero tincidunt lacinia et
+                                                    eget eros.
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    <!-- </div> -->
+                                    <!-- / INVOICE -->
+<!-- 
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                </mat-tab-group>
+
+            </div> -->
+            <!-- / CONTENT -->
+
+        <!-- </div> -->
+        <!-- / CONTENT CARD -->
+
+    <!-- </div> -->
+    <!-- / CENTER -->
+<!-- </div> -->

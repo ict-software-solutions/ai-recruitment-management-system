@@ -1,0 +1,22 @@
+// Import Fuse core library
+@import "@fuse/scss/core";
+
+// Import app.theme.scss
+@import "app/app.theme";
+
+
+.mat-progress-spinner svg {
+    position: absolute;
+    transform: rotate(-90deg);
+    top: 0;
+    left: 0;
+    transform-origin: center;
+    overflow: visible;
+    height: 30px!important;
+    width: 30px!important;
+    margin-top: 32px;
+}
+.mat-grid-tile .mat-grid-figure
+{
+align-items: flex-start!important;
+}
