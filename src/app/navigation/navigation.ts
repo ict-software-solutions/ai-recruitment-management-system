@@ -202,71 +202,72 @@ export const navigation: FuseNavigation[] = [
     },
     {
         id      : 'pages',
-        title   : 'Pages',
+        title   : 'Settings',
         type    : 'group',
         icon    : 'pages',
         children: [
-            {
-                id      : 'authentication',
-                title   : 'Authentication',
-                type    : 'collapsable',
-                icon    : 'lock',
-                badge   : {
-                    title: '10',
-                    bg   : '#525e8a',
-                    fg   : '#FFFFFF'
-                },
-                children: [
-                    {
-                        id   : 'login',
-                        title: 'Login',
-                        type : 'item',
-                        url  : '/pages/auth/login'
-                    },
+            // {
+            //     id      : 'authentication',
+            //     title   : 'Authentication',
+            //     type    : 'collapsable',
+            //     icon    : 'lock',
+            //     badge   : {
+            //         title: '10',
+            //         bg   : '#525e8a',
+            //         fg   : '#FFFFFF'
+            //     },
+                // children: [
+                //     {
+                //         id   : 'login',
+                //         title: 'Login',
+                //         type : 'item',
+                //         url  : '/pages/auth/login'
+                //     },
     //                 // {
     //                 //     id   : 'login-v2',
     //                 //     title: 'Login v2',
     //                 //     type : 'item',
     //                 //     url  : '/pages/auth/login-2'
     //                 // },
-                    {
-                        id   : 'register',
-                        title: 'Register',
-                        type : 'item',
-                        url  : '/pages/auth/register'
-                    },
+                    // {
+                    //     id   : 'register',
+                    //     title: 'Register',
+                    //     type : 'item',
+                    //     url  : '/pages/auth/register'
+                    // },
     //                 // {
     //                 //     id   : 'register-v2',
     //                 //     title: 'Register v2',
     //                 //     type : 'item',
     //                 //     url  : '/pages/auth/register-2'
     //                 // },
-                    {
-                        id   : 'forgot-password',
-                        title: 'Forgot Password',
-                        type : 'item',
-                        url  : '/pages/auth/forgot-password'
-                    },
+                    // {
+                    //     id   : 'forgot-password',
+                    //     title: 'Forgot Password',
+                    //     type : 'item',
+                    //     url  : '/pages/auth/forgot-password'
+                    // },
                     {
                                             id   : 'reset-password',
-                                            title: 'Reset Password',
+                                            title: 'Change Password',
                                             type : 'item',
+                                            icon: 'vpn_key',
                                             url  : '/pages/auth/reset-password'
                                         },
-                                        {
-                                                                id   : 'lock-screen',
-                                                                title: 'Lock Screen',
-                                                                type : 'item',
-                                                                url  : '/pages/auth/lock'
-                                                            },
-                                                            {
-                                                                                    id   : 'mail-confirmation',
-                                                                                    title: 'Mail Confirmation',
-                                                                                    type : 'item',
-                                                                                    url  : '/pages/auth/mail-confirm'
-                                                                                }
-                ]
-            }
+                                        // {
+                                        //                         id   : 'lock-screen',
+                                        //                         title: 'Lock Screen',
+                                        //                         type : 'item',
+                                        //                         url  : '/pages/auth/lock'
+                                        //                     },
+                                                            // {
+                                                            //                         id   : 'mail-confirmation',
+                                                            //                         title: 'Mail Confirmation',
+                                                            //                         type : 'item',
+                                                            //                         url  : '/pages/auth/mail-confirm'
+                                                            //                     }
+            //     ]
+            // }
         ]
     },
 
