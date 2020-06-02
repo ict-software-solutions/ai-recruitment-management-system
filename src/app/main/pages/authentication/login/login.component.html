@@ -1,103 +1,80 @@
 <div id="login" fxLayout="column">
-
     <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
-
         <div id="login-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
-
             <div class="logo">
-                <img src="assets/images/logos/troy.png">
+                <img [src]="logoPath">
             </div>
-
             <div class="title">LOGIN TO YOUR ACCOUNT</div>
-
             <form name="loginForm" [formGroup]="loginForm" novalidate>
-
                 <mat-form-field appearance="outline">
                     <mat-label>Email</mat-label>
                     <input matInput formControlName="email">
-                    <button matSuffix class="secondary-text"mat-icon-button color="secondary-text" aria-label="Example icon-button with a heart icon">
+                    <button matSuffix class="secondary-text" mat-icon-button color="secondary-text"
+                        aria-label="Example icon-button with a heart icon">
                         <mat-icon>mail</mat-icon>
-                        </button>
+                    </button>
                     <!-- <mat-icon matSuffix class="secondary-text">mail</mat-icon> -->
                     <mat-error *ngIf="loginForm.get('email').hasError('required')">
                         Email is required
                     </mat-error>
-                    <mat-error
-                        *ngIf="!loginForm.get('email').hasError('required') &&
+                    <mat-error *ngIf="!loginForm.get('email').hasError('required') &&
                                 loginForm.get('email').hasError('email')">
                         Please enter a valid email address
                     </mat-error>
                 </mat-form-field>
-
                 <mat-form-field appearance="outline">
                     <mat-label>Password</mat-label>
-                    <input matInput type="password" formControlName="password" required maxlength="15" >
+                    <input matInput type="password" formControlName="password" required maxlength="15">
                     <!-- <button mat-icon-button color="primary" aria-label="Example icon-button with a heart icon">
                         <mat-icon>visibility_off</mat-icon>
                       </button> -->
                     <!-- <mat-icon matSuffix class="secondary-text">visibility_off</mat-icon> -->
-                    <button matSuffix class="secondary-text"mat-icon-button color="secondary-text" aria-label="Example icon-button with a heart icon">
+                    <button matSuffix class="secondary-text" mat-icon-button color="secondary-text"
+                        aria-label="Example icon-button with a heart icon">
                         <mat-icon>visibility_off</mat-icon>
-                        </button>
-                   
-                   
-                   
-                        <mat-error *ngIf="loginForm.get('password').hasError('required')">
+                    </button>
+                    <mat-error *ngIf="loginForm.get('password').hasError('required')">
                         Password is required
                     </mat-error>
-
-                    <mat-error
-                    *ngIf="!loginForm.get('password').hasError('required') &&
+                    <mat-error *ngIf="!loginForm.get('password').hasError('required') &&
                             loginForm.get('password').hasError('email')">
-                    Please enter a valid email address
-                </mat-error>
+                        Please enter a valid email address
+                    </mat-error>
                 </mat-form-field>
-
                 <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
-                     fxLayoutAlign="space-between center">
+                    fxLayoutAlign="space-between center">
                     <!-- <mat-checkbox class="remember-me" aria-label="Remember Me">
                         Remember Me
                     </mat-checkbox> -->
-
                     <a class="forgot-password" [routerLink]="'/pages/auth/forgot-password'">
                         Forgot Password?
                     </a>
                 </div>
-
-                <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN" (click)="login()" type="submit" [disabled]="loginForm.invalid">                      
+                <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
+                    (click)="login(loginForm.value)" type="submit" [disabled]="loginForm.invalid">
                     LOGIN
                 </button>
-                    
-                    <!-- [routerLink]="['../../apps/dashboards/analytics']"> -->
-               
- 
+                <!-- [routerLink]="['../../apps/dashboards/analytics']"> -->
                 <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
-                [routerLink]="'/pages/auth/register'">
-        <!-- <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
+                    [routerLink]="'/pages/auth/register'">
+                    <!-- <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
                 [disabled]="loginForm.invalid"> -->
-            SIGN UP
-        </button>
+                    SIGN UP
+                </button>
             </form>
-
             <!--<div class="separator">
                 <span class="text">OR</span>
             </div>
-
             <button mat-raised-button class="google">
                 Log in with Google
             </button>
-
             <button mat-raised-button class="facebook">
                 Log in with Facebook
             </button>-->
-
-           <!-- <div class="register" fxLayout="column" fxLayoutAlign="center center">
+            <!-- <div class="register" fxLayout="column" fxLayoutAlign="center center">
                 <span class="text">Don't have an account?</span>
                 <a class="link" [routerLink]="'/pages/auth/register'">Create an account</a>
             </div> -->
-
         </div>
-
     </div>
-
 </div>

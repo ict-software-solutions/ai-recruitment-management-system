@@ -1,25 +1,26 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder,  Validators } from '@angular/forms';
-
-import { FuseConfigService } from '@fuse/services/config.service';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
-import { FormGroup,FormControl } from '@angular/forms';
+import { FuseConfigService } from '@fuse/services/config.service';
+import { TROY_LOGO, LAYOUT_STRUCTURE } from 'app/util/constants';
+
 @Component({
-    selector     : 'login',
-    templateUrl  : './login.component.html',
-    styleUrls    : ['./login.component.scss'],
+    selector: 'login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations: fuseAnimations
 })
-export class LoginComponent implements OnInit
-{
-   
-    loginForm = new FormGroup({
+
+export class LoginComponent implements OnInit, OnDestroy {
+
+    /* loginForm = new FormGroup({
         email: new FormControl(''),
         password: new FormControl(''),
-      });  
-      
-    // loginForm: FormGroup;
+    }); */
+
+    loginForm: FormGroup;
+    logoPath = TROY_LOGO;
 
     /**
      * Constructor
@@ -30,58 +31,27 @@ export class LoginComponent implements OnInit
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder
-
-    )
-   
-    {
+    ) {
         // Configure the layout
-        this._fuseConfigService.config = {
-            layout: {
-                navbar   : {
-                    hidden: true
-                },
-                toolbar  : {
-                    hidden: true
-                },
-                footer   : {
-                    hidden: true
-                },
-                sidepanel: {
-                    hidden: true
-                }
-            }
-        };
+        this._fuseConfigService.config = LAYOUT_STRUCTURE;
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
+    ngOnInit(): void {
+        this.loginForm = this._formBuilder.group({
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
+        });
+    }
 
-    /**
-     * On init
-     */
-    // ngOnInit(): void
-    // {
-    //     this.loginForm = this._formBuilder.group(
-        // {
-    //         email   : ['', [Validators.required, Validators.email]],
-    //         password: ['', Validators.required]
-    //     }
-    // );
-    // }
-ngOnInit():void
-{
-    this.loginForm=this._formBuilder.group(
-        {
-            email:['',[Validators.required,Validators.email]],
-            password:['',Validators.minLength(6),Validators.maxLength(15)]
-        }
-    );
-}
-login()
-{
-    console.log(this.loginForm)
-   
-}
+    login(value) {
+        console.log(value);
+    }
+
+    ngOnDestroy() {
+        this.loginForm = null;
+        this._fuseConfigService = null;
+        this._formBuilder = null;
+        this.logoPath = null;
+    }
 
 }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
+import { LAYOUT_STRUCTURE } from 'app/util/constants';
 
 @Component({
     selector     : 'forgot-password-2',
@@ -27,22 +28,7 @@ export class ForgotPassword2Component implements OnInit
     )
     {
         // Configure the layout
-        this._fuseConfigService.config = {
-            layout: {
-                navbar   : {
-                    hidden: true
-                },
-                toolbar  : {
-                    hidden: true
-                },
-                footer   : {
-                    hidden: true
-                },
-                sidepanel: {
-                    hidden: true
-                }
-            }
-        };
+        this._fuseConfigService.config = LAYOUT_STRUCTURE;
     }
 
     // -----------------------------------------------------------------------------------------------------

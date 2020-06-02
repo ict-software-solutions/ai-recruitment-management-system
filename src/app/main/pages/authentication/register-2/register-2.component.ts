@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
+import { LAYOUT_STRUCTURE } from 'app/util/constants';
 
 @Component({
     selector     : 'register-2',
@@ -26,22 +27,7 @@ export class Register2Component implements OnInit, OnDestroy
     )
     {
         // Configure the layout
-        this._fuseConfigService.config = {
-            layout: {
-                navbar   : {
-                    hidden: true
-                },
-                toolbar  : {
-                    hidden: true
-                },
-                footer   : {
-                    hidden: true
-                },
-                sidepanel: {
-                    hidden: true
-                }
-            }
-        };
+        this._fuseConfigService.config = LAYOUT_STRUCTURE;
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();

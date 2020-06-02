@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
+import { FuseConfigService } from '@fuse/services/config.service';
+import { LAYOUT_STRUCTURE } from 'app/util/constants';
 
 @Component({
     selector     : 'coming-soon',
@@ -27,22 +27,7 @@ export class ComingSoonComponent implements OnInit
     )
     {
         // Configure the layout
-        this._fuseConfigService.config = {
-            layout: {
-                navbar   : {
-                    hidden: true
-                },
-                toolbar  : {
-                    hidden: true
-                },
-                footer   : {
-                    hidden: true
-                },
-                sidepanel: {
-                    hidden: true
-                }
-            }
-        };
+        this._fuseConfigService.config = LAYOUT_STRUCTURE;
     }
 
     // -----------------------------------------------------------------------------------------------------
