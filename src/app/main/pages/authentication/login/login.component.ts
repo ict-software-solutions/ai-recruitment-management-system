@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder,  Validators } from '@angular/forms';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
-
+import { FormGroup,FormControl } from '@angular/forms';
 @Component({
     selector     : 'login',
     templateUrl  : './login.component.html',
@@ -13,7 +13,13 @@ import { fuseAnimations } from '@fuse/animations';
 })
 export class LoginComponent implements OnInit
 {
-    loginForm: FormGroup;
+   
+    loginForm = new FormGroup({
+        email: new FormControl(''),
+        password: new FormControl(''),
+      });  
+      
+    // loginForm: FormGroup;
 
     /**
      * Constructor
@@ -24,7 +30,9 @@ export class LoginComponent implements OnInit
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder
+
     )
+   
     {
         // Configure the layout
         this._fuseConfigService.config = {
@@ -52,11 +60,28 @@ export class LoginComponent implements OnInit
     /**
      * On init
      */
-    ngOnInit(): void
-    {
-        this.loginForm = this._formBuilder.group({
-            email   : ['', [Validators.required, Validators.email]],
-            password: ['', Validators.required]
-        });
-    }
+    // ngOnInit(): void
+    // {
+    //     this.loginForm = this._formBuilder.group(
+        // {
+    //         email   : ['', [Validators.required, Validators.email]],
+    //         password: ['', Validators.required]
+    //     }
+    // );
+    // }
+ngOnInit():void
+{
+    this.loginForm=this._formBuilder.group(
+        {
+            email:['',[Validators.required,Validators.email]],
+            password:['',Validators.minLength(6),Validators.maxLength(15)]
+        }
+    );
+}
+login()
+{
+    console.log(this.loginForm)
+   
+}
+
 }

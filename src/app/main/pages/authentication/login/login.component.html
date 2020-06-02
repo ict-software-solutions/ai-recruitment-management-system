@@ -14,7 +14,7 @@
 
                 <mat-form-field appearance="outline">
                     <mat-label>Email</mat-label>
-                    <input matInput formControlName="zz">
+                    <input matInput formControlName="email">
                     <button matSuffix class="secondary-text"mat-icon-button color="secondary-text" aria-label="Example icon-button with a heart icon">
                         <mat-icon>mail</mat-icon>
                         </button>
@@ -31,7 +31,7 @@
 
                 <mat-form-field appearance="outline">
                     <mat-label>Password</mat-label>
-                    <input matInput type="password" formControlName="password">
+                    <input matInput type="password" formControlName="password" required maxlength="15" >
                     <!-- <button mat-icon-button color="primary" aria-label="Example icon-button with a heart icon">
                         <mat-icon>visibility_off</mat-icon>
                       </button> -->
@@ -39,9 +39,18 @@
                     <button matSuffix class="secondary-text"mat-icon-button color="secondary-text" aria-label="Example icon-button with a heart icon">
                         <mat-icon>visibility_off</mat-icon>
                         </button>
-                    <mat-error>
+                   
+                   
+                   
+                        <mat-error *ngIf="loginForm.get('password').hasError('required')">
                         Password is required
                     </mat-error>
+
+                    <mat-error
+                    *ngIf="!loginForm.get('password').hasError('required') &&
+                            loginForm.get('password').hasError('email')">
+                    Please enter a valid email address
+                </mat-error>
                 </mat-form-field>
 
                 <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
@@ -55,12 +64,13 @@
                     </a>
                 </div>
 
-                <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
-                        [routerLink]="['../../apps/dashboards/analytics']">
-                <!-- <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
-                        [disabled]="loginForm.invalid"> -->
+                <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN" (click)="login()" type="submit" [disabled]="loginForm.invalid">                      
                     LOGIN
                 </button>
+                    
+                    <!-- [routerLink]="['../../apps/dashboards/analytics']"> -->
+               
+ 
                 <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
                 [routerLink]="'/pages/auth/register'">
         <!-- <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"

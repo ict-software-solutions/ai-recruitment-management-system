@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { LoginComponent } from 'app/main/pages/authentication/login/login.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 const routes = [
     {
         path     : '/login',
@@ -34,9 +34,12 @@ const routes = [
         MatIconModule,
         MatInputModule,
 
-        FuseSharedModule
+        FuseSharedModule,
+        ReactiveFormsModule
     ]
 })
 export class LoginModule
 {
+    email:string;
+    password:string;
 }

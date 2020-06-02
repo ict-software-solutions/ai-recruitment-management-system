@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup,FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 
@@ -15,6 +15,15 @@ import { fuseAnimations } from '@fuse/animations';
 })
 export class RegisterComponent implements OnInit, OnDestroy
 {
+    // registerForm= new FormGroup(
+    //     {
+    //         name: new FormControl(''),
+    //         email: new FormControl(''),
+    //         password:new FormControl(''),
+    //         passwordConfirm:new FormControl('')
+
+    //     }
+    // )
     registerForm: FormGroup;
 
     // Private
@@ -59,7 +68,8 @@ export class RegisterComponent implements OnInit, OnDestroy
         this.registerForm = this._formBuilder.group({
             name           : ['', Validators.required],
             email          : ['', [Validators.required, Validators.email]],
-            password       : ['', Validators.required],
+            // password       : ['', Validators.required],
+            password:['',Validators.minLength(6),Validators.maxLength(15)],
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator]]
         });
 
@@ -81,6 +91,13 @@ export class RegisterComponent implements OnInit, OnDestroy
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
+
+register()
+{
+    console.log(this.registerForm)
+}
+
+
 }
 
 /**

@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { RegisterComponent } from 'app/main/pages/authentication/register/register.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 const routes = [
     {
         path     : 'auth/register',
@@ -30,7 +30,9 @@ const routes = [
         MatIconModule,
         MatInputModule,
 
-        FuseSharedModule
+        FuseSharedModule,
+        ReactiveFormsModule
+
     ]
 })
 export class RegisterModule
