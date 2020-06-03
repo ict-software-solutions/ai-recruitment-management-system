@@ -7,7 +7,7 @@ import { takeUntil } from 'rxjs/internal/operators';
 import { TROY_LOGO, LAYOUT_STRUCTURE } from 'app/util/constants';
 import { Router } from '@angular/router';
 
-
+import { AuthService } from '../../../../service/auth.service';
 @Component({
     selector: 'register',
     templateUrl: './register.component.html',
@@ -21,11 +21,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
     registerForm: FormGroup;
     private _unsubscribeAll: Subject<any>;
     logoPath = TROY_LOGO;
-
+ Authentication;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
-        private router: Router
+        private router: Router,
+        private authservice:AuthService
     ) {
         // Configure the layout
         this._fuseConfigService.config = LAYOUT_STRUCTURE;
@@ -39,6 +40,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.registerForm.get('password').valueChanges
             .pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
                 this.registerForm.get('passwordConfirm').updateValueAndValidity();
+
+        
             });
     }
 
@@ -47,7 +50,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
             name: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.minLength(6), Validators.maxLength(15)]],
-            passwordConfirm: ['', [Validators.required, confirmPasswordValidator]]
+            passwordConfirm: ['', [Validators.required, confirmPasswordValidator]],
+            check: ['', Validators.required]
         });
     }
 
@@ -62,6 +66,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     register(value) {
+    this.authservice.signup(value).subscribe(response => {
+        console.log(response);
+    });
         console.log(value);
     }
 

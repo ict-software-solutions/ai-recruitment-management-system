@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { TROY_LOGO, LAYOUT_STRUCTURE } from 'app/util/constants';
-
+import { AuthService } from '../../../../service/auth.service';
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit, OnDestroy {
      */
     constructor(
         private _fuseConfigService: FuseConfigService,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private authservice:AuthService
     ) {
         // Configure the layout
         this._fuseConfigService.config = LAYOUT_STRUCTURE;
@@ -43,7 +44,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         });
     }
 
-    login(value) {
+    login(value) { this.authservice.login(value).subscribe(Response => {
+        console.log(Response);
+        
+
+        });
         console.log(value);
     }
 

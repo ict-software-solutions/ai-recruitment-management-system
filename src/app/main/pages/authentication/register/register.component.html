@@ -44,8 +44,7 @@
                         <mat-icon>lock</mat-icon>
                     </button>
                     <!-- <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon> -->
-                    <mat-error>
-                        Password is required
+                    <mat-error >    Password is required
                     </mat-error>
                 </mat-form-field>
  
@@ -68,7 +67,7 @@
             
 
                 <div class="terms" fxLayout="row" fxLayoutAlign="center center">
-                    <mat-checkbox name="terms" aria-label="I read and accept" required>
+                    <mat-checkbox name="terms" formControlName="check"aria-label="I read and accept" required>
                         <span>I read and accept</span>
                     </mat-checkbox>
                     <a href="#">terms and conditions</a>
