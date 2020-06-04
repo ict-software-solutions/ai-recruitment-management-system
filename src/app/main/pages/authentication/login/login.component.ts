@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
-import { TROY_LOGO, LAYOUT_STRUCTURE } from 'app/util/constants';
+import { LAYOUT_STRUCTURE, TROY_LOGO } from 'app/util/constants';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../../../../service/auth.service';
-import { Router } from '@angular/router';
+
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
@@ -14,29 +16,17 @@ import { Router } from '@angular/router';
 })
 
 export class LoginComponent implements OnInit, OnDestroy {
-
-    /* loginForm = new FormGroup({
-        email: new FormControl(''),
-        password: new FormControl(''),
-    }); */
-
     loginForm: FormGroup;
     logoPath = TROY_LOGO;
     hide = true;
+    signupSubscription: Subscription;
 
-    /**
-     * Constructor
-     *
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FormBuilder} _formBuilder
-     */
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
-        private authservice:AuthService,
+        private authservice: AuthService,
         private router: Router,
     ) {
-        // Configure the layout
         this._fuseConfigService.config = LAYOUT_STRUCTURE;
     }
 
@@ -45,25 +35,27 @@ export class LoginComponent implements OnInit, OnDestroy {
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
         });
-
-   
-
-
     }
 
-    login(value) { this.authservice.login(value).subscribe(Response => {
-        console.log(Response);
-        this.router.navigate(['../../apps/dashboards/analytics']);
-        
+    login(value) {
+        this.authservice.login(value).subscribe(Response => {
+            console.log(Response);
+            this.router.navigate(['../../apps/dashboards/analytics']);
         });
         console.log(value);
     }
 
+    unsubscribe(subscription: Subscription) {
+        if (subscription !== null && subscription !== undefined) {
+            subscription.unsubscribe();
+        }
+    }
+
     ngOnDestroy() {
+        this.unsubscribe(this.signupSubscription);
         this.loginForm = null;
         this._fuseConfigService = null;
         this._formBuilder = null;
         this.logoPath = null;
     }
-
 }
