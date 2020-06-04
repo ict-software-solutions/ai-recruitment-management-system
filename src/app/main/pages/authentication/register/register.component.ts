@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
@@ -6,8 +6,15 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { TROY_LOGO, LAYOUT_STRUCTURE } from 'app/util/constants';
 import { Router } from '@angular/router';
-
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from '../../../../service/auth.service';
+
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+export interface DialogData {
+    sample: string;
+    name: string;
+}
+
 @Component({
     selector: 'register',
     templateUrl: './register.component.html',
@@ -23,16 +30,27 @@ export class RegisterComponent implements OnInit, OnDestroy {
     logoPath = TROY_LOGO;
  Authentication;
     constructor(
+        public dialog: MatDialog,
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
         private router: Router,
-        private authservice:AuthService
-    ) {
+        private authservice:AuthService,
+        public _matDialog: MatDialog,
+    ) 
+    
+    
+    {
         // Configure the layout
         this._fuseConfigService.config = LAYOUT_STRUCTURE;
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
+    opensuccess(): void {
+        this.dialog.open(DialogOverviewExampleDialog, {
+            width: '250px',
+        });
+    }
+
 
     ngOnInit() {
         this.registerForm = this.buildRegisterForm(); // build form
@@ -53,6 +71,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator]],
             check: ['', Validators.required]
         });
+       
     }
 
     ngOnDestroy(): void {
@@ -63,12 +82,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this._fuseConfigService = null;
         this._formBuilder = null;
         this.logoPath = null;
+      
     }
 
     register(value) {
     this.authservice.signup(value).subscribe(response => {
         console.log(response);
+        this.router.navigate(['/pages/auth/login']);
     });
+
         console.log(value);
     }
 
@@ -107,3 +129,18 @@ export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl):
 
     return { passwordsNotMatching: true };
 };
+@Component({
+    selector: 'dialog-overview-example-dialog',
+    templateUrl: 'dialog-overview-example-dialog.html',
+})
+export class DialogOverviewExampleDialog {
+
+    constructor(
+        public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
+
+}

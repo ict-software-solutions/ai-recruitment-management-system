@@ -4,6 +4,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { TROY_LOGO, LAYOUT_STRUCTURE } from 'app/util/constants';
 import { AuthService } from '../../../../service/auth.service';
+import { Router } from '@angular/router';
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     loginForm: FormGroup;
     logoPath = TROY_LOGO;
+    hide = true;
 
     /**
      * Constructor
@@ -31,7 +33,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
-        private authservice:AuthService
+        private authservice:AuthService,
+        private router: Router,
     ) {
         // Configure the layout
         this._fuseConfigService.config = LAYOUT_STRUCTURE;
@@ -42,12 +45,16 @@ export class LoginComponent implements OnInit, OnDestroy {
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
         });
+
+   
+
+
     }
 
     login(value) { this.authservice.login(value).subscribe(Response => {
         console.log(Response);
+        this.router.navigate(['../../apps/dashboards/analytics']);
         
-
         });
         console.log(value);
     }

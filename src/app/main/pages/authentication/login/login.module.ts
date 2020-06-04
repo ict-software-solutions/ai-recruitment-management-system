@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { LoginComponent } from 'app/main/pages/authentication/login/login.component';
+// import {FormsModule} from '@angular/forms';
+
 
 const routes = [
     {
@@ -33,6 +35,9 @@ const routes = [
         MatInputModule,
         FuseSharedModule,
         ReactiveFormsModule
+     
+        // FormsModule
+
     ]
 })
 export class LoginModule { }
