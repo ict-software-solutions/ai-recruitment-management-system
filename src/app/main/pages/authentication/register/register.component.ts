@@ -79,12 +79,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.logoPath = null;
     }
 }
-/**
- * Confirm password validator
- *
- * @param {AbstractControl} control
- * @returns {ValidationErrors | null}
- */
 
 export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     if (!control.parent || !control) {
