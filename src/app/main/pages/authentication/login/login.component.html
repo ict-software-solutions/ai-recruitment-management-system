@@ -12,8 +12,9 @@
                     <mat-icon matSuffix class="secondary-text">mail</mat-icon>
                     <mat-error *ngIf="loginForm.get('email').hasError('required')">Email is required </mat-error>
                     <mat-error *ngIf="!loginForm.get('email').hasError('required') && loginForm.get('email').hasError('email')"> Please enter a valid email address</mat-error>
+                  
                 </mat-form-field>
-
+               
                 <mat-form-field appearance="outline">
                     <mat-label>Password</mat-label>
                     <input matInput type="Password" [type]="hide ? 'password' : 'text'" formControlName="password" required maxlength="15">

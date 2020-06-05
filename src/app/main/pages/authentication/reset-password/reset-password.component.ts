@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
-import { TROY_LOGO, LAYOUT_STRUCTURE } from 'app/util/constants';
+import { LAYOUT_STRUCTURE, TROY_LOGO } from 'app/util/constants';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -17,30 +17,25 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     resetPasswordForm: FormGroup;
     logoPath = TROY_LOGO;
     private _unsubscribeAll: Subject<any>;
+    hide: true;
 
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder
     ) {
         // Configure the layout
-        this._fuseConfigService.config =LAYOUT_STRUCTURE;
+        this._fuseConfigService.config = LAYOUT_STRUCTURE;
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void {
         this.resetPasswordForm = this._formBuilder.group({
-            name: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
+            // name: ['', Validators.required],
+            // email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
+            passwordnew: ['', Validators.required],
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator]]
         });
 
@@ -53,9 +48,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
             });
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
@@ -64,12 +56,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     }
 }
 
-/**
- * Confirm password validator
- *
- * @param {AbstractControl} control
- * @returns {ValidationErrors | null}
- */
 export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
 
     if (!control.parent || !control) {

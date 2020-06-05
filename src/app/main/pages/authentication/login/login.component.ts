@@ -11,6 +11,7 @@ import { AuthService } from '../../../../service/auth.service';
     selector: 'login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
+    
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
@@ -21,17 +22,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     hide = true;
     signupSubscription: Subscription;
 
+
     constructor(
-        private _fuseConfigService: FuseConfigService,
-        private _formBuilder: FormBuilder,
+        private fuseConfigService: FuseConfigService,
+        private formBuilder: FormBuilder,
         private authservice: AuthService,
+
         private router: Router,
     ) {
-        this._fuseConfigService.config = LAYOUT_STRUCTURE;
+        this.fuseConfigService.config = LAYOUT_STRUCTURE;
     }
 
     ngOnInit(): void {
-        this.loginForm = this._formBuilder.group({
+        this.loginForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
         });
@@ -54,8 +57,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.unsubscribe(this.signupSubscription);
         this.loginForm = null;
-        this._fuseConfigService = null;
-        this._formBuilder = null;
+        this.fuseConfigService = null;
+        this.formBuilder = null;
         this.logoPath = null;
     }
 }

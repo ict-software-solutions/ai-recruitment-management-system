@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { RegisterComponent } from 'app/main/pages/authentication/register/register.component';
-
+import { MatSelectModule } from '@angular/material/select';
 const routes = [
     {
         path: 'auth/register',
@@ -28,7 +28,8 @@ const routes = [
         MatIconModule,
         MatInputModule,
         FuseSharedModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatSelectModule
     ]
 })
 export class RegisterModule { }

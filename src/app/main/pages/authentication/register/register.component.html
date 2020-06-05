@@ -6,13 +6,33 @@
             </div>
             <div class="title">CREATE AN ACCOUNT</div>
             <form name="registerForm" [formGroup]="registerForm" novalidate>
+
+               
                 <mat-form-field appearance="outline">
-                    <mat-label>Name</mat-label>
-                    <input matInput formControlName="name">
+                    <mat-label>Account Type</mat-label>
+                    <mat-select formControlName="accountType">
+                      <mat-option *ngFor="let account of accounts" [value]="account.value">
+                        {{account.viewValue}}
+                      </mat-option>
+                     
+                    </mat-select>
+                    <mat-error>Account type is required</mat-error>
+                  </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>First Name</mat-label>
+                    <input matInput formControlName="firstname">
                     <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                    <mat-error>Name is required</mat-error>
+                    <mat-error>First Name is required</mat-error>
                 </mat-form-field>
-                
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput formControlName="lastname">
+                    <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                    <mat-error>Last name is required</mat-error>
+                </mat-form-field>
+
                  <mat-form-field appearance="outline">
                     <mat-label>Email</mat-label>
                     <input matInput formControlName="email">

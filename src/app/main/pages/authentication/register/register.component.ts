@@ -7,7 +7,12 @@ import { LAYOUT_STRUCTURE, TROY_LOGO } from 'app/util/constants';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { AuthService } from '../../../../service/auth.service';
+// import {MatSelectModule} from '@angular/material/select';
 
+interface Account {
+    value: string;
+    viewValue: string;
+}
 @Component({
     selector: 'register',
     templateUrl: './register.component.html',
@@ -17,8 +22,14 @@ import { AuthService } from '../../../../service/auth.service';
 })
 
 export class RegisterComponent implements OnInit, OnDestroy {
+    accounts: Account[] = [
+        { value: 'Client', viewValue: 'Client' },
+        { value: 'Candidate', viewValue: 'Candidate' }
+
+    ];
+
     registerForm: FormGroup;
-    private _unsubscribeAll: Subject<any>;
+    private unsubscribeAll: Subject<any>;
     logoPath = TROY_LOGO;
     Authentication;
     signupSubscription: Subscription;
@@ -30,20 +41,23 @@ export class RegisterComponent implements OnInit, OnDestroy {
         private authservice: AuthService,
     ) {
         this.fuseConfigService.config = LAYOUT_STRUCTURE;
-        this._unsubscribeAll = new Subject();
+        this.unsubscribeAll = new Subject();
     }
 
     ngOnInit() {
         this.registerForm = this.buildRegisterForm();
         this.registerForm.get('password').valueChanges
-            .pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
+            .pipe(takeUntil(this.unsubscribeAll)).subscribe(() => {
                 this.registerForm.get('passwordConfirm').updateValueAndValidity();
             });
     }
 
     buildRegisterForm() {
         return this.formBuilder.group({
-            name: ['', Validators.required],
+
+            accountType: ['', Validators.required],
+            firstname: ['', Validators.required],
+            lastname: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.minLength(6), Validators.maxLength(15)]],
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator]],
@@ -54,6 +68,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
     register(value) {
         this.signupSubscription = this.authservice.signup(value).subscribe(response => {
             console.log(response);
+            // this.router.navigate(['/pages/auth/login']);
+            // if (response.result=false)
+            // {
+            //     let message="error"
+            //    console.log(message);
+
+            // }
+            // else
             this.router.navigate(['/pages/auth/login']);
         });
         console.log(value);
@@ -71,8 +93,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.unsubscribe(this.signupSubscription);
-        this._unsubscribeAll.next();
-        this._unsubscribeAll.complete();
+        this.unsubscribeAll.next();
+        this.unsubscribeAll.complete();
         this.registerForm = null;
         this.fuseConfigService = null;
         this.formBuilder = null;
