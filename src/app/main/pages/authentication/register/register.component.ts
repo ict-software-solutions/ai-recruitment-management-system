@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     logoPath = TROY_LOGO;
     Authentication;
     signupSubscription: Subscription;
+    alreadyExist = false;
 
     constructor(
         private fuseConfigService: FuseConfigService,
@@ -68,16 +69,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
     register(value) {
         this.signupSubscription = this.authservice.signup(value).subscribe(response => {
             console.log(response);
-            // this.router.navigate(['/pages/auth/login']);
-            // if (response.result=false)
-            // {
-            //     let message="error"
-            //    console.log(message);
-
-            // }
-            // else
             this.router.navigate(['/pages/auth/login']);
+        }, error => {
+            if (error.status === 422) {
+                console.log('account exists')
+                this.alreadyExist = true;
+            }
+            console.log(error);
         });
+
         console.log(value);
     }
 

@@ -14,7 +14,6 @@
                       <mat-option *ngFor="let account of accounts" [value]="account.value">
                         {{account.viewValue}}
                       </mat-option>
-                     
                     </mat-select>
                     <mat-error>Account type is required</mat-error>
                   </mat-form-field>
@@ -65,6 +64,11 @@
                     (click)="register(registerForm.value)" type="submit" [disabled]="registerForm.invalid">
                     CREATE AN ACCOUNT
                 </button>
+
+                <div style="text-align: center;">
+              <mat-error *ngIf="alreadyExist===true">Account already exists</mat-error> 
+            </div>
+            
             </form>
 
             <div class="register" fxLayout="column" fxLayoutAlign="center center">

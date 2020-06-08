@@ -16,22 +16,22 @@ import { takeUntil } from 'rxjs/operators';
 export class ResetPasswordComponent implements OnInit, OnDestroy {
     resetPasswordForm: FormGroup;
     logoPath = TROY_LOGO;
-    private _unsubscribeAll: Subject<any>;
-    hide: true;
+    private unsubscribeAll: Subject<any>;
+    hide: false;
 
     constructor(
-        private _fuseConfigService: FuseConfigService,
-        private _formBuilder: FormBuilder
+        private fuseConfigService: FuseConfigService,
+        private formBuilder: FormBuilder
     ) {
         // Configure the layout
-        this._fuseConfigService.config = LAYOUT_STRUCTURE;
+        this.fuseConfigService.config = LAYOUT_STRUCTURE;
 
         // Set the private defaults
-        this._unsubscribeAll = new Subject();
+        this.unsubscribeAll = new Subject();
     }
 
     ngOnInit(): void {
-        this.resetPasswordForm = this._formBuilder.group({
+        this.resetPasswordForm = this.formBuilder.group({
             // name: ['', Validators.required],
             // email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
@@ -39,10 +39,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator]]
         });
 
-        // Update the validity of the 'passwordConfirm' field
-        // when the 'password' field changes
         this.resetPasswordForm.get('password').valueChanges
-            .pipe(takeUntil(this._unsubscribeAll))
+            .pipe(takeUntil(this.unsubscribeAll))
             .subscribe(() => {
                 this.resetPasswordForm.get('passwordConfirm').updateValueAndValidity();
             });
@@ -50,8 +48,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next();
-        this._unsubscribeAll.complete();
+        this.unsubscribeAll.next();
+        this.unsubscribeAll.complete();
         this.logoPath = null;
     }
 }

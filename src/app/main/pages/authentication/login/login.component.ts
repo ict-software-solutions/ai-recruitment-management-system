@@ -11,7 +11,6 @@ import { AuthService } from '../../../../service/auth.service';
     selector: 'login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
-    
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
@@ -21,7 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     logoPath = TROY_LOGO;
     hide = true;
     signupSubscription: Subscription;
-
+    invalidData = true;
 
     constructor(
         private fuseConfigService: FuseConfigService,
@@ -44,6 +43,12 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.authservice.login(value).subscribe(Response => {
             console.log(Response);
             this.router.navigate(['../../apps/dashboards/analytics']);
+        }, error => {
+            if (error.status === 401) {
+                console.log('Invalid Username or Password')
+                this.invalidData = false;
+            }
+            console.log(error);
         });
         console.log(value);
     }

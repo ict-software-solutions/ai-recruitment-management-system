@@ -6,10 +6,7 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 import { FuseConfigService } from '@fuse/services/config.service';
 import { TROY_LOGO, LAYOUT_STRUCTURE } from 'app/util/constants';
 
-export interface DialogData {
-    animal: string;
-    name: string;
-}
+
 
 @Component({
     selector: 'forgot-password',
@@ -35,18 +32,14 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         this._fuseConfigService.config = LAYOUT_STRUCTURE;
     }
 
-    openwarning(): void {
-        this.dialog.open(DialogOverviewExampleDialog, {
-            width: '250px',
-        });
-    }
+   
 
     ngOnInit(): void {
         this.forgotPasswordForm = this._formBuilder.group({
             email: ['', [Validators.required, Validators.email]]
         });
     }
-
+  
     ngOnDestroy() {
         this.dialog = null;
         this._fuseConfigService = null;
@@ -57,18 +50,4 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     }
 }
 
-@Component({
-    selector: 'dialog-overview-example-dialog',
-    templateUrl: 'dialog-overview-example-dialog.html',
-})
-export class DialogOverviewExampleDialog {
 
-    constructor(
-        public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-        @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
-
-    onNoClick(): void {
-        this.dialogRef.close();
-    }
-
-}

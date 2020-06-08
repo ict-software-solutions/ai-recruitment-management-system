@@ -28,10 +28,14 @@
                     <!-- <mat-checkbox class="remember-me" aria-label="Remember Me"> Remember Me</mat-checkbox> -->
                     <a class="forgot-password" [routerLink]="'/pages/auth/forgot-password'">Forgot Password? </a>
                 </div>
-
+               
                 <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN" (click)="login(loginForm.value)" type="submit" [disabled]="loginForm.invalid">LOGIN</button>
+               
+               
                 <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"[routerLink]="'/pages/auth/register'">SIGN UP</button>
-              
+                <div style="text-align: center;">
+                    <mat-error *ngIf="invalidData===false">Invalid Username or Password</mat-error> 
+                  </div>
             </form>
             <!--<div class="separator">
                 <span class="text">OR</span>
