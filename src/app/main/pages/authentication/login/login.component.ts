@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         private fuseConfigService: FuseConfigService,
         private formBuilder: FormBuilder,
         private authservice: AuthService,
-
         private router: Router,
     ) {
         this.fuseConfigService.config = LAYOUT_STRUCTURE;
@@ -41,16 +40,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     login(value) {
         this.authservice.login(value).subscribe(Response => {
-            console.log(Response);
             this.router.navigate(['../../apps/dashboards/analytics']);
         }, error => {
             if (error.status === 401) {
-                console.log('Invalid Username or Password')
                 this.invalidData = false;
             }
-            console.log(error);
         });
-        console.log(value);
     }
 
     unsubscribe(subscription: Subscription) {
