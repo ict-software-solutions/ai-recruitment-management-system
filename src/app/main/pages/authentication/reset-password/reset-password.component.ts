@@ -29,19 +29,16 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         // Set the private defaults
         this.unsubscribeAll = new Subject();
     }
-
+ 
     ngOnInit(): void {
         this.resetPasswordForm = this.formBuilder.group({
-            // name: ['', Validators.required],
-            // email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
-            passwordnew: ['', Validators.required],
+            passwordNew: ['', Validators.required],
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator]]
         });
-
+        this.resetPasswordForm .get('password').valueChanges;
         this.resetPasswordForm.get('password').valueChanges
-            .pipe(takeUntil(this.unsubscribeAll))
-            .subscribe(() => {
+            .pipe(takeUntil(this.unsubscribeAll)).subscribe(() => {
                 this.resetPasswordForm.get('passwordConfirm').updateValueAndValidity();
             });
     }

@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.router.navigate(['../../apps/dashboards/analytics']);
         }, error => {
             if (error.status === 401) {
+                console.log('Invalid Username or Password')
                 this.invalidData = false;
             }
         });

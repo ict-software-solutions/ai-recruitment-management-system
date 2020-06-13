@@ -270,14 +270,14 @@ export class ProfileFakeDb
 
     public static about = {
         'general': {
-            'name':'Adams',
-            'gender'   : 'Male',
-            'birthday' : 'February 30th, 1974',
+            'name':'Karthiga',
+            'gender'   : 'Female',
+            'birthday' : 'February 30th, 1984',
             'locations': [
                 'London, UK',
                 'New York, USA'
             ],
-            'about'    : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget pharetra felis, sed ullamcorper dui. Sed et elementum neque. Vestibulum pellente viverra ultrices. Etiam justo augue, vehicula ac gravida a, interdum sit amet nisl. Integer vitae nisi id nibh dictum mollis in vitae tortor.'
+            'about'    : '.'
         },
         'work'   : {
             'occupation': 'Developer',
@@ -296,14 +296,14 @@ export class ProfileFakeDb
         'contact': {
             'address' : 'Ut pharetra luctus est quis sodales. Duis nisi tortor, bibendum eget tincidunt, aliquam ac elit. Mauris nec euismod odio.',
             'tel'     : [
-                '+6 555 6600',
-                '+9 555 5255'
+                '7946 035721',
+                '7946 032145'
             ],
             'websites': [
                 'withinpixels.com'
             ],
             'emails'  : [
-                'mail@withinpixels.com',
+                'thiga@gmail.com',
                 'mail@creapond.com'
             ]
         },

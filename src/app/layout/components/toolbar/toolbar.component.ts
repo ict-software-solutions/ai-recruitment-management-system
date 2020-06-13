@@ -8,7 +8,9 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
-
+// import {MatDialog} from '@angular/material/dialog';
+// import { ResetPasswordModule } from 'app/main/pages/authentication/reset-password/reset-password.module';
+// import { ResetPasswordComponent } from 'app/main/pages/authentication/reset-password/reset-password.component';
 @Component({
     selector     : 'toolbar',
     templateUrl  : './toolbar.component.html',
@@ -40,6 +42,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
         private _translateService: TranslateService
+        // public dialog: MatDialog
     )
     {
         // Set the defaults
@@ -160,4 +163,12 @@ export class ToolbarComponent implements OnInit, OnDestroy
         // Use the selected language for translations
         this._translateService.use(lang.id);
     }
+    // openDialog() {
+    //     const dialogRef = this.dialog.open(ResetPasswordComponent);
+    
+    //     dialogRef.afterClosed().subscribe(result => {
+    //       console.log(`Dialog result: ${result}`);
+    //     });
+    //   }
 }
+export class ResetPasswordComponent {}

@@ -1,70 +1,17 @@
 <div id="about" class="p-24" fxLayout="row wrap">
 
-    <div class="about-content" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="50">
+    <div class="about-content" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="65">
 
         <div class="profile-box info-box general" fxLayout="column">
 
-            <header class="header_bg">
+            <header class="accent">
                 <div class="title">General Information</div>
             </header>
-            <!-- <mat-form-field appearance="outline" floatLabel="always"  class="w-100-p">
-                <mat-label>Company Name</mat-label>
-                <input matInput placeholder="Company Name"
-                       name="name"
-                       value='{{about.general.name}}'
-                       required>
-            </mat-form-field> -->
+
             <div class="content">
-                <!-- <mat-form-field appearance="outline" floatLabel="always"  class="w-100-p">
-                    <mat-label>Company Name</mat-label>
-                    <input matInput placeholder=""
-                           name="name"
-                           formControlName="name"
-                           required>
-                </mat-form-field> -->
-<!-- <table id="details">
-   
-<tr>
-    <th><div class="title">Name</div></th>
-    <td><div class="info">{{about.general.name}}</div></td>
-</tr>
-<tr>
-    <th><div class="title">Gender</div></th>
-    <td><div class="info">{{about.general.gender}}</div></td>
-</tr>
-<tr>
-   <th><div class="title">Birthday</div></th> 
-   <td > <div class="info">{{about.general.birthday}}</div></td>
-</tr>
-<tr>
-    <th>
-        <div class="title">Locations</div>
-    </th>
-<td>
-    <div class="info location" fxLayout="row" fxLayoutAlign="start center"
-                         *ngFor="let location of about.general.locations">
-                        <span>{{location}}</span>
-                        <mat-icon class="s-16 ml-4">location_on</mat-icon>
-                    </div>
-</td>
-</tr>
-
-<tr>
-    <th><div class="title">About</div></th>
-    <td> <div class="info">{{about.general.about}}</div></td>
-
-   
-</tr>
-<tr>
-    <th><div class="title">Occupation</div></th>
-    <td> <div class="info">{{about.work.occupation}}</div></td>
-</tr>
-</table> -->
-
-
-                <!-- <div class="info-line">
-                    <div class="title">Gender</div>
-                    <div class="info">{{about.general.gender}}</div>
+                <div class="info-line">
+                    <div class="title">Name</div>
+                    <div class="info">{{about.general.name}}</div>
                 </div>
                 <div class="info-line">
                     <div class="title">Gender</div>
@@ -83,65 +30,34 @@
                         <span>{{location}}</span>
                         <mat-icon class="s-16 ml-4">location_on</mat-icon>
                     </div>
-                </div> -->
-<!-- 
+                </div>
+
                 <div class="info-line">
                     <div class="title">About Me</div>
                     <div class="info">{{about.general.about}}</div>
-                </div> -->
+                </div>
             </div>
 
         </div>
 
         <div class="profile-box info-box work" fxLayout="column">
 
-            <header class="header_bg">
+            <header class="accent">
                 <div class="title">Work</div>
             </header>
 
             <div class="content">
-
-                
-<table id="details">
-    <tr>
-    <th> <div class="title">Occupation</div></th>
-    <td><div class="info">{{about.work.occupation}}</div></td>
-</tr>
-<tr>
-    <th><div class="title">Skills</div></th>
-    <td><div class="info">{{about.work.skills}}</div></td>
-</tr>
-<tr>
-    <th colspan="2">Jobs</th>
-    
-    
-</tr>
-<!-- <tr class="job" *ngFor="let job of about.work.jobs">
-    <td class="company">{{job.company}}</td>
-    <td class="date">{{job.date}}</td>
-</tr> -->
-<tr>
-    <th></th>
-    <td></td>
-</tr>
-
-<tr>
-    <th></th>
-    <td></td>
-</tr>
-
-</table>
-                <!-- <div class="info-line">
+                <div class="info-line">
                     <div class="title">Occupation</div>
                     <div class="info">{{about.work.occupation}}</div>
-                </div> -->
+                </div>
 
-                <!-- <div class="info-line">
+                <div class="info-line">
                     <div class="title">Skills</div>
                     <div class="info">{{about.work.skills}}</div>
-                </div> -->
+                </div>
 
-                <!-- <div class="info-line">
+                <div class="info-line">
                     <div class="title">Jobs</div>
                     <table class="info jobs">
                         <tr class="job" *ngFor="let job of about.work.jobs">
@@ -149,102 +65,74 @@
                             <td class="date">{{job.date}}</td>
                         </tr>
                     </table>
-                </div> -->
+                </div>
             </div>
         </div>
 
         <div class="profile-box info-box contact" fxLayout="column">
 
-            <header class="header_bg">
+            <header class="accent">
                 <div class="title">Contact</div>
             </header>
 
             <div class="content">
-                <table id="details">
-                    <tr>
-                        <th><div class="title">Address</div></th>
-                        <td><div class="info">{{about.contact.address}}</div></td>
-                    </tr>
-
-<tr>
-    <th><div class="title">Tel.</div></th>
-    <td> <div class="info" *ngFor="let tel of about.contact.tel">
-        <span>{{tel}}</span>
-    </div></td>
-</tr>
-<tr>
-    <th> <div class="title">Website</div></th>
-    <td><div class="info" *ngFor="let website of about.contact.websites">
-        <span>{{website}}</span>
-    </div>
-
-    </td>
-</tr>
-<!-- <tr>
-    <th><div class="title">Emails</div></th>
-    <td><div class="info" *ngFor="let email of about.contact.emails">
-        <span>{{email}}</span></div></td>
-</tr> -->
-
-
-
-
-                </table>
-
-
-
-
-                <!-- <div class="info-line">
+                <div class="info-line">
                     <div class="title">Address</div>
                     <div class="info">{{about.contact.address}}</div>
-                </div> -->
-                <!-- <div class="info-line">
+                </div>
+                <div class="info-line">
                     <div class="title">Tel.</div>
                     <div class="info" *ngFor="let tel of about.contact.tel">
                         <span>{{tel}}</span>
                     </div>
-                </div> -->
-                <!-- <div class="info-line">
+                </div>
+                <div class="info-line">
                     <div class="title">Website</div>
                     <div class="info" *ngFor="let website of about.contact.websites">
                         <span>{{website}}</span>
                     </div>
-                </div> -->
-                <!-- <div class="info-line">
+                </div>
+                <div class="info-line">
                     <div class="title">Emails</div>
                     <div class="info" *ngFor="let email of about.contact.emails">
                         <span>{{email}}</span>
                     </div>
-                </div> -->
+                </div>
             </div>
 
         </div>
 
     </div>
 
-    <div class="about-sidebar" fxLayout="column" fxFlex="100" fxFlex.gt-sm="40" fxFlex.gt-md="40">
+    <div class="about-sidebar" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="35">
 
         <div class="profile-box friends" fxLayout="column">
 
-            <header class="header_bg" fxLayout="row" fxLayoutAlign="space-between center">
+            <header class="accent" fxLayout="row" fxLayoutAlign="space-between center">
                 <div class="title">Resume</div>
-                <div class="more secondary-text"style="color:white;">
-                    <span>View Resume</span>
+                <div class="more secondary-text">
+                    <!-- <span>See 454 more...</span> -->
                 </div>
             </header>
 
-            <!-- <div class="content" fxLayout="row wrap"> -->
-                <h1>
+            <mat-tab-group >
                   
-                </h1>
-                <div class="friend" fxFlex="40" *ngFor="let friend of about.friends">
-                    <img [src]="friend.avatar" style="width: 100%;">
-                </div>
-            <!-- </div> -->
+        
+                <mat-tab label="">
+            <div class="ex1">
+                <iframe src="../../../../../assets/sample.pdf"  height="100%" width="500px"></iframe>
+              
+    </div>
+   
+    </mat-tab>
+ 
+           
+                 </mat-tab-group>
+      
 
         </div>
-<!-- 
-        <div class="profile-box groups" fxLayout="column">
+
+        <!-- <div class="profile-box groups" fxLayout="column">
 
             <header class="accent" fxLayout="row" fxLayoutAlign="space-between center">
                 <div class="title">Joined Groups</div>

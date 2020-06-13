@@ -27,7 +27,10 @@ export class ContactsFakeDb
      
             'mapped':3,
             'birthday': '',
-            'notes'   : ''
+            'notes'   : '',
+        'adminName':'Keitch',
+        'adminEmail':'keitch@gmail.com',
+        
         },
         {
             'id'      : '5725a680606588342058356d',

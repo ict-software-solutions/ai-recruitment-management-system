@@ -8,7 +8,7 @@
                 <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
                     account_circle
                 </mat-icon>
-                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Candidate details</span>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">My Profile</span>
             </div>
             <!-- <div class="info">{{about.general.name}}</div> -->
 
@@ -45,14 +45,14 @@
     <div class="content">
 
         <mat-tab-group dynamicHeight="true">
-
-            <!-- <mat-tab label="Timeline">
-                <profile-timeline></profile-timeline>
-            </mat-tab> -->
-
             <mat-tab label="About">
                 <profile-about></profile-about>
             </mat-tab>
+            <mat-tab label="Comment">
+                <profile-timeline></profile-timeline>
+            </mat-tab>
+
+           
 
             <!-- <mat-tab label="Photos & Videos">
                 <profile-photos-videos></profile-photos-videos>

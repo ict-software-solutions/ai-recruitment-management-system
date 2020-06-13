@@ -6,8 +6,6 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 import { FuseConfigService } from '@fuse/services/config.service';
 import { TROY_LOGO, LAYOUT_STRUCTURE } from 'app/util/constants';
 
-
-
 @Component({
     selector: 'forgot-password',
     templateUrl: './forgot-password.component.html',
@@ -32,14 +30,14 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         this._fuseConfigService.config = LAYOUT_STRUCTURE;
     }
 
-   
+
 
     ngOnInit(): void {
         this.forgotPasswordForm = this._formBuilder.group({
             email: ['', [Validators.required, Validators.email]]
         });
     }
-  
+
     ngOnDestroy() {
         this.dialog = null;
         this._fuseConfigService = null;

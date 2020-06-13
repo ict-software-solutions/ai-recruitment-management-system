@@ -1,51 +1,41 @@
-import { NgModule ,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule, Routes } from '@angular/router';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { TranslateModule } from '@ngx-translate/core';
-import 'hammerjs';
-import {MatTableModule} from '@angular/material/table';
-
+import { MatTableModule } from '@angular/material/table';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule, Routes } from '@angular/router';
+import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from '@fuse/components';
 import { FuseModule } from '@fuse/fuse.module';
 import { FuseSharedModule } from '@fuse/shared.module';
-import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from '@fuse/components';
-
-import { fuseConfig } from 'app/fuse-config';
-
-import { FakeDbService } from 'app/fake-db/fake-db.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AppComponent } from 'app/app.component';
-import { AppStoreModule } from 'app/store/store.module';
+import { FakeDbService } from 'app/fake-db/fake-db.service';
+import { fuseConfig } from 'app/fuse-config';
 import { LayoutModule } from 'app/layout/layout.module';
-// import { StudentComponent} from 'app/main/apps/student';
+import { AppStoreModule } from 'app/store/store.module';
+import 'hammerjs';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 const appRoutes: Routes = [
     {
-        path        : '',
+        path: '',
         loadChildren: () => import('./main/pages/authentication/login/login.module').then(m => m.LoginModule)
     },
     {
-        path        : 'apps',
+        path: 'apps',
         loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule)
     },
     {
-        path        : 'pages',
+        path: 'pages',
         loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
     },
+
     {
-        path        : 'ui',
-        loadChildren: () => import('./main/ui/ui.module').then(m => m.UIModule)
-    },
-    {
-        path        : 'documentation',
-        loadChildren: () => import('./main/documentation/documentation.module').then(m => m.DocumentationModule)
-    },
-    {
-        path      : '**',
+        path: '**',
         redirectTo: ''
     }
 ];
@@ -54,15 +44,15 @@ const appRoutes: Routes = [
     declarations: [
         AppComponent
     ],
-    imports     : [
+    imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        RouterModule.forRoot(appRoutes,{enableTracing:false}),
+        RouterModule.forRoot(appRoutes, { enableTracing: false }),
 
         TranslateModule.forRoot(),
         InMemoryWebApiModule.forRoot(FakeDbService, {
-            delay             : 0,
+            delay: 0,
             passThruUnknownUrl: true
         }),
 
@@ -82,14 +72,15 @@ const appRoutes: Routes = [
 
         // App modules
         LayoutModule,
-        AppStoreModule
+        AppStoreModule,
+        RecaptchaModule
     ],
-    bootstrap   : [
+    bootstrap: [
         AppComponent
     ],
-    schemas:[CUSTOM_ELEMENTS_SCHEMA]
+
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
-export class AppModule
-{
+export class AppModule {
 }

@@ -1,0 +1,17 @@
+[
+  {
+    "loggerName": "console",
+    "loggerLocation": "",
+    "isActive": false
+  },
+  {
+    "loggerName": "localstorage",
+    "loggerLocation": "$$MyAppLogId$$",
+    "isActive": false
+  },
+  {
+    "loggerName": "clientlog",
+    "loggerLocation": "clientlogs",
+    "isActive": true
+  }
+]

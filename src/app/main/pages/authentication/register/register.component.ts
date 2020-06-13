@@ -7,7 +7,6 @@ import { LAYOUT_STRUCTURE, TROY_LOGO } from 'app/util/constants';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { AuthService } from '../../../../service/auth.service';
-// import {MatSelectModule} from '@angular/material/select';
 
 interface Account {
     value: string;
@@ -25,7 +24,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     accounts: Account[] = [
         { value: 'Client', viewValue: 'Client' },
         { value: 'Candidate', viewValue: 'Candidate' }
-
     ];
 
     registerForm: FormGroup;
@@ -34,7 +32,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     Authentication;
     signupSubscription: Subscription;
     alreadyExist = false;
-
+    pattern = true;
+  
     constructor(
         private fuseConfigService: FuseConfigService,
         private formBuilder: FormBuilder,
@@ -60,7 +59,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             firstname: ['', Validators.required],
             lastname: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
-            password: ['', [Validators.minLength(6), Validators.maxLength(15)]],
+            password: ['', [Validators.minLength(8), Validators.maxLength(15)]],
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator]],
             check: ['', Validators.required]
         });
@@ -68,17 +67,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     register(value) {
         this.signupSubscription = this.authservice.signup(value).subscribe(response => {
-            console.log(response);
             this.router.navigate(['/pages/auth/login']);
         }, error => {
             if (error.status === 422) {
-                console.log('account exists')
                 this.alreadyExist = true;
             }
-            console.log(error);
         });
-
-        console.log(value);
     }
 
     cancel() {
@@ -99,6 +93,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.fuseConfigService = null;
         this.formBuilder = null;
         this.logoPath = null;
+        // this.validNewPassword = null;
     }
 }
 
@@ -115,6 +110,7 @@ export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl):
         return null;
     }
     if (password.value === passwordConfirm.value) {
+
         return null;
     }
     return { passwordsNotMatching: true };
