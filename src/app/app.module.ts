@@ -18,7 +18,6 @@ import { fuseConfig } from 'app/fuse-config';
 import { LayoutModule } from 'app/layout/layout.module';
 import { AppStoreModule } from 'app/store/store.module';
 import 'hammerjs';
-import { RecaptchaModule } from 'ng-recaptcha';
 
 const appRoutes: Routes = [
     {
@@ -72,8 +71,7 @@ const appRoutes: Routes = [
 
         // App modules
         LayoutModule,
-        AppStoreModule,
-        RecaptchaModule
+        AppStoreModule
     ],
     bootstrap: [
         AppComponent

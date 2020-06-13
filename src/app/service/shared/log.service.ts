@@ -10,37 +10,37 @@ export class LogService {
   level: LogLevel = LogLevel.All;
   logWithDate = true;
   publishers: LogPublisher[];
- 
+
 
   constructor(private publishersService: LogPublishersService) {
     this.publishers = this.publishersService.publishers;
   }
 
-  debug(msg: any,  ...optionalParams: any[]) {
-    this.writeToLog(msg,  LogLevel.Debug, optionalParams);
+  debug(msg: any, ...optionalParams: any[]) {
+    this.writeToLog(msg, LogLevel.Debug, optionalParams);
   }
 
   info(msg: any, ...optionalParams: any[]) {
-    this.writeToLog(msg,  LogLevel.Info, optionalParams);
+    this.writeToLog(msg, LogLevel.Info, optionalParams);
   }
 
   warn(msg: any, ...optionalParams: any[]) {
-    this.writeToLog(msg,  LogLevel.Warn, optionalParams);
+    this.writeToLog(msg, LogLevel.Warn, optionalParams);
   }
 
   error(msg: any, ...optionalParams: any[]) {
-    this.writeToLog(msg,  LogLevel.Error, optionalParams);
+    this.writeToLog(msg, LogLevel.Error, optionalParams);
   }
 
   fatal(msg: any, ...optionalParams: any[]) {
-    this.writeToLog(msg,  LogLevel.Fatal, optionalParams);
+    this.writeToLog(msg, LogLevel.Fatal, optionalParams);
   }
 
   log(msg: any, ...optionalParams: any[]) {
-    this.writeToLog(msg,  LogLevel.All, optionalParams);
+    this.writeToLog(msg, LogLevel.All, optionalParams);
   }
 
-  private writeToLog(msg: any,level: LogLevel, params: any[]) {
+  private writeToLog(msg: any, level: LogLevel, params: any[]) {
     if (this.shouldLog(level)) {
       let entry: any;
       entry = { ...msg };
@@ -61,13 +61,27 @@ export class LogService {
     return ret;
   }
 
+  logUserActivity(logLevel, whereArise, whatEnsue) {
+    const params = {
+      createdBy: 0,
+      whereArise,
+      whatEnsue,
+      whenOccur: new Date(),
+      logActivity: true,
+      logErr: false
+    }
+    this[logLevel](params);
+  }
+
   logError(logLevel, screen, whereArise, message) {
     const params = {
       createdBy: 0, // UserId
       screen,
       whereArise,
       message,
-      whenOccur: new Date() // Should assigned from Server
+      whenOccur: new Date(), // Should assigned from Server
+      logActivity: false,
+      logErr: true
     }
     this[logLevel](params);
   }

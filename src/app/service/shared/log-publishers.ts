@@ -1,13 +1,13 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 // import 'rxjs/add/observable/of';
-import { Observable,from } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { LogLevel } from './log-level.enum';
 import { LogEntry } from './log.service';
 import { of } from 'rxjs';
 
 // import 'rxjs/add/observable/of';
 export abstract class LogPublisher {
-  location : string;
+  location: string;
   abstract log(record: LogEntry): Observable<boolean>;
   abstract clear(): Observable<boolean>;
 
@@ -54,12 +54,10 @@ export class LogConsole extends LogPublisher {
 }
 
 export class LogLocalStorage extends LogPublisher {
-location:any;
+  location: any;
   constructor() {
     super();
-    
     this.location = '$$MyApp-Log-Id$$';
-
   }
 
   // Append log entry to local storage
@@ -96,7 +94,9 @@ export class LogWebApi extends LogPublisher {
 
   // Add log entry to back end data store
   log(entry: LogEntry): Observable<boolean> {
-	super.postToAPI(this.location, entry, this.http);
+    if (entry['logErr']) {
+      super.postToAPI(this.loggerLocation, entry, this.http);
+    }
     return of(true);
   }
 
@@ -106,8 +106,22 @@ export class LogWebApi extends LogPublisher {
   }
 }
 
-class LogPublisherConfig {
-  loggerName: string;
-  loggerLocation: string;
-  isActive: boolean;
+
+export class LogAuditApi extends LogPublisher {
+
+  constructor(private http: HttpClient, private loggerLocation) {
+    super();
+  }
+  // Add log entry to back end data store
+  log(entry: LogEntry): Observable<boolean> {
+    if (entry['logActivity']) {
+      super.postToAPI(this.loggerLocation, entry, this.http);
+    }
+    return of(true);
+  }
+
+  clear(): Observable<boolean> {
+    console.clear();
+    return of(true);
+  }
 }

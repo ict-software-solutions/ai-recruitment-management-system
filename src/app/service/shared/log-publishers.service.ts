@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LogConsole,  LogLocalStorage, LogPublisher, LogWebApi } from './log-publishers';
+import { LogConsole, LogLocalStorage, LogPublisher, LogWebApi, LogAuditApi } from './log-publishers';
 const PUBLISHERS_FILE = 'assets/log-config.json'; // Path for Log Configuration File
 
 @Injectable()
@@ -26,6 +26,9 @@ export class LogPublishersService {
             break;
           case 'clientlog':
             logPub = new LogWebApi(this.http, pub.loggerLocation);
+            break;
+          case 'auditlog':
+            logPub = new LogAuditApi(this.http, pub.loggerLocation);
             break;
         }
         // Set location of logging
