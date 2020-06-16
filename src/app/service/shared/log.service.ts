@@ -78,7 +78,7 @@ export class LogService {
       createdBy: 0, // UserId
       screen,
       whereArise,
-      message,
+      message: JSON.stringify(message),
       whenOccur: new Date(), // Should assigned from Server
       logActivity: false,
       logErr: true

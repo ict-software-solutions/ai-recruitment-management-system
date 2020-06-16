@@ -18,6 +18,8 @@ import { fuseConfig } from 'app/fuse-config';
 import { LayoutModule } from 'app/layout/layout.module';
 import { AppStoreModule } from 'app/store/store.module';
 import 'hammerjs';
+import { LogPublishersService } from './service/shared/log-publishers.service';
+import { LogService } from './service/shared/log.service';
 
 const appRoutes: Routes = [
     {
@@ -76,7 +78,10 @@ const appRoutes: Routes = [
     bootstrap: [
         AppComponent
     ],
-
+    providers: [
+        LogService,
+        LogPublishersService
+    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })

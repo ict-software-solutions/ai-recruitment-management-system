@@ -2,12 +2,14 @@
 
 import { environment } from 'environments/environment';
 
-export const apiURL={
-    'user':environment.url + 'user', 'login':environment.url + 'user/login'
+export const apiURL = {
+    'user': environment.url + 'user',
+    'login': environment.url + 'user/login'
 }
 
 export const TROY_LOGO = "assets/images/logos/troy.png";
-export const LAYOUT_STRUCTURE= {
+export const LOGGED_IN_USER = '$$AIRMS-USER$$';
+export const LAYOUT_STRUCTURE = {
     layout: {
         navbar: { hidden: true },
         toolbar: { hidden: true },
@@ -15,3 +17,11 @@ export const LAYOUT_STRUCTURE= {
         sidepanel: { hidden: true }
     }
 };
+export const LOG_LEVELS = {
+    INFO: 'info',
+    DEBUG: 'debug',
+    WARN: 'warn',
+    ERROR: 'error',
+    FATAL: 'fatal',
+    LOG: 'log'
+}
