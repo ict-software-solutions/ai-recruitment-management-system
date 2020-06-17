@@ -17,7 +17,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     resetPasswordForm: FormGroup;
     logoPath = TROY_LOGO;
     private unsubscribeAll: Subject<any>;
-    hide: false;
+    hide = true;
 
     constructor(
         private fuseConfigService: FuseConfigService,
@@ -33,7 +33,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.resetPasswordForm = this.formBuilder.group({
             password: ['', Validators.required],
-            passwordNew: ['', Validators.required],
+            passwordNew: ['', [Validators.minLength(8), Validators.maxLength(15)]],
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator]]
         });
         this.resetPasswordForm .get('password').valueChanges;
@@ -61,10 +61,10 @@ export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl):
         return null;
     }
 
-    const password = control.parent.get('password');
+    const passwordNew = control.parent.get('passwordNew');
     const passwordConfirm = control.parent.get('passwordConfirm');
 
-    if (!password || !passwordConfirm) {
+    if (!passwordNew || !passwordConfirm) {
         return null;
     }
 
@@ -72,7 +72,7 @@ export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl):
         return null;
     }
 
-    if (password.value === passwordConfirm.value) {
+    if (passwordNew.value === passwordConfirm.value) {
         return null;
     }
 

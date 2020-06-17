@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
-import { LAYOUT_STRUCTURE, TROY_LOGO } from 'app/util/constants';
+import { LAYOUT_STRUCTURE, TROY_LOGO, EMAIL_PATTERN } from 'app/util/constants';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { AuthService } from '../../../../service/auth.service';
@@ -58,7 +58,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             accountType: ['', Validators.required],
             firstname: ['', Validators.required],
             lastname: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
+            email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
             password: ['', [Validators.minLength(8), Validators.maxLength(15)]],
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator]],
             check: ['', Validators.required]

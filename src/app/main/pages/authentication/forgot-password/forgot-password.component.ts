@@ -4,7 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { FuseConfigService } from '@fuse/services/config.service';
-import { TROY_LOGO, LAYOUT_STRUCTURE } from 'app/util/constants';
+import { TROY_LOGO, LAYOUT_STRUCTURE, EMAIL_PATTERN} from 'app/util/constants';
 
 @Component({
     selector: 'forgot-password',
@@ -34,7 +34,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.forgotPasswordForm = this._formBuilder.group({
-            email: ['', [Validators.required, Validators.email]]
+            email: ['', [Validators.required,  Validators.pattern(EMAIL_PATTERN)]]
         });
     }
 

@@ -5,7 +5,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { AirmsService } from 'app/service/airms.service';
 import { LogService } from 'app/service/shared/log.service';
-import { LAYOUT_STRUCTURE, LOGGED_IN_USER, LOG_LEVELS, TROY_LOGO } from 'app/util/constants';
+import { LAYOUT_STRUCTURE, LOGGED_IN_USER, LOG_LEVELS, TROY_LOGO, EMAIL_PATTERN } from 'app/util/constants';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../../service/auth.service';
 
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.loginForm = this.formBuilder.group({
-            email: ['sample@gmail.com', [Validators.required, Validators.email]],
+            email: ['sample@gmail.com', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
             password: ['sample123', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
         });
     }
