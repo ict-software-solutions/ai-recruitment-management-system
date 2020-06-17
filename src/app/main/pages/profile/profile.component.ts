@@ -1,7 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { fuseAnimations } from '@fuse/animations';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ResetPasswordModule } from 'app/main/pages/authentication/reset-password/reset-password.module';
 import { ResetPasswordComponent } from '../authentication/reset-password/reset-password.component';
 // import { ResetPasswordComponent } from 'app/layout/components/toolbar/toolbar.component';
 export interface PeriodicElement {
@@ -12,10 +11,9 @@ export interface PeriodicElement {
   gender: string;
   company: string;
   lastLogin: string;
-
 }
 
-Component({
+@Component({
   selector: 'profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
@@ -31,7 +29,7 @@ export class ProfileComponent {
   gender = "female";
   company = "Atlas Software Sollutions";
   lastLogin = "16th june 2020"
- constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog) {
   }
 
   openDialog(): void {

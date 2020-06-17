@@ -17,8 +17,8 @@ import { FakeDbService } from 'app/fake-db/fake-db.service';
 import { fuseConfig } from 'app/fuse-config';
 import { LayoutModule } from 'app/layout/layout.module';
 import { AppStoreModule } from 'app/store/store.module';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatCardModule} from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
 import 'hammerjs';
 import { LogPublishersService } from './service/shared/log-publishers.service';
 import { LogService } from './service/shared/log.service';
@@ -33,14 +33,13 @@ const appRoutes: Routes = [
         loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule)
     },
     {
-        path: 'pages',
-        loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
-    },
-    {
-        path        : 'ui',
+        path: 'ui',
         loadChildren: () => import('./main/ui/ui.module').then(m => m.UIModule)
     },
-  
+    {
+        path: 'profile',
+        loadChildren: () => import('./main/pages/profile/profile.module').then(m => m.ProfileModule)
+    },
     {
         path: '**',
         redirectTo: ''

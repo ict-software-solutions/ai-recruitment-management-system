@@ -18,11 +18,8 @@ import { ResetPasswordModule } from 'app/main/pages/authentication/reset-passwor
 
 const routes = [
     {
-        path: 'profile',
-        component: ProfileComponent,
-        resolve: {
-            profile: ProfileService
-        }
+        path: '',
+        component: ProfileComponent
     }
 ];
 
