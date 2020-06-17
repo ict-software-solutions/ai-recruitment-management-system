@@ -8,26 +8,25 @@
     <div class="center">
 
         <!-- HEADER -->
-        <div class="header accent"
-             fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
 
             <!-- APP TITLE -->
             <div fxLayout="row" fxLayoutAlign="start center">
 
-                <button mat-icon-button class="mr-16" [routerLink]="'../../apps/dashboards/analytics/'">
+                <button mat-icon-button class="mr-16" [routerLink]="'../../../apps/dashboards/analytics'">
                     <mat-icon>arrow_back</mat-icon>
-                  
+
                 </button>
                 <div class="user-info" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
-                fxLayoutAlign.gt-sm="start center">
-               <img class="profile-image avatar huge" src="assets/images/avatars/Nancy.jpg" >
-               <div class="name" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                   <!-- Hellen  Adams -->
-               </div>
-           </div>
+                    fxLayoutAlign.gt-sm="start center">
+                    <img class="profile-image avatar huge" src="assets/images/avatars/Nancy.jpg">
+                    <div class="name" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                        <!-- Hellen  Adams -->
+                    </div>
+                </div>
                 <div fxLayout="column" fxLayoutAlign="start start">
                     <div class="info">
-                       <h2 style="font-weight: bold;"> {{name}}</h2> 
+                        <h2 style="font-weight: bold;"> {{name}}</h2>
                     </div>
                     <div class="subtitle secondary-text">
                         <span></span>
@@ -35,15 +34,17 @@
                     </div>
                 </div>
 
-                
+
             </div>
             <div class="icon" align="right">
                 <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
-                  
-                    
-                    <button mat-raised-button color="light" style="margin-left:10px;" [routerLink]="'/ui/forms'">Edit Profile</button>
-                    <button mat-raised-button color="light" style="margin-left:10px;" (click)="openDialog()">Change Password</button>
-               
+
+
+                    <button mat-raised-button color="light" style="margin-left:10px;" [routerLink]="'/ui/forms'">Edit
+                        Profile</button>
+                    <button mat-raised-button color="light" style="margin-left:10px;" (click)="openDialog()">Change
+                        Password</button>
+
                 </div>
             </div>
             <!-- / APP TITLE -->
@@ -51,64 +52,66 @@
         </div>
         <!-- / HEADER -->
 
-        <div class="content-card" >
-           
-<div class="ex-1">
-<!-- <mat-card class="p-24"> -->
-    <div class="profile-box info-box general" fxLayout="column" style="background-color: white;">
-    
-        <header class="accent">
-            <div class="title">General Information</div>
-                     
+        <div class="content-card">
 
-        </header>
+            <div class="ex-1">
+                <!-- <mat-card class="p-24"> -->
+                <div class="profile-box info-box general" fxLayout="column" style="background-color: white;">
 
-        <div class="content">
-            <div class="info-line">
-                <div class="title">Name</div>
-                <div class="info">{{name}}</div>
+                    <header class="accent">
+                        <div class="title">General Information</div>
+
+
+                    </header>
+
+                    <div class="content">
+                        <div class="info-line">
+                            <div class="title">Name</div>
+                            <div class="info">{{name}}</div>
+                        </div>
+
+                        <div class="info-line">
+                            <div class="title">Email</div>
+                            <div class="info">{{email}}<span style="float:right;color:green;font-size:17px;">
+                                    <mat-icon style="font-size: 17px;">check_circle</mat-icon><span
+                                        style="color:green; margin-left:10px;">Verified</span>
+                                </span>
+                                <!-- <span style="color:green;">Email verification is done</span> -->
+                            </div>
+                        </div>
+
+                        <div class="info-line">
+                            <div class="title">Mobile</div>
+                            <div class="info">{{mobile}}<span style="float:right;color:green;font-size:17px; ">
+                                    <mat-icon style="font-size: 17px;">check_circle</mat-icon>
+                                    <span style="color:green;margin-left:10px;">Verified</span>
+                                </span></div>
+                        </div>
+
+                        <div class="info-line">
+                            <div class="title">DOB</div>
+                            <div class="info">{{birthday}}</div>
+                        </div>
+                        <div class="info-line">
+                            <div class="title">Gender</div>
+                            <div class="info">{{gender}}</div>
+                        </div>
+                        <div class="info-line">
+                            <div class="title">Company</div>
+                            <div class="info">{{company}}</div>
+                        </div>
+
+
+
+                        <div class="info-line">
+                            <div class="title">Last Login</div>
+                            <div class="info">{{lastLogin}}</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- </mat-card> -->
+
             </div>
-           
-            <div class="info-line">
-                <div class="title">Email</div>
-                <div class="info">{{email}}<span style="float:right;color:green;font-size:17px;">
-                    <mat-icon style="font-size: 17px;">check_circle</mat-icon><span style="color:green; margin-left:10px;">Verified</span>
-                </span>
-                <!-- <span style="color:green;">Email verification is done</span> -->
-            </div>
-            </div>
-
-            <div class="info-line">
-                <div class="title">Mobile</div>
-                <div class="info">{{mobile}}<span style="float:right;color:green;font-size:17px; ">
-                    <mat-icon style="font-size: 17px;">check_circle</mat-icon>
-                <span style="color:green;margin-left:10px;">Verified</span></span></div>
-            </div>
-
-            <div class="info-line">
-                <div class="title">DOB</div>
-                <div class="info">{{birthday}}</div>
-            </div>
-            <div class="info-line">
-                <div class="title">Gender</div>
-                <div class="info">{{gender}}</div>
-            </div> 
-             <div class="info-line">
-                <div class="title">Company</div>
-                <div class="info">{{company}}</div>
-            </div> 
-
-         
-
-            <div class="info-line">
-                <div class="title">Last Login</div>
-                <div class="info">{{lastLogin}}</div>
-            </div>
-        </div>
-
-    </div>
-
-<!-- </mat-card> -->
-
-</div>
         </div>

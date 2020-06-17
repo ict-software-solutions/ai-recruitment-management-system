@@ -33,12 +33,12 @@ const appRoutes: Routes = [
         loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule)
     },
     {
-        path: 'ui',
-        loadChildren: () => import('./main/ui/ui.module').then(m => m.UIModule)
+        path: 'pages',
+        loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
     },
     {
-        path: 'profile',
-        loadChildren: () => import('./main/pages/profile/profile.module').then(m => m.ProfileModule)
+        path: 'ui',
+        loadChildren: () => import('./main/ui/ui.module').then(m => m.UIModule)
     },
     {
         path: '**',

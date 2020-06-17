@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit,Inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 
@@ -10,13 +10,12 @@ import { Subject } from 'rxjs';
 //     name: string;
 //   }
 @Component({
-    selector   : 'forms',
+    selector: 'forms',
     templateUrl: './forms.component.html',
-    styleUrls  : ['./forms.component.scss']
+    styleUrls: ['./forms.component.scss']
 })
-export class FormsComponent implements OnInit, OnDestroy
-{
-    form: FormGroup;z
+export class FormsComponent implements OnInit, OnDestroy {
+    form: FormGroup;
     dialogRef: any;
 
     // Horizontal Stepper
@@ -44,10 +43,7 @@ export class FormsComponent implements OnInit, OnDestroy
      */
     constructor(
         private _formBuilder: FormBuilder
-    )
-
-
-    {
+    ) {
         // Set the private defaults
         // this._unsubscribeAll = new Subject();
     }
@@ -89,7 +85,7 @@ export class FormsComponent implements OnInit, OnDestroy
     //       width: '400px',
     //       data: {name: this.name, animal: this.animal}
     //     });
-    
+
     //     dialogRef.afterClosed().subscribe(result => {
     //       console.log('The dialog was closed');
     //       this.animal = result;
@@ -103,9 +99,8 @@ export class FormsComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
-        
+    ngOnInit(): void {
+
     }
     // {
     //     // Reactive Form
@@ -165,21 +160,21 @@ export class FormsComponent implements OnInit, OnDestroy
     //         // lastName : ['', Validators.required],
     //         // dob : ['', Validators.required],
     //         // sex : ['', Validators.required],
-            
+
     // }
-            
+
     //     });
 
     //     this.horizontalStepperStep2 = this._formBuilder.group({
     //         address: ['', Validators.required]
     //     });
-       
+
     //     this.horizontalStepperStep3 = this._formBuilder.group({
     //         // country     : ['', Validators.required],
     //         // city      : ['', Validators.required],
     //         // state     : ['', Validators.required],
     //         // postalCode: ['', [Validators.required, Validators.maxLength(5)]]
-          
+
     //     });
     //     this.horizontalStepperStep4 = this._formBuilder.group({
     //         // edu_qual  : ['', Validators.required],
@@ -217,8 +212,7 @@ export class FormsComponent implements OnInit, OnDestroy
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         // this._unsubscribeAll.next();
         // this._unsubscribeAll.complete();
@@ -231,8 +225,7 @@ export class FormsComponent implements OnInit, OnDestroy
     /**
      * Finish the horizontal stepper
      */
-    finishHorizontalStepper(): void
-    {
+    finishHorizontalStepper(): void {
         alert('You have finished the horizontal stepper!');
     }
 
@@ -250,13 +243,13 @@ export class FormsComponent implements OnInit, OnDestroy
 //     styleUrls  : ['dialog.scss']
 //   })
 //   export class DialogOverviewExampleDialog {
-  
+
 //     constructor(
 //       public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
 //       @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-  
+
 //     onNoClick(): void {
 //       this.dialogRef.close();
 //     }
-  
+
 //   }
