@@ -2,49 +2,65 @@
 
 #profile {
 
-    .header {
-        height: 320px;
-        min-height: 320px;
-        max-height: 320px;
-        background-color: blue;
-        background-size: cover;
 
-        .profile-image {
-            margin-right: 24px;
+ .profile-box {
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    @include mat-elevation(2);
+    margin: 3% 8%;
+    header {
+        padding: 16px;
 
-            @include media-breakpoint('sm') {
-                margin: 0 0 16px 0;
-            }
+        .title {
+            font-size: 17px;
         }
 
-        .name {
-            font-size: 34px;
-            color: #FFFFFF;
-
-            @include media-breakpoint('sm') {
-                margin-bottom: 32px;
-            }
-        }
-
-        .actions {
-
-            button {
-                text-transform: none;
-                padding: 0 16px;
-                margin: 0 0 0 8px;
-            }
+        .more {
+            cursor: pointer;
         }
     }
 
     .content {
-        flex: 1;
+        padding: 16px;
+    }
 
-        mat-tab-group {
-            height: 100%;
+    footer {
+        padding: 8px;
+        border-top: 1px solid;
+    }
 
-            .mat-tab-body-wrapper {
-                flex-grow: 1;
+    &.info-box {
+
+        .info-line {
+            margin-bottom: 24px;
+
+            .title {
+                font-size: 15px;
+                font-weight: 600;
+                padding-bottom: 4px;
             }
+
+            .info {
+
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        
         }
     }
+}
+}
+.ex-1
+{
+    overflow:scroll;
+}
+
+@media screen and (min-width: 1000px) {
+.camera{
+    margin-left: 38px;
+    margin-top: -33px;
+}
 }

@@ -49,6 +49,10 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         this.unsubscribeAll.complete();
         this.logoPath = null;
     }
+    cancelEdit()
+    {
+        close();
+    }
 }
 
 export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {

@@ -25,6 +25,20 @@ export const navigation: FuseNavigation[] = [
                 icon: 'today',
                 url: '/apps/calendar'
             },
+            //   {
+            //             id        : 'orderDetail',
+            //             title     : 'Order Detail',
+            //             type      : 'item',
+            //             url       : '/apps/e-commerce/orders/1',
+            //             exactMatch: true
+            //         },
+                    // {
+                    //     id   : 'forms',
+                    //     title: 'ui',
+                    //     type : 'item',
+                    //     icon : 'add',
+                    //     url  : '/ui/forms'
+                    // },
         ]
     },
     {

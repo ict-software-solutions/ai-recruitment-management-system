@@ -10,6 +10,11 @@ import { ProfileService } from 'app/main/pages/profile/profile.service';
 import { ProfileAboutComponent } from 'app/main/pages/profile/tabs/about/about.component';
 import { ProfilePhotosVideosComponent } from 'app/main/pages/profile/tabs/photos-videos/photos-videos.component';
 import { ProfileTimelineComponent } from 'app/main/pages/profile/tabs/timeline/timeline.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ResetPasswordModule } from 'app/main/pages/authentication/reset-password/reset-password.module';
 
 const routes = [
     {
@@ -30,13 +35,18 @@ const routes = [
     ],
     imports: [
         RouterModule.forChild(routes),
-
         MatButtonModule,
         MatDividerModule,
         MatIconModule,
         MatTabsModule,
+        FuseSharedModule,
+        MatCardModule,
+        MatGridListModule,
+        MatTableModule,
+        MatDialogModule,
+        ResetPasswordModule
+        // ResetPasswordComponent 
 
-        FuseSharedModule
     ],
     providers: [
         ProfileService

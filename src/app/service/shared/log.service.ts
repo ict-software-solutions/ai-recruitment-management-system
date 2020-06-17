@@ -60,9 +60,9 @@ export class LogService {
     }
     return ret;
   }
-
+//dinesh updated
   logUserActivity(logLevel, whereArise, whatEnsue) {
-    const params = {
+    const params = { 
       createdBy: 0,
       whereArise,
       whatEnsue,
