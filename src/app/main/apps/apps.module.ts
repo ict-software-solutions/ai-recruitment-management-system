@@ -17,7 +17,18 @@ const routes = [
         path: 'calendar',
         loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarModule)
     },
-
+    {
+        path        : 'e-commerce',
+        loadChildren: () => import('./usermanagement/usermanagement.module').then(m => m.EcommerceModule)
+    },
+    {
+        path: 'profile',
+        loadChildren: () => import('./profile/profile.module').then(m => m.UIModule)
+    },
+    {
+        path: 'contacts',
+        loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule)
+    },
 ];
 
 @NgModule({

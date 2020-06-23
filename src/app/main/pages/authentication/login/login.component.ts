@@ -8,6 +8,7 @@ import { LogService } from 'app/service/shared/log.service';
 import { LAYOUT_STRUCTURE, LOGGED_IN_USER, LOG_LEVELS, TROY_LOGO, EMAIL_PATTERN } from 'app/util/constants';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../../service/auth.service';
+import { url } from 'inspector';
 
 @Component({
     selector: 'login',
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     invalidData = true;
     loginSubscription: Subscription;
     getUserSubscription: Subscription;
-
+    showResetContent=false;
     constructor(
         private fuseConfigService: FuseConfigService,
         private formBuilder: FormBuilder,
@@ -44,6 +45,24 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     login(value) {
+        if((this.loginForm.get('email').value=="abc@gmail.com") && (this .loginForm.get('password').value=="@abc123ABC")){
+            this.showResetContent = true;
+        
+            
+        }
+        else{
+            this.showResetContent = false;
+  
+        }
+        if((this.loginForm.get('email').value=="abc@gmail.com") && (this .loginForm.get('password').value=="@abc123ABC")){
+            this.showResetContent = true;
+        
+            
+        }
+        else{
+            this.showResetContent = false;
+  
+        }
         this.loginSubscription = this.authService.login(value).subscribe(res => {
             const userInfo = { token: res['id'], userId: res['userId'] };
             this.airmsService.setSessionStorage(LOGGED_IN_USER, userInfo);

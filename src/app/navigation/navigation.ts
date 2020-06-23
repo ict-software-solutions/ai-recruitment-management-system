@@ -25,6 +25,45 @@ export const navigation: FuseNavigation[] = [
                 icon: 'today',
                 url: '/apps/calendar'
             },
+                //   {
+                //         id        : 'orders',
+                //         title     : 'User Management',
+                //         icon: 'account_circle',
+                //         type      : 'item',
+                //         url       : '/apps/e-commerce/orders',
+                //         exactMatch: true
+                //     },
+                    {
+                        id        : 'products',
+                        title     : 'User Management',
+                        icon: 'account_circle',
+                        type      : 'item',
+                        url       : '/apps/e-commerce/products',
+                        exactMatch: true
+                    },
+                    {
+                        id        : 'products',
+                        title     : 'Role Management',
+                        icon: 'account_circle',
+                        type      : 'item',
+                        url       : '/apps/contacts',
+                        exactMatch: true
+                    },
+                    // {
+                    //     id        : 'products',
+                    //     title     : 'profile',
+                    //     icon: 'account_circle',
+                    //     type      : 'item',
+                    //     url       : '/apps/profile/forms',
+                    //     exactMatch: true
+                    // },
+                    //   {
+                    //     id   : 'forms',
+                    //     title: 'profile',
+                    //     type : 'item',
+                    //     icon : 'add',
+                    //     url  : '/apps/profile/forms'
+                    // },
             //   {
             //             id        : 'orderDetail',
             //             title     : 'Order Detail',

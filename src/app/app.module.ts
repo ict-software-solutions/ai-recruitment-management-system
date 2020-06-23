@@ -36,10 +36,11 @@ const appRoutes: Routes = [
         path: 'pages',
         loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
     },
-    {
-        path: 'ui',
-        loadChildren: () => import('./main/ui/ui.module').then(m => m.UIModule)
-    },
+    // {
+    //     path: 'ui',
+    //     loadChildren: () => import('./main/ui/ui.module').then(m => m.UIModule)
+    // },
+   
     {
         path: '**',
         redirectTo: ''

@@ -89,9 +89,7 @@ $typography: mat-typography-config(
 @import "src/app/main/pages/authentication/forgot-password/forgot-password.theme";
 @import "src/app/main/pages/authentication/lock/lock.theme";
 @import "src/app/main/pages/authentication/mail-confirm/mail-confirm.theme";
-@import "src/app/main/pages/profile/tabs/about/about.theme";
-@import "src/app/main/pages/profile/tabs/photos-videos/photos-videos.theme";
-@import "src/app/main/pages/profile/tabs/timeline/timeline.theme";
+
 // Define a mixin for easier access
 @mixin components-theme($theme) {
   // Layout components
@@ -107,9 +105,7 @@ $typography: mat-typography-config(
   @include forgot-password-theme($theme);
   @include lock-theme($theme);
   @include mail-confirm-theme($theme);
-  @include profile-about-theme($theme);
-  @include profile-photos-videos-theme($theme);
-  @include profile-timeline-theme($theme);
+
 }
 
 // -----------------------------------------------------------------------------------------------------

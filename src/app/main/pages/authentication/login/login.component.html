@@ -4,48 +4,46 @@
             <div class="logo">
                 <img [src]="logoPath"><span style="color:#0066ff;font-size:bold;">AIRMS</span>
             </div>
-
-            <div class="title">Login</div>
-            <form name="loginForm" [formGroup]="loginForm" novalidate>
+           
+            <div class="title" *ngIf = "!showResetContent">Login</div>
+            <form name="loginForm" [formGroup]="loginForm" novalidate *ngIf = "!showResetContent">
                 <mat-form-field appearance="outline">
-                    <mat-label>Email</mat-label>
+                    <mat-label>User name / Email</mat-label>
                     <input matInput formControlName="email">
                     <mat-icon matSuffix class="secondary-text">mail</mat-icon>
                     <mat-error *ngIf="loginForm.get('email').hasError('required')">Email is required </mat-error>
-                    <mat-error
-                        *ngIf="!loginForm.get('email').hasError('required') && loginForm.get('email').hasError('email')">
-                        Please enter a valid email address</mat-error>
+                    <mat-error *ngIf="!loginForm.get('email').hasError('required') && loginForm.get('email').hasError('email')"> Please enter a valid email address</mat-error>
                 </mat-form-field>
-
+               
                 <mat-form-field appearance="outline">
                     <mat-label>Password</mat-label>
-                    <input matInput type="Password" [type]="hide ? 'password' : 'text'" formControlName="password"
-                        required maxlength="15">
-                    <mat-icon matSuffix class="secondary-text" (click)="hide = !hide">
-                        {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <input matInput type="Password" [type]="hide ? 'password' : 'text'" formControlName="password" required maxlength="15">
+                     <mat-icon matSuffix class="secondary-text" (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     <mat-error *ngIf="loginForm.get('password').hasError('required')"> Password is required </mat-error>
-                    <mat-error
-                        *ngIf="!loginForm.get('password').hasError('required') && loginForm.get('password').hasError('email')">
-                        Please enter a valid email address or password</mat-error>
+                    <mat-error *ngIf="!loginForm.get('password').hasError('required') && loginForm.get('password').hasError('email')"> Please enter a valid email address or password</mat-error>
                 </mat-form-field>
-
+                    
                 <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
                     fxLayoutAlign="space-between center">
                     <!-- <mat-checkbox class="remember-me" aria-label="Remember Me"> Remember Me</mat-checkbox> -->
                     <a class="forgot-password" [routerLink]="'/pages/auth/forgot-password'">Forgot Password? </a>
                 </div>
-
-                <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
-                    (click)="login(loginForm.value)" type="submit" [disabled]="loginForm.invalid">LOGIN</button>
-
-
-                <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
-                    [routerLink]="'/pages/auth/register'">SIGN UP</button>
+               
+                <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN" (click)="login(loginForm.value)" type="submit" [disabled]="loginForm.invalid">LOGIN</button>
+               
+               
+                <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"[routerLink]="'/pages/auth/register'">SIGN UP</button>
                 <div style="text-align: center;">
-                    <mat-error *ngIf="invalidData===false">Invalid Username or Password</mat-error>
-                </div>
+                    <mat-error *ngIf="invalidData===false">Invalid Username or Password</mat-error> 
+                  </div>
             </form>
-
+            <div class="title" *ngIf = "showResetContent">
+                <h3 style=color:#3366ff;>Password expired</h3>
+                <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"  [routerLink]="'pages/auth/reset-password'" type="submit" 
+                   >Reset password</button>
+                 
+            </div>
+            <div class="title" *ngIf = "showResetContent"></div>
         </div>
     </div>
 </div>

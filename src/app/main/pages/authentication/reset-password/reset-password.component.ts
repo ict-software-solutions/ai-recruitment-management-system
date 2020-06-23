@@ -5,7 +5,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { LAYOUT_STRUCTURE, TROY_LOGO } from 'app/util/constants';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
+import { Subscription } from 'rxjs';
 @Component({
     selector: 'reset-password',
     templateUrl: './reset-password.component.html',
@@ -18,6 +18,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     logoPath = TROY_LOGO;
     private unsubscribeAll: Subject<any>;
     hide = true;
+    ResetPasswordSubscription: Subscription;
+    getUserSubscription: Subscription;
 
     constructor(
         private fuseConfigService: FuseConfigService,
@@ -42,9 +44,15 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
                 this.resetPasswordForm.get('passwordConfirm').updateValueAndValidity();
             });
     }
-
+    unsubscribe(subscription: Subscription) {
+        if (subscription !== null && subscription !== undefined) {
+            subscription.unsubscribe();
+        }
+    }
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
+        // this.unsubscribe(this.Subscription);
+        this.unsubscribe(this.getUserSubscription);
         this.unsubscribeAll.next();
         this.unsubscribeAll.complete();
         this.logoPath = null;
