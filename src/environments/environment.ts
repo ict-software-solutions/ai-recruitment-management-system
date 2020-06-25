@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     hmr       : false,
-    url :'http://54.176.155.237:3002/api/'
+    url :'http://ec2-3-89-150-233.compute-1.amazonaws.com:3000/'
 };
 
 /*

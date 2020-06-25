@@ -50,6 +50,14 @@ export const navigation: FuseNavigation[] = [
                         exactMatch: true
                     },
                     // {
+                    //     id       : 'scrumboard',
+                    //     title    : 'Mapping',
+                    //     // translate: 'NAV.SCRUMBOARD',
+                    //     type     : 'item',
+                    //     icon     : 'check_circle_outline',
+                    //     url      : '/apps/scrumboard'
+                    // }
+                    // {
                     //     id        : 'products',
                     //     title     : 'profile',
                     //     icon: 'account_circle',

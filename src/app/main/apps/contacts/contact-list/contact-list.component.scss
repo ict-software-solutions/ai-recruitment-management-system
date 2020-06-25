@@ -12,9 +12,16 @@ contacts-contact-list {
 
         .mat-column-checkbox {
             flex: 0 1 64px;
-            padding-left: 18px;
+            // padding-left: 18px;
+            // margin-bottom: 10px;
         }
-
+        // .mat-column-rolename {
+        //     flex: 0 1 80px;
+        //     // padding-left: 18px;
+        // }
+        .mat-column-rolename{
+            padding-left:10px;
+        }
         .mat-column-avatar {
             flex: 0 1 64px;
         }
@@ -22,11 +29,18 @@ contacts-contact-list {
         .mat-column-buttons {
             flex: 0 1 80px;
         }
-
+.mat-column-desc{
+    flex: 2 1 80px;
+    width: 300px!important;
+}
+.mat-column-status{
+    flex: 0 -1 64px;
+}
         .mat-row {
             position: relative;
             cursor: pointer;
             padding: 8px;
+            // height: 100px;
 
             .mat-cell {
                 min-width: 0;

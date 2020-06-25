@@ -7,7 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
 import { FuseUtils } from '@fuse/utils';
-
+import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Product } from 'app/main/apps/usermanagement/product/product.model';
 import { EcommerceProductService } from 'app/main/apps/usermanagement/product/product.service';
 interface usertype {
@@ -31,22 +31,28 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     product: Product;
     pageType: string;
     productForm: FormGroup;
+
     usertype: usertype [] = [
         {value: 'employee-0', viewValue: 'Employee'},
         {value: 'client-1', viewValue: 'Client'},
         {value: 'candidate-2', viewValue: 'Candidate'}
       ];
       userrole: userrole [] = [
-        {value: 'view', viewValue: 'View'},
-        {value: 'client', viewValue: 'Client'},
-        {value: 'consultant', viewValue: 'Consultant'},
+        {value: 'Admin', viewValue: 'Admin'},
         {value: 'Manager', viewValue: 'Manager'},
-        {value: 'Admin', viewValue: 'Admin'}
-        
-        
+        {value: 'CandidateConsultant', viewValue: 'Candidate Consultant'},
+        {value: 'ClientConsultant', viewValue: 'Client Consultant'},
+        {value: 'CandidateView', viewValue: 'Candidate View'},
+        {value: 'client', viewValue: 'Client'},
+        {value: 'customer', viewValue: 'Customer'}
       ];
       show = false;
       hide = true;
+      form: FormGroup;
+      checked = false;
+      indeterminate = false;
+      labelPosition: 'before' | 'after' = 'after';
+      disabled = false;
     // Private
     private _unsubscribeAll: Subject<any>;
     shown: boolean;
@@ -87,7 +93,24 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
      * On init
      */
     ngOnInit(): void
-    {
+    {     this.form = this._formBuilder.group({
+        firstName: ['', Validators.required],
+        secondName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        email: ['', Validators.required],
+        mobile: ['', Validators.required],
+        companyname: ['', Validators.required],
+        position: ['', Validators.required],
+        address: ['', Validators.required],
+        postalcode: ['', Validators.required],
+        city: ['', Validators.required],
+        state: ['', Validators.required],
+        country: ['', Validators.required],
+        password: ['', Validators.required],
+        passwordNew: ['', [Validators.minLength(8), Validators.maxLength(15)]],
+        check: [''],
+
+    });
         // Subscribe to update product on changes
         this._ecommerceProductService.onProductChanged
             .pipe(takeUntil(this._unsubscribeAll))

@@ -3,8 +3,8 @@
 import { environment } from 'environments/environment';
 
 export const apiURL = {
-    'user': environment.url + 'user',
-    'login': environment.url + 'user/login'
+    'USER': environment.url + 'user',
+    'LOGIN_URL': environment.url + 'user/login'
 }
 
 export const TROY_LOGO = "assets/images/logos/troy.png";

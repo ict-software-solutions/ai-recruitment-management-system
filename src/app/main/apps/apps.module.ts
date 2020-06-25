@@ -29,6 +29,10 @@ const routes = [
         path: 'contacts',
         loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule)
     },
+    {
+        path: 'scrumboard',
+        loadChildren: () => import('./scrumboard/scrumboard.module').then(m => m.ScrumboardModule)
+    },
 ];
 
 @NgModule({

@@ -11,6 +11,9 @@ import { takeUntil } from 'rxjs/operators';
     styleUrls: ['./forms.component.scss']
 })
 export class FormsComponent implements OnInit, OnDestroy {
+    onFileSelected(event){
+console.log(event);
+    }
     form: FormGroup;
     dialogRef: any;
     showPassword = true;
@@ -78,6 +81,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.unsubscribeAll.next();
         this.unsubscribeAll.complete();
     }
+    
     // toggleDisplay() {
     //     this.isDisplay = !this.isDisplay;
     // }

@@ -14,7 +14,10 @@ export class Contact
     address: string;
     birthday: string;
     notes: string;
-
+    rolename:string;
+    desc:string;
+    status:string;
+    food: any;
     /**
      * Constructor
      *
@@ -35,6 +38,10 @@ export class Contact
             this.address = contact.address || '';
             this.birthday = contact.birthday || '';
             this.notes = contact.notes || '';
+            this.rolename = contact.rolename || '';
+            this.desc = contact.desc || '';
+            this.status = contact.status || '';
+
         }
     }
 }

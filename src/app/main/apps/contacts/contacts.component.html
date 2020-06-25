@@ -14,10 +14,10 @@
 
             <div class="logo" fxLayout="row" fxLayoutAlign="start center">
                 <mat-icon class="logo-icon mr-16"
-                          [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
+                          [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_circle
                 </mat-icon>
                 <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                    Contacts
+                    Role Management
                 </span>
             </div>
 
@@ -31,7 +31,7 @@
 
                 <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon>search</mat-icon>
-                    <input [formControl]="searchInput" placeholder="Search for a contact">
+                    <input [formControl]="searchInput" placeholder="Search">
                 </div>
 
             </div>
@@ -50,15 +50,15 @@
     <div class="content">
 
         <!-- SIDEBAR -->
-        <fuse-sidebar class="sidebar" name="contacts-main-sidebar" position="left" lockedOpen="gt-sm">
+        <!-- <fuse-sidebar class="sidebar" name="contacts-main-sidebar" position="left" lockedOpen="gt-sm"> -->
 
             <!-- SIDEBAR CONTENT -->
-            <div class="content" fusePerfectScrollbar>
+            <!-- <div class="content" fusePerfectScrollbar>
                 <contacts-main-sidebar [@animate]="{value:'*'}"></contacts-main-sidebar>
-            </div>
+            </div> -->
             <!-- / SIDEBAR CONTENT -->
 
-        </fuse-sidebar>
+        <!-- </fuse-sidebar> -->
         <!-- / SIDEBAR -->
 
         <!-- CENTER -->

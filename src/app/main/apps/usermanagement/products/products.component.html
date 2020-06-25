@@ -107,13 +107,18 @@
                     </mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="action"  style="margin-left: 20px;">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header >Action</mat-header-cell>
-                    <mat-cell *matCellDef="let product">
+                <ng-container matColumnDef="action" >
+                    <mat-header-cell *matHeaderCellDef mat-sort-header style="justify-content: center;" >Action</mat-header-cell>
+                    <mat-cell *matCellDef="let product" style="justify-content: center;">
+                        <!-- <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                        (click)="$event.stopPropagation();">
+                    <mat-icon class="secondary-text" style="color: #006699;">more_vert</mat-icon>
+                </button> -->
+                <!-- <mat-menu #moreMenu="matMenu"></mat-menu> -->
                         <!-- <button mat-icon-button *ngIf="order.active"style="color:#42a1f5;background-color:white;"[routerLink]="'/apps/e-commerce/orders/'+order.id"><mat-icon>edit</mat-icon></button> -->
                         <button mat-icon-button *ngIf="product.action"style="color:#42a1f5;" [routerLink]="'/apps/e-commerce/products/'+product.id+'/'+product.handle"><mat-icon>edit</mat-icon></button><span>
                         <!-- <button mat-icon-button *ngIf="product.action" style="color:red;margin-left:5px"><mat-icon>delete</mat-icon></button></span>                             -->
-                        <button mat-icon-button color="accent" style=" color:red;background-color: white;margin-left: 5px;" (click)="deleteContact()"><mat-icon>delete</mat-icon></button></span>
+                        <button mat-icon-button color="accent" style=" color:red;background-color: white;" (click)="deleteContact()"><mat-icon>delete</mat-icon></button></span>
                         <!-- <mat-icon *ngIf="!product.active" class="active-icon red-500 s-16">close</mat-icon> -->
                     </mat-cell>
                 </ng-container> 

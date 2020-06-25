@@ -13,22 +13,22 @@ export class AuthService {
       "email": value.email,
       "password": value.password
     }
-    return this.httpClient.post(apiURL.user, param)
+    return this.httpClient.post(apiURL.USER, param)
   }
 
   login(value) {
     const param = {
 
-      "email": value.email,
+      "emailAddress": value.email,
       "password": value.password
     }
-    return this.httpClient.post(apiURL.login, param);
+    return this.httpClient.post(apiURL.LOGIN_URL, param);
   }
 
   getUserById(access_token, userId) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Authorization': access_token })
     };
-    return this.httpClient.get(apiURL.user + '/' + userId, httpOptions);
+    return this.httpClient.get(apiURL.USER + '/' + userId, httpOptions);
   }
 }

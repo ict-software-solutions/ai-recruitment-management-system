@@ -68,7 +68,8 @@ e-commerce-products {
             // margin-left: 50px;
             // height: 60px;
             // width: 1000px;
-           
+        //    display:flex;
+        //    justify-content: center;
         }
 
         .product {
@@ -83,6 +84,7 @@ e-commerce-products {
             min-width: 0;
             display: flex;
             align-items: center;
+            // justify-content: center;
             // margin-left: 50px;
             // padding-right: 160px;
         }
@@ -118,6 +120,13 @@ e-commerce-products {
         .mat-column-active {
             flex: 0 1 80px;
         }
+        // .mat-column-action {
+        //     flex: 0 1 80px;
+        // }
+        // .mat-column-action{
+        //     flex: 0 1 80px;
+        //     // margin-left: 20px;
+        // }
 
         .quantity-indicator {
             display: inline-block;

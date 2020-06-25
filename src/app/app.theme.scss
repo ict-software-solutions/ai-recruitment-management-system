@@ -89,7 +89,7 @@ $typography: mat-typography-config(
 @import "src/app/main/pages/authentication/forgot-password/forgot-password.theme";
 @import "src/app/main/pages/authentication/lock/lock.theme";
 @import "src/app/main/pages/authentication/mail-confirm/mail-confirm.theme";
-
+@import "src/app/main/apps/scrumboard/scrumboard.theme";
 // Define a mixin for easier access
 @mixin components-theme($theme) {
   // Layout components
@@ -105,6 +105,7 @@ $typography: mat-typography-config(
   @include forgot-password-theme($theme);
   @include lock-theme($theme);
   @include mail-confirm-theme($theme);
+  @include scrumboard-theme($theme);
 
 }
 

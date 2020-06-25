@@ -26,7 +26,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     contacts: any;
     user: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['checkbox', 'avatar', 'name', 'email', 'phone', 'jobTitle', 'buttons'];
+    displayedColumns = ['checkbox','rolename','desc', 'status', 'buttons'];
     selectedContacts: any[];
     checkboxes: {};
     dialogRef: any;
@@ -123,9 +123,12 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     {
         this.dialogRef = this._matDialog.open(ContactsContactFormDialogComponent, {
             panelClass: 'contact-form-dialog',
+            width: '900px',
             data      : {
                 contact: contact,
-                action : 'edit'
+               
+                action : 'edit',
+               
             }
         });
 

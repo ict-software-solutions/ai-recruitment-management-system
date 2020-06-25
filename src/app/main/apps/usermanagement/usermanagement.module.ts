@@ -25,6 +25,7 @@ import { EcommerceProductComponent } from 'app/main/apps/usermanagement/product/
 import { EcommerceProductService } from 'app/main/apps/usermanagement/product/product.service';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatCardModule} from '@angular/material/card';
 // import { EcommerceOrdersComponent } from 'app/main/apps/user/orders/orders.component';
 // import { EcommerceOrdersService } from 'app/main/apps/e-comme/orders/orders.service';
 // import { EcommerceOrderComponent } from 'app/main/apps/e-commerce/order/order.component';
@@ -95,6 +96,7 @@ const routes: Routes = [
         MatDatepickerModule,
         MatRadioModule,
         MatCheckboxModule,
+        MatCardModule,
 
         NgxChartsModule,
         AgmCoreModule.forRoot({

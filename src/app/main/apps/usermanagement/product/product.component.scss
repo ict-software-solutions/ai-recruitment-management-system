@@ -1,7 +1,7 @@
 #product {
 
     .header {
-
+        height: 150px;
         .product-image {
             overflow: hidden;
             width: 56px;
@@ -71,3 +71,20 @@
   {
       margin-top: 20px;
   }
+  .example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+  }
+  .example-margin {
+      color: rgb(0, 102, 153);
+    // margin: 0 10px;
+    margin: 0px 7px;
+    font-size: 12px;
+    // margin-left: 0px;
+  }
+  .ex-1
+{
+    overflow:scroll;
+}

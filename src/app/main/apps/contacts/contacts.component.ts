@@ -91,13 +91,18 @@ export class ContactsComponent implements OnInit, OnDestroy
      */
     newContact(): void
     {
+
+        
         this.dialogRef = this._matDialog.open(ContactsContactFormDialogComponent, {
             panelClass: 'contact-form-dialog',
+            width: '900px',
+            // height:'900px',
             data      : {
                 action: 'new'
             }
+            
         });
-
+       
         this.dialogRef.afterClosed()
             .subscribe((response: FormGroup) => {
                 if ( !response )
@@ -107,6 +112,7 @@ export class ContactsComponent implements OnInit, OnDestroy
 
                 this._contactsService.updateContact(response.getRawValue());
             });
+            
     }
 
     /**

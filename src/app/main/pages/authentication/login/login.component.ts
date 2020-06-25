@@ -17,7 +17,6 @@ import { url } from 'inspector';
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
-
 export class LoginComponent implements OnInit, OnDestroy {
     loginForm: FormGroup;
     logoPath = TROY_LOGO;
@@ -25,7 +24,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     invalidData = true;
     loginSubscription: Subscription;
     getUserSubscription: Subscription;
-    showResetContent=false;
+    showResetContent = false;
     constructor(
         private fuseConfigService: FuseConfigService,
         private formBuilder: FormBuilder,
@@ -39,30 +38,25 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.loginForm = this.formBuilder.group({
-            email: ['sample@gmail.com', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
-            password: ['sample123', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
+            email: ['aravindtsa@gmail.com', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
+            password: ['testing', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
         });
     }
 
     login(value) {
-        if((this.loginForm.get('email').value=="abc@gmail.com") && (this .loginForm.get('password').value=="@abc123ABC")){
+        // sample code
+        /*if ((this.loginForm.get('email').value == "abc@gmail.com") && (this.loginForm.get('password').value == "@abc123ABC")) {
             this.showResetContent = true;
-        
-            
         }
-        else{
+        else {
             this.showResetContent = false;
-  
         }
-        if((this.loginForm.get('email').value=="abc@gmail.com") && (this .loginForm.get('password').value=="@abc123ABC")){
+        if ((this.loginForm.get('email').value == "abc@gmail.com") && (this.loginForm.get('password').value == "@abc123ABC")) {
             this.showResetContent = true;
-        
-            
         }
-        else{
+        else {
             this.showResetContent = false;
-  
-        }
+        }*/
         this.loginSubscription = this.authService.login(value).subscribe(res => {
             const userInfo = { token: res['id'], userId: res['userId'] };
             this.airmsService.setSessionStorage(LOGGED_IN_USER, userInfo);
@@ -88,9 +82,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             subscription.unsubscribe();
         }
     }
-
     ngOnDestroy() {
-        this.unsubscribe(this.loginSubscription);
+        // this.unsubscribe(this.loginSubscription);
         this.unsubscribe(this.getUserSubscription);
         this.loginForm = null;
         this.fuseConfigService = null;

@@ -1,5 +1,5 @@
 <div id="product" class="page-layout carded fullwidth inner-scroll">
-
+    <div class="ex-1">
     <!-- TOP BACKGROUND -->
     <div class="top-bg accent"></div>
     <!-- / TOP BACKGROUND -->
@@ -47,39 +47,36 @@
             <button mat-raised-button
                     class="save-product-button"
                     [disabled]="productForm.invalid || productForm.pristine"
-                    *ngIf="pageType ==='edit'" (click)="saveProduct()">
+                    *ngIf="pageType ==='edit'" (click)="saveProduct()" style="margin-right: 40px;">
                 <span>SAVE</span>
             </button>
         </div>
         <!-- / HEADER -->
 
         <!-- CONTENT CARD -->
-        <div class="content-card">
-
+        <!-- <div class="content-card"> -->
+            <div class="content-card" style="height: 700px !important;">
             <!-- CONTENT -->
-            <div class="content">
+            <!-- <div class="content"> -->
+                <div class="mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row" style="margin-left:10px;margin-top:10px;margin-right:10px;">
+                <!-- <form name="productForm" [formGroup]="productForm" class="product w-100-p" fxLayout="column" fxFlex> -->
+                    <form class="mat-card mat-elevation-z4 p-24 mr-24" fxLayout="column" fxLayoutAlign="start"
+                    fxFlex="1 0 auto" name="form" [formGroup]="form">
+                    <header class="accent" style="height: 54px;font-size: bold;font-size: 17px; padding: 16px;">
+                        <div class="title">Basic Info
+                         
+                        </div>
+                    </header>
+                    <!-- <mat-tab-group> -->
 
-                <form name="productForm" [formGroup]="productForm" class="product w-100-p" fxLayout="column" fxFlex>
+                        <!-- <mat-tab label="Basic Info"> -->
 
-                    <mat-tab-group>
-
-                        <mat-tab label="Basic Info">
-
-                            <div class="tab-content p-24" fusePerfectScrollbar>
-                                <!-- <div fxLayout="row" fxLayoutAlign="space-between">
-                                    <mat-form-field>
-                                        <mat-label>User Type</mat-label>
-                                        <select matNativeControl required>
-                                          <option value="employee">Employee</option>
-                                          <option value="client">Client</option>
-                                          <option value="candidate">Candidate</option>
-                                         
-                                        </select>
-                                      </mat-form-field>
-                                </div> -->
-                                <div fxLayout="row" fxLayoutAlign="space-between">
-
-                                <mat-form-field floatLabel="always" class="w-30-p">
+                            <!-- <div class="p-24" fusePerfectScrollbar> -->
+                         
+                                <!-- <div fxLayout="row" fxLayoutAlign="space-between"> -->
+                                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" style="margin-top: 20px;">
+                                <!-- <mat-form-field floatLabel="always" class="w-30-p" appearance="outline"> -->
+                                    <mat-form-field appearance="outline" fxFlex="33">
                                     <mat-label>First Name</mat-label>
                                     <input matInput placeholder="First Name"
                                            name="fname"
@@ -87,78 +84,53 @@
                                            required>
                                 </mat-form-field>
 
- <mat-form-field  floatLabel="always" class="w-30-p">
+                                <mat-form-field appearance="outline" fxFlex="34" class="px-8">
                                     <mat-label>Second Name</mat-label>
                                     <input matInput placeholder="Second Name"
                                            name="sname"
                                            formControlName="sname"
                                            required>
                                 </mat-form-field>
-                                <mat-form-field floatLabel="always" class="w-30-p">
+                                <mat-form-field appearance="outline" fxFlex="33">
                                     <mat-label>Last Name</mat-label>
                                     <input matInput placeholder="Last Name"
                                            name="lname"
                                            formControlName="lname"
                                            required>
                                 </mat-form-field>
-                                <!-- <mat-form-field appearance="outline" floatLabel="always" class="w-30-p">
-                                    <mat-label>Product Description</mat-label>
-                                    <textarea matInput placeholder="Product Description"
-                                              name="description"
-                                              formControlName="description"
-                                              rows="5">
-                                    </textarea>
-                                </mat-form-field> -->
-
-                                <!-- <mat-form-field appearance="outline" floatLabel="always" class="w-30-p">
-
-                                    <mat-label>Categories</mat-label>
-
-                                    <mat-chip-list #categoryList name="categories" formControlName="categories">
-
-                                        <mat-chip *ngFor="let category of product.categories"
-                                                  [removable]="true" (removed)="product.removeCategory(category)">
-                                            {{category}}
-                                            <mat-icon matChipRemove>cancel</mat-icon>
-                                        </mat-chip>
-
-                                        <input [matChipInputFor]="categoryList"
-                                               [matChipInputAddOnBlur]="true"
-                                               (matChipInputTokenEnd)="product.addCategory($event)"/>
-
-                                    </mat-chip-list>
-
-                                </mat-form-field> -->
+                              
                                 </div>
-                                <div fxLayout="row" fxLayoutAlign="space-between">
-                                    <mat-form-field floatLabel="always" fxFlex="30">
+                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                               
+                                    <mat-form-field appearance="outline" fxFlex="33">
                                         <mat-label>Email</mat-label>
                                         <input matInput placeholder="Email"
                                                name="email"
                                                formControlName="email"
                                                required>
                                     </mat-form-field>
-                                    <mat-form-field floatLabel="always" fxFlex="30">
+                                    <mat-form-field appearance="outline" fxFlex="34" class="px-8">
                                         <mat-label>Mobile</mat-label>
                                         <input matInput placeholder="Mobile"
                                                name="mobile"
                                                formControlName="mobile"
                                                required>
                                     </mat-form-field>
-                                    <mat-form-field floatLabel="always" fxFlex="30">
+                                    <mat-form-field appearance="outline" fxFlex="33">
                                         <mat-label>Birth day</mat-label>
                                         <input matInput [matDatepicker]="picker"  name="dob"
                                         formControlName="dob">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                       </mat-form-field>
-                                    <!-- <mat-form-field></mat-form-field> -->
+                               
                                     </div>
                                
                                    
-                                            <div fxLayout="row" fxLayoutAlign="space-between">
-
-                                                <mat-form-field fxFlex="30">
+                                            <!-- <div fxLayout="row" fxLayoutAlign="space-between"> -->
+                                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                                <!-- <mat-form-field fxFlex="30"  appearance="outline"> -->
+                                                    <mat-form-field appearance="outline" fxFlex="33">
                                                     <mat-label>User Type</mat-label>
                                                     <mat-select>
                                                       <mat-option *ngFor="let usertype of usertype" [value]="usertype.value">
@@ -166,7 +138,8 @@
                                                       </mat-option>
                                                     </mat-select>
                                                   </mat-form-field>
-                                                  <mat-form-field fxFlex="30">
+                                                  <!-- <mat-form-field fxFlex="30"  appearance="outline"> -->
+                                                    <mat-form-field appearance="outline" fxFlex="34" class="px-8">
                                                     <mat-label>User Role</mat-label>
                                                     <mat-select>
                                                       <mat-option *ngFor="let userrole of userrole" [value]="userrole.value">
@@ -174,38 +147,57 @@
                                                       </mat-option>
                                                     </mat-select>
                                                   </mat-form-field>
-                                                  <mat-form-field fxFlex="30">
+                                                  <mat-form-field appearance="outline" fxFlex="33">
+                                                  <!-- <mat-form-field fxFlex="30"  appearance="outline"> -->
                                                     <mat-label>Valid From</mat-label>
                                                     <input matInput>
                                                   </mat-form-field>
-                                                
+                                                  
+
+                                                  
+                                             
                                                 </div>
                                                 
-                                                <div fxLayout="row" fxLayoutAlign="space-between">
-
-                                                    <mat-form-field fxFlex="30">
-                                                        <mat-label>Valid To</mat-label>
-                                                        <input matInput>
-                                                      </mat-form-field>
-                                                    <mat-form-field fxFlex="30">
+                                                <!-- <div fxLayout="row" fxLayoutAlign="space-between"> -->
+                                                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                                    
+                                                        <mat-form-field appearance="outline" fxFlex="33">
                                                         <mat-label>Password Since</mat-label>
                                                         <input matInput>
                                                       </mat-form-field>
-                                                      <mat-form-field fxFlex="30">
+                                                      <mat-form-field appearance="outline" fxFlex="34" class="px-8">
                                                         <mat-label>Password Expiry Date</mat-label>
                                                         <input matInput>
                                                       </mat-form-field>
+                                                     
+                                                      <mat-form-field appearance="outline" fxFlex="33">
+                                                        <mat-label>Valid To</mat-label>
+                                                        <input matInput>
+                                                      </mat-form-field>
                                                     </div>
-                                                    <p>Account Status</p>
-                                                    <mat-radio-group aria-label="Select an option">
-                                                        <mat-radio-button value="1">Activated</mat-radio-button>
-                                                        <mat-radio-button value="2">Blocked</mat-radio-button>
-                                                      </mat-radio-group>
-                                                      <h3></h3>
-                                                    <mat-checkbox (change)="changePassword($event.checked)" formControlName="check" >Change Password</mat-checkbox>                           
-                                
-                                                    <div fxLayout="row" fxLayoutAlign="space-between" *ngIf ="show">
-                                                        <mat-form-field fxFlex="30">
+                                                   
+                                               
+                                                 
+                                                        
+                                                     
+                                                 
+                                                              
+                                                      <!-- <div fxLayout="row" fxLayoutAlign="space-between"> -->
+                                                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                                            <div fxFlex="35" appearance="outline">
+                                                                <section class="example-section">
+                                                                    <label class="example-margin">Account Status:</label>
+                                                                    <mat-radio-group [(ngModel)]="labelPosition">
+                                                                      <mat-radio-button class="example-margin" value="after">Activated</mat-radio-button>
+                                                                      <mat-radio-button class="example-margin" value="before">Locked</mat-radio-button>
+                                                                    </mat-radio-group>
+                                                                  </section>  
+                                                            </div>
+                                                        <div fxFlex="16" appearance="outline">
+                                                    <mat-checkbox (change)="changePassword($event.checked)" formControlName="check" style="  color: rgb(0, 102, 153);font-size: 12px;" >Change Password</mat-checkbox>                           
+                                 </div>
+                                                        <!-- <mat-form-field fxFlex="30" *ngIf ="show" appearance="outline"> -->
+                                                            <mat-form-field *ngIf ="show" appearance="outline" fxFlex="25" class="px-8">
                                                             <mat-label>Current Password</mat-label>
                                                             <input matInput type="password" formControlName="password">
                                                             <mat-icon matSuffix class="secondary-text">lock</mat-icon>
@@ -213,201 +205,29 @@
                                                                 Password is required
                                                             </mat-error>
                                                         </mat-form-field>
-                                                        <mat-form-field  fxFlex="30">
+                                                        <mat-form-field *ngIf ="show" appearance="outline" fxFlex="25">
+                                                        <!-- <mat-form-field  fxFlex="30" *ngIf ="show"appearance="outline"> -->
                                                             <mat-label>New Password</mat-label>
                                                             <input matInput type="Password" [type]="hide ? 'password' : 'text'" formControlName="passwordNew" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*?/]).{8,15})"required>
                                                             <mat-icon matSuffix class="secondary-text" (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                                                             <!-- <mat-error *ngIf="form.get('passwordNew').hasError('required')">New password is required</mat-error>
+                                                           </mat-form-field>
+                                                           </div>
+                                                            <!-- <mat-error *ngIf="form.get('passwordNew').hasError('required')">New password is required</mat-error>
                                                           <mat-error *ngIf="form.get('passwordNew').hasError('minlength')">Password must be at least 8 characters</mat-error>
                                                             <mat-error *ngIf="form.get('passwordNew').hasError('pattern') && form.get('passwordNew').value.length > 7">Please secure your account with a strong password</mat-error> -->
-                                                     </mat-form-field> 
-                                                      <!-- <mat-form-field appearance="outline" fxFlex="20">
-                    <mat-label>Password (Confirm)</mat-label>
-                    <input matInput type="password" formControlName="passwordConfirm">
-                    <mat-icon matSuffix class="secondary-text">lock</mat-icon>
-                  
-                    <mat-error *ngIf="resetPasswordForm.get('passwordConfirm').hasError('required')">
-                        Password confirmation is required
-                    </mat-error>
-                    <mat-error *ngIf="!resetPasswordForm.get('passwordConfirm').hasError('required') &&
-                                       resetPasswordForm.get('passwordConfirm').hasError('passwordsNotMatching')">
-                        Passwords must match
-                    </mat-error>
-                </mat-form-field> -->
+                                                     <!-- </mat-form-field> 
+                                                  
 
                                 </div>
-                                                    <!-- <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                            </mat-card> -->
+                              <p></p>
+                                     
+                        <!-- </div> -->
 
-                                    <mat-label>Tags</mat-label>
-
-                                    <mat-chip-list #tagList name="tags" formControlName="tags">
-
-                                        <mat-chip *ngFor="let tag of product.tags"
-                                                  [removable]="true" (removed)="product.removeTag(tag)">
-                                            {{tag}}
-                                            <mat-icon matChipRemove>cancel</mat-icon>
-                                        </mat-chip>
-
-                                        <input [matChipInputFor]="tagList"
-                                               [matChipInputAddOnBlur]="true"
-                                               (matChipInputTokenEnd)="product.addTag($event)"/>
-
-                                    </mat-chip-list>
-
-                                </mat-form-field> -->
-
-                            </div>
-
-                        </mat-tab>
-
-                        <!-- <mat-tab label="Product Images">
-
-                            <div class="tab-content p-24" fusePerfectScrollbar>
-                                <div fxLayout="row wrap" fxLayoutAlign="start start">
-
-                                    <div *ngIf="product.images.length === 0"
-                                         class="product-image" fxlayout="row" fxLayoutAlign="center center">
-                                        <img class="media"
-                                             [src]="'assets/images/ecommerce/product-image-placeholder.png'">
-                                    </div>
-
-                                    <div *ngFor="let image of product.images">
-                                        <div *ngIf="product.images.length > 0"
-                                             class="product-image" fxlayout="row" fxLayoutAlign="center center">
-                                            <img class="media" [src]="image.url">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </mat-tab> -->
-
-                        <!-- <mat-tab label="Pricing">
-
-                            <div class="tab-content p-24" fusePerfectScrollbar>
-
-                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label>Tax Excluded Price</mat-label>
-                                    <input matInput placeholder="Tax Excluded Price"
-                                           name="priceTaxExcl"
-                                           formControlName="priceTaxExcl"
-                                           type="number">
-                                    <span matPrefix>$&nbsp;</span>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label>Tax Included Price</mat-label>
-                                    <input matInput placeholder="Tax Included Price"
-                                           name="priceTaxIncl"
-                                           formControlName="priceTaxIncl"
-                                           type="number">
-                                    <span matPrefix>$&nbsp;</span>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label>Tax Rate</mat-label>
-                                    <input matInput placeholder="Tax Rate"
-                                           name="taxRate"
-                                           formControlName="taxRate"
-                                           type="number">
-                                    <span matPrefix>&#37;&nbsp;</span>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label>Compared Price</mat-label>
-                                    <input matInput placeholder="Compared Price"
-                                           name="comparedPrice"
-                                           formControlName="comparedPrice"
-                                           type="number">
-                                    <span matPrefix>$&nbsp;</span>
-                                    <mat-hint align="start">Add a compare price to show next to the real price
-                                    </mat-hint>
-                                </mat-form-field>
-
-                            </div>
-                        </mat-tab> -->
-
-                        <!-- <mat-tab label="Inventory">
-
-                            <div class="tab-content p-24" fusePerfectScrollbar>
-
-                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label>SKU</mat-label>
-                                    <input matInput placeholder="SKU"
-                                           name="sku"
-                                           formControlName="sku">
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label>Quantity</mat-label>
-                                    <input matInput placeholder="Quantity"
-                                           name="quantity"
-                                           formControlName="quantity"
-                                           type="number">
-                                </mat-form-field>
-
-                            </div>
-
-                        </mat-tab> -->
-
-                        <!-- <mat-tab label="Shipping">
-
-                            <div class="tab-content p-24" fusePerfectScrollbar fxLayout="column">
-
-                                <div fxLayout="row" fxLayoutAlign="space-between">
-
-                                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
-                                        <mat-label>Width</mat-label>
-                                        <input matInput placeholder="Width"
-                                               name="Width"
-                                               formControlName="width">
-                                        <span matSuffix>cm</span>
-                                    </mat-form-field>
-
-                                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
-                                        <mat-label>Height</mat-label>
-                                        <input matInput placeholder="Height"
-                                               name="Height"
-                                               formControlName="height">
-                                        <span matSuffix>cm</span>
-                                    </mat-form-field>
-
-                                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
-                                        <mat-label>Depth</mat-label>
-                                        <input matInput placeholder="Depth"
-                                               name="Depth"
-                                               formControlName="depth">
-                                        <span matSuffix>cm</span>
-                                    </mat-form-field>
-
-                                </div>
-
-                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label>Weight</mat-label>
-                                    <input matInput placeholder="Weight"
-                                           name="Weight"
-                                           formControlName="weight">
-                                    <span matSuffix>kg</span>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label>Extra Shipping Fee</mat-label>
-                                    <input matInput placeholder="Extra Shipping Fee"
-                                           name="extraShippingFee"
-                                           formControlName="extraShippingFee"
-                                           type="number">
-                                    <span matPrefix>$&nbsp;</span>
-                                </mat-form-field>
-
-                            </div>
-
-                        </mat-tab> -->
-
-                    </mat-tab-group>
-
-                </form>
-
-            </div>
+               
+                    </form>
+</div>
+            <!-- </div> -->
             <!-- / CONTENT -->
 
         </div>
@@ -416,4 +236,5 @@
     </div>
     <!-- / CENTER -->
 
+</div>
 </div>
