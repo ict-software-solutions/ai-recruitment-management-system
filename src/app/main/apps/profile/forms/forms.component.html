@@ -27,7 +27,9 @@
                         <mat-icon>local_see</mat-icon>
                        
                     </button>
-                    <input type="file"  (change)="onFileSelected($event)" style="margin: 0px;
+                    <!-- <input id="file-upload" type="file" (input)="uploadFile($event)" /> -->
+                    <!-- <input type="file"  (change)="onFileSelected($event)" style="margin: 0px;"> -->
+                    <input type="file" id="file-upload"(change)="onFileSelected($event)"style="margin: 0px;
                     /* position: absolute; */
                     top: 0;
                     bottom: 0;
@@ -56,10 +58,9 @@
             <div class="icon" align="right">
                 <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
                   
-                    <button mat-raised-button color="light" style="margin-right:30px;width: 100px;">Edit</button>
-                 
-                
-
+                    <button mat-raised-button color="light" (click)="Edit()" *ngIf = "!enableEdit" style="margin-right:30px;width: 100px;">Edit</button>
+                    <button mat-raised-button color="light" (click)="Edit()"  *ngIf = "enableEdit" class="submit-button" style="margin-right:30px;width: 100px; ">Save</button>
+                    <button mat-raised-button color="light" (click)="Edit()"  *ngIf = "enableEdit" class="submit-button" style="margin-right:30px;width: 100px; ">Cancel</button>
                 </div>
             </div>
             <!-- / APP TITLE -->
@@ -73,12 +74,13 @@
                 <div class="mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row" style="margin-left:10px;margin-top:10px;margin-right:10px;">
 
                     <form class="mat-card mat-elevation-z4 p-24 mr-24" fxLayout="column" fxLayoutAlign="start"
-                        fxFlex="1 0 auto" name="form" [formGroup]="form">
+                        fxFlex="1 0 auto" name="form" [formGroup]="form" style="height: 685px;">
 
                         <header class="accent" style="height: 54px;font-size: bold;font-size: 17px; padding: 16px;">
-                            <div class="title">My Profile
-                             
+                            <div class="title">My Profile<span style="float: right;font-size:11px;">Last Login :Jun 20,2020  08:15:26 AM</span>
+                           
                             </div>
+                            <!-- <div>  <p style="color: white;">Last Login :Feb 13,2014  08:15:26 AM</p></div> -->
                         </header>
                      
 
@@ -86,19 +88,19 @@
 
                             <mat-form-field appearance="outline" fxFlex="33">
                                 <mat-label>First Name</mat-label>
-                                <input matInput formControlName="firstName" required>
+                                <input matInput  type="text" ngModel  formControlName="firstName" type="text"required>
                                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                                 <mat-error>First Name is required!</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="34" class="px-8">
                                 <mat-label>Second Name</mat-label>
-                                <input matInput formControlName="firstName">
+                                <input matInput  type="text" formControlName="firstName">
                                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                                 <mat-error>First Name is required!</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="33">
                                 <mat-label>Last name</mat-label>
-                                <input matInput formControlName="lastName" required>
+                                <input  matInput  type="text" formControlName="lastName" required>
                                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                                 <mat-error>Last Name is required!</mat-error>
                             </mat-form-field>
@@ -108,14 +110,14 @@
 
                             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                                 <mat-label>Email <span style="color: green;">(verified)</span></mat-label>
-                                <input matInput formControlName="email">
+                                <input matInput  type="email" formControlName="email" [disabled]="true">
                                 <mat-icon matSuffix class="secondary-text">mail</mat-icon>
                                 <mat-error>Email is required!</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
                                 <mat-label>Mobile <span style="color: green">(verified)</span></mat-label>
-                                <input matInput formControlName="mobile" required>
+                                <input matInput  type="tel" formControlName="mobile">
                                 <mat-icon matSuffix class="secondary-text">call</mat-icon>
                                 <mat-error>Mobile is required!</mat-error>
                             </mat-form-field>
@@ -124,13 +126,13 @@
                         <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field appearance="outline"  fxFlex="50" class="pr-4">
                                 <mat-label>Company Name</mat-label>
-                                <input matInput formControlName="companyname" required>
+                                <input matInput  type="text" formControlName="companyname" required>
                                 <mat-icon matSuffix class="secondary-text">location_city</mat-icon>
                                 <mat-error>company name is required!</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline"  fxFlex="50" class="pl-4">
                                 <mat-label>Position</mat-label>
-                                <input matInput formControlName="position">
+                                <input matInput  type="text"formControlName="position">
                                 <mat-icon matSuffix class="secondary-text">work_outline</mat-icon>
                                 <mat-error>company name is required!</mat-error>
                             </mat-form-field>
@@ -140,7 +142,7 @@
 
                             <mat-form-field appearance="outline" fxFlex="100">
                                 <mat-label>Address</mat-label>
-                                <textarea matInput formControlName="address" required>
+                                <textarea matInput   formControlName="address" required>
                             Flat No 5,%th Avenue,Cambridge
                         </textarea>
                             </mat-form-field>
@@ -150,20 +152,20 @@
 
     <mat-form-field appearance="outline" fxFlex="25">
         <mat-label>Postal Code</mat-label>
-        <input matInput #postalcode value="94043" formControlName="postalcode" maxlength="5"
+        <input matInput  type="tel" #postalcode value="94043" formControlName="postalcode" maxlength="5"
             required>
         <mat-icon matSuffix class="secondary-text">markunread_mailbox</mat-icon>
        
     </mat-form-field>
                                 <mat-form-field appearance="outline" fxFlex="25"class="px-8">
                                     <mat-label>City</mat-label>
-                                    <input matInput formControlName="city">
+                                    <input matInput  type="text" formControlName="city">
                                     <mat-icon matSuffix class="secondary-text">location_city</mat-icon>
                                 </mat-form-field>
     
                                 <mat-form-field appearance="outline" fxFlex="25" class="px-8">
                                     <mat-label>State</mat-label>
-                                    <mat-select formControlName="state">
+                                    <mat-select    formControlName="state">
                                         <mat-option [value]="'United States of America'">
                                             United States of America
                                         </mat-option>
@@ -174,9 +176,9 @@
                                     </mat-select>
                                     <mat-icon matSuffix class="secondary-text">location_city</mat-icon>
                                 </mat-form-field>
-                                <mat-form-field appearance="outline" fxFlex="25">
+                                <mat-form-field  appearance="outline" fxFlex="25">
                                     <mat-label>Country</mat-label>
-                                    <input matInput formControlName="country">
+                                    <input matInput  type="text" formControlName="country">
                                     <mat-icon matSuffix class="secondary-text">flag</mat-icon>
                                 </mat-form-field>
     
@@ -190,24 +192,26 @@
 <div fxFlex="33">
     <mat-checkbox (change)="changePassword($event.checked)" formControlName="check" >Change Password</mat-checkbox> 
 </div>
-                                <mat-form-field appearance="outline" fxFlex="33" *ngIf ="show1">
+                                <mat-form-field appearance="outline" fxFlex="34" *ngIf ="showPasswordsection">
                                     <mat-label>Current Password</mat-label>
-                                    <input matInput type="password" formControlName="password">
+                                    <input matInput type="password" formControlName="password" required>
                                     <mat-icon matSuffix class="secondary-text">lock</mat-icon>
                                     <mat-error>
                                         Password is required
                                     </mat-error>
                                 </mat-form-field>
                                    
-                <mat-form-field appearance="outline" fxFlex="34"class="px-8" *ngIf ="show1">
+                <mat-form-field appearance="outline" fxFlex="33"class="px-8" *ngIf ="showPasswordsection">
                     <mat-label>New Password</mat-label>
-                    <input matInput type="Password" [type]="hide ? 'password' : 'text'" formControlName="passwordNew" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*?/]).{8,15})"required>
+                    <input matInput type="Password" [type]="hide ? 'password' : 'text'" formControlName="NewPassword" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*?/]).{8,15})"required>
                     <mat-icon matSuffix class="secondary-text" (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                     <mat-error *ngIf="form.get('passwordNew').hasError('required')">New password is required</mat-error>
-                  <mat-error *ngIf="form.get('passwordNew').hasError('minlength')">Password must be at least 8 characters</mat-error>
-                    <mat-error *ngIf="form.get('passwordNew').hasError('pattern') && form.get('passwordNew').value.length > 7">Please secure your account with a strong password</mat-error>
+                     <mat-error *ngIf="form.get('NewPassword').hasError('required')">New password is required</mat-error>
+                  <mat-error *ngIf="form.get('NewPassword').hasError('minlength')">Password must be at least 8 characters</mat-error>
+                    <mat-error *ngIf="form.get('NewPassword').hasError('pattern') && form.get('NewPassword').value.length > 7">Please secure your account with a strong password</mat-error>
              </mat-form-field>  
-        
+        <!-- <div fxflex="25"class="px-8">
+       <p> Last Login</p>
+        </div> -->
              <!-- <button mat-raised-button class="submit-button" color="accent"
              aria-label="RESET" [disabled]="form.invalid"style="width:150px;">
          RESET
@@ -217,7 +221,12 @@
 CANCEL
 </button> -->
                             </div>
-                      
+                            <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" >
+                                 <div fxflex="50">
+       <p> Last Login :Feb 13,2014  08:15:26 AM</p>
+        </div>
+                            </div> -->
+                           
                     </form>
             </div>
            </div>

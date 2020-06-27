@@ -3,7 +3,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { Contact } from 'app/main/apps/contacts/contact.model';
-interface usertype {
+// interface usertype {
+//     value: string;
+//     viewValue: string;
+//   }
+  interface status {
     value: string;
     viewValue: string;
   }
@@ -21,7 +25,11 @@ export class ContactsContactFormDialogComponent
         "Calander",
         "User Management",
         "Edit Profile"];
-
+        status: status [] = [
+          {value: 'employee-0', viewValue: 'Activated'},
+          {value: 'client-1', viewValue: 'Locked'}
+          
+        ];
         items= [];
   selectedItems: Item[];
  
@@ -142,7 +150,7 @@ export class ContactsContactFormDialogComponent
             rolename   : [this.contact.rolename],
             desc  : [this.contact.desc],
             status  : [this.contact.status],
-            food:[this.contact.food]
+          
         });
     }
 }

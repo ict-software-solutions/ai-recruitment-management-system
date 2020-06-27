@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     loginSubscription: Subscription;
     getUserSubscription: Subscription;
     showResetContent = false;
+    inActive = false;
+    errorMessage = '';
     constructor(
         private fuseConfigService: FuseConfigService,
         private formBuilder: FormBuilder,
@@ -38,41 +40,35 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.loginForm = this.formBuilder.group({
-            email: ['aravindtsa@gmail.com', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
+            email: ['aravindtsa@gmail.com', Validators.required],
             password: ['testing', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
         });
     }
 
     login(value) {
-        // sample code
-        /*if ((this.loginForm.get('email').value == "abc@gmail.com") && (this.loginForm.get('password').value == "@abc123ABC")) {
-            this.showResetContent = true;
-        }
-        else {
-            this.showResetContent = false;
-        }
-        if ((this.loginForm.get('email').value == "abc@gmail.com") && (this.loginForm.get('password').value == "@abc123ABC")) {
-            this.showResetContent = true;
-        }
-        else {
-            this.showResetContent = false;
-        }*/
+        this.inActive = true;
+        this.errorMessage = '';
         this.loginSubscription = this.authService.login(value).subscribe(res => {
-            const userInfo = { token: res['id'], userId: res['userId'] };
-            this.airmsService.setSessionStorage(LOGGED_IN_USER, userInfo);
-            this.getUserSubscription = this.authService.getUserById(res['id'], res['userId']).
+        const userInfo = { token: res['id'], userId: res['userId'] };
+        this.airmsService.setSessionStorage(LOGGED_IN_USER, userInfo);
+        this.getUserSubscription = this.authService.getUserById(res['id'], res['userId']).
                 subscribe(userDetails => {
                     console.log(userDetails);
                 }, error => {
                     this.logService.logError(LOG_LEVELS.ERROR, 'Login page', 'On Fetch User', error);
                 });
-            this.router.navigate(['../../apps/dashboards/analytics']);
-            this.logService.logUserActivity(LOG_LEVELS.INFO, 'Login Page', 'Login');
+        this.router.navigate(['../../apps/dashboards/analytics']);
+        this.logService.logUserActivity(LOG_LEVELS.INFO, 'Login Page', 'Login');
         }, error => {
-            if (error.status === 401) {
+            if (error.error.message === 'Account Inactive. Please contact admin') {
+                this.errorMessage = "Account Inactive.Please contact admin"
+                this.inActive = true;
+            }
+            else if (error.status === 400) {
                 console.log('Invalid Username or Password')
                 this.invalidData = false;
             }
+
             this.logService.logError(LOG_LEVELS.ERROR, 'Login page', 'On Try Login', error);
         });
     }

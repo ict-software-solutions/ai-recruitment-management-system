@@ -33,12 +33,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
     signupSubscription: Subscription;
     alreadyExist = false;
     pattern = true;
-  
-    constructor(
+    errorMessage = '';
+    activationLink = false;
+       constructor(
         private fuseConfigService: FuseConfigService,
         private formBuilder: FormBuilder,
         private router: Router,
-        private authservice: AuthService,
+        private authservice: AuthService       
     ) {
         this.fuseConfigService.config = LAYOUT_STRUCTURE;
         this.unsubscribeAll = new Subject();
@@ -54,13 +55,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     buildRegisterForm() {
         return this.formBuilder.group({
-
             accountType: ['', Validators.required],
-            firstname: ['', Validators.required],
-            lastname: ['', Validators.required],
+            firstName: ['', Validators.required],
+            lastName: ['', Validators.required],
             email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
             userName: ['', [Validators.minLength(6), Validators.maxLength(30)]],
-
             password: ['', [Validators.minLength(8), Validators.maxLength(15)]],
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator]],
             check: ['', Validators.required]
@@ -68,13 +67,25 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     register(value) {
-        this.signupSubscription = this.authservice.signup(value).subscribe(response => {
-            this.router.navigate(['/pages/auth/login']);
+        this.alreadyExist = false;
+        this.activationLink = false;
+        this.errorMessage = '';
+        this.signupSubscription = this.authservice.signup(value).subscribe((response: any) => {
+            this.activationLink = true;
         }, error => {
-            if (error.status === 422) {
+            if (error.error.message === "email already exists") {
+                this.errorMessage = 'Email already exists'
+                this.alreadyExist = true;
+
+            }
+            else if (error.error.message === "userName already exists") {
+                this.errorMessage = 'User name already exists'
                 this.alreadyExist = true;
             }
-        });
+            console.log(error)
+        }
+        );
+
     }
 
     cancel() {
@@ -95,7 +106,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.fuseConfigService = null;
         this.formBuilder = null;
         this.logoPath = null;
-        // this.validNewPassword = null;
     }
 }
 

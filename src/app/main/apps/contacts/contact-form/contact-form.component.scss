@@ -63,13 +63,20 @@ width:900px;
     border-radius: 7px;
         }
     }
+    .example-selection{
+        margin-top: -18px;
+    }
     .example-margin {
         // color: rgb(0, 102, 153);
-      // margin: 0 10px;
-      margin: 0px 7px;
-      font-size: 12px;
+      margin: 0 10px;
+    //   margin: 0px 7px;
+    //   font-size: 12px;
       // margin-left: 0px;
     }
+
+    input:checked + label{
+        background: green;
+      }
     // ul {
     //     margin:0;
     //     padding:0;

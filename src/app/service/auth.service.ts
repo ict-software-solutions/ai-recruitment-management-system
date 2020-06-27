@@ -9,20 +9,30 @@ export class AuthService {
   constructor(private httpClient: HttpClient) { }
   signup(value) {
     const param = {
-      "name": value.name,
-      "email": value.email,
+      "firstName": value.firstName,
+      "userName":value.userName,
+      "lastName":value.lastName,
+      "emailAddress": value.email,
       "password": value.password
     }
-    return this.httpClient.post(apiURL.USER, param)
+    return this.httpClient.post(apiURL.SIGNUP_URL, param)
   }
 
   login(value) {
     const param = {
-
-      "emailAddress": value.email,
+      "userName": value.email,
       "password": value.password
     }
     return this.httpClient.post(apiURL.LOGIN_URL, param);
+  }
+
+  changePassword(value) {
+    const param = {
+      "emailAddress": value.email,
+      "password": value.password,
+      'NewPassword':value.NewPassword
+    }
+    return this.httpClient.post(apiURL.CHANGE_PASSWORD_URL, param);
   }
 
   getUserById(access_token, userId) {

@@ -1,214 +1,175 @@
 <div class="dialog-content-wrapper">
-    <mat-toolbar matDialogTitle class="mat-accent m-0">
-        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
-            <span class="title dialog-title">{{dialogTitle}}</span>
-            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-toolbar-row>
+  <mat-toolbar matDialogTitle class="mat-accent m-0" style="height: 64px;">
+      <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="title dialog-title">{{dialogTitle}}</span>
+          <div class="icon"align="right">
+              <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                  <!-- <button mat-mini-fab color="light"><mat-icon>edit</mat-icon></button> -->
+                 
+                  <!-- <button mat-mini-fab color="light"style="margin-left:10px;"(click)="deleteContact()"><mat-icon>delete</mat-icon></button> -->
+                  <button mat-mini-fab color="light"(click)="matDialogRef.close()" style="margin-left:10px;margin-top: 10px;"><mat-icon>close</mat-icon></button>
+                  
+                     
+              </div>
+          </div>
+          <!-- <button mat-icon-button color="accent" style="background-color: white;margin-right: 5px;"><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog" color="accent" style="background-color: white;margin-left: 5px;">
+              <mat-icon>close</mat-icon>
+          </button> -->
+      </mat-toolbar-row>
 
-        <!-- <mat-toolbar-row class="toolbar-bottom py-16" fxLayout="column" fxLayoutAlign="center center">
-            <img [src]="contact.avatar" class="avatar contact-avatar huge m-0"
-                 [alt]="contact.name"/>
-            <div class="contact-name mt-8">{{contact.name}} {{contact.lastName}}</div>
-        </mat-toolbar-row> -->
-    </mat-toolbar>
+      <mat-toolbar-row class="toolbar-bottom py-16" fxLayout="column" fxLayoutAlign="center center">
+          <!-- <img [src]="contact.avatar" class="avatar contact-avatar huge m-0"
+               [alt]="contact.name"/>
+          <div class="contact-name mt-8">{{contact.name}} {{contact.lastName}}</div> -->
+      </mat-toolbar-row>
+  </mat-toolbar>
 
-    <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+  <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
 
-        <form [formGroup]="contactForm">
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-            <!-- <div fxLayout="row" fxLayoutAlign="start start"> -->
-                <mat-form-field  appearance="outline" fxFlex="30">
-                    <mat-label>Role Name</mat-label>
-                    <input matInput placeholder="Second Name"
-                    name="sname"
-                    formControlName="sname"
-                    required>
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex ="50" class="px-8">
-                    <mat-label>Description</mat-label>
-                    <input matInput placeholder="Second Name"
-                    name="sname"
-                    formControlName="sname"
-                    required>
-                    <!-- <textarea name="desc" formControlName="desc" matInput type="text"></textarea> -->
-                </mat-form-field>
-                <!-- <mat-form-field appearance="outline" fxFlex="50">
-                    <mat-label>Role Name</mat-label>
-                    <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                    <input name="rolename" formControlName="rolename" matInput>
-                </mat-form-field> -->
-          
-            <!-- <div fxLayout="row" fxLayoutAlign="start start"> -->
-               
-                    <div fxFlex="20"  class="px-8">
-                        <section class="example-section"  style="margin-top: -27px;">
-                            <label class="example-margin">Account Status:</label><br>
+      <form [formGroup]="contactForm">
 
-                            <mat-radio-group [(ngModel)]="labelPosition">
-                              <mat-radio-button class="example-margin" value="after">Activated</mat-radio-button>
-                              <mat-radio-button class="example-margin" style="margin-top:5px;" value="before">Locked</mat-radio-button>
-                            </mat-radio-group>
-                          </section>  
-                        <!-- <section class="example-section">
-                            <label class="example-margin">Account Status:</label>
-                            <mat-radio-group [(ngModel)]="labelPosition">
-                              <mat-radio-button class="example-margin" value="after">Activated</mat-radio-button>
-                              <mat-radio-button class="example-margin" value="before">Locked</mat-radio-button>
-                            </mat-radio-group>
-                          </section>   -->
-                    </div>
-                    <!-- <mat-label>Status</mat-label>
-                    <mat-icon matSuffix class="secondary-text">check_circle_outline</mat-icon>
-                    <input name="status" formControlName="status" matInput> -->
-               
-            </div>
+         
         
-            <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-          
-                <mat-form-field appearance="outline" fxFlex ="100">
-                    <mat-label>Description</mat-label>
-                    <textarea name="desc" formControlName="desc" matInput type="text"></textarea>
-                </mat-form-field>
+         
+
+         
+          <div fxLayout="row" fxLayoutAlign="start start">
+              <mat-form-field appearance="outline" fxFlex="50">
+                  <mat-label>Role Name</mat-label>
+                  <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                  <input formControlName="vacancies" matInput>
+              </mat-form-field>
+              <!-- <div fxFlex="45"  class="px-8">
+                <section class="example-section" style="margin-top: 20px;margin-left: 29px;">
+                    <label class="example-margin">Account Status:</label>
+
+                    <mat-radio-group [(ngModel)]="labelPosition">
+                      <mat-radio-button class="example-margin" value="after">Activated</mat-radio-button>
+                      <mat-radio-button class="example-margin"  value="before">Locked</mat-radio-button>
+                    </mat-radio-group>
+                  </section>  
+                
             </div> -->
-            <!-- <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field>
-                    <mat-label>Favorite food</mat-label>
-                    <mat-select [(ngModel)]="selectedValue" name="food">
-                      <mat-option *ngFor="let food of foods" [value]="food.value">
-                        {{food.viewValue}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-            </div> -->
-        </form>
-        <p>Role Mapping</p>
-        <div class="container">
-            <div fxLayout="row"fxLayoutAlign="space-between">
-        <mat-card fxFlex="45"class="mapping" style="background-color: aliceblue;" >
-            
-                <!-- <mat-card-title style="font-weight:lighter;">Available Screens</mat-card-title> -->
-                <p style="font-weight: bold;">Available Screens</p>
-                <!-- <mat-card-subtitle  style="font-weight: bold;">Available Screens</mat-card-subtitle>
-                -->
-                <mat-card-content class="card_content">
-                    <div  *ngFor="let screen of screens">
-                    <mat-checkbox (change)="select(screen)" style="margin-top:20px;">{{screen}}</mat-checkbox><br>
-
-                </div>
-                    <!-- <mat-checkbox style="margin-top:20px;">Calendar</mat-checkbox><br>
-<mat-checkbox style="margin-top:20px;">Profile</mat-checkbox><br>
-<mat-checkbox style="margin-top:20px;">Edit Screen</mat-checkbox><br>
-<mat-checkbox style="margin-top:20px;">User management</mat-checkbox><br> -->
-
-
-                    <!-- <mat-selection-list #screens >
-                        <mat-list-option *ngFor="let screen of typesOfScreens"  style="    font-size: 11px;;">
-                          {{screen}}
-                        </mat-list-option>
-                      </mat-selection-list> -->
-                      
-                      <!-- <p>
-                        Options selected: {{shoes.selectedOptions.selected.length}}
-                      </p> -->
-                      
-
-                    </mat-card-content>
-        </mat-card>
-        <!-- <mat-card fxFlex="15"style="margin-left:4px;border:none;border-opacity:0px;"> -->
-            <!-- <mat-card-content > -->
-                <div fxFlex="15"style="text-align:center;">
-                <!-- <button mat-raised-button class="accent" style="width: 100px;margin-top:30px;">Add </button><br>
-                <button mat-raised-button class="accent" style="width: 100px; margin-top:30px;"> Remove </button><br> -->
-                <button mat-raised-button class="accent"style="width: 100px;margin-top:30px;">Add all  </button><br>
-                <button mat-raised-button class="accent"style="width: 100px;margin-top:30px;"> Remove all</button>
-            </div>
-                <!-- </mat-card-content> -->
-        <!-- </mat-card> -->
-        <mat-card fxFlex="45"style="margin-left:4px;"class="mapping" style="background-color: aliceblue;" >
-            <p style="font-weight: bold;">Configured Screens</p>
-            <!-- <mat-card-title style="font-weight:lighter;">Configured Screens</mat-card-title> -->
-            <!-- <mat-card-subtitle style="fontweight: bold;">Configured Screens</mat-card-subtitle> -->
-
-            <mat-card-content class="card_content">
-                <div  *ngFor="let item of items">
-                <mat-checkbox (change)="unSelect(item, i)" style="margin-top:20px;" >{{item}}</mat-checkbox><br>
-            </div>
-                <!-- <mat-checkbox>Dashboard</mat-checkbox><br>
-                <mat-checkbox>User management</mat-checkbox><br> -->
-                <!-- <mat-selection-list #confscreens >
-                    <mat-list-option *ngFor="let confscreen of typesOfConfscreens"  style="font-size: 11px;;">
-                      {{confscreen}}
-                    </mat-list-option>
-                  </mat-selection-list> -->
-               
-                </mat-card-content>
-
-        </mat-card>
-        </div>
-       
-        <!-- <div fxLayout="row"fxLayoutAlign="space-between">
+            <mat-form-field appearance="outline" fxFlex="50"class="px-8">
+              <mat-label>Status</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let status of status" [value]="status.value">
+                  {{status.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
            
-            </div> -->
-    </div>
-<div >
-   
- 
-       <!-- <ul>
-      <li>
-        <div class="c-screenContainer u-displayOnly">
-          <span *ngFor="let item of selectedItems; let i = index" (click)="unSelect(item, i)">{{ item.name }}</span> 
-        </div>  
-      </li>      
-      
-     
-     <li>
-        <div class="c-screenContainer u-selectionScreen">
-          <span [class.u-removeScreen]="item.selected" (click)="select(item)" *ngFor="let item of items">{{ item.name }}</span> 
-        </div>  
-      </li>     
-    </ul> -->
-    <!-- <div class="c-actions">
-      <button *ngIf="selectedItems.length === screen.length" (click)="newGame()" class="c-btn">Refresh</button>
-    </div> -->
+          </div>
+
+          
+         
+          
+
+         
+
+
+          
+          <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
+              <mat-form-field appearance="outline" fxFlex>
+                  <mat-label>Description</mat-label>
+                  <textarea name="notes" formControlName="notes" matInput type="text" max-rows="1" value="  Has access to only interview schedule change screen interview schedule change screen">
+                  
+                  </textarea>
+              </mat-form-field>
+          </div>
+
+      </form>
+      <div class="container">
+
+        <mat-card fxFlex="48"class="mapping" style="background-color: aliceblue;    height: 170px;" >
+          <p style="font-weight: bold;">Available Screens</p>
+          <mat-card-content class="card_content">
+            <div  *ngFor="let screen of screens">
+            <mat-checkbox (change)="select(screen)" style="margin-top:20px;">{{screen}}</mat-checkbox><br>
+
+        </div>
+        <!-- <button mat-raised-button class="accent"style="width: 100px;margin-top:30px;">Add all  </button> -->
+        </mat-card-content>
+        <!-- <button mat-raised-button class="accent"style="width: 100px;">Add all  </button> -->
+        <!-- <mat-card-actions>
+          <button mat-raised-button class="accent"style="width: 100px;">Add all  </button>
+</mat-card-actions> -->
+        </mat-card>
+
+<div fxFlex="4">
+  
+  
 </div>
+<mat-card fxFlex="48" style="margin-left:4px;"class="mapping" style="background-color: aliceblue;    height: 170px;" >
+  <p style="font-weight: bold;">Configured Screens</p>
+  <!-- <mat-card-title style="font-weight:lighter;">Configured Screens</mat-card-title> -->
+  <!-- <mat-card-subtitle style="fontweight: bold;">Configured Screens</mat-card-subtitle> -->
 
-    
-    <!-- <dual-list [source]="source" [(destination)]="confirmed"></dual-list> -->
-    <!-- <dual-list [source]="source"  key="id" display="name"  [(destination)]="confirmed"></dual-list> -->
-            
+  <mat-card-content class="card_content">
+      <div  *ngFor="let item of items">
+      <mat-checkbox (change)="unSelect(item, i)" style="margin-top:20px;" >{{item}}</mat-checkbox><br>
+  </div>
+      <!-- <mat-checkbox>Dashboard</mat-checkbox><br>
+      <mat-checkbox>User management</mat-checkbox><br> -->
+      <!-- <mat-selection-list #confscreens >
+          <mat-list-option *ngFor="let confscreen of typesOfConfscreens"  style="font-size: 11px;;">
+            {{confscreen}}
+          </mat-list-option>
+        </mat-selection-list> -->
+        <!-- <button mat-raised-button class="accent"style="width: 100px;margin-top:30px;"> Remove all</button> -->
+      </mat-card-content>
+      <!-- <button mat-raised-button class="accent"style="width: 100px;"> Remove all</button> -->
+      <!-- <mat-card-actions>
+        <button mat-raised-button class="accent"style="width: 100px;">Add all  </button>
+</mat-card-actions> -->
+</mat-card>
+
+      </div>
       
-    </div>
+      <!-- <div fxLayout="row" fxLayoutAlign="start start" style="margin-top:10px;">
+        <div fxFlex="48">
+          <button mat-raised-button class="accent" style="width:100%;"> Add all</button>
+          </div>
+          
+<div fxFlex="4">
+  
+  
+</div>
+          <div fxFlex="48" >
+<button mat-raised-button class="accent" style="width:100%;">Remove all</button>
+          </div>
+        </div> -->
+  </div>
 
-    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+  <div mat-dialog-actions class="m-0 p-12" fxLayout="row" fxLayoutAlign="end center" >
 
-        <button *ngIf="action === 'edit'"
-                mat-button
-                class="mr-8"
-                (click)="matDialogRef.close(['delete',contactForm])"
-                aria-label="Delete"
-                matTooltip="Delete">
-            DELETE
-        </button>
+      <button *ngIf="action === 'edit'"
+      mat-raised-button color="accent"
+              class="mr-8"
+              (click)="matDialogRef.close(['delete',contactForm])"
+              aria-label="Delete"
+              matTooltip="Delete">
+          DELETE
+      </button>
 
-        <button *ngIf="action !== 'edit'"
-                mat-raised-button color="accent"
-                class="save-button"
-                (click)="matDialogRef.close(contactForm)"
-                [disabled]="contactForm.invalid"
-                aria-label="SAVE">
-            ADD
-        </button>
+      <button *ngIf="action !== 'edit'"
+              mat-raised-button color="accent"
+              class="save-button"
+              (click)="matDialogRef.close(contactForm)"
+              [disabled]="contactForm.invalid"
+              aria-label="SAVE">
+          ADD
+      </button>
 
-        <button *ngIf="action === 'edit'"
-                mat-button
-                class="save-button"
-                (click)="matDialogRef.close(['save',contactForm])"
-                [disabled]="contactForm.invalid"
-                aria-label="SAVE">
-            SAVE
-        </button>
+      <button *ngIf="action === 'edit'"
+      mat-raised-button color="accent"
+              class="save-button"
+              (click)="matDialogRef.close(['save',contactForm])"
+              [disabled]="contactForm.invalid"
+              aria-label="SAVE">
+          SAVE
+      </button>
 
-    </div>
+  </div>
 </div>

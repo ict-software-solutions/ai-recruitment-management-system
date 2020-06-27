@@ -25,10 +25,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         private fuseConfigService: FuseConfigService,
         private formBuilder: FormBuilder
     ) {
-        // Configure the layout
         this.fuseConfigService.config = LAYOUT_STRUCTURE;
-
-        // Set the private defaults
         this.unsubscribeAll = new Subject();
     }
  
