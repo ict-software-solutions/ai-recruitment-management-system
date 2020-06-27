@@ -33,8 +33,14 @@ export class AuthService {
 
   getUserById(access_token, userId) {
     const httpOptions = {
-      headers: new HttpHeaders({ 'Authorization': access_token })
+      headers: new HttpHeaders({ 'Authorization': 'Bearer ' + access_token })
     };
     return this.httpClient.get(apiURL.USER + '/' + userId, httpOptions);
+  }
+
+  logout() {
+    sessionStorage.clear();
+    localStorage.clear();
+    console.clear();
   }
 }

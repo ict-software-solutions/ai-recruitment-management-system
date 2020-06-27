@@ -5,7 +5,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { AirmsService } from 'app/service/airms.service';
 import { LogService } from 'app/service/shared/log.service';
-import { LAYOUT_STRUCTURE, LOGGED_IN_USER, LOG_LEVELS, LOG_MESSAGES, TROY_LOGO } from 'app/util/constants';
+import { LAYOUT_STRUCTURE, LOGGED_IN_USER, LOG_LEVELS, LOG_MESSAGES, TROY_LOGO, LOGGED_IN_USER_INFO } from 'app/util/constants';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../../service/auth.service';
 import Swal from 'sweetalert2';
@@ -36,19 +36,19 @@ export class LoginComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private router: Router,
         private airmsService: AirmsService,
-        private logService: LogService    ) {
+        private logService: LogService) {
         this.fuseConfigService.config = LAYOUT_STRUCTURE;
         const browserType = this.airmsService.getBrowserName();
         if (!browserType) {
-         const notSupportBrowser = {
-           title: '<strong>Unsupported Browser</strong>',
-           text: 'Please use latest version of “Firefox” or “Chrome”',
-         };
-         const areyousure = this.airmsService.swalOKButton(notSupportBrowser);
-         Swal.fire(areyousure).then(() => {
-           this.unsupportedBrowser = true;
-         });
-       }
+            const notSupportBrowser = {
+                title: '<strong>Unsupported Browser</strong>',
+                text: 'Please use latest version of “Firefox” or “Chrome”',
+            };
+            const areyousure = this.airmsService.swalOKButton(notSupportBrowser);
+            Swal.fire(areyousure).then(() => {
+                this.unsupportedBrowser = true;
+            });
+        }
     }
 
     ngOnInit(): void {
@@ -68,12 +68,22 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.airmsService.setSessionStorage(LOGGED_IN_USER, userInfo);
             this.getUserSubscription = this.authService.getUserById(res['token'], res['userId']).
                 subscribe(userDetails => {
-                    console.log(userDetails);
+                    let user_info = {
+                        userName: userDetails['userName'],
+                        userType: userDetails['userType'],
+                        profileImage: userDetails['profileImage'],
+                        emailAddress: userDetails['emailAddress'],
+                        company: userDetails['company'],
+                        firstName: userDetails['firstName'],
+                        lastName: userDetails['lastName'],
+                        lastLogin: userDetails['lastLogin']
+                    }
+                    this.airmsService.setSessionStorage(LOGGED_IN_USER_INFO, user_info)
                     this.logUserActivity('Login - fetch user', LOG_MESSAGES.SUCCESS);
                     this.router.navigate(['../../apps/dashboards/analytics']);
                     this.loginSubscription.unsubscribe();
                 }, error => {
-                    this.logService.logError(LOG_LEVELS.ERROR, 'Login page', 'On Fetch User',JSON.stringify(error));
+                    this.logService.logError(LOG_LEVELS.ERROR, 'Login page', 'On Fetch User', JSON.stringify(error));
                 });
         }, error => {
             if (error.error.message === 'Account Inactive. Please contact admin') {
@@ -114,5 +124,5 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.inActive = null;
         this.errorMessage = null;
     }
-   
+
 }

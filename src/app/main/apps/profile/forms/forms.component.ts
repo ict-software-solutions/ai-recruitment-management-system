@@ -4,14 +4,19 @@ import { Subject } from 'rxjs';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { userDetails } from 'app/models/user-details';
+import { LOGGED_IN_USER_INFO } from 'app/util/constants';
+import { AirmsService } from 'app/service/airms.service';
+import { DatePipe } from '@angular/common';
 @Component({
     selector: 'forms',
     templateUrl: './forms.component.html',
     styleUrls: ['./forms.component.scss']
 })
 export class FormsComponent implements OnInit, OnDestroy {
-    onFileSelected(event){
-console.log(event);
+    lastLogin: string;
+    onFileSelected(event) {
+        console.log(event);
     }
     form: FormGroup;
     dialogRef: any;
@@ -22,12 +27,17 @@ console.log(event);
     hide = true;
     private unsubscribeAll: Subject<any>;
     enableEdit = false;
-    showPasswordsection=false;
+    showPasswordsection = false;
+    userInfo: userDetails;
     // show1 = true;
 
     constructor(public dialog: MatDialog,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private datePipe: DatePipe,
+        private airmsService: AirmsService
     ) {
+        this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+        this.lastLogin = datePipe.transform(this.userInfo.lastLogin, 'MMM dd, yyyy hh:mm:ss a');
         this.unsubscribeAll = new Subject();
     }
 
@@ -56,7 +66,7 @@ console.log(event);
             .pipe(takeUntil(this.unsubscribeAll)).subscribe(() => {
                 this.form.get('passwordConfirm').updateValueAndValidity();
             });
-         
+
     }
     unsubscribe(subscription: Subscription) {
         if (subscription !== null && subscription !== undefined) {
@@ -67,19 +77,19 @@ console.log(event);
         this.unsubscribeAll.next();
         this.unsubscribeAll.complete();
     }
-    Edit(){
+    Edit() {
         console.log(this.enableEdit);
         this.enableEdit = !this.enableEdit;
-        console.log(this.enableEdit); 
+        console.log(this.enableEdit);
     }
- 
+
     changePassword(checked) {
-      
+
         console.log(this.showPasswordsection);
         this.showPasswordsection = !this.showPasswordsection;
         console.log(this.showPasswordsection);
-  }
-    
+    }
+
     getClipboardContent() {
         return window.navigator['clipboard'].readText();
     }

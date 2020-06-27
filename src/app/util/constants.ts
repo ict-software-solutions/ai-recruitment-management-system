@@ -11,6 +11,7 @@ export const apiURL = {
 export const TROY_LOGO = "assets/images/logos/troy.png";
 export const EMAIL_PATTERN = /^\w+([\.-]?\w+)*@\w+(\-]?\w+)*(\.-]?\w+)*(\.\w{2,3})+$/i;
 export const LOGGED_IN_USER = '$$AIRMS-USER$$';
+export const LOGGED_IN_USER_INFO = '$$AIRMS-USER-INFO$$';
 export const SIGNUP = '$$AIRMS-USER$$';
 export const LAYOUT_STRUCTURE = {
     layout: {

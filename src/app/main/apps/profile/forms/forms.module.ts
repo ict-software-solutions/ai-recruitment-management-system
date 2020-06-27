@@ -11,11 +11,12 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { RouterModule, Routes } from '@angular/router';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FormsComponent } from 'app/main/apps/profile/forms/forms.component';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {ClipboardModule} from '@angular/cdk/clipboard';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { DatePipe } from '@angular/common';
 const routes: Routes = [
     {
-        path     : 'forms',
+        path: 'forms',
         component: FormsComponent
     }
 ];
@@ -24,7 +25,7 @@ const routes: Routes = [
     declarations: [
         FormsComponent
     ],
-    imports     : [
+    imports: [
         RouterModule.forChild(routes),
         MatButtonModule,
         MatFormFieldModule,
@@ -39,14 +40,16 @@ const routes: Routes = [
         MatCheckboxModule,
         ClipboardModule
     ],
+    providers: [
+        DatePipe
+    ],
     exports: [
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule
-      ]
+    ]
 
 })
-export class UIFormsModule
-{
-   
+export class UIFormsModule {
+
 }

@@ -1,14 +1,19 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { takeUntil } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
-import * as _ from 'lodash';
-import Swal from 'sweetalert2';
-import { FuseConfigService } from '@fuse/services/config.service';
+import { Router } from '@angular/router';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { Subject, Subscription } from 'rxjs';
-import { navigation } from 'app/navigation/navigation';
+import { FuseConfigService } from '@fuse/services/config.service';
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
+import { TranslateService } from '@ngx-translate/core';
+import { userDetails } from 'app/models/user-details';
+import { navigation } from 'app/navigation/navigation';
+import { AirmsService } from 'app/service/airms.service';
+import { AuthService } from 'app/service/auth.service';
+import { LOGGED_IN_USER_INFO } from 'app/util/constants';
+import * as _ from 'lodash';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 // import {MatDialog} from '@angular/material/dialog';
 // import { ResetPasswordModule } from 'app/main/pages/authentication/reset-password/reset-password.module';
 // import { ResetPasswordComponent } from 'app/main/pages/authentication/reset-password/reset-password.component';
@@ -33,6 +38,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     WAITING_TIME = 1800;
     TIME_OUT = 300;
     alertMessages = [];
+    userInfo: userDetails;
     // Private
     private _unsubscribeAll: Subject<any>;
     toolbarSubscription: Subscription;
@@ -48,10 +54,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
         private idle: Idle,
+        private airmsService: AirmsService,
         private _translateService: TranslateService,
-        private keepalive: Keepalive
+        private keepalive: Keepalive,
+        private authService: AuthService,
+        private router: Router
         // public dialog: MatDialog
     ) {
+        this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
         // Set the defaults
         this.userStatusOptions = [
             {
@@ -181,6 +191,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.selectedLanguage = _.find(this.languages, { id: this._translateService.currentLang });
     }
 
+    logoutAIRMS() {
+        this.authService.logout();
+        this.router.navigate(['']);
+    }
+
     unsubscribe(subscription: Subscription) {
         if (subscription !== null && subscription !== undefined) {
             subscription.unsubscribe();
@@ -192,6 +207,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.unsubscribe(this.toolbarSubscription);
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
+        this.router = null;
+        this.authService = null;
     }
 
     // -----------------------------------------------------------------------------------------------------
