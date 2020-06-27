@@ -14,6 +14,7 @@
         <div fxLayout="row" fxLayoutAlign="start center">
 
           <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/apps/e-commerce/products'">
+            
             <mat-icon>arrow_back</mat-icon>
           </button>
 
@@ -36,12 +37,12 @@
         </div>
         <!-- / APP TITLE -->
 
-        <button mat-raised-button class="save-product-button" [disabled]="productForm.invalid" *ngIf="pageType ==='new'"
+        <!-- <button mat-raised-button class="save-product-button" [disabled]="productForm.invalid" *ngIf="pageType ==='new'"
           (click)="addProduct()">
           <span>Add</span>
-        </button>
+        </button> -->
         <button mat-raised-button style="margin-right:40px;" class="add-product-button fuse-white mt-24 mt-md-0">
-          <span>SAVE</span>
+          <span>Save</span>
         </button>
         <!-- <button mat-raised-button color="basic"
                     class="save-product-button"

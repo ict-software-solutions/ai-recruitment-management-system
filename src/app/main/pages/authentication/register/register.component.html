@@ -7,8 +7,16 @@
             <div class="title">Create an Account</div>
             <form name="registerForm" [formGroup]="registerForm" novalidate>
 
-
                 <mat-form-field appearance="outline">
+                    <mat-label>Account Type</mat-label>
+                    <mat-select formControlName="userType" required>
+                        <mat-option *ngFor="let account of accounts" [value]="account">
+                            {{account}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Account type is required</mat-error>
+                </mat-form-field>
+                <!-- <mat-form-field appearance="outline">
                     <mat-label>Account Type</mat-label>
                     <mat-select formControlName="accountType" required>
                         <mat-option *ngFor="let account of accounts" [value]="account">
@@ -16,7 +24,7 @@
                         </mat-option>
                     </mat-select>
                     <mat-error>Account type is required</mat-error>
-                </mat-form-field>
+                </mat-form-field> -->
 
                 <mat-form-field appearance="outline">
                     <mat-label>First Name</mat-label>

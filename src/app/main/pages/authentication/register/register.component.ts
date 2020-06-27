@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     buildRegisterForm() {
         return this.formBuilder.group({
-            accountType: ['', Validators.required],
+            userType: ['', Validators.required],
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
             email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
@@ -131,4 +131,3 @@ export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl):
     }
     return { passwordsNotMatching: true };
 };
-

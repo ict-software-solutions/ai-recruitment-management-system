@@ -87,7 +87,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
         this.userrole = null;
         this.ecommerceProductService = null;
         this.formBuilder = null;
-        location = null;
+        this.location = null;
         this.matSnackBar = null
     }
 

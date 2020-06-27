@@ -9,6 +9,7 @@ export class AuthService {
   constructor(private httpClient: HttpClient) { }
   signup(value) {
     const param = {
+      "userType":value.userType,
       "firstName": value.firstName,
       "userName": value.userName,
       "lastName": value.lastName,
