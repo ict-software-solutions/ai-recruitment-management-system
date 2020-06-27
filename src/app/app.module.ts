@@ -22,6 +22,8 @@ import { MatCardModule } from '@angular/material/card';
 import 'hammerjs';
 import { LogPublishersService } from './service/shared/log-publishers.service';
 import { LogService } from './service/shared/log.service';
+import { Keepalive, NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+
 
 const appRoutes: Routes = [
     {
@@ -77,7 +79,7 @@ const appRoutes: Routes = [
         FuseSidebarModule,
         FuseThemeOptionsModule,
         MatGridListModule,
-
+        NgIdleKeepaliveModule,
         // App modules
         LayoutModule,
         AppStoreModule,
@@ -88,7 +90,8 @@ const appRoutes: Routes = [
     ],
     providers: [
         LogService,
-        LogPublishersService
+        LogPublishersService,
+        Keepalive
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

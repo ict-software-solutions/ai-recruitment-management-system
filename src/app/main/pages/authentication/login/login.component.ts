@@ -8,6 +8,7 @@ import { LogService } from 'app/service/shared/log.service';
 import { LAYOUT_STRUCTURE, LOGGED_IN_USER, LOG_LEVELS, LOG_MESSAGES, TROY_LOGO } from 'app/util/constants';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../../service/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'login',
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     showResetContent = false;
     inActive = false;
     errorMessage = '';
+    unsupportedBrowser: boolean;
 
     constructor(
         private fuseConfigService: FuseConfigService,
@@ -34,8 +36,20 @@ export class LoginComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private router: Router,
         private airmsService: AirmsService,
-        private logService: LogService
-    ) { this.fuseConfigService.config = LAYOUT_STRUCTURE; }
+        private logService: LogService    ) {
+        this.fuseConfigService.config = LAYOUT_STRUCTURE;
+        const browserType = this.airmsService.getBrowserName();
+        if (!browserType) {
+         const notSupportBrowser = {
+           title: '<strong>Unsupported Browser</strong>',
+           text: 'Please use latest version of “Firefox” or “Chrome”',
+         };
+         const areyousure = this.airmsService.swalOKButton(notSupportBrowser);
+         Swal.fire(areyousure).then(() => {
+           this.unsupportedBrowser = true;
+         });
+       }
+    }
 
     ngOnInit(): void {
         this.loginForm = this.formBuilder.group({
@@ -59,7 +73,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                     this.router.navigate(['../../apps/dashboards/analytics']);
                     this.loginSubscription.unsubscribe();
                 }, error => {
-                    this.logService.logError(LOG_LEVELS.ERROR, 'Login page', 'On Fetch User', error);
+                    this.logService.logError(LOG_LEVELS.ERROR, 'Login page', 'On Fetch User',JSON.stringify(error));
                 });
         }, error => {
             if (error.error.message === 'Account Inactive. Please contact admin') {
@@ -100,4 +114,5 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.inActive = null;
         this.errorMessage = null;
     }
+   
 }

@@ -10,6 +10,7 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import { LoginComponent } from 'app/main/pages/authentication/login/login.component';
 // import {FormsModule} from '@angular/forms';
 
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 const routes = [
     {
         path: '/login',
@@ -33,7 +34,12 @@ const routes = [
         MatIconModule,
         MatInputModule,
         FuseSharedModule,
-        ReactiveFormsModule
-    ]
+        ReactiveFormsModule,
+        RecaptchaModule, 
+        RecaptchaFormsModule,
+    ],
+    entryComponents:[],
+    providers: [ ],
+    bootstrap: [LoginComponent]
 })
 export class LoginModule { }
