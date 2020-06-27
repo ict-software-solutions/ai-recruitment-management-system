@@ -5,10 +5,9 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { AirmsService } from 'app/service/airms.service';
 import { LogService } from 'app/service/shared/log.service';
-import { LAYOUT_STRUCTURE, LOGGED_IN_USER, LOG_LEVELS, TROY_LOGO, EMAIL_PATTERN } from 'app/util/constants';
+import { LAYOUT_STRUCTURE, LOGGED_IN_USER, LOG_LEVELS, LOG_MESSAGES, TROY_LOGO } from 'app/util/constants';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../../service/auth.service';
-import { url } from 'inspector';
 
 @Component({
     selector: 'login',
@@ -17,6 +16,7 @@ import { url } from 'inspector';
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
+
 export class LoginComponent implements OnInit, OnDestroy {
     loginForm: FormGroup;
     logoPath = TROY_LOGO;
@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     showResetContent = false;
     inActive = false;
     errorMessage = '';
+
     constructor(
         private fuseConfigService: FuseConfigService,
         private formBuilder: FormBuilder,
@@ -34,43 +35,46 @@ export class LoginComponent implements OnInit, OnDestroy {
         private router: Router,
         private airmsService: AirmsService,
         private logService: LogService
-    ) {
-        this.fuseConfigService.config = LAYOUT_STRUCTURE;
-    }
+    ) { this.fuseConfigService.config = LAYOUT_STRUCTURE; }
 
     ngOnInit(): void {
         this.loginForm = this.formBuilder.group({
-            email: ['aravindtsa@gmail.com', Validators.required],
+            userName: ['aravindtsa@gmail.com', Validators.required],
             password: ['testing', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
         });
     }
 
     login(value) {
+        this.logUserActivity('LOGIN', LOG_MESSAGES.CLICK);
         this.inActive = true;
         this.errorMessage = '';
         this.loginSubscription = this.authService.login(value).subscribe(res => {
-        const userInfo = { token: res['id'], userId: res['userId'] };
-        this.airmsService.setSessionStorage(LOGGED_IN_USER, userInfo);
-        this.getUserSubscription = this.authService.getUserById(res['id'], res['userId']).
+            this.logUserActivity('LOGIN', LOG_MESSAGES.SUCCESS);
+            const userInfo = { token: res['token'], userId: res['userId'] };
+            this.airmsService.setSessionStorage(LOGGED_IN_USER, userInfo);
+            this.getUserSubscription = this.authService.getUserById(res['token'], res['userId']).
                 subscribe(userDetails => {
                     console.log(userDetails);
+                    this.logUserActivity('Login - fetch user', LOG_MESSAGES.SUCCESS);
+                    this.router.navigate(['../../apps/dashboards/analytics']);
+                    this.loginSubscription.unsubscribe();
                 }, error => {
                     this.logService.logError(LOG_LEVELS.ERROR, 'Login page', 'On Fetch User', error);
                 });
-        this.router.navigate(['../../apps/dashboards/analytics']);
-        this.logService.logUserActivity(LOG_LEVELS.INFO, 'Login Page', 'Login');
         }, error => {
             if (error.error.message === 'Account Inactive. Please contact admin') {
-                this.errorMessage = "Account Inactive.Please contact admin"
+                this.errorMessage = error.error.message;
                 this.inActive = true;
-            }
-            else if (error.status === 400) {
-                console.log('Invalid Username or Password')
+            } else if (error.status === 400) {
                 this.invalidData = false;
             }
-
-            this.logService.logError(LOG_LEVELS.ERROR, 'Login page', 'On Try Login', error);
+            this.logUserActivity('Login Page', LOG_MESSAGES.FAILURE);
+            this.logService.logError(LOG_LEVELS.ERROR, 'Login page', 'On Try Login', JSON.stringify(error));
         });
+    }
+
+    logUserActivity(from, value) {
+        this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
     }
 
     unsubscribe(subscription: Subscription) {
@@ -78,6 +82,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             subscription.unsubscribe();
         }
     }
+
     ngOnDestroy() {
         // this.unsubscribe(this.loginSubscription);
         this.unsubscribe(this.getUserSubscription);
@@ -89,5 +94,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.router = null;
         this.airmsService = null;
         this.logService = null;
+        this.hide = null;
+        this.invalidData = null;
+        this.showResetContent = null;
+        this.inActive = null;
+        this.errorMessage = null;
     }
 }

@@ -3,15 +3,12 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
-import { LAYOUT_STRUCTURE, TROY_LOGO, EMAIL_PATTERN } from 'app/util/constants';
+import { LAYOUT_STRUCTURE, TROY_LOGO, EMAIL_PATTERN, LOG_LEVELS, LOG_MESSAGES } from 'app/util/constants';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { AuthService } from '../../../../service/auth.service';
+import { LogService } from 'app/service/shared/log.service';
 
-interface Account {
-    value: string;
-    viewValue: string;
-}
 @Component({
     selector: 'register',
     templateUrl: './register.component.html',
@@ -21,25 +18,21 @@ interface Account {
 })
 
 export class RegisterComponent implements OnInit, OnDestroy {
-    accounts: Account[] = [
-        { value: 'Client', viewValue: 'Client' },
-        { value: 'Candidate', viewValue: 'Candidate' }
-    ];
-
+    accounts = ['Client', 'Candidate'];
     registerForm: FormGroup;
     private unsubscribeAll: Subject<any>;
     logoPath = TROY_LOGO;
-    Authentication;
-    signupSubscription: Subscription;
     alreadyExist = false;
-    pattern = true;
     errorMessage = '';
     activationLink = false;
-       constructor(
+    signupSubscription: Subscription;
+
+    constructor(
         private fuseConfigService: FuseConfigService,
         private formBuilder: FormBuilder,
         private router: Router,
-        private authservice: AuthService       
+        private authservice: AuthService,
+        private logService: LogService
     ) {
         this.fuseConfigService.config = LAYOUT_STRUCTURE;
         this.unsubscribeAll = new Subject();
@@ -67,29 +60,33 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     register(value) {
+        this.logUserActivity('CREATE AN ACCOUNT', LOG_MESSAGES.CLICK);
         this.alreadyExist = false;
         this.activationLink = false;
         this.errorMessage = '';
-        this.signupSubscription = this.authservice.signup(value).subscribe((response: any) => {
+        this.signupSubscription = this.authservice.signup(value).subscribe(() => {
             this.activationLink = true;
+            this.logUserActivity('CREATE AN ACCOUNT', LOG_MESSAGES.SUCCESS);
         }, error => {
             if (error.error.message === "email already exists") {
                 this.errorMessage = 'Email already exists'
-                this.alreadyExist = true;
-
             }
             else if (error.error.message === "userName already exists") {
                 this.errorMessage = 'User name already exists'
-                this.alreadyExist = true;
             }
-            console.log(error)
-        }
-        );
-
+            this.alreadyExist = true;
+            this.logService.logError(LOG_LEVELS.ERROR, 'Register_Page', 'on Register user', JSON.stringify(error));
+            this.logUserActivity('CREATE AN ACCOUNT', LOG_MESSAGES.FAILURE);
+        });
     }
 
     cancel() {
         this.router.navigate(['']);
+        this.logUserActivity('CREATE AN ACCOUNT', LOG_MESSAGES.CANCEL);
+    }
+
+    logUserActivity(from, value) {
+        this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
     }
 
     unsubscribe(subscription: Subscription) {
@@ -106,6 +103,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.fuseConfigService = null;
         this.formBuilder = null;
         this.logoPath = null;
+        this.activationLink = null;
+        this.errorMessage = null;
+        this.alreadyExist = null;
+        this.router = null;
+        this.authservice = null;
+        this.logService = null;
+        this.accounts = null;
     }
 }
 

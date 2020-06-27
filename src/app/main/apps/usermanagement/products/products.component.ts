@@ -1,94 +1,75 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { DataSource } from '@angular/cdk/collections';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { DataSource } from '@angular/cdk/collections';
+import { fuseAnimations } from '@fuse/animations';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { FuseUtils } from '@fuse/utils';
+import { EcommerceProductsService } from 'app/main/apps/usermanagement/products/products.service';
 import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/internal/operators';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
-import { fuseAnimations } from '@fuse/animations';
-import { FuseUtils } from '@fuse/utils';
-
-import { EcommerceProductsService } from 'app/main/apps/usermanagement/products/products.service';
-import { takeUntil } from 'rxjs/internal/operators';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 @Component({
-    selector     : 'e-commerce-products',
-    templateUrl  : './products.component.html',
-    styleUrls    : ['./products.component.scss'],
-    animations   : fuseAnimations,
+    selector: 'e-commerce-products',
+    templateUrl: './products.component.html',
+    styleUrls: ['./products.component.scss'],
+    animations: fuseAnimations,
     encapsulation: ViewEncapsulation.None
 })
-export class EcommerceProductsComponent implements OnInit
-{
+
+export class EcommerceProductsComponent implements OnInit, OnDestroy {
+
     dataSource: FilesDataSource | null;
-    displayedColumns = ['image', 'username','userType','userRole','modified','active','action'];
-
-    @ViewChild(MatPaginator, {static: true})
-    paginator: MatPaginator;
-
-    @ViewChild(MatSort, {static: true})
-    sort: MatSort;
-
-    @ViewChild('filter', {static: true})
-    filter: ElementRef;
-    
+    displayedColumns = ['image', 'username', 'userType', 'userRole', 'modified', 'active', 'action'];
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+    @ViewChild(MatSort, { static: true }) sort: MatSort;
+    @ViewChild('filter', { static: true }) filter: ElementRef;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-    // Private
     private _unsubscribeAll: Subject<any>;
 
-    constructor(public dialog: MatDialog,
+    constructor(
+        public dialog: MatDialog,
         private _ecommerceProductsService: EcommerceProductsService,
-        public _matDialog: MatDialog,
-    )
-    {
-        // Set the private defaults
+        public _matDialog: MatDialog) {
         this._unsubscribeAll = new Subject();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         this.dataSource = new FilesDataSource(this._ecommerceProductsService, this.paginator, this.sort);
-
-        fromEvent(this.filter.nativeElement, 'keyup')
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(150),
-                distinctUntilChanged()
-            )
-            .subscribe(() => {
-                if ( !this.dataSource )
-                {
-                    return;
-                }
-
-                this.dataSource.filter = this.filter.nativeElement.value;
-            });
+        fromEvent(this.filter.nativeElement, 'keyup').pipe(
+            takeUntil(this._unsubscribeAll),
+            debounceTime(150),
+            distinctUntilChanged()
+        ).subscribe(() => {
+            if (!this.dataSource) { return; }
+            this.dataSource.filter = this.filter.nativeElement.value;
+        });
     }
-    deleteContact(): void
-    {
+
+    deleteContact(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
-  
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-  
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            // if ( result )
-            // {
-            //     this._contactsService.deleteContact(contact);
-            // }
+        this.confirmDialogRef.afterClosed().subscribe(() => {
             this.confirmDialogRef = null;
-        }
-        );
-  
+        });
+    }
+
+    ngOnDestroy() {
+        this._unsubscribeAll.next();
+        this._unsubscribeAll.complete();
+        this.dataSource = null;
+        this.displayedColumns = null;
+        this.paginator = null;
+        this.sort == null;
+        this.filter = null;
+        this.confirmDialogRef = null;
+        this.dialog = null;
+        this._ecommerceProductsService = null;
+        this._matDialog = null;
     }
 }
 
@@ -108,8 +89,7 @@ export class FilesDataSource extends DataSource<any>
         private _ecommerceProductsService: EcommerceProductsService,
         private _matPaginator: MatPaginator,
         private _matSort: MatSort
-    )
-    {
+    ) {
         super();
 
         this.filteredData = this._ecommerceProductsService.products;
@@ -120,8 +100,7 @@ export class FilesDataSource extends DataSource<any>
      *
      * @returns {Observable<any[]>}
      */
-    connect(): Observable<any[]>
-    {
+    connect(): Observable<any[]> {
         const displayDataChanges = [
             this._ecommerceProductsService.onProductsChanged,
             this._matPaginator.page,
@@ -132,18 +111,18 @@ export class FilesDataSource extends DataSource<any>
         return merge(...displayDataChanges)
             .pipe(
                 map(() => {
-                        let data = this._ecommerceProductsService.products.slice();
+                    let data = this._ecommerceProductsService.products.slice();
 
-                        data = this.filterData(data);
+                    data = this.filterData(data);
 
-                        this.filteredData = [...data];
+                    this.filteredData = [...data];
 
-                        data = this.sortData(data);
+                    data = this.sortData(data);
 
-                        // Grab the page's slice of data.
-                        const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
-                        return data.splice(startIndex, this._matPaginator.pageSize);
-                    }
+                    // Grab the page's slice of data.
+                    const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
+                    return data.splice(startIndex, this._matPaginator.pageSize);
+                }
                 ));
     }
 
@@ -152,24 +131,20 @@ export class FilesDataSource extends DataSource<any>
     // -----------------------------------------------------------------------------------------------------
 
     // Filtered data
-    get filteredData(): any
-    {
+    get filteredData(): any {
         return this._filteredDataChange.value;
     }
 
-    set filteredData(value: any)
-    {
+    set filteredData(value: any) {
         this._filteredDataChange.next(value);
     }
 
     // Filter
-    get filter(): string
-    {
+    get filter(): string {
         return this._filterChange.value;
     }
 
-    set filter(filter: string)
-    {
+    set filter(filter: string) {
         this._filterChange.next(filter);
     }
 
@@ -183,10 +158,8 @@ export class FilesDataSource extends DataSource<any>
      * @param data
      * @returns {any}
      */
-    filterData(data): any
-    {
-        if ( !this.filter )
-        {
+    filterData(data): any {
+        if (!this.filter) {
             return data;
         }
         return FuseUtils.filterArrayByString(data, this.filter);
@@ -198,10 +171,8 @@ export class FilesDataSource extends DataSource<any>
      * @param data
      * @returns {any[]}
      */
-    sortData(data): any[]
-    {
-        if ( !this._matSort.active || this._matSort.direction === '' )
-        {
+    sortData(data): any[] {
+        if (!this._matSort.active || this._matSort.direction === '') {
             return data;
         }
 
@@ -209,8 +180,7 @@ export class FilesDataSource extends DataSource<any>
             let propertyA: number | string = '';
             let propertyB: number | string = '';
 
-            switch ( this._matSort.active )
-            {
+            switch (this._matSort.active) {
                 case 'id':
                     [propertyA, propertyB] = [a.id, b.id];
                     break;
@@ -241,7 +211,6 @@ export class FilesDataSource extends DataSource<any>
     /**
      * Disconnect
      */
-    disconnect(): void
-    {
+    disconnect(): void {
     }
 }

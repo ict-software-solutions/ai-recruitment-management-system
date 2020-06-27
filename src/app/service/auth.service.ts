@@ -10,19 +10,15 @@ export class AuthService {
   signup(value) {
     const param = {
       "firstName": value.firstName,
-      "userName":value.userName,
-      "lastName":value.lastName,
+      "userName": value.userName,
+      "lastName": value.lastName,
       "emailAddress": value.email,
       "password": value.password
     }
     return this.httpClient.post(apiURL.SIGNUP_URL, param)
   }
 
-  login(value) {
-    const param = {
-      "userName": value.email,
-      "password": value.password
-    }
+  login(param) {
     return this.httpClient.post(apiURL.LOGIN_URL, param);
   }
 
@@ -30,7 +26,7 @@ export class AuthService {
     const param = {
       "emailAddress": value.email,
       "password": value.password,
-      'NewPassword':value.NewPassword
+      'NewPassword': value.NewPassword
     }
     return this.httpClient.post(apiURL.CHANGE_PASSWORD_URL, param);
   }

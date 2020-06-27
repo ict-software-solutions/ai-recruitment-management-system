@@ -4,8 +4,8 @@ import { environment } from 'environments/environment';
 export const apiURL = {
     'USER': environment.url + 'user',
     'LOGIN_URL': environment.url + 'user/login',
-    'SIGNUP_URL':environment.url + 'user/register',
-    'CHANGE_PASSWORD_URL':environment.url + 'user/resetPassword',
+    'SIGNUP_URL': environment.url + 'user/register',
+    'CHANGE_PASSWORD_URL': environment.url + 'user/resetPassword',
 }
 
 export const TROY_LOGO = "assets/images/logos/troy.png";
@@ -20,6 +20,21 @@ export const LAYOUT_STRUCTURE = {
         sidepanel: { hidden: true }
     }
 };
+
+export const LOG_MESSAGES = {
+    SUCCESS: 'Success',
+    FAILURE: 'Failure',
+    PREVIOUS: 'Previous',
+    NEXT: 'Next',
+    CLICK: 'Click',
+    TOGGLE: 'Toggle',
+    SHOW: 'Show',
+    HIDE: 'Hide',
+    SAVE: 'Save',
+    CANCEL: 'Cancel',
+    YES: 'Yes',
+    NO: 'No'
+}
 
 export const LOG_LEVELS = {
     INFO: 'info',

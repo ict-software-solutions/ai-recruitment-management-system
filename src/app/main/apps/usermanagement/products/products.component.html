@@ -8,13 +8,11 @@
     <div class="center">
 
         <!-- HEADER -->
-        <div class="header accent"
-             fxLayout="column" fxLayoutAlign="center center"
-             fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
+        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="space-between center">
 
             <!-- APP TITLE -->
-            <div class="logo mb-24 mb-md-0"
-                 fxLayout="row" fxLayoutAlign="start center">
+            <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
                 <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
                     account_circle
                 </mat-icon>
@@ -34,12 +32,11 @@
             <!-- / SEARCH -->
 
             <!-- ADD BUTTON -->
-            <button mat-raised-button
-                    [routerLink]="'/apps/e-commerce/products/new'"
-                    class="add-product-button fuse-white mt-24 mt-md-0">
+            <button mat-raised-button [routerLink]="'/apps/e-commerce/products/new'"
+                class="add-product-button fuse-white mt-24 mt-md-0">
                 <span>Add user</span>
             </button>.
-            
+
             <!-- / ADD BUTTON -->
 
         </div>
@@ -48,23 +45,19 @@
         <!-- CONTENT CARD -->
         <div class="content-card">
 
-            <mat-table class="products-table"
-                       #table [dataSource]="dataSource"
-                       matSort
-                       [@animateStagger]="{value:'50'}"
-                       fusePerfectScrollbar>
+            <mat-table class="products-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
+                fusePerfectScrollbar>
 
-              
+
 
                 <!-- Image Column -->
                 <ng-container matColumnDef="image" style="width: 200px;">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let product">
-                        <img class="product-image"
-                             *ngIf="product.featuredImageId" [alt]="product.name"
-                             [src]="product.images[product.featuredImageId].url"/>
+                        <img class="product-image" *ngIf="product.featuredImageId" [alt]="product.name"
+                            [src]="product.images[product.featuredImageId].url" />
                         <img *ngIf="!product.featuredImageId"
-                             [src]="'assets/images/ecommerce/product-image-placeholder.png'">
+                            [src]="'assets/images/ecommerce/product-image-placeholder.png'">
                     </mat-cell>
                 </ng-container>
 
@@ -82,63 +75,68 @@
                         <p class="text-truncate">{{product.modified}}</p>
                     </mat-cell>
                 </ng-container>
-<!--user Type-->
-<ng-container matColumnDef="userType">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>User Type</mat-header-cell>
-    <mat-cell *matCellDef="let product">
-        <p class="text-truncate">{{product.userType}}</p>
-    </mat-cell>
-</ng-container>
-
-<!--User Role-->
-<ng-container matColumnDef="userRole">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>User Role</mat-header-cell>
-    <mat-cell *matCellDef="let product">
-        <p class="text-truncate">{{product.userRole}}</p>
-    </mat-cell>
-</ng-container>
-        
-
-                <!-- Active Column -->
-                <ng-container matColumnDef="active"style="width: 200px;">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs> Status</mat-header-cell>
-                    <mat-cell *matCellDef="let product" fxHide fxShow.gt-xs>
-                        <mat-icon *ngIf="product.active" class="active-icon green-600 s-16"style="margin-left: 15px;">check</mat-icon>
-                        <mat-icon *ngIf="!product.active" class="active-icon red-500 s-16"style="margin-left: 15px;">close</mat-icon>
+                <!--user Type-->
+                <ng-container matColumnDef="userType">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>User Type</mat-header-cell>
+                    <mat-cell *matCellDef="let product">
+                        <p class="text-truncate">{{product.userType}}</p>
                     </mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="action" >
-                    <mat-header-cell *matHeaderCellDef mat-sort-header style="justify-content: center;" >Action</mat-header-cell>
+                <!--User Role-->
+                <ng-container matColumnDef="userRole">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>User Role</mat-header-cell>
+                    <mat-cell *matCellDef="let product">
+                        <p class="text-truncate">{{product.userRole}}</p>
+                    </mat-cell>
+                </ng-container>
+
+
+                <!-- Active Column -->
+                <ng-container matColumnDef="active" style="width: 200px;">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs> Status</mat-header-cell>
+                    <mat-cell *matCellDef="let product" fxHide fxShow.gt-xs>
+                        <mat-icon *ngIf="product.active" class="active-icon green-600 s-16" style="margin-left: 15px;">
+                            check</mat-icon>
+                        <mat-icon *ngIf="!product.active" class="active-icon red-500 s-16" style="margin-left: 15px;">
+                            close</mat-icon>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header style="justify-content: center;">Action
+                    </mat-header-cell>
                     <mat-cell *matCellDef="let product" style="justify-content: center;">
                         <!-- <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
                         (click)="$event.stopPropagation();">
                     <mat-icon class="secondary-text" style="color: #006699;">more_vert</mat-icon>
                 </button> -->
-                <!-- <mat-menu #moreMenu="matMenu"></mat-menu> -->
+                        <!-- <mat-menu #moreMenu="matMenu"></mat-menu> -->
                         <!-- <button mat-icon-button *ngIf="order.active"style="color:#42a1f5;background-color:white;"[routerLink]="'/apps/e-commerce/orders/'+order.id"><mat-icon>edit</mat-icon></button> -->
-                        <button mat-icon-button *ngIf="product.action"style="color:#42a1f5;" [routerLink]="'/apps/e-commerce/products/'+product.id+'/'+product.handle"><mat-icon>edit</mat-icon></button><span>
-                        <!-- <button mat-icon-button *ngIf="product.action" style="color:red;margin-left:5px"><mat-icon>delete</mat-icon></button></span>                             -->
-                        <button mat-icon-button color="accent" style=" color:red;background-color: white;" (click)="deleteContact()"><mat-icon>delete</mat-icon></button></span>
+                        <button mat-icon-button *ngIf="product.action" style="color:#42a1f5;"
+                            [routerLink]="'/apps/e-commerce/products/'+product.id+'/'+product.handle">
+                            <mat-icon>edit</mat-icon>
+                        </button><span>
+                            <!-- <button mat-icon-button *ngIf="product.action" style="color:red;margin-left:5px"><mat-icon>delete</mat-icon></button></span>                             -->
+                            <button mat-icon-button color="accent" style=" color:red;background-color: white;"
+                                (click)="deleteContact()">
+                                <mat-icon>delete</mat-icon>
+                            </button></span>
                         <!-- <mat-icon *ngIf="!product.active" class="active-icon red-500 s-16">close</mat-icon> -->
                     </mat-cell>
-                </ng-container> 
+                </ng-container>
 
                 <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
 
-                <mat-row *matRowDef="let product; columns: displayedColumns;"
-                         class="product">
-                         <!-- matRipple
+                <mat-row *matRowDef="let product; columns: displayedColumns;" class="product">
+                    <!-- matRipple
                          [routerLink]="'/apps/e-commerce/products/'+product.id+'/'+product.handle"> -->
                 </mat-row>
 
             </mat-table>
 
-            <mat-paginator #paginator
-                           [length]="dataSource.filteredData.length"
-                           [pageIndex]="0"
-                           [pageSize]="10"
-                           [pageSizeOptions]="[5, 10, 25, 100]">
+            <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 25, 100]">
             </mat-paginator>
 
         </div>
