@@ -13,14 +13,13 @@ import { Keepalive } from '@ng-idle/keepalive';
 // import { ResetPasswordModule } from 'app/main/pages/authentication/reset-password/reset-password.module';
 // import { ResetPasswordComponent } from 'app/main/pages/authentication/reset-password/reset-password.component';
 @Component({
-    selector     : 'toolbar',
-    templateUrl  : './toolbar.component.html',
-    styleUrls    : ['./toolbar.component.scss'],
+    selector: 'toolbar',
+    templateUrl: './toolbar.component.html',
+    styleUrls: ['./toolbar.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 
-export class ToolbarComponent implements OnInit, OnDestroy
-{
+export class ToolbarComponent implements OnInit, OnDestroy {
     horizontalNavbar: boolean;
     rightNavbar: boolean;
     hiddenNavbar: boolean;
@@ -31,8 +30,8 @@ export class ToolbarComponent implements OnInit, OnDestroy
     idleState = 'Not started.';
     timedOut = false;
     lastPing?: Date = null;
-    WAITING_TIME = 50;
-    TIME_OUT = 50;
+    WAITING_TIME = 1800;
+    TIME_OUT = 300;
     alertMessages = [];
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -52,47 +51,46 @@ export class ToolbarComponent implements OnInit, OnDestroy
         private _translateService: TranslateService,
         private keepalive: Keepalive
         // public dialog: MatDialog
-    )
-    {
+    ) {
         // Set the defaults
         this.userStatusOptions = [
             {
                 title: 'Online',
-                icon : 'icon-checkbox-marked-circle',
+                icon: 'icon-checkbox-marked-circle',
                 color: '#4CAF50'
             },
             {
                 title: 'Away',
-                icon : 'icon-clock',
+                icon: 'icon-clock',
                 color: '#FFC107'
             },
             {
                 title: 'Do not Disturb',
-                icon : 'icon-minus-circle',
+                icon: 'icon-minus-circle',
                 color: '#F44336'
             },
             {
                 title: 'Invisible',
-                icon : 'icon-checkbox-blank-circle-outline',
+                icon: 'icon-checkbox-blank-circle-outline',
                 color: '#BDBDBD'
             },
             {
                 title: 'Offline',
-                icon : 'icon-checkbox-blank-circle-outline',
+                icon: 'icon-checkbox-blank-circle-outline',
                 color: '#616161'
             }
         ];
 
         this.languages = [
             {
-                id   : 'en',
+                id: 'en',
                 title: 'English',
-                flag : 'us'
+                flag: 'us'
             },
             {
-                id   : 'tr',
+                id: 'tr',
                 title: 'Turkish',
-                flag : 'tr'
+                flag: 'tr'
             }
         ];
 
@@ -105,48 +103,48 @@ export class ToolbarComponent implements OnInit, OnDestroy
         idle.setTimeout(this.TIME_OUT);
         // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
         idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
-    
+
         idle.onIdleEnd.subscribe(() => {
-          this.reset();
-          this.idleState = 'No longer idle.';
+            this.reset();
+            this.idleState = 'No longer idle.';
         });
         idle.onTimeout.subscribe(() => {
-          this.idleState = 'Timed out!';
-          this.timedOut = true;
-        //   Swal.close();
-         
-        //   this.authService.logout();
-        //   this.logUserActivity('Session Expired', 'Auto Sign Out');
+            this.idleState = 'Timed out!';
+            this.timedOut = true;
+            //   Swal.close();
+
+            //   this.authService.logout();
+            //   this.logUserActivity('Session Expired', 'Auto Sign Out');
         });
         idle.onIdleStart.subscribe(() => {
-          this.idleState = 'You\'ve gone idle!';
-          this.showSessionLogoutDialog();
+            this.idleState = 'You\'ve gone idle!';
+            this.showSessionLogoutDialog();
         });
         idle.onTimeoutWarning.subscribe((countdown) => {
-          this.idleState = 'You will time out in ' + countdown + ' seconds!';
+            this.idleState = 'You will time out in ' + countdown + ' seconds!';
         });
-    
+
         // sets the ping interval to 15 seconds
         keepalive.interval(15);
-    
+
         keepalive.onPing.subscribe(() => {
-          this.lastPing = new Date();
+            this.lastPing = new Date();
         });
         this.reset();
-      
-      }
-    
-      reset() {
+
+    }
+
+    reset() {
         this.idle.setIdle(this.WAITING_TIME);
         this.idle.setTimeout(this.TIME_OUT);
         this.idle.watch();
         this.keepalive.interval(15);
         this.idleState = 'Started.';
         this.timedOut = false;
-      }
-    
-      showSessionLogoutDialog(){
-        Swal.fire ( {
+    }
+
+    showSessionLogoutDialog() {
+        Swal.fire({
             title: '<strong>Session expiring in 5 mins</strong>',
             text: 'Do you want to continue?',
             imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT5Z6V4WR3CdGzUrLsipzkE4X8uyJR9_RFbhpgGA0tWAezR2_O9&usqp=CAU',
@@ -155,7 +153,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
             confirmButtonText: 'Extend',
             cancelButtonText: 'No'
         });
-      }
+    }
     //   title: 'Sweet!',
     //     text: 'Modal with a custom image.',
     //     imageUrl: 'https://unsplash.it/400/200',
@@ -169,8 +167,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Subscribe to the config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
@@ -181,7 +178,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
             });
 
         // Set the selected language from default languages
-        this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
+        this.selectedLanguage = _.find(this.languages, { id: this._translateService.currentLang });
     }
 
     unsubscribe(subscription: Subscription) {
@@ -190,8 +187,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
         }
     }
 
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this.unsubscribe(this.toolbarSubscription);
         this._unsubscribeAll.next();
@@ -207,8 +203,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
      *
      * @param key
      */
-    toggleSidebarOpen(key): void
-    {
+    toggleSidebarOpen(key): void {
         this._fuseSidebarService.getSidebar(key).toggleOpen();
     }
 
@@ -217,8 +212,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
      *
      * @param value
      */
-    search(value): void
-    {
+    search(value): void {
         // Do your search here...
         console.log(value);
     }
@@ -228,8 +222,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
      *
      * @param lang
      */
-    setLanguage(lang): void
-    {
+    setLanguage(lang): void {
         // Set the selected language for the toolbar
         this.selectedLanguage = lang;
 
@@ -238,10 +231,10 @@ export class ToolbarComponent implements OnInit, OnDestroy
     }
     // openDialog() {
     //     const dialogRef = this.dialog.open(ResetPasswordComponent);
-    
+
     //     dialogRef.afterClosed().subscribe(result => {
     //       console.log(`Dialog result: ${result}`);
     //     });
     //   }
 }
-export class ResetPasswordComponent {}
+export class ResetPasswordComponent { }
