@@ -81,7 +81,7 @@ width:900px;
       .mat-grid-tile{
         //   height:90px;
           border: unset;
-        
+          box-shadow: -5px 15px 22px rgba(0, 0, 0, 0.3);
           .mat-raised-button {
             height: 90px;
             width: 188px;
@@ -92,8 +92,15 @@ width:900px;
       .tik{
           float: right;
           font-size: small;
-          margin-right: -15px;
+          margin-right: -10px;
       }
+      .blue{
+        background-color: blue;
+    }
+    
+    .white {
+        background-color:white;
+    }
     // ul {
     //     margin:0;
     //     padding:0;

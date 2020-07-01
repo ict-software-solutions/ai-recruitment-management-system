@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Contact } from 'app/main/apps/contacts/contact.model';
 import { usertype } from 'app/models/user-type';
-
 @Component({
   selector: 'contacts-contact-form-dialog',
   templateUrl: './contact-form.component.html',
@@ -30,6 +29,12 @@ export class ContactsContactFormDialogComponent {
   selectpro = false;
   selectuser = false;
   selectrole = false;
+  toggle1 = true;
+  toggle2 = true;
+  toggle3 = true;
+  toggle4 = true;
+  toggle5 = true;
+
   constructor(
     public matDialogRef: MatDialogRef<ContactsContactFormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private _data: any,
@@ -78,18 +83,24 @@ export class ContactsContactFormDialogComponent {
 
   selectdashboard() {
     this.selectdash = !this.selectdash;
+    this.toggle1 = !this.toggle1;
+    // this.status = this.toggle ? 'Enable' : 'Disable';
   }
   selectcalander() {
     this.selectcal = !this.selectcal;
+    this.toggle2 = !this.toggle2;
   }
   selectProfile() {
     this.selectpro = !this.selectpro;
+    this.toggle3= !this.toggle3;
   }
   userManagement() {
     this.selectuser = !this.selectuser;
+    this.toggle4= !this.toggle4;
   }
   rolemanagement() {
     this.selectrole = !this.selectrole;
+    this.toggle5= !this.toggle5;
   }
   createContactForm(): FormGroup {
     return this._formBuilder.group({

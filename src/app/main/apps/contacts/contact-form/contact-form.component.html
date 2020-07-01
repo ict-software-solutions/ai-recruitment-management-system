@@ -69,35 +69,38 @@
                 margin-bottom: 9px;
                 margin-top: -9px;">Role Mapping</div>
                 
-            <mat-grid-list cols="2" rowHeight="2:1"  [gutterSize]="'20px'">
+            <mat-grid-list cols="2" rowHeight="2:1"  [gutterSize]="'30px'" style="margin-left: 12px;
+            margin-right: 12px;">
                 <mat-grid-tile>
                     <div >
-                        <button mat-raised-button color="accent" (click)="selectdashboard()">Dashboard<span class="tik"  *ngIf="selectdash"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>dashboard</mat-icon></span>
+                        <button mat-raised-button  (click)="selectdashboard()"   [ngClass]="{'white' : toggle1, 'blue': !toggle1}">Dashboard<span class="tik"  *ngIf="selectdash"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>dashboard</mat-icon></span>
                          
                         </button>
                     </div>
                 </mat-grid-tile>
                 <mat-grid-tile>
                     <div >
-                        <button mat-raised-button color="accent"  (click)="selectcalander()">Calendar<span class="tik" *ngIf="selectcal "><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>today</mat-icon></span></button>
+                        <button mat-raised-button  (click)="selectcalander()"  [ngClass]="{'white' : toggle2, 'blue': !toggle2}">Calendar<span class="tik" *ngIf="selectcal "><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>today</mat-icon></span></button>
                     </div>
                 </mat-grid-tile>
                <mat-grid-tile>
                     <div >
-                        <button mat-raised-button color="accent"  (click)="selectProfile()">Edit Profile<span class="tik" *ngIf="selectpro"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>edit</mat-icon></span></button>
+                        <button mat-raised-button  (click)="selectProfile()"  [ngClass]="{'white' : toggle3, 'blue': !toggle3}">Edit Profile<span class="tik" *ngIf="selectpro"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>edit</mat-icon></span></button>
                     </div>
                 </mat-grid-tile>
                <mat-grid-tile>
                     <div >
-                        <button mat-raised-button color="accent"  (click)="userManagement()">User Management<span class="tik" *ngIf="selectuser"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>account_circle</mat-icon></span></button>
+                        <button mat-raised-button (click)="userManagement()"  [ngClass]="{'white' : toggle4, 'blue': !toggle4}">User Management<span class="tik" *ngIf="selectuser"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>account_circle</mat-icon></span></button>
                     </div>
                 </mat-grid-tile>
               
             <mat-grid-tile>  <div >
-                    <button mat-raised-button color="accent"  (click)="rolemanagement()">Role Management<span class="tik" *ngIf="selectrole"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>check_circle</mat-icon></span></button>
+                    <button mat-raised-button   (click)="rolemanagement()" [ngClass]="{'white' : toggle5, 'blue': !toggle5}">Role Management<span class="tik" *ngIf="selectrole"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>check_circle</mat-icon></span></button>
                 </div></mat-grid-tile>
+               
+
                     <mat-grid-tile>  <div >
-                    <button mat-raised-button color="accent">Add<span><br><mat-icon>add_cicle</mat-icon></span></button>
+                    <button mat-raised-button color="basic">Add<span><br><mat-icon>add_cicle</mat-icon></span></button>
                 </div></mat-grid-tile> 
                 <!-- <mat-grid-tile>5</mat-grid-tile>
                 <mat-grid-tile>6</mat-grid-tile> -->

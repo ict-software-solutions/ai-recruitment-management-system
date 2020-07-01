@@ -5,10 +5,15 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { takeUntil } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { userDetails } from 'app/models/user-details';
-import { LOGGED_IN_USER_INFO } from 'app/util/constants';
+
+import { LOGGED_IN_USER_INFO, SIGNUP } from 'app/util/constants';
 import { AirmsService } from 'app/service/airms.service';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
+import { UserService } from 'app/service/user.service';
+import { userInfo } from 'os';
+
+// import { UserService } from './user.service';
 let $:any;
   
 @Component({
@@ -33,21 +38,40 @@ export class FormsComponent implements OnInit, OnDestroy {
     showPasswordsection = false;
     check = false;
     userInfo: userDetails;
+    user:userDetails;
     confirmDialogs: any;
     contactProfilePic: any;
     $:any;
+    userProfileUpdateSubscription:Subscription;
+    isLoading: false;
+  
   
     // show1 = true;
 
-    constructor(public dialog: MatDialog,
+    constructor(private userService:UserService,
+        public dialog: MatDialog,
         private _formBuilder: FormBuilder,
         private datePipe: DatePipe,
         private airmsService: AirmsService,
    
     ) {
         this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+        this.user = airmsService.getSessionStorage(SIGNUP)
+        console.log("LOGGED_IN_USER_INFO",this.userInfo);
         this.lastLogin = datePipe.transform(this.userInfo.lastLogin, 'MMM dd, yyyy hh:mm:ss a');
         this.unsubscribeAll = new Subject();
+        this.userProfileUpdateSubscription=this.userService.userProfileUpdated$.subscribe(res =>{
+            console.log("res",this.user);
+        console.log("res");
+            if(res !== null){
+             
+              this.form.patchValue(res);
+              
+               
+            }
+            
+        });
+        
     }
 
     ngOnInit() {
@@ -55,7 +79,7 @@ export class FormsComponent implements OnInit, OnDestroy {
             firstName: ['', Validators.required],
             secondName: ['', Validators.required],
             lastName: ['', Validators.required],
-            email: ['', Validators.required],
+            emailAddress: ['', Validators.required],
             mobile: ['', Validators.required],
             companyname: ['', Validators.required],
             position: ['', Validators.required],
@@ -77,26 +101,7 @@ export class FormsComponent implements OnInit, OnDestroy {
             });
 
     }
-    // register(value) {
-    //     this.logUserActivity('CREATE AN ACCOUNT', LOG_MESSAGES.CLICK);
-    //     this.alreadyExist = false;
-    //     this.activationLink = false;
-    //     this.errorMessage = '';
-    //     this.signupSubscription = this.authservice.signup(value).subscribe(() => {
-    //         this.activationLink = true;
-    //         this.logUserActivity('CREATE AN ACCOUNT', LOG_MESSAGES.SUCCESS);
-    //     }, error => {
-    //         if (error.error.message === "email already exists") {
-    //             this.errorMessage = 'Email already exists'
-    //         }
-    //         else if (error.error.message === "userName already exists") {
-    //             this.errorMessage = 'User name already exists'
-    //         }
-    //         this.alreadyExist = true;
-    //         this.logService.logError(LOG_LEVELS.ERROR, 'Register_Page', 'on Register user', JSON.stringify(error));
-    //         this.logUserActivity('CREATE AN ACCOUNT', LOG_MESSAGES.FAILURE);
-    //     });
-    // }
+
     unsubscribe(subscription: Subscription) {
         if (subscription !== null && subscription !== undefined) {
             subscription.unsubscribe();
@@ -126,7 +131,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         if (imageDetails.size > 30000 && !imageDetails.type.includes('jpg') && !imageDetails.type.includes('jpeg')) {
           const swalObject = {
             title: '<strong>Invalid Image Found</strong>',
-            text: 'Please upload a profile picture, jpg or jpeg, with size less than 30KB.',
+            text: 'Please upload a profile picture, jpg or jpeg, with size less than 8MB.',
           };
           const areYouSure = this.airmsService.swalOKButton(swalObject);
           Swal.fire(areYouSure).then(() => { });

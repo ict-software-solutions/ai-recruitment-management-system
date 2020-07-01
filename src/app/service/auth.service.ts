@@ -13,7 +13,7 @@ export class AuthService {
       "firstName": value.firstName,
       "userName": value.userName,
       "lastName": value.lastName,
-      "emailAddress": value.email,
+      "emailAddress": value.emailAddress,
       "password": value.password
     }
     return this.httpClient.post(apiURL.SIGNUP_URL, param)
@@ -23,14 +23,33 @@ export class AuthService {
     return this.httpClient.post(apiURL.LOGIN_URL, param);
   }
 
-  changePassword(value) {
-    const param = {
-      "emailAddress": value.email,
-      "password": value.password,
-      'NewPassword': value.NewPassword
-    }
-    return this.httpClient.post(apiURL.CHANGE_PASSWORD_URL, param);
+  // changePassword(value) {
+  //   const param = {
+  //     "emailAddress": value.email,
+  //     "password": value.password,
+  //     'NewPassword': value.NewPassword
+  //   }
+  //   return this.httpClient.post(apiURL.CHANGE_PASSWORD_URL, param);
+  // }
+edituser(value){
+  const param = {
+    "firstName": value.firstName,
+    "middleName": value.middleName,
+    "lastName": value.lastName,
+    "emailAddress": value.emailAddress,
+    "mobileNumber": value.mobile,
+    "company":value.company ,
+    "address": value.address,
+    "city": value.city,
+    "state": value.state,
+    "postalCode":value.postalCode,
+    "password": value.password,
+    "newPassword": value.newPassword
   }
+  return this.httpClient.post(apiURL.EDITUSER_URL, param)
+}
+
+
 
   getUserById(access_token, userId) {
     const httpOptions = {
