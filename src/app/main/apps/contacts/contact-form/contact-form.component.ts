@@ -24,7 +24,12 @@ export class ContactsContactFormDialogComponent {
   contactForm: FormGroup;
   dialogTitle: string;
   labelPosition: 'before' | 'after' = 'after';
-
+  selected = false;
+  selectdash = false;
+  selectcal = false;
+  selectpro = false;
+  selectuser = false;
+  selectrole = false;
   constructor(
     public matDialogRef: MatDialogRef<ContactsContactFormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private _data: any,
@@ -71,14 +76,28 @@ export class ContactsContactFormDialogComponent {
     }
   }
 
+  selectdashboard() {
+    this.selectdash = !this.selectdash;
+  }
+  selectcalander() {
+    this.selectcal = !this.selectcal;
+  }
+  selectProfile() {
+    this.selectpro = !this.selectpro;
+  }
+  userManagement() {
+    this.selectuser = !this.selectuser;
+  }
+  rolemanagement() {
+    this.selectrole = !this.selectrole;
+  }
   createContactForm(): FormGroup {
     return this._formBuilder.group({
       id: [this.contact.id],
       name: [this.contact.name],
       lastName: [this.contact.lastName],
       avatar: [this.contact.avatar],
-      nickname: [this.contact.nickname],
-      company: [this.contact.company],
+      nickname: [this.contact.nickname], company: [this.contact.company],
       jobTitle: [this.contact.jobTitle],
       email: [this.contact.email],
       phone: [this.contact.phone],

@@ -26,31 +26,93 @@
   </mat-toolbar>
 
   <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+    <div class="container">
+    <div fxFlex="50" style="height:380px;">
+<mat-card style="height: 360px;">
+ <form [formGroup]="contactForm">
+    <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
+              <mat-form-field appearance="outline" fxFlex="100">
+                  <mat-label>Role Name</mat-label>
+                  <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                  <input formControlName="vacancies" matInput>
+              </mat-form-field>
+    </div>
+              <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
+            <mat-form-field appearance="outline" fxFlex="100">
+              <mat-label>Status</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let status of status" [value]="status.value">
+                  {{status.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+              </div>
+          
+          
+          <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
+              <mat-form-field appearance="outline" fxFlex ="100">
+                  <mat-label>Description</mat-label>
+                  <textarea name="notes" formControlName="notes" matInput type="text" max-rows="5" value="  Has access to only interview schedule change screen interview schedule change screen">
+                  
+                  </textarea>
+              </mat-form-field>
+          </div>
 
-      <form [formGroup]="contactForm">
+      </form>
+    </mat-card>
+    </div>
 
-         
+        <div fxFlex="50" style="height:380px; margin-left:10px;">
+         <mat-card style="height: 360px;background-color: aliceblue;">  
         
-         
-
-         
+                <div style="text-align: center;    text-align: center;
+                margin-bottom: 9px;
+                margin-top: -9px;">Role Mapping</div>
+                
+            <mat-grid-list cols="2" rowHeight="2:1"  [gutterSize]="'20px'">
+                <mat-grid-tile>
+                    <div >
+                        <button mat-raised-button color="accent" (click)="selectdashboard()">Dashboard<span class="tik"  *ngIf="selectdash"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>dashboard</mat-icon></span>
+                         
+                        </button>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div >
+                        <button mat-raised-button color="accent"  (click)="selectcalander()">Calendar<span class="tik" *ngIf="selectcal "><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>today</mat-icon></span></button>
+                    </div>
+                </mat-grid-tile>
+               <mat-grid-tile>
+                    <div >
+                        <button mat-raised-button color="accent"  (click)="selectProfile()">Edit Profile<span class="tik" *ngIf="selectpro"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>edit</mat-icon></span></button>
+                    </div>
+                </mat-grid-tile>
+               <mat-grid-tile>
+                    <div >
+                        <button mat-raised-button color="accent"  (click)="userManagement()">User Management<span class="tik" *ngIf="selectuser"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>account_circle</mat-icon></span></button>
+                    </div>
+                </mat-grid-tile>
+              
+            <mat-grid-tile>  <div >
+                    <button mat-raised-button color="accent"  (click)="rolemanagement()">Role Management<span class="tik" *ngIf="selectrole"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>check_circle</mat-icon></span></button>
+                </div></mat-grid-tile>
+                    <mat-grid-tile>  <div >
+                    <button mat-raised-button color="accent">Add<span><br><mat-icon>add_cicle</mat-icon></span></button>
+                </div></mat-grid-tile> 
+                <!-- <mat-grid-tile>5</mat-grid-tile>
+                <mat-grid-tile>6</mat-grid-tile> -->
+              </mat-grid-list>
+            </mat-card>
+            </div>
+</div>
+      <!-- <form [formGroup]="contactForm">
           <div fxLayout="row" fxLayoutAlign="start start">
               <mat-form-field appearance="outline" fxFlex="50">
                   <mat-label>Role Name</mat-label>
                   <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                   <input formControlName="vacancies" matInput>
               </mat-form-field>
-              <!-- <div fxFlex="45"  class="px-8">
-                <section class="example-section" style="margin-top: 20px;margin-left: 29px;">
-                    <label class="example-margin">Account Status:</label>
-
-                    <mat-radio-group [(ngModel)]="labelPosition">
-                      <mat-radio-button class="example-margin" value="after">Activated</mat-radio-button>
-                      <mat-radio-button class="example-margin"  value="before">Locked</mat-radio-button>
-                    </mat-radio-group>
-                  </section>  
-                
-            </div> -->
+            
             <mat-form-field appearance="outline" fxFlex="50"class="px-8">
               <mat-label>Status</mat-label>
               <mat-select>
@@ -61,14 +123,6 @@
             </mat-form-field>
            
           </div>
-
-          
-         
-          
-
-         
-
-
           
           <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
               <mat-form-field appearance="outline" fxFlex>
@@ -79,9 +133,9 @@
               </mat-form-field>
           </div>
 
-      </form>
-      <div class="container">
-
+      </form> -->
+      <!-- <div class="container"> -->
+<!-- 
         <mat-card fxFlex="48"class="mapping" style="background-color: aliceblue;    height: 170px;" >
           <p style="font-weight: bold;">Available Screens</p>
           <mat-card-content class="card_content">
@@ -89,57 +143,30 @@
             <mat-checkbox (change)="select(screen)" style="margin-top:20px;">{{screen}}</mat-checkbox><br>
 
         </div>
-        <!-- <button mat-raised-button class="accent"style="width: 100px;margin-top:30px;">Add all  </button> -->
         </mat-card-content>
-        <!-- <button mat-raised-button class="accent"style="width: 100px;">Add all  </button> -->
-        <!-- <mat-card-actions>
-          <button mat-raised-button class="accent"style="width: 100px;">Add all  </button>
-</mat-card-actions> -->
-        </mat-card>
+    
+        </mat-card> -->
 
-<div fxFlex="4">
+<!-- <div fxFlex="4"> -->
   
   
-</div>
-<mat-card fxFlex="48" style="margin-left:4px;"class="mapping" style="background-color: aliceblue;    height: 170px;" >
+<!-- </div> -->
+<!-- <mat-card fxFlex="48" style="margin-left:4px;"class="mapping" style="background-color: aliceblue;    height: 170px;" >
   <p style="font-weight: bold;">Configured Screens</p>
-  <!-- <mat-card-title style="font-weight:lighter;">Configured Screens</mat-card-title> -->
-  <!-- <mat-card-subtitle style="fontweight: bold;">Configured Screens</mat-card-subtitle> -->
+  
 
   <mat-card-content class="card_content">
       <div  *ngFor="let item of items">
       <mat-checkbox (change)="unSelect(item, i)" style="margin-top:20px;" >{{item}}</mat-checkbox><br>
   </div>
-      <!-- <mat-checkbox>Dashboard</mat-checkbox><br>
-      <mat-checkbox>User management</mat-checkbox><br> -->
-      <!-- <mat-selection-list #confscreens >
-          <mat-list-option *ngFor="let confscreen of typesOfConfscreens"  style="font-size: 11px;;">
-            {{confscreen}}
-          </mat-list-option>
-        </mat-selection-list> -->
-        <!-- <button mat-raised-button class="accent"style="width: 100px;margin-top:30px;"> Remove all</button> -->
+     
       </mat-card-content>
-      <!-- <button mat-raised-button class="accent"style="width: 100px;"> Remove all</button> -->
-      <!-- <mat-card-actions>
-        <button mat-raised-button class="accent"style="width: 100px;">Add all  </button>
-</mat-card-actions> -->
-</mat-card>
+     
+</mat-card> -->
 
-      </div>
+      <!-- </div> -->
       
-      <!-- <div fxLayout="row" fxLayoutAlign="start start" style="margin-top:10px;">
-        <div fxFlex="48">
-          <button mat-raised-button class="accent" style="width:100%;"> Add all</button>
-          </div>
-          
-<div fxFlex="4">
-  
-  
-</div>
-          <div fxFlex="48" >
-<button mat-raised-button class="accent" style="width:100%;">Remove all</button>
-          </div>
-        </div> -->
+     
   </div>
 
   <div mat-dialog-actions class="m-0 p-12" fxLayout="row" fxLayoutAlign="end center" >
