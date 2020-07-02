@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { AirmsService } from 'app/service/airms.service';
@@ -9,7 +9,9 @@ import { LAYOUT_STRUCTURE, LOGGED_IN_USER, LOG_LEVELS, LOG_MESSAGES, TROY_LOGO, 
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../../service/auth.service';
 import Swal from 'sweetalert2';
-
+export interface DialogData {
+    displayMessage: string;
+}
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
@@ -19,6 +21,7 @@ import Swal from 'sweetalert2';
 })
 
 export class LoginComponent implements OnInit, OnDestroy {
+    displayMessage: string;
     loginForm: FormGroup;
     logoPath = TROY_LOGO;
     hide = true;
@@ -29,13 +32,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     inActive = false;
     errorMessage = '';
     unsupportedBrowser: boolean;
-
+    status = "";
     constructor(
         private fuseConfigService: FuseConfigService,
         private formBuilder: FormBuilder,
         private authService: AuthService,
         private router: Router,
         private airmsService: AirmsService,
+        private route: ActivatedRoute,
         private logService: LogService) {
         this.fuseConfigService.config = LAYOUT_STRUCTURE;
         const browserType = this.airmsService.getBrowserName();
@@ -49,6 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 this.unsupportedBrowser = true;
             });
         }
+
     }
 
     ngOnInit(): void {
@@ -56,6 +61,17 @@ export class LoginComponent implements OnInit, OnDestroy {
             userName: ['', Validators.required],
             password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
         });
+        const firstParam: string = this.route.snapshot.queryParamMap.get('status');
+        console.log(firstParam);
+        if (firstParam === '"active"') {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Your account is activated!',
+                showConfirmButton: false,
+                timer: 2500
+            });
+        }
     }
 
     login(value) {
@@ -108,7 +124,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        // this.unsubscribe(this.loginSubscription);
         this.unsubscribe(this.getUserSubscription);
         this.loginForm = null;
         this.fuseConfigService = null;

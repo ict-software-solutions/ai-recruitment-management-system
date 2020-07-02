@@ -5,7 +5,6 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { takeUntil } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { userDetails } from 'app/models/user-details';
-
 import { LOGGED_IN_USER_INFO, SIGNUP } from 'app/util/constants';
 import { AirmsService } from 'app/service/airms.service';
 import { DatePipe } from '@angular/common';
@@ -15,7 +14,6 @@ import { userInfo } from 'os';
 
 // import { UserService } from './user.service';
 let $:any;
-  
 @Component({
     selector: 'forms',
     templateUrl: './forms.component.html',
@@ -45,9 +43,6 @@ export class FormsComponent implements OnInit, OnDestroy {
     userProfileUpdateSubscription:Subscription;
     isLoading: false;
   
-  
-    // show1 = true;
-
     constructor(private userService:UserService,
         public dialog: MatDialog,
         private _formBuilder: FormBuilder,
@@ -62,16 +57,11 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.unsubscribeAll = new Subject();
         this.userProfileUpdateSubscription=this.userService.userProfileUpdated$.subscribe(res =>{
             console.log("res",this.user);
-        console.log("res");
             if(res !== null){
              
               this.form.patchValue(res);
-              
-               
             }
-            
         });
-        
     }
 
     ngOnInit() {
@@ -91,7 +81,6 @@ export class FormsComponent implements OnInit, OnDestroy {
             password: ['', Validators.required],
             newPassword: ['', [Validators.minLength(8), Validators.maxLength(15)]],
             check: [''],
-
         });
         // this.form.controls.email.disable();
         this.form.get('password').valueChanges;
@@ -99,7 +88,6 @@ export class FormsComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.unsubscribeAll)).subscribe(() => {
                 this.form.get('passwordConfirm').updateValueAndValidity();
             });
-
     }
 
     unsubscribe(subscription: Subscription) {
@@ -148,35 +136,6 @@ export class FormsComponent implements OnInit, OnDestroy {
           this.form.markAsDirty();
         }
       }
-// 
-
-
-// {
-//     this.check=true;
-//     this.getUserSubscription = this.authService.getUserById( res['userId']). 
-//     subscribe(userDetails => {
-//         let user_info = {
-                   
-//                     "firstName": userDetails.firstName,
-//                     "middleName": userDetails.middleName,
-//                     "lastName": userDetails.lastName,
-//                     "emailAddress": userDetails.email,
-//                     "mobileNumber": userDetails.mobile,
-//                     "company":userDetails.company ,
-//                     "address": userDetails.address,
-//                     "city": userDetails.city,
-//                     "state": userDetails.state,
-//                     "postalCode":userDetails.postalCode,
-//                     'check':userDetails.check,
-//                     "password": userDetails.password,
-//                     "newPassword": userDetails.newPassword
-//                 }
-              
-               
-//     });
-
-// }
-      
     getClipboardContent() {
         return window.navigator['clipboard'].readText();
     }

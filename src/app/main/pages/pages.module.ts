@@ -16,7 +16,8 @@ import { ResetPasswordModule } from 'app/main/pages/authentication/reset-passwor
                 ResetPasswordModule,
                 LockModule,
                 MailConfirmModule,
-                MatDialogModule
+                MatDialogModule,
+                
                 // ProfileModule,
         ]
 })

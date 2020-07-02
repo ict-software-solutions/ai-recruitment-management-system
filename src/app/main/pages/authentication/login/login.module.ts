@@ -8,9 +8,9 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { LoginComponent } from 'app/main/pages/authentication/login/login.component';
-// import {FormsModule} from '@angular/forms';
-
+import {MatDialogModule} from '@angular/material/dialog';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
+
 const routes = [
     {
         path: '/login',
@@ -37,9 +37,11 @@ const routes = [
         ReactiveFormsModule,
         RecaptchaModule, 
         RecaptchaFormsModule,
+        MatDialogModule
+      
     ],
     entryComponents:[],
     providers: [ ],
-    bootstrap: [LoginComponent]
+    bootstrap: [LoginComponent],
 })
 export class LoginModule { }
