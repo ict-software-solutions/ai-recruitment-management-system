@@ -9,6 +9,7 @@ import { LAYOUT_STRUCTURE, LOGGED_IN_USER, LOG_LEVELS, LOG_MESSAGES, TROY_LOGO, 
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../../service/auth.service';
 import Swal from 'sweetalert2';
+
 export interface DialogData {
     displayMessage: string;
 }
@@ -33,6 +34,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     errorMessage = '';
     unsupportedBrowser: boolean;
     status = "";
+    message = '';
+
+
     constructor(
         private fuseConfigService: FuseConfigService,
         private formBuilder: FormBuilder,
@@ -40,6 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         private router: Router,
         private airmsService: AirmsService,
         private route: ActivatedRoute,
+        // private userService:UserService,
         private logService: LogService) {
         this.fuseConfigService.config = LAYOUT_STRUCTURE;
         const browserType = this.airmsService.getBrowserName();
@@ -78,6 +83,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.logUserActivity('LOGIN', LOG_MESSAGES.CLICK);
         this.inActive = true;
         this.errorMessage = '';
+        this.message = '';
         this.loginSubscription = this.authService.login(value).subscribe(res => {
             this.logUserActivity('LOGIN', LOG_MESSAGES.SUCCESS);
             const userInfo = { token: res['token'], userId: res['userId'] };
@@ -102,8 +108,21 @@ export class LoginComponent implements OnInit, OnDestroy {
                     this.logService.logError(LOG_LEVELS.ERROR, 'Login page', 'On Fetch User', JSON.stringify(error));
                 });
         }, error => {
-            if (error.error.message === 'Account Inactive. Please contact admin') {
-                this.errorMessage = error.error.message;
+            if (error.error.message === 'Account Inactive') {
+                Swal.fire({
+                    title: 'Activation',
+                    text: 'Please consider activating your account',
+                    showCloseButton: true,
+                    confirmButtonText: 'Resend Mail',
+
+                    // cancelButtonText: 'No'
+                }).then(res => {
+                    console.log("result", res.value);
+                    if (res.value === true) {
+                        this.resend()
+                    }
+                })
+
                 this.inActive = true;
             } else if (error.status === 400) {
                 this.invalidData = false;
@@ -112,7 +131,18 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.logService.logError(LOG_LEVELS.ERROR, 'Login page', 'On Try Login', JSON.stringify(error));
         });
     }
+    resend() {
+        console.log(this.loginForm.value.userName)
+        this.errorMessage = '';
+        this.authService.resendActivationMail(this.loginForm.value.userName).subscribe((res: any) => {
+            console.log("response", res.message);
+            if (res.message === "activation link send successfully") {
+                Swal.fire('Activation link send your email-Id')
+            }
 
+
+        })
+    }
     logUserActivity(from, value) {
         this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
     }
@@ -138,6 +168,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.showResetContent = null;
         this.inActive = null;
         this.errorMessage = null;
+        this.message = null;
     }
 
 }

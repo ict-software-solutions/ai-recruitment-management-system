@@ -1,15 +1,17 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { apiURL } from 'app/util/constants';
+import { BehaviorSubject, observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   constructor(private httpClient: HttpClient) { }
+
   signup(value) {
     const param = {
-      "userType":value.userType,
+      "userType": value.userType,
       "firstName": value.firstName,
       "userName": value.userName,
       "lastName": value.lastName,
@@ -23,39 +25,42 @@ export class AuthService {
     return this.httpClient.post(apiURL.LOGIN_URL, param);
   }
 
-  // changePassword(value) {
-  //   const param = {
-  //     "emailAddress": value.email,
-  //     "password": value.password,
-  //     'NewPassword': value.NewPassword
-  //   }
-  //   return this.httpClient.post(apiURL.CHANGE_PASSWORD_URL, param);
-  // }
-edituser(value){
-  const param = {
-    "firstName": value.firstName,
-    "middleName": value.middleName,
-    "lastName": value.lastName,
-    "emailAddress": value.emailAddress,
-    "mobileNumber": value.mobile,
-    "company":value.company ,
-    "address": value.address,
-    "city": value.city,
-    "state": value.state,
-    "postalCode":value.postalCode,
-    "password": value.password,
-    "newPassword": value.newPassword
+  private userProfileUpdateSub = new BehaviorSubject<any>(null);
+  userProfileUpdated$ = this.userProfileUpdateSub.asObservable();
+  userProfileUpdateDone(value) {
+    this.userProfileUpdateSub.next(value);
   }
-  return this.httpClient.post(apiURL.EDITUSER_URL, param)
-}
 
-
+  resendActivationMail(userName) {
+    let url = apiURL.RESEND_EMAIL
+    let emailObject = { "userName": userName }
+    return this.httpClient.post(url, emailObject)
+  }
 
   getUserById(access_token, userId) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Authorization': 'Bearer ' + access_token })
     };
     return this.httpClient.get(apiURL.USER + '/' + userId, httpOptions);
+  }
+
+  getProfileInfo(object) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Authorization': 'Bearer ' + object.token })
+    };
+    console.log("getProfileinfo", object.userId);
+    let url = apiURL.USER + "/" + object.userId
+
+    return this.httpClient.get(url, httpOptions)
+  }
+
+  updateProfileDetails(value, user) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Authorization': 'Bearer ' + user.token })
+    };
+    console.log("value", value);
+    let url = apiURL.USER + "/" + value.userId
+    return this.httpClient.put(url, value, httpOptions)
   }
 
   logout() {
