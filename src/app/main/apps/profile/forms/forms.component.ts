@@ -44,7 +44,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     userProfileUpdateSubscription: Subscription;
     isLoading: false;
     profileDetails: any;
-
+   viewMode=true;
 
     constructor(private userService: UserService,
         public dialog: MatDialog,
@@ -102,6 +102,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     }
 
     Edit() {
+        this.viewMode=false;
         console.log(this.enableEdit);
         this.enableEdit = !this.enableEdit;
         console.log(this.enableEdit);
@@ -118,6 +119,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     }
 
     canceledit(){
+        this.viewMode=true;
         console.log("user", this.user);
         this.authService.getProfileInfo(this.user).subscribe(res => {
             this.profileDetails = res
@@ -126,7 +128,10 @@ export class FormsComponent implements OnInit, OnDestroy {
         })
     }
     updateProfile(value) {
+
         console.log("updated profile", value);
+        // Swal.fire('Profile Updated')
+       
         let updateObject = {
             "firstName": value.firstName,
             "middleName": value.middleName,
@@ -138,18 +143,34 @@ export class FormsComponent implements OnInit, OnDestroy {
             "city": value.city,
             "state": value.state,
             "postalCode": value.postalCode,
-            // "password": value.password,
-            // "newPassword": value.newPassword
+            'userId':this.user.userId
         }
 
-
         if (value.check === true) {
+            if(value.password!= value.newPassword){
             updateObject['password'] = value.password;
             updateObject['newPassword'] = value.newPassword;
+        }else{
+            Swal.fire("Curent password are same")
+            return;
+            
+        }
         }
         this.authService.updateProfileDetails(updateObject, this.user).subscribe(res => {
             // this.updateProfile = res
             console.log("updateObject", res);
+            Swal.fire({
+                title: 'Profile Updated',
+               confirmButtonText: 'Ok',
+    
+                // cancelButtonText: 'No'
+            }).then(res => {
+                console.log("result", res.value);
+                if (res.value === true) {
+                    this.canceledit()
+                    this.enableEdit=false;
+                }
+            })
             // this.form.patchValue(res);
         })
     }
@@ -162,9 +183,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     onValueChange() {
         this.confirmDialogs = true;
     }
-    // addUser() {
-    //     console.log("form", this.form.value);
-    // }
+   
     uploadFile(e) {
         const imageDetails = e.target.files[0];
         if (imageDetails.size > 30000 && !imageDetails.type.includes('jpg') && !imageDetails.type.includes('jpeg')) {

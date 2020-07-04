@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators, FormControl } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { LAYOUT_STRUCTURE, TROY_LOGO, LOG_LEVELS, LOG_MESSAGES  } from 'app/util/constants';
@@ -27,7 +27,11 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     ResetPasswordSubscription: Subscription;
     getUserSubscription: Subscription;
     userName:'';
+    token:'';
     errorMessage = '';
+    type: any;
+    email: any;
+    changePassword: boolean;
 
     constructor(
         private fuseConfigService: FuseConfigService,
@@ -43,34 +47,56 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
  
     ngOnInit(): void {
         this.resetPasswordForm = this.formBuilder.group({
-            password: ['', Validators.required],
             newPassword: ['', [Validators.minLength(8), Validators.maxLength(15)]],
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator]]
         });
+         this.route.queryParams.subscribe(params => {
+             console.log(params);
+             if (params.userName) {
+                 this.resetPasswordForm.addControl('password', new FormControl('', Validators.required));
+                 this.userName = params.userName;
+                 this.changePassword = false;
+                 
         this.resetPasswordForm .get('password').valueChanges;
         this.resetPasswordForm.get('password').valueChanges
             .pipe(takeUntil(this.unsubscribeAll)).subscribe(() => {
                 this.resetPasswordForm.get('passwordConfirm').updateValueAndValidity();
             });
-         this.route.queryParams.subscribe(params => {
-            console.log(params);
-            this.userName=params.userName;
+             } else {
+                 this.type = params.type;
+                 this.email = params.email;
+                 this.token = params.token;
+                 this.changePassword = true
+             }
            }); 
     }
-    resetPassword(value)
-    {
+    resetPassword(value)    {
         console.log(value);
         this.passwordChanged=false;
         this.logUserActivity('RESET YOUR PASSWORD', LOG_MESSAGES.CLICK);
-        this.authservice.resetPassword(value,this.userName).subscribe((res:any) => {
+
+    let param: any;
+        if (!this.changePassword) {
+           param= {
+                userName: this.userName,
+                password: value.password,
+                    newPassword: value.newPassword,
+                    chnagePassword: false
+            }
+        } else {
+            param = {
+                newPassword: value.newPassword,
+                emailAddress :this.email ,
+                token :this.token,
+                changePassword:true
+
+            }
+        }
+
+        this.authservice.resetPassword(param).subscribe((res:any) => {
             console.log("response",res.message);
             if (res.message === "your password has been changed") {
-                Swal.fire({
-                    title: 'Your Password has been Changed',
-                    confirmButtonText: 'OK',
-                }).then(() => {
-                    this.router.navigate (['/pages/login']);
-               });
+                this.passwordResetDone();
             }
             this.logUserActivity('RESET YOUR PASSWORD', LOG_MESSAGES.SUCCESS);
         },error => {
@@ -81,7 +107,15 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
                this.logUserActivity('RESET YOUR PASSWORD', LOG_MESSAGES.FAILURE);
         });
     } 
-    
+   
+    passwordResetDone() {
+                Swal.fire({
+                    title: 'Your Password has been Changed',
+                    confirmButtonText: 'OK',
+                }).then(() => {
+                    this.router.navigate (['/pages/login']);
+               });
+    }
     
     cancel() {
         this.router.navigate(['']);
@@ -99,8 +133,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         }
     }
     ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        // this.unsubscribe(this.Subscription);
         this.unsubscribe(this.getUserSubscription);
         this.unsubscribeAll.next();
         this.unsubscribeAll.complete();

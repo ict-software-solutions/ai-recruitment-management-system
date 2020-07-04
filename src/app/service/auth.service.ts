@@ -31,15 +31,18 @@ export class AuthService {
     this.userProfileUpdateSub.next(value);
   }
 
-  resetPassword(value,userName) {
-    const param = {
-      "userName": userName,
-      "password": value.password,
-      'newPassword': value.newPassword
-    }
-    console.log(param);
-    return this.httpClient.post(apiURL.RESET_PASSWORD_URL, param);
+  resetPassword(param) {
+    if (param.changePassword) {
+      delete param.changePassword;
+      return this.httpClient.post(apiURL.CHANGE_PASSWORD, param);
+    }else {
+        return this.httpClient.post(apiURL.RESET_PASSWORD_URL, param);
   }
+}
+
+  changePassword(param) {
+    return this.httpClient.post(apiURL.CHANGE_PASSWORD, param);
+  } 
   
   resendActivationMail(userName) {
     let url = apiURL.RESEND_EMAIL
@@ -69,7 +72,7 @@ export class AuthService {
       headers: new HttpHeaders({ 'Authorization': 'Bearer ' + user.token })
     };
     console.log("value", value);
-    value.id=value.userId;
+    // value.id=value.userId;
     let url = apiURL.USER + "/" + value.userId
     return this.httpClient.put(url, value, httpOptions)
   }

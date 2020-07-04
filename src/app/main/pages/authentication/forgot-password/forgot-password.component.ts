@@ -6,7 +6,8 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 import { FuseConfigService } from '@fuse/services/config.service';
 import { TROY_LOGO, LAYOUT_STRUCTURE, EMAIL_PATTERN} from 'app/util/constants';
 import { AuthService } from 'app/service/auth.service';
-
+import { Router} from '@angular/router';
+import Swal from 'sweetalert2';
 @Component({
     selector: 'forgot-password',
     templateUrl: './forgot-password.component.html',
@@ -26,43 +27,40 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
         public _matDialog: MatDialog,
+        private router: Router,
         private authService:AuthService,
     ) {
-        // Configure the layout
         this._fuseConfigService.config = LAYOUT_STRUCTURE;
     }
-
-
 
     ngOnInit(): void {
         this.forgotPasswordForm = this._formBuilder.group({
             emailAddress: ['', [Validators.required,  Validators.pattern(EMAIL_PATTERN)]]
         });
     }
+
     sendResetLink(){
+        
         this.authService.sendResetLink(this.forgotPasswordForm.value.emailAddress).subscribe((res:any)=>{
-            console.log("response",res);
+            console.log("response",res.message);
+            if (res.message === "change password link send successfully") {
+                Swal.fire('Reset Password link send your email id successfully')
+                this.sendLink();
+            }
         })
+       
     }
 
-    
+    sendLink() {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'change password link send successfully!',
+            showConfirmButton: false,
+            timer: 2500
+        });
+}
 
-    
-
-
-
-    // resend() {
-    //     console.log(this.loginForm.value.userName)
-    //     this.errorMessage = '';
-    //     this.authService.resendActivationMail(this.loginForm.value.userName).subscribe((res: any) => {
-    //         console.log("response", res.message);
-    //         if (res.message === "activation link send successfully") {
-    //             Swal.fire('Activation link send your email-Id')
-    //         }
-
-
-    //     })
-    // }
     ngOnDestroy() {
         this.dialog = null;
         this._fuseConfigService = null;
