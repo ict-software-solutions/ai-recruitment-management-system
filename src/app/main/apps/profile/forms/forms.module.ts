@@ -46,7 +46,8 @@ const routes: Routes = [
     exports: [
         MatButtonModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        
     ]
 
 })

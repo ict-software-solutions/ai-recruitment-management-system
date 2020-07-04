@@ -77,6 +77,30 @@ width:900px;
     input:checked + label{
         background: green;
       }
+
+      .mat-grid-tile{
+        //   height:90px;
+          border: unset;
+          box-shadow: -5px 15px 22px rgba(0, 0, 0, 0.3);
+          .mat-raised-button {
+            height: 90px;
+            width: 188px;
+            // background-color:#6699ff;
+          }
+      }
+
+      .tik{
+          float: right;
+          font-size: small;
+          margin-right: -10px;
+      }
+      .blue{
+        background-color: blue;
+    }
+    
+    .white {
+        background-color:white;
+    }
     // ul {
     //     margin:0;
     //     padding:0;

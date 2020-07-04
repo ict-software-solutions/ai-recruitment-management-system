@@ -22,6 +22,9 @@ import { ContactsSelectedBarComponent } from 'app/main/apps/contacts/selected-ba
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import { MatSelectModule } from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatGridListModule} from '@angular/material/grid-list';
+// import { shadows } from '@material-ui/system';
+
 // import { AngularDualListBoxModule } from 'angular-dual-listbox';
 // import {MatCheckboxModule} from '@angular/material/checkbox';
 const routes: Routes = [
@@ -61,7 +64,8 @@ const routes: Routes = [
         FuseConfirmDialogModule,
         FuseSidebarModule,
         MatSelectModule,
-        MatRadioModule
+        MatRadioModule,
+        MatGridListModule
         // AngularDualListBoxModule
     ],
     providers      : [

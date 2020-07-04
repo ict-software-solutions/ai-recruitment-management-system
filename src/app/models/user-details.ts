@@ -8,4 +8,5 @@ export interface userDetails {
         firstName: string;
         lastName: string;
         lastLogin: string;
+        userId:string;
 }

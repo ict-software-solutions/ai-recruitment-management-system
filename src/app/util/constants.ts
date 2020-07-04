@@ -5,7 +5,10 @@ export const apiURL = {
     'USER': environment.url + 'user',
     'LOGIN_URL': environment.url + 'user/login',
     'SIGNUP_URL': environment.url + 'user/register',
-    'CHANGE_PASSWORD_URL': environment.url + 'user/resetPassword',
+    'RESEND_EMAIL':environment.url +'user/resentActivationKey',
+    'FORGOT_PASSWORD':environment.url + 'user/forgotPassword',
+
+    'RESET_PASSWORD_URL' :  environment.url + 'user/resetPassword'
 }
 
 export const TROY_LOGO = "assets/images/logos/troy.png";
@@ -13,6 +16,9 @@ export const EMAIL_PATTERN = /^\w+([\.-]?\w+)*@\w+(\-]?\w+)*(\.-]?\w+)*(\.\w{2,3
 export const LOGGED_IN_USER = '$$AIRMS-USER$$';
 export const LOGGED_IN_USER_INFO = '$$AIRMS-USER-INFO$$';
 export const SIGNUP = '$$AIRMS-USER$$';
+
+
+// export const EDIT = '$$AIRMS-USER-INFO$$'+
 export const LAYOUT_STRUCTURE = {
     layout: {
         navbar: { hidden: true },

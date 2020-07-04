@@ -14,6 +14,7 @@ import * as _ from 'lodash';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { isThisHour } from 'date-fns';
 // import {MatDialog} from '@angular/material/dialog';
 // import { ResetPasswordModule } from 'app/main/pages/authentication/reset-password/reset-password.module';
 // import { ResetPasswordComponent } from 'app/main/pages/authentication/reset-password/reset-password.component';
@@ -209,6 +210,27 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
         this.router = null;
         this.authService = null;
+        this.navigation=null;
+        this.languages=null;
+        this.selectedLanguage=null;
+        this.userStatusOptions=null;
+        this.idleState=null;
+        this.timedOut=null;
+        this.WAITING_TIME=null;
+        this.TIME_OUT=null;
+        this.alertMessages=null;
+        this.userInfo=null;
+        this.alertMessages=null;
+        this.toolbarSubscription=null;
+        this.keepalive=null;
+        this.router=null;
+        this.authService=null;
+        this._translateService=null;
+        this._fuseConfigService=null;
+        this._fuseSidebarService=null;
+        this.airmsService=null;
+        this.idle=null;
+        this._translateService=null;
     }
 
     // -----------------------------------------------------------------------------------------------------

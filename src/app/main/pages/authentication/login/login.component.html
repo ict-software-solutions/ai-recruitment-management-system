@@ -1,12 +1,12 @@
 <div id="login" fxLayout="column">
     <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
-        <div id="login-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
+        <div id="login-form">
             <div class="logo">
-                <img [src]="logoPath"><span style="color:#0066ff;font-size:bold;">AIRMS</span>
+                <img [src]="logoPath"><span style="color:#0066ff;font-size:bold;"></span>
             </div>
 
             <div class="title" *ngIf="!showResetContent">Login</div>
-            <form name="loginForm" [formGroup]="loginForm" novalidate *ngIf="!showResetContent">
+            <form name="loginForm" [formGroup]="loginForm" novalidate *ngIf="!showResetContent" style="margin-top: -15px;">
                 <mat-form-field appearance="outline">
                     <mat-label>User Name / Email</mat-label>
                     <input matInput formControlName="userName">
@@ -34,7 +34,7 @@
                     <!-- <mat-checkbox class="remember-me" aria-label="Remember Me"> Remember Me</mat-checkbox> -->
                     <a class="forgot-password" [routerLink]="'/pages/auth/forgot-password'">Forgot Password? </a>
                 </div>
-                <re-captcha (resolved)="resolved($event)"  formControlName="recaptchaReactive"  siteKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"> </re-captcha>               
+                <re-captcha (resolved)="resolved($event)" *ngIf="reCaptcha===true" formControlName="recaptchaReactive"  siteKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"> </re-captcha>               
                 <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN" (click)="login(loginForm.value)" type="submit" [disabled]="loginForm.invalid">LOGIN</button>
                
                
@@ -45,6 +45,9 @@
                 <div style="text-align: center;">
                     <mat-error *ngIf="inActive">{{errorMessage}}</mat-error>
                 </div>
+                <!-- <div style="text-align: center;">
+                    <mat-error>Activation Link send successfully</mat-error>
+                </div> -->
             </form>
             <div class="title" *ngIf="showResetContent">
                 <h3 style=color:#3366ff;>Password expired</h3>

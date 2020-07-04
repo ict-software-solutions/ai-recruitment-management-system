@@ -6,6 +6,8 @@ login {
         width: 100%;
         background: url('/assets/images/backgrounds/dark-material-bg.jpg') no-repeat;
         background-size: cover;
+        display: flex;
+        position: fixed;
 
         #login-form-wrapper {
             flex: 1 0 auto;
@@ -140,6 +142,15 @@ login {
                     &.facebook {
                         background-color: rgb(63, 92, 154);
                     }
+                }
+            .forgot-password {
+                    font-size: 13px;
+                    font-weight: 600;
+                    margin-bottom: 9px;
+                    margin-top: -7px;
+                }
+                .mat-error{
+                    font-size: 11px;
                 }
             }
         }
