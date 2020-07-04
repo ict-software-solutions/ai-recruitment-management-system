@@ -34,7 +34,7 @@
                     <!-- <mat-checkbox class="remember-me" aria-label="Remember Me"> Remember Me</mat-checkbox> -->
                     <a class="forgot-password" [routerLink]="'/pages/auth/forgot-password'">Forgot Password? </a>
                 </div>
-                <re-captcha (resolved)="resolved($event)"  formControlName="recaptchaReactive"  siteKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"> </re-captcha>               
+                <re-captcha (resolved)="resolved($event)" *ngIf="reCaptcha===true" formControlName="recaptchaReactive"  siteKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"> </re-captcha>               
                 <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN" (click)="login(loginForm.value)" type="submit" [disabled]="loginForm.invalid">LOGIN</button>
                
                
