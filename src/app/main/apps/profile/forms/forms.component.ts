@@ -116,8 +116,17 @@ export class FormsComponent implements OnInit, OnDestroy {
         })
 
     }
+
+    canceledit(){
+        console.log("user", this.user);
+        this.authService.getProfileInfo(this.user).subscribe(res => {
+            this.profileDetails = res
+            this.form.patchValue(res);
+            console.log("cancel edit", res);
+        })
+    }
     updateProfile(value) {
-        console.log("value", value);
+        console.log("updated profile", value);
         let updateObject = {
             "firstName": value.firstName,
             "middleName": value.middleName,
@@ -129,19 +138,18 @@ export class FormsComponent implements OnInit, OnDestroy {
             "city": value.city,
             "state": value.state,
             "postalCode": value.postalCode,
-            "password": value.password,
-            "newPassword": value.newPassword
+            // "password": value.password,
+            // "newPassword": value.newPassword
         }
 
 
         if (value.check === true) {
-            updateObject.password = value.password;
-            updateObject.newPassword = value.newPassword;
-
+            updateObject['password'] = value.password;
+            updateObject['newPassword'] = value.newPassword;
         }
         this.authService.updateProfileDetails(updateObject, this.user).subscribe(res => {
             // this.updateProfile = res
-            console.log("updatedData", res);
+            console.log("updateObject", res);
             // this.form.patchValue(res);
         })
     }
@@ -154,9 +162,9 @@ export class FormsComponent implements OnInit, OnDestroy {
     onValueChange() {
         this.confirmDialogs = true;
     }
-    addUser() {
-        console.log("form", this.form.value);
-    }
+    // addUser() {
+    //     console.log("form", this.form.value);
+    // }
     uploadFile(e) {
         const imageDetails = e.target.files[0];
         if (imageDetails.size > 30000 && !imageDetails.type.includes('jpg') && !imageDetails.type.includes('jpeg')) {

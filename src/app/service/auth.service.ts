@@ -59,8 +59,14 @@ export class AuthService {
       headers: new HttpHeaders({ 'Authorization': 'Bearer ' + user.token })
     };
     console.log("value", value);
+    value.id=value.userId;
     let url = apiURL.USER + "/" + value.userId
     return this.httpClient.put(url, value, httpOptions)
+  }
+  sendResetLink(emailAddress){
+    let url=apiURL.FORGOT_PASSWORD
+    let resendAddress ={"emailAddress":emailAddress}
+    return this.httpClient.post(url,resendAddress)
   }
 
   logout() {

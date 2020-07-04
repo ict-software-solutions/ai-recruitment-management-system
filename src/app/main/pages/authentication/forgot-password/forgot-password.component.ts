@@ -5,6 +5,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { TROY_LOGO, LAYOUT_STRUCTURE, EMAIL_PATTERN} from 'app/util/constants';
+import { AuthService } from 'app/service/auth.service';
 
 @Component({
     selector: 'forgot-password',
@@ -25,6 +26,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
         public _matDialog: MatDialog,
+        private authService:AuthService,
     ) {
         // Configure the layout
         this._fuseConfigService.config = LAYOUT_STRUCTURE;
@@ -34,10 +36,33 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.forgotPasswordForm = this._formBuilder.group({
-            email: ['', [Validators.required,  Validators.pattern(EMAIL_PATTERN)]]
+            emailAddress: ['', [Validators.required,  Validators.pattern(EMAIL_PATTERN)]]
         });
     }
+    sendResetLink(){
+        this.authService.sendResetLink(this.forgotPasswordForm.value.emailAddress).subscribe((res:any)=>{
+            console.log("response",res);
+        })
+    }
 
+    
+
+    
+
+
+
+    // resend() {
+    //     console.log(this.loginForm.value.userName)
+    //     this.errorMessage = '';
+    //     this.authService.resendActivationMail(this.loginForm.value.userName).subscribe((res: any) => {
+    //         console.log("response", res.message);
+    //         if (res.message === "activation link send successfully") {
+    //             Swal.fire('Activation link send your email-Id')
+    //         }
+
+
+    //     })
+    // }
     ngOnDestroy() {
         this.dialog = null;
         this._fuseConfigService = null;

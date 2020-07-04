@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     status = "";
     message = '';
 
-
     constructor(
         private fuseConfigService: FuseConfigService,
         private formBuilder: FormBuilder,
@@ -76,6 +75,13 @@ export class LoginComponent implements OnInit, OnDestroy {
                 showConfirmButton: false,
                 timer: 2500
             });
+        }
+       
+        const firstParam1: string = this.route.snapshot.queryParamMap.get('type');
+        console.log(firstParam1);
+        if(firstParam1 === '"resetPassword"'){
+        // this.router.navigate(['pages/auth/reset-password']);
+        this.router.navigate(['pages/auth/reset-password']);
         }
     }
 
