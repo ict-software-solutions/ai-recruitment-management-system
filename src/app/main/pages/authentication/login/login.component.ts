@@ -79,11 +79,17 @@ export class LoginComponent implements OnInit, OnDestroy {
             });
         }
        
-        const firstParam1: string = this.route.snapshot.queryParamMap.get('type');
-        console.log(firstParam1);
-        if(firstParam1 === '"resetPassword"'){
-        // this.router.navigate(['pages/auth/reset-password']);
-        this.router.navigate(['pages/auth/reset-password']);
+        const type: string = this.route.snapshot.queryParamMap.get('type');
+        const email = this.route.snapshot.queryParamMap.get('email');
+        const token = this.route.snapshot.queryParamMap.get('token');
+        console.log(type);
+        if(type === '"resetPassword"'){
+            let navigationExtras: NavigationExtras = {
+                queryParams: {
+                    type, email, token
+                }
+            };
+            this.router.navigate (['/pages/auth/reset-password'],navigationExtras);
         }
     }
 
