@@ -6,7 +6,7 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 import { FuseConfigService } from '@fuse/services/config.service';
 import { TROY_LOGO, LAYOUT_STRUCTURE, EMAIL_PATTERN} from 'app/util/constants';
 import { AuthService } from 'app/service/auth.service';
-
+import Swal from 'sweetalert2';
 @Component({
     selector: 'forgot-password',
     templateUrl: './forgot-password.component.html',
@@ -40,9 +40,14 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         });
     }
     sendResetLink(){
+        
         this.authService.sendResetLink(this.forgotPasswordForm.value.emailAddress).subscribe((res:any)=>{
-            console.log("response",res);
+            console.log("response",res.message);
+            if (res.message === "change password link send successfully") {
+                Swal.fire('Reset Password link send your email id successfully')
+            }
         })
+       
     }
 
     

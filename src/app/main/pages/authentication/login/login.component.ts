@@ -146,7 +146,6 @@ export class LoginComponent implements OnInit, OnDestroy {
                 Swal.fire('Activation link send your email-Id')
             }
 
-
         })
     }
     logUserActivity(from, value) {
