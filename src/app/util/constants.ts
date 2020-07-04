@@ -8,6 +8,7 @@ export const apiURL = {
     'RESEND_EMAIL':environment.url +'user/resentActivationKey',
     'FORGOT_PASSWORD':environment.url + 'user/forgotPassword',
 
+    'RESET_PASSWORD_URL' :  environment.url + 'user/resetPassword'
 }
 
 export const TROY_LOGO = "assets/images/logos/troy.png";

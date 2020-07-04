@@ -31,6 +31,16 @@ export class AuthService {
     this.userProfileUpdateSub.next(value);
   }
 
+  resetPassword(value,userName) {
+    const param = {
+      "userName": userName,
+      "password": value.password,
+      'newPassword': value.newPassword
+    }
+    console.log(param);
+    return this.httpClient.post(apiURL.RESET_PASSWORD_URL, param);
+  }
+  
   resendActivationMail(userName) {
     let url = apiURL.RESEND_EMAIL
     let emailObject = { "userName": userName }

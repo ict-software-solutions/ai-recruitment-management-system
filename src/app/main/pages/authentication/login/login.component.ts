@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras} from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { AirmsService } from 'app/service/airms.service';
@@ -30,8 +30,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     loginSubscription: Subscription;
     getUserSubscription: Subscription;
     showResetContent = false;
+    passwordExpired = false;
     inActive = false;
     errorMessage = '';
+    reCaptcha = false;
     unsupportedBrowser: boolean;
     status = "";
     message = '';
@@ -114,22 +116,41 @@ export class LoginComponent implements OnInit, OnDestroy {
                     this.logService.logError(LOG_LEVELS.ERROR, 'Login page', 'On Fetch User', JSON.stringify(error));
                 });
         }, error => {
-            if (error.error.message === 'Account Inactive') {
+            if (error.error.message === 'Password expired. Please change the password') {
+                this.errorMessage = error.error.message;
+                this.passwordExpired = true;
+                Swal.fire({
+                    title: 'Password expired',
+                    confirmButtonText: 'Reset Your Password',
+                }).then(() => {
+                    let navigationExtras: NavigationExtras = {
+                        queryParams: {
+                            userName: this.loginForm.get("userName").value
+                        }
+                    };
+                    this.router.navigate (['/pages/auth/reset-password'],navigationExtras);
+               });
+               }
+                else if (error.error.message === 'Invalid Password You-have-2-attempts'|| error.error.message === 'Invalid Password You-have-1-attempts' ) {
+                this.reCaptcha = true;
+               }
+               else if (error.error.message === 'Account Locked, Please contact support') {
+                this.errorMessage = error.error.message;
+                this.inActive = true;
+              } 
+               else if (error.error.message === 'Account Inactive') {
                 Swal.fire({
                     title: 'Activation',
                     text: 'Please consider activating your account',
                     showCloseButton: true,
                     confirmButtonText: 'Resend Mail',
-
-                    // cancelButtonText: 'No'
                 }).then(res => {
                     console.log("result", res.value);
                     if (res.value === true) {
                         this.resend()
                     }
                 })
-
-                this.inActive = true;
+             this.inActive = true;
             } else if (error.status === 400) {
                 this.invalidData = false;
             }
@@ -175,6 +196,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.inActive = null;
         this.errorMessage = null;
         this.message = null;
+        this.reCaptcha=null;
+        this.passwordExpired=null;
     }
 
 }
