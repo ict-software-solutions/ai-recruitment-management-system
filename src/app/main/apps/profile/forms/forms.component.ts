@@ -13,7 +13,6 @@ import { UserService } from 'app/service/user.service';
 import { userInfo } from 'os';
 import { AuthService } from 'app/service/auth.service';
 
-// import { UserService } from './user.service';
 let $: any;
 @Component({
     selector: 'forms',
@@ -23,7 +22,7 @@ let $: any;
 export class FormsComponent implements OnInit, OnDestroy {
     lastLogin: string;
     onFileSelected(event) {
-        console.log(event);
+        // console.log(event);
     }
     form: FormGroup;
     dialogRef: any;
@@ -32,6 +31,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     ResetPasswordSubscription: Subscription;
     getUserSubscription: Subscription;
     hide = true;
+    hide1 = true;
     private unsubscribeAll: Subject<any>;
     enableEdit = false;
     showPasswordsection = false;
@@ -44,7 +44,9 @@ export class FormsComponent implements OnInit, OnDestroy {
     userProfileUpdateSubscription: Subscription;
     isLoading: false;
     profileDetails: any;
-   viewMode=true;
+    viewMode = true;
+    errorMessage = '';
+    oldPasswordWrong = false;
 
     constructor(private userService: UserService,
         public dialog: MatDialog,
@@ -56,11 +58,10 @@ export class FormsComponent implements OnInit, OnDestroy {
     ) {
         this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
         this.user = airmsService.getSessionStorage(SIGNUP)
-        console.log("LOGGED_IN_USER_INFO", this.userInfo);
         this.lastLogin = datePipe.transform(this.userInfo.lastLogin, 'MMM dd, yyyy hh:mm:ss a');
         this.unsubscribeAll = new Subject();
         this.userProfileUpdateSubscription = this.userService.userProfileUpdated$.subscribe(res => {
-            console.log("res", this.user);
+
             if (res !== null) {
                 this.form.patchValue(res);
             }
@@ -86,7 +87,7 @@ export class FormsComponent implements OnInit, OnDestroy {
             newPassword: ['', [Validators.minLength(8), Validators.maxLength(15)]],
             check: [''],
         });
-        // this.form.controls.email.disable();
+
         this.form.get('password').valueChanges;
         this.form.get('password').valueChanges
             .pipe(takeUntil(this.unsubscribeAll)).subscribe(() => {
@@ -102,36 +103,26 @@ export class FormsComponent implements OnInit, OnDestroy {
     }
 
     Edit() {
-        this.viewMode=false;
-        console.log(this.enableEdit);
+        this.viewMode = false;
         this.enableEdit = !this.enableEdit;
-        console.log(this.enableEdit);
     }
 
     getProfileInfo() {
-        console.log("user", this.user);
         this.authService.getProfileInfo(this.user).subscribe(res => {
             this.profileDetails = res
             this.form.patchValue(res);
-            console.log("response", res);
         })
-
     }
 
-    canceledit(){
-        this.viewMode=true;
-        console.log("user", this.user);
+    canceledit() {
+        this.viewMode = true;
+
         this.authService.getProfileInfo(this.user).subscribe(res => {
             this.profileDetails = res
             this.form.patchValue(res);
-            console.log("cancel edit", res);
         })
     }
     updateProfile(value) {
-
-        console.log("updated profile", value);
-        // Swal.fire('Profile Updated')
-       
         let updateObject = {
             "firstName": value.firstName,
             "middleName": value.middleName,
@@ -143,47 +134,52 @@ export class FormsComponent implements OnInit, OnDestroy {
             "city": value.city,
             "state": value.state,
             "postalCode": value.postalCode,
-            'userId':this.user.userId
+            'userId': this.user.userId
         }
-
         if (value.check === true) {
-            if(value.password!= value.newPassword){
-            updateObject['password'] = value.password;
-            updateObject['newPassword'] = value.newPassword;
-        }else{
-            Swal.fire("Curent password are same")
-            return;
-            
-        }
+            if (value.password != value.newPassword) {
+                updateObject['password'] = value.password;
+                updateObject['newPassword'] = value.newPassword;
+            } else {
+                Swal.fire({
+                    title: 'New password cannot be the same as Old Password',
+                    icon: 'warning',
+                    confirmButtonText: 'Ok',
+                })
+                return;
+            }
         }
         this.authService.updateProfileDetails(updateObject, this.user).subscribe(res => {
-            // this.updateProfile = res
-            console.log("updateObject", res);
             Swal.fire({
                 title: 'Profile Updated',
-               confirmButtonText: 'Ok',
-    
-                // cancelButtonText: 'No'
+                icon: 'success',
+                confirmButtonText: 'Ok',
             }).then(res => {
-                console.log("result", res.value);
                 if (res.value === true) {
                     this.canceledit()
-                    this.enableEdit=false;
+                    this.enableEdit = false;
                 }
             })
-            // this.form.patchValue(res);
-        })
+        }
+            , error => {
+                if (error.error.message === 'old password does not match') {
+                    this.errorMessage = error.error.message;
+                    this.oldPasswordWrong = true;
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'warning',
+                        title: 'Current password is wrong',
+                        showConfirmButton: true,
+                    })
+                }
+            });
     }
     changePassword(checked) {
-
-        console.log(this.showPasswordsection);
         this.showPasswordsection = !this.showPasswordsection;
-        console.log(this.showPasswordsection);
     }
     onValueChange() {
         this.confirmDialogs = true;
     }
-   
     uploadFile(e) {
         const imageDetails = e.target.files[0];
         if (imageDetails.size > 30000 && !imageDetails.type.includes('jpg') && !imageDetails.type.includes('jpeg')) {
