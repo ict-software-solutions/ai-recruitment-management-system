@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute, NavigationExtras} from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { AirmsService } from 'app/service/airms.service';
@@ -68,28 +68,25 @@ export class LoginComponent implements OnInit, OnDestroy {
             password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
         });
         const firstParam: string = this.route.snapshot.queryParamMap.get('status');
-        console.log(firstParam);
         if (firstParam === '"active"') {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
                 title: 'Your account is activated!',
-                showConfirmButton: false,
-                timer: 2500
+                showConfirmButton: true,
             });
         }
-       
+
         const type: string = this.route.snapshot.queryParamMap.get('type');
         const email = this.route.snapshot.queryParamMap.get('email');
         const token = this.route.snapshot.queryParamMap.get('token');
-        console.log(type);
-        if(type === '"resetPassword"'){
+        if (type === '"resetPassword"') {
             let navigationExtras: NavigationExtras = {
                 queryParams: {
                     type, email, token
                 }
             };
-            this.router.navigate (['/pages/auth/reset-password'],navigationExtras);
+            this.router.navigate(['/pages/auth/reset-password'], navigationExtras);
         }
     }
 
@@ -134,29 +131,31 @@ export class LoginComponent implements OnInit, OnDestroy {
                             userName: this.loginForm.get("userName").value
                         }
                     };
-                    this.router.navigate (['/pages/auth/reset-password'],navigationExtras);
-               });
-               }
-                else if (error.error.message === 'Invalid Password You-have-2-attempts'|| error.error.message === 'Invalid Password You-have-1-attempts' ) {
+                    this.router.navigate(['/pages/auth/reset-password'], navigationExtras);
+                });
+            }
+            else if (error.error.message === 'Invalid Password You-have-2-attempts' || error.error.message === 'Invalid Password You-have-1-attempts') {
                 this.reCaptcha = true;
-               }
-               else if (error.error.message === 'Account Locked, Please contact support') {
+            }
+            else if (error.error.message === 'Account Locked, Please contact support') {
                 this.errorMessage = error.error.message;
                 this.inActive = true;
-              } 
-               else if (error.error.message === 'Account Inactive') {
+            }
+            else if (error.error.message === 'Account Inactive') {
                 Swal.fire({
                     title: 'Activation',
                     text: 'Please consider activating your account',
-                    showCloseButton: true,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    cancelButtonText: 'Ok',
+                    cancelButtonColor: 'green',
                     confirmButtonText: 'Resend Mail',
                 }).then(res => {
-                    console.log("result", res.value);
                     if (res.value === true) {
                         this.resend()
                     }
                 })
-             this.inActive = true;
+                this.inActive = true;
             } else if (error.status === 400) {
                 this.invalidData = false;
             }
@@ -165,14 +164,15 @@ export class LoginComponent implements OnInit, OnDestroy {
         });
     }
     resend() {
-        console.log(this.loginForm.value.userName)
         this.errorMessage = '';
         this.authService.resendActivationMail(this.loginForm.value.userName).subscribe((res: any) => {
-            console.log("response", res.message);
             if (res.message === "activation link send successfully") {
-                Swal.fire('Activation link send your email-Id')
+                Swal.fire({
+                    text: 'Activation link send your email successfully',
+                    icon: 'success',
+                    showConfirmButton: true,
+                })
             }
-
         })
     }
     logUserActivity(from, value) {
@@ -201,8 +201,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.inActive = null;
         this.errorMessage = null;
         this.message = null;
-        this.reCaptcha=null;
-        this.passwordExpired=null;
+        this.reCaptcha = null;
+        this.passwordExpired = null;
     }
 
 }
