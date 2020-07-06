@@ -23,6 +23,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     private unsubscribeAll: Subject<any>;
     passwordChanged=false;
     hide = true;
+    hide1 = true;
     invalidData = true;
     ResetPasswordSubscription: Subscription;
     getUserSubscription: Subscription;
@@ -31,6 +32,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     errorMessage = '';
     type: any;
     email: any;
+    check = false;
     changePassword: boolean;
 
     constructor(
@@ -47,8 +49,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
  
     ngOnInit(): void {
         this.resetPasswordForm = this.formBuilder.group({
-            newPassword: ['', [Validators.minLength(8), Validators.maxLength(15)]],
-            passwordConfirm: ['', [Validators.required, confirmPasswordValidator]]
+            newPassword: ['', [Validators.minLength(8), Validators.maxLength(15)]]
         });
          this.route.queryParams.subscribe(params => {
              console.log(params);
@@ -60,7 +61,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         this.resetPasswordForm .get('password').valueChanges;
         this.resetPasswordForm.get('password').valueChanges
             .pipe(takeUntil(this.unsubscribeAll)).subscribe(() => {
-                this.resetPasswordForm.get('passwordConfirm').updateValueAndValidity();
+                this.resetPasswordForm.get('passwordNew').updateValueAndValidity();
             });
              } else {
                  this.type = params.type;
@@ -92,10 +93,26 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
             }
         }
-
+    //    let  updateObject= {
+    //     "password": value.password,
+    //     "newPassword": value.newPassword,
+    //    }
+    //    if (value.check === true) {
+    //     if(value.password!= value.newPassword){
+    //     updateObject['password'] = value.password;
+    //     updateObject['newPassword'] = value.newPassword;
+    //    }else{
+    //     Swal.fire({
+    //         title: 'New password cannot be the same as Old Password',
+    //         icon:'warning',
+    //        confirmButtonText: 'Ok',
+    //     })
+        
+    // }
+    // }
         this.authservice.resetPassword(param).subscribe((res:any) => {
             console.log("response",res.message);
-            if (res.message === "your password has been changed") {
+            if (res.resCode === "PWD-CNGD") {
                 this.passwordResetDone();
             }
             this.logUserActivity('RESET YOUR PASSWORD', LOG_MESSAGES.SUCCESS);
@@ -107,12 +124,23 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
                this.logUserActivity('RESET YOUR PASSWORD', LOG_MESSAGES.FAILURE);
         });
     } 
-   
+    // if (value.check === true) {
+    //     if(value.password!= value.newPassword){
+    //     param['password'] = value.password;
+    //     param['newPassword'] = value.newPassword;
+    // }else{
+    //     Swal.fire({
+    //         title: 'New password cannot be the same as Old Password',
+    //         icon:'warning',
+    //        confirmButtonText: 'Ok',
+    //     })         
+    // }
     passwordResetDone() {
                 Swal.fire({
                
                     text: 'Your Password has been Changed',
                     icon:'success',
+                    position: 'center',
                     confirmButtonText: 'OK',
                 }).then(() => {
                     this.router.navigate (['/pages/login']);
@@ -143,6 +171,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         this.route=null;
         this.invalidData=null;
         this.hide=null;
+        this.hide1=null;
         this.authservice=null;
         this.logService = null;
         this.formBuilder=null;
@@ -154,24 +183,24 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     }
 }
 
-export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+export const newPasswordValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
 
     if (!control.parent || !control) {
         return null;
     }
 
+    const password = control.parent.get('password');
     const newPassword = control.parent.get('newPassword');
-    const passwordConfirm = control.parent.get('passwordConfirm');
-
-    if (!newPassword || !passwordConfirm) {
+  
+    if (password || newPassword) {
         return null;
     }
 
-    if (passwordConfirm.value === '') {
+    if (newPassword.value === '') {
         return null;
     }
 
-    if (newPassword.value === passwordConfirm.value) {
+    if (password.value! === newPassword.value) {
         return null;
     }
 

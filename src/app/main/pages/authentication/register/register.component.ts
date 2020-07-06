@@ -62,6 +62,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     register(value) {
         this.logUserActivity('CREATE AN ACCOUNT', LOG_MESSAGES.CLICK);
+        this.alreadyExist = false;
+        this.activationLink = false;0
+        this.errorMessage = '';
         this.signupSubscription = this.authservice.signup(value).subscribe(() => {
             this.activationLink = true;
             Swal.fire({

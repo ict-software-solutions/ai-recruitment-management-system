@@ -40,6 +40,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     TIME_OUT = 300;
     alertMessages = [];
     userInfo: userDetails;
+    
     // Private
     private _unsubscribeAll: Subject<any>;
     toolbarSubscription: Subscription;
@@ -162,22 +163,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             imageWidth: 50,
             imageHeight: 100,
             confirmButtonText: 'Extend',
-            cancelButtonText: 'No'
+            cancelButtonText: 'No',
         });
     }
-    //   title: 'Sweet!',
-    //     text: 'Modal with a custom image.',
-    //     imageUrl: 'https://unsplash.it/400/200',
-    //     imageWidth: 400,
-    //     imageHeight: 200,
-    //     animation: false
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void {
         // Subscribe to the config changes
         this._fuseConfigService.config

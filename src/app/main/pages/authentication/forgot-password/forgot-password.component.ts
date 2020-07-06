@@ -37,10 +37,11 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
             emailAddress: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]]
         });
     }
-    sendResetLink() {
-        this.authService.sendResetLink(this.forgotPasswordForm.value.emailAddress).subscribe((res: any) => {
-            if (res.message === "change password link send successfully") {
-                Swal.fire('Reset Password link send your email id successfully')
+
+    sendResetLink(){
+        
+        this.authService.sendResetLink(this.forgotPasswordForm.value.emailAddress).subscribe((res:any)=>{
+            if (res.resCode === "CNG-PWD-LNK-SEND") {
                 this.sendLink();
             }
         }, error => {
@@ -61,8 +62,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Reset password link send email id successfully!',
-            showConfirmButton: true,
+            title: 'Reset Password link send your email id successfully',
+            confirmButtonText: 'OK',
         });
     }
 

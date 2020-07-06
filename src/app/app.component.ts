@@ -79,12 +79,17 @@ export class AppComponent implements OnInit, OnDestroy
        this.connectionService.monitor().subscribe(isConnected => {
         this.isConnected = isConnected;
         if (this.isConnected) {
-          this.status = "YOU ARE IN ONLINE";
+          this.status = "  connected";
         }
         else {
-          this.status = "YOU ARE IN OFFLINE";
+          this.status = "  connection lost";
         }
-        Swal.fire(this.status);
+        let status=this.status;
+        Swal.fire({
+            title: 'Network'  +status,
+            icon : 'info',
+            confirmButtonText: 'OK',
+        });
       });
     }
 }

@@ -119,11 +119,11 @@ export class LoginComponent implements OnInit, OnDestroy {
                     this.logService.logError(LOG_LEVELS.ERROR, 'Login page', 'On Fetch User', JSON.stringify(error));
                 });
         }, error => {
-            if (error.error.message === 'Password expired. Please change the password') {
-                this.errorMessage = error.error.message;
+            if (error.error.resCode === 'PWD-EXPD') {
                 this.passwordExpired = true;
                 Swal.fire({
-                    title: 'Password expired',
+                    title: 'Password expired. Please change the password',
+                    icon: 'warning',
                     confirmButtonText: 'Reset Your Password',
                 }).then(() => {
                     let navigationExtras: NavigationExtras = {
@@ -134,13 +134,19 @@ export class LoginComponent implements OnInit, OnDestroy {
                     this.router.navigate(['/pages/auth/reset-password'], navigationExtras);
                 });
             }
-            else if (error.error.message === 'Invalid Password You-have-2-attempts' || error.error.message === 'Invalid Password You-have-1-attempts') {
-                this.reCaptcha = true;
-            }
-            else if (error.error.message === 'Account Locked, Please contact support') {
+            else if (error.error.message === 'Invalid Password You-have-2-attempts'|| error.error.message === 'Invalid Password You-have-1-attempts' ) {
                 this.errorMessage = error.error.message;
+                this.reCaptcha = true;
+               }
+               else if (error.error.message === 'Account Locked, Please contact support') {
                 this.inActive = true;
-            }
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Account Locked, Please contact support',
+                    confirmButtonText: 'OK',
+                });
+              } 
             else if (error.error.message === 'Account Inactive') {
                 Swal.fire({
                     title: 'Activation',
@@ -148,7 +154,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                     icon: 'warning',
                     showCancelButton: true,
                     cancelButtonText: 'Ok',
-                    cancelButtonColor: 'green',
+                    cancelButtonColor: '#008ae6',
                     confirmButtonText: 'Resend Mail',
                 }).then(res => {
                     if (res.value === true) {
