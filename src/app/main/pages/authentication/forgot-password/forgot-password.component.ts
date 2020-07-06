@@ -4,9 +4,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { FuseConfigService } from '@fuse/services/config.service';
-import { TROY_LOGO, LAYOUT_STRUCTURE, EMAIL_PATTERN} from 'app/util/constants';
+import { TROY_LOGO, LAYOUT_STRUCTURE, EMAIL_PATTERN } from 'app/util/constants';
 import { AuthService } from 'app/service/auth.service';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 @Component({
     selector: 'forgot-password',
@@ -17,49 +17,54 @@ import Swal from 'sweetalert2';
 })
 
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
-
     forgotPasswordForm: FormGroup;
     logoPath = TROY_LOGO;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-
+    errorMessage = '';
+    wrongEmail = false;
     constructor(
         public dialog: MatDialog,
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
         public _matDialog: MatDialog,
         private router: Router,
-        private authService:AuthService,
+        private authService: AuthService,
     ) {
         this._fuseConfigService.config = LAYOUT_STRUCTURE;
     }
-
     ngOnInit(): void {
         this.forgotPasswordForm = this._formBuilder.group({
-            emailAddress: ['', [Validators.required,  Validators.pattern(EMAIL_PATTERN)]]
+            emailAddress: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]]
         });
     }
-
-    sendResetLink(){
-        
-        this.authService.sendResetLink(this.forgotPasswordForm.value.emailAddress).subscribe((res:any)=>{
-            console.log("response",res.message);
+    sendResetLink() {
+        this.authService.sendResetLink(this.forgotPasswordForm.value.emailAddress).subscribe((res: any) => {
             if (res.message === "change password link send successfully") {
                 Swal.fire('Reset Password link send your email id successfully')
                 this.sendLink();
             }
-        })
-       
+        }, error => {
+            if (error.error.message === 'email/userName not registered' || error.error.message === "Account Inactive") {
+                this.errorMessage = error.error.message;
+                this.wrongEmail = true;
+                Swal.fire({
+                    position: 'center',
+                    icon: 'warning',
+                    title: 'Incorrect Email address. Please enter a valid Email address',
+                    showConfirmButton: true,
+                })
+            }
+        });
     }
 
     sendLink() {
         Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'change password link send successfully!',
-            showConfirmButton: false,
-            timer: 2500
+            title: 'Reset password link send email id successfully!',
+            showConfirmButton: true,
         });
-}
+    }
 
     ngOnDestroy() {
         this.dialog = null;
