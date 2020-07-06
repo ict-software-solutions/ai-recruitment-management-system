@@ -8,7 +8,7 @@ import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { AuthService } from '../../../../service/auth.service';
 import { LogService } from 'app/service/shared/log.service';
-
+import Swal from 'sweetalert2';
 @Component({
     selector: 'register',
     templateUrl: './register.component.html',
@@ -26,6 +26,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     errorMessage = '';
     activationLink = false;
     signupSubscription: Subscription;
+    hide = true;
 
     constructor(
         private fuseConfigService: FuseConfigService,
@@ -54,22 +55,21 @@ export class RegisterComponent implements OnInit, OnDestroy {
             emailAddress: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
             userName: ['', [Validators.minLength(6), Validators.maxLength(30)]],
             password: ['', [Validators.minLength(8), Validators.maxLength(15)]],
-            passwordConfirm: ['', [Validators.required, confirmPasswordValidator]],
+            // passwordConfirm: ['', [Validators.required, confirmPasswordValidator]],
             check: ['', Validators.required]
         });
     }
 
     register(value) {
         this.logUserActivity('CREATE AN ACCOUNT', LOG_MESSAGES.CLICK);
-        this.alreadyExist = false;
-        this.activationLink = false;
-        this.errorMessage = '';
         this.signupSubscription = this.authservice.signup(value).subscribe(() => {
             this.activationLink = true;
+            Swal.fire("Account activation link send your email id")
+
             this.logUserActivity('CREATE AN ACCOUNT', LOG_MESSAGES.SUCCESS);
         }, error => {
             if (error.error.message === "email already exists") {
-                this.errorMessage = 'Email already exists'
+                this.errorMessage = 'Email already in use'
             }
             else if (error.error.message === "userName already exists") {
                 this.errorMessage = 'User name already exists'
