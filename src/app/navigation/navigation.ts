@@ -17,14 +17,14 @@ export const navigation: FuseNavigation[] = [
 
             },
 
-            {
-                id: 'calendar',
-                title: 'Calendar',
-                translate: 'NAV.CALENDAR',
-                type: 'item',
-                icon: 'today',
-                url: '/apps/calendar'
-            },
+            // {
+            //     id: 'calendar',
+            //     title: 'Calendar',
+            //     translate: 'NAV.CALENDAR',
+            //     type: 'item',
+            //     icon: 'today',
+            //     url: '/apps/calendar'
+            // },
                 //   {
                 //         id        : 'orders',
                 //         title     : 'User Management',
