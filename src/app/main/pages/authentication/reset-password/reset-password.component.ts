@@ -110,7 +110,9 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
    
     passwordResetDone() {
                 Swal.fire({
-                    title: 'Your Password has been Changed',
+               
+                    text: 'Your Password has been Changed',
+                    icon:'success',
                     confirmButtonText: 'OK',
                 }).then(() => {
                     this.router.navigate (['/pages/login']);
