@@ -144,7 +144,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                 Swal.fire({
                     position: 'center',
                     icon: 'warning',
-                    title: 'Remaining of last attempt,if it is incorrect account locked',
+                    title: 'One more attempt remaining',
+                    text: 'If login is unsuccessfull,Your account will be locked',
                     confirmButtonText: 'OK',
                 });
                }

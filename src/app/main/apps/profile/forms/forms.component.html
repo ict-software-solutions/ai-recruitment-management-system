@@ -131,16 +131,8 @@
 
                             <mat-form-field appearance="outline" fxFlex="25" class="px-8">
                                 <mat-label>State</mat-label>
-                                <mat-select formControlName="state">
-                                    <mat-option [value]="'United States of America'">
-                                        United States of America
-                                    </mat-option>
-                                    <mat-option [value]="'United Kingdom'">
-                                        United Kingdom
-                                    </mat-option>
-
-                                </mat-select>
-                                <mat-icon matSuffix class="secondary-text">location_city</mat-icon>
+                                <input matInput type="text" formControlName="state" [readonly]="viewMode">
+                              <mat-icon matSuffix class="secondary-text">location_city</mat-icon>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="25">
                                 <mat-label>Country</mat-label>
