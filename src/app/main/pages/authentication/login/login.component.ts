@@ -128,18 +128,28 @@ export class LoginComponent implements OnInit, OnDestroy {
                 }).then(() => {
                     let navigationExtras: NavigationExtras = {
                         queryParams: {
-                            userName: this.loginForm.get("userName").value,
-                            password:this.loginForm.get("password").value
+                            userName: this.loginForm.get("userName").value
                         }
                     };
                     this.router.navigate(['/pages/auth/reset-password'], navigationExtras);
                 });
             }
-            else if (error.error.message === 'Invalid Password You-have-2-attempts'|| error.error.message === 'Invalid Password You-have-1-attempts' ) {
+        
+            else if (error.error.message === 'Invalid Password You-have-2-attempts') {
                 this.errorMessage = error.error.message;
                 this.reCaptcha = true;
+            }
+            else if (error.error.message === 'Invalid Password You-have-1-attempts' ) {
+                this.reCaptcha = true;
+                Swal.fire({
+                    position: 'center',
+                    icon: 'warning',
+                    title: 'Remaining of last attempt,if it is incorrect account locked',
+                    confirmButtonText: 'OK',
+                });
                }
-               else if (error.error.message === 'Account Locked, Please contact support') {
+
+               else if (error.error.message === 'Account Locked, Please contact support' || error.error.message === 'Invalid Password You-have-0-attempts' ) {
                 this.inActive = true;
                 Swal.fire({
                     position: 'center',
