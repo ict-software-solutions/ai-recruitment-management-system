@@ -128,7 +128,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                 }).then(() => {
                     let navigationExtras: NavigationExtras = {
                         queryParams: {
-                            userName: this.loginForm.get("userName").value
+                            userName: this.loginForm.get("userName").value,
+                            password:this.loginForm.get("password").value
                         }
                     };
                     this.router.navigate(['/pages/auth/reset-password'], navigationExtras);
