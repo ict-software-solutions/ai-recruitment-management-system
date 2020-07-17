@@ -13,6 +13,7 @@ contacts-contact-list {
 
         .mat-column-checkbox {
             flex: 0 1 64px;
+            vertical-align: middle!important;
            
         }
    
@@ -33,9 +34,9 @@ contacts-contact-list {
 .mat-column-status{
     flex: 0 -2 50px;
 }
-.mat-header-row {
-    min-height: 64px;
-  }
+ .mat-header-row {
+    height: 64px!important;
+    }
 
         .mat-row {
             position: relative;

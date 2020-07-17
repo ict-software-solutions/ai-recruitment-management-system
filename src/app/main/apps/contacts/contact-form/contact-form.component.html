@@ -4,18 +4,13 @@
           <span class="title dialog-title">{{dialogTitle}}</span>
           <div class="icon"align="right">
               <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
-                  <!-- <button mat-mini-fab color="light"><mat-icon>edit</mat-icon></button> -->
-                 
-                  <!-- <button mat-mini-fab color="light"style="margin-left:10px;"(click)="deleteContact()"><mat-icon>delete</mat-icon></button> -->
+               
                   <button mat-mini-fab color="light"(click)="matDialogRef.close()" style="margin-left:10px;margin-top: 10px;"><mat-icon>close</mat-icon></button>
                   
                      
               </div>
           </div>
-          <!-- <button mat-icon-button color="accent" style="background-color: white;margin-right: 5px;"><mat-icon>edit</mat-icon></button>
-          <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog" color="accent" style="background-color: white;margin-left: 5px;">
-              <mat-icon>close</mat-icon>
-          </button> -->
+         
       </mat-toolbar-row>
 
       <mat-toolbar-row class="toolbar-bottom py-16" fxLayout="column" fxLayoutAlign="center center">
@@ -50,7 +45,7 @@
           
           
           <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
-              <mat-form-field appearance="outline" fxFlex ="100">
+              <mat-form-field appearance="outline" fxFlex ="100" style="    height: 100px;">
                   <mat-label>Description</mat-label>
                   <textarea name="notes" formControlName="notes" matInput type="text" max-rows="5" value="  Has access to only interview schedule change screen interview schedule change screen">
                   
@@ -63,111 +58,59 @@
     </div>
 
         <div fxFlex="50" style="height:380px; margin-left:10px;">
-         <mat-card style="height: 360px;background-color: aliceblue;">  
+         <mat-card style="height: 360px;background-color: aliceblue;border:1px solid aliceblue;">  
         
                 <div style="text-align: center;    text-align: center;
                 margin-bottom: 9px;
-                margin-top: -9px;">Role Mapping</div>
+                margin-top: -9px;
+                font-weight: bold;">Role Mapping</div>
                 
-            <mat-grid-list cols="2" rowHeight="2:1"  [gutterSize]="'30px'" style="margin-left: 12px;
+            <mat-grid-list cols="2" rowHeight="2:.80"  [gutterSize]="'30px'" style="margin-left: 12px;
             margin-right: 12px;">
+
+           
                 <mat-grid-tile>
                     <div >
-                        <button mat-raised-button  (click)="selectdashboard()"   [ngClass]="{'white' : toggle1, 'blue': !toggle1}">Dashboard<span class="tik"  *ngIf="selectdash"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>dashboard</mat-icon></span>
+                        <button mat-raised-button  (click)="selectdashboard()"   [ngClass]="{'white' : toggle1, 'blue': !toggle1}" class="tile_button">Dashboard<div class="tik" style="display: inline;" *ngIf="selectdash"><mat-icon class="tile_icon" style="font-size: small;">check_circle</mat-icon></div><span><br><mat-icon style="margin-bottom: 19px;">dashboard</mat-icon></span>
                          
                         </button>
                     </div>
                 </mat-grid-tile>
-                <mat-grid-tile>
+                <!-- <mat-grid-tile>
                     <div >
-                        <button mat-raised-button  (click)="selectcalander()"  [ngClass]="{'white' : toggle2, 'blue': !toggle2}">Calendar<span class="tik" *ngIf="selectcal "><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>today</mat-icon></span></button>
+                        <button mat-raised-button  (click)="selectcalander()"  [ngClass]="{'white' : toggle2, 'blue': !toggle2}" class="tile_button">Calendar<span class="tik" *ngIf="selectcal "><mat-icon class="tile_icon"style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon  style="margin-bottom: 19px;">today</mat-icon></span></button>
+                    </div>
+                </mat-grid-tile> -->
+               <mat-grid-tile>
+                    <div >
+                        <button mat-raised-button  (click)="selectProfile()"  [ngClass]="{'white' : toggle3, 'blue': !toggle3}" class="tile_button">Edit Profile<span class="tik" *ngIf="selectpro"><mat-icon class="tile_icon" style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon style="margin-bottom: 19px;">edit</mat-icon></span></button>
                     </div>
                 </mat-grid-tile>
                <mat-grid-tile>
                     <div >
-                        <button mat-raised-button  (click)="selectProfile()"  [ngClass]="{'white' : toggle3, 'blue': !toggle3}">Edit Profile<span class="tik" *ngIf="selectpro"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>edit</mat-icon></span></button>
-                    </div>
-                </mat-grid-tile>
-               <mat-grid-tile>
-                    <div >
-                        <button mat-raised-button (click)="userManagement()"  [ngClass]="{'white' : toggle4, 'blue': !toggle4}">User Management<span class="tik" *ngIf="selectuser"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>account_circle</mat-icon></span></button>
+                        <button mat-raised-button (click)="userManagement()"  [ngClass]="{'white' : toggle4, 'blue': !toggle4}" class="tile_button">User Management<span class="tik" *ngIf="selectuser"><mat-icon class="tile_icon" style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon style="margin-bottom: 19px;">account_circle</mat-icon></span></button>
                     </div>
                 </mat-grid-tile>
               
             <mat-grid-tile>  <div >
-                    <button mat-raised-button   (click)="rolemanagement()" [ngClass]="{'white' : toggle5, 'blue': !toggle5}">Role Management<span class="tik" *ngIf="selectrole"><mat-icon style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>check_circle</mat-icon></span></button>
+                    <button mat-raised-button   (click)="rolemanagement()" [ngClass]="{'white' : toggle5, 'blue': !toggle5}">Role Management<span class="tik" *ngIf="selectrole"><mat-icon class="tile_icon" style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>check_circle</mat-icon></span></button>
                 </div></mat-grid-tile>
                
-
+<!-- 
                     <mat-grid-tile>  <div >
                     <button mat-raised-button color="basic">Add<span><br><mat-icon>add_cicle</mat-icon></span></button>
-                </div></mat-grid-tile> 
+                </div></mat-grid-tile>  -->
                 <!-- <mat-grid-tile>5</mat-grid-tile>
                 <mat-grid-tile>6</mat-grid-tile> -->
               </mat-grid-list>
+              <div style="float:right;margin-bottom: 10px;    margin-top: 140px;
+              margin-right: 20px;">
+                <a class="link" style="cursor: pointer;">Select all</a></div>
             </mat-card>
+        
             </div>
 </div>
-      <!-- <form [formGroup]="contactForm">
-          <div fxLayout="row" fxLayoutAlign="start start">
-              <mat-form-field appearance="outline" fxFlex="50">
-                  <mat-label>Role Name</mat-label>
-                  <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                  <input formControlName="vacancies" matInput>
-              </mat-form-field>
-            
-            <mat-form-field appearance="outline" fxFlex="50"class="px-8">
-              <mat-label>Status</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let status of status" [value]="status.value">
-                  {{status.viewValue}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-           
-          </div>
-          
-          <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
-              <mat-form-field appearance="outline" fxFlex>
-                  <mat-label>Description</mat-label>
-                  <textarea name="notes" formControlName="notes" matInput type="text" max-rows="1" value="  Has access to only interview schedule change screen interview schedule change screen">
-                  
-                  </textarea>
-              </mat-form-field>
-          </div>
-
-      </form> -->
-      <!-- <div class="container"> -->
-<!-- 
-        <mat-card fxFlex="48"class="mapping" style="background-color: aliceblue;    height: 170px;" >
-          <p style="font-weight: bold;">Available Screens</p>
-          <mat-card-content class="card_content">
-            <div  *ngFor="let screen of screens">
-            <mat-checkbox (change)="select(screen)" style="margin-top:20px;">{{screen}}</mat-checkbox><br>
-
-        </div>
-        </mat-card-content>
     
-        </mat-card> -->
-
-<!-- <div fxFlex="4"> -->
-  
-  
-<!-- </div> -->
-<!-- <mat-card fxFlex="48" style="margin-left:4px;"class="mapping" style="background-color: aliceblue;    height: 170px;" >
-  <p style="font-weight: bold;">Configured Screens</p>
-  
-
-  <mat-card-content class="card_content">
-      <div  *ngFor="let item of items">
-      <mat-checkbox (change)="unSelect(item, i)" style="margin-top:20px;" >{{item}}</mat-checkbox><br>
-  </div>
-     
-      </mat-card-content>
-     
-</mat-card> -->
-
-      <!-- </div> -->
       
      
   </div>
@@ -180,7 +123,7 @@
               (click)="matDialogRef.close(['delete',contactForm])"
               aria-label="Delete"
               matTooltip="Delete">
-          DELETE
+          Cancel
       </button>
 
       <button *ngIf="action !== 'edit'"
@@ -188,8 +131,9 @@
               class="save-button"
               (click)="matDialogRef.close(contactForm)"
               [disabled]="contactForm.invalid"
-              aria-label="SAVE">
-          ADD
+              aria-label="SAVE"
+              style="    margin-right: 10px;">
+          Add
       </button>
 
       <button *ngIf="action === 'edit'"
@@ -197,8 +141,9 @@
               class="save-button"
               (click)="matDialogRef.close(['save',contactForm])"
               [disabled]="contactForm.invalid"
-              aria-label="SAVE">
-          SAVE
+              aria-label="SAVE"
+              style="margin-right: 10px;">
+          Save
       </button>
 
   </div>

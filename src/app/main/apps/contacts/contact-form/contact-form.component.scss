@@ -81,7 +81,8 @@ width:900px;
       .mat-grid-tile{
         //   height:90px;
           border: unset;
-          box-shadow: -5px 15px 22px rgba(0, 0, 0, 0.3);
+        //   box-shadow: -5px 15px 22px rgba(0, 0, 0, 0.3);
+        box-shadow: -17px 4px 13px rgba(0, 0, 0, 0.3);
           .mat-raised-button {
             height: 90px;
             width: 188px;
@@ -93,6 +94,7 @@ width:900px;
           float: right;
           font-size: small;
           margin-right: -10px;
+         
       }
       .blue{
         background-color: blue;
@@ -101,4 +103,19 @@ width:900px;
     .white {
         background-color:white;
     }
-  
+    .mat-column-desc{
+       height:100px;
+    }
+    textarea.mat-input-element {
+        padding: 2px 0;
+        margin: -2px 0;
+        height: 100px;
+    }
+    .tile_button{
+        font-size: 15px;
+        margin-top:10px;
+    }
+    .tile_icon{
+        margin-top: 13px;
+        margin-right: 5px;
+    }
