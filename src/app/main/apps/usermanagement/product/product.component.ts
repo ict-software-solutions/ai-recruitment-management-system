@@ -36,7 +36,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
         { value: 'client-1', viewValue: 'Client' },
         { value: 'candidate-2', viewValue: 'Candidate' }
     ];
-    userrole = ['Admin', 'Manager', 'CandidateConsultant', 'ClientConsultant', 'CandidateView', 'client', 'customer'];
+    userrole = ['Admin', 'Manager', 'Candidate Consultant', 'Client Consultant', 'Candidate View', 'client', 'customer'];
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -99,13 +99,10 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
             email: ['', Validators.required],
             mobile: ['', Validators.required],
             dob: ['', Validators.required],
-            companyname: ['', Validators.required],
-            position: ['', Validators.required],
-            address: ['', Validators.required],
-            postalcode: ['', Validators.required],
-            city: ['', Validators.required],
-            state: ['', Validators.required],
-            country: ['', Validators.required],
+            validFrom:['',Validators.required],
+            validTo:['',Validators.required],
+            passwordSince:['',Validators.required],
+            passwordExpiryDate:['',Validators.required],
             password: ['', Validators.required],
             passwordNew: ['', [Validators.minLength(8), Validators.maxLength(15)]],
             check: [''],

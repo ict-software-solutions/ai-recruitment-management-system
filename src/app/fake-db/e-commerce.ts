@@ -6,6 +6,7 @@ export class ECommerceFakeDb
             'username'            : 'Andrew Michel',
             'userType'   :'Candidate',
             'userRole':'View',
+            'status':'Active',
             
 
           'modified':'29/06/2020',
@@ -96,6 +97,7 @@ export class ECommerceFakeDb
             'username'            : 'Trevino John',
             'userType'   :'Client',
             'userRole':'Client',
+            'status':'Inactive',
          
             'modified':'21/05/2020',
             'handle'          : 'braies-lake-canvas-print',
@@ -181,6 +183,7 @@ export class ECommerceFakeDb
             'username'            : 'Lily Adams',
             'userType'   :'Client',
             'userRole':'View',
+            'status':'Active',
             'modified':'12/04/2020',
             'handle'          : 'fall-glow-canvas-print',
             'description'     : 'Sit ipsum esse eu consequat veniam sit consectetur consectetur anim. Ut Lorem dolor ullamco do. Laboris excepteur consectetur tempor nisi commodo amet deserunt duis.',
@@ -265,6 +268,7 @@ export class ECommerceFakeDb
             'username'            : 'Braine Murphy',
             'userType'   :'Client',
             'userRole':'Consultant',
+            'status':'Inactive',
             'modified':'05/04/2020',
             'handle'          : 'first-snow-canvas-print',
             'description'     : 'Incididunt nostrud culpa labore nostrud veniam nostrud dolore velit sunt laborum ad reprehenderit. Excepteur enim irure ut labore elit ut deserunt qui qui consequat quis do nostrud ad. Aliqua dolor labore ut occaecat laborum irure. Aute in deserunt do aute laborum sit et reprehenderit minim voluptate proident do est.',
@@ -348,6 +352,7 @@ export class ECommerceFakeDb
             'username'            : 'Christy Joseph Williams Joseph Williams',
             'userType'   :'Employee',
             'userRole':'Candidate Consultant',
+            'status':'Active',
             'modified':'01/02/2020',
             'handle'          : 'lago-di-braies-canvas-print',
             'description'     : 'Laboris laborum minim qui reprehenderit duis fugiat ea anim labore incididunt duis. Officia adipisicing anim amet in sit aliqua fugiat quis do sint non velit eu. Labore occaecat labore elit voluptate Lorem adipisicing et ipsum id et reprehenderit ullamco. Elit in nulla laborum nulla quis dolor deserunt magna dolor ad anim magna. Esse aute reprehenderit anim sit est et quis est. Ex reprehenderit culpa deserunt qui sint eiusmod reprehenderit ipsum consequat ut.',
@@ -426,135 +431,63 @@ export class ECommerceFakeDb
             'active'          : true,
             'action'    :true
         },
-        // {
-        //     'id'              : '6',
-        //     'name'            : 'Lago di Sorapis - Canvas Print',
-        //     'handle'          : 'lago-di-sorapis-canvas-print',
-        //     'description'     : 'Tempor sunt tempor veniam non culpa excepteur. Ea irure elit non cupidatat cillum dolore. Sit incididunt qui dolore ipsum commodo aliqua amet cupidatat incididunt nisi qui consectetur. Cillum eu aute qui irure aute adipisicing cupidatat magna.',
-        //     'categories'      : [
-        //         'Canvas Print',
-        //         'Nature'
-        //     ],
-        //     'tags'            : [
-        //         'canvas-print',
-        //         'nature'
-        //     ],
-        //     'featuredImageId' : 6,
-        //     'images'          : [
-        //         {
-        //             'id'  : 0,
-        //             'url' : 'assets/images/ecommerce/a-walk-amongst-friends.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 1,
-        //             'url' : 'assets/images/ecommerce/braies-lake.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 2,
-        //             'url' : 'assets/images/ecommerce/fall-glow.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 3,
-        //             'url' : 'assets/images/ecommerce/first-snow.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 4,
-        //             'url' : 'assets/images/ecommerce/lago-di-braies.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 5,
-        //             'url' : 'assets/images/ecommerce/lago-di-sorapis.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 6,
-        //             'url' : 'assets/images/ecommerce/never-stop-changing.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 7,
-        //             'url' : 'assets/images/ecommerce/reaching.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 8,
-        //             'url' : 'assets/images/ecommerce/morain-lake.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 9,
-        //             'url' : 'assets/images/ecommerce/yosemite.jpg',
-        //             'type': 'image'
-        //         }
-        //     ],
-        //     'priceTaxExcl'    : 53.963,
-        //     'priceTaxIncl'    : 59.36,
-        //     'taxRate'         : 10,
-        //     'comparedPrice'   : 69.90,
-        //     'quantity'        : 101,
-        //     'sku'             : 'A445BV',
-        //     'width'           : '22',
-        //     'height'          : '24',
-        //     'depth'           : '15',
-        //     'weight'          : '3',
-        //     'extraShippingFee': 3.00,
-        //     'active'          : true
-        // },
-        // {
-        //     'id'              : '7',
-        //     'name'            : 'Never Stop Changing - Canvas Print',
-        //     'handle'          : 'never-stop-changing-canvas-print',
-        //     'description'     : 'Excepteur commodo ipsum in ex esse elit ea id voluptate id occaecat. Sunt Lorem ipsum ut proident eu aliquip velit non minim. Sunt velit deserunt veniam eu non veniam. Eiusmod sit ex et id incididunt labore aliqua eu aute dolor cillum ex mollit mollit. Incididunt voluptate adipisicing eiusmod non ipsum cupidatat excepteur enim in pariatur eu. Labore dolor qui exercitation amet labore laboris Lorem do adipisicing. Minim non consectetur adipisicing esse ut occaecat incididunt eiusmod commodo et cillum pariatur.',
-        //     'categories'      : [
-        //         'Canvas Print',
-        //         'Nature'
-        //     ],
-        //     'tags'            : [
-        //         'canvas-print',
-        //         'nature'
-        //     ],
-        //     'featuredImageId' : 7,
-        //     'images'          : [
-        //         {
-        //             'id'  : 0,
-        //             'url' : 'assets/images/ecommerce/a-walk-amongst-friends.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 1,
-        //             'url' : 'assets/images/ecommerce/braies-lake.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 2,
-        //             'url' : 'assets/images/ecommerce/fall-glow.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 3,
-        //             'url' : 'assets/images/ecommerce/first-snow.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 4,
-        //             'url' : 'assets/images/ecommerce/lago-di-braies.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 5,
-        //             'url' : 'assets/images/ecommerce/lago-di-sorapis.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 6,
-        //             'url' : 'assets/images/ecommerce/never-stop-changing.jpg',
-        //             'type': 'image'
-        //         },
+        {
+            'id'              : '6',
+            'username'            : 'James Andrew',
+            'userType'   :'Candidate',
+            'userRole':'View',
+            'status':'Active',
+            
+
+          'modified':'29/05/2020',
+            'name'            : 'Lago di Sorapis - Canvas Print',
+            'handle'          : 'lago-di-sorapis-canvas-print',
+            'description'     : 'Tempor sunt tempor veniam non culpa excepteur. Ea irure elit non cupidatat cillum dolore. Sit incididunt qui dolore ipsum commodo aliqua amet cupidatat incididunt nisi qui consectetur. Cillum eu aute qui irure aute adipisicing cupidatat magna.',
+            'categories'      : [
+                'Canvas Print',
+                'Nature'
+            ],
+            'tags'            : [
+                'canvas-print',
+                'nature'
+            ],
+            'featuredImageId' : 6,
+            'images'          : [
+                {
+                    'id'  : 0,
+                    'url' : 'assets/images/ecommerce/a-walk-amongst-friends.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 1,
+                    'url' : 'assets/images/ecommerce/braies-lake.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 2,
+                    'url' : 'assets/images/ecommerce/fall-glow.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 3,
+                    'url' : 'assets/images/ecommerce/first-snow.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 4,
+                    'url' : 'assets/images/ecommerce/lago-di-braies.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 5,
+                    'url' : 'assets/images/ecommerce/lago-di-sorapis.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 6,
+                    'url' : 'assets/images/ecommerce/james.jpg',
+                    'type': 'image'
+                },
         //         {
         //             'id'  : 7,
         //             'url' : 'assets/images/ecommerce/reaching.jpg',
@@ -570,75 +503,83 @@ export class ECommerceFakeDb
         //             'url' : 'assets/images/ecommerce/yosemite.jpg',
         //             'type': 'image'
         //         }
-        //     ],
-        //     'priceTaxExcl'    : 58.372,
-        //     'priceTaxIncl'    : 64.21,
-        //     'taxRate'         : 10,
-        //     'comparedPrice'   : 69.90,
-        //     'quantity'        : 34,
-        //     'sku'             : 'A445BV',
-        //     'width'           : '22',
-        //     'height'          : '24',
-        //     'depth'           : '15',
-        //     'weight'          : '3',
-        //     'extraShippingFee': 3.00,
-        //     'active'          : true
-        // },
-        // {
-        //     'id'              : '8',
-        //     'name'            : 'Reaching - Canvas Print',
-        //     'handle'          : 'reaching-canvas-print',
-        //     'description'     : 'Velit cillum cupidatat eiusmod ea quis sit. Consequat dolore elit sunt sunt voluptate irure incididunt consectetur non. Dolore veniam ipsum anim commodo ex. Proident ipsum nostrud ullamco sit. Ad dolore nulla qui mollit laborum ex ipsum.',
-        //     'categories'      : [
-        //         'Canvas Print',
-        //         'Nature'
-        //     ],
-        //     'tags'            : [
-        //         'canvas-print',
-        //         'nature'
-        //     ],
-        //     'featuredImageId' : 8,
-        //     'images'          : [
-        //         {
-        //             'id'  : 0,
-        //             'url' : 'assets/images/ecommerce/a-walk-amongst-friends.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 1,
-        //             'url' : 'assets/images/ecommerce/braies-lake.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 2,
-        //             'url' : 'assets/images/ecommerce/fall-glow.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 3,
-        //             'url' : 'assets/images/ecommerce/first-snow.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 4,
-        //             'url' : 'assets/images/ecommerce/lago-di-braies.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 5,
-        //             'url' : 'assets/images/ecommerce/lago-di-sorapis.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 6,
-        //             'url' : 'assets/images/ecommerce/never-stop-changing.jpg',
-        //             'type': 'image'
-        //         },
-        //         {
-        //             'id'  : 7,
-        //             'url' : 'assets/images/ecommerce/reaching.jpg',
-        //             'type': 'image'
-        //         },
+            ],
+            'priceTaxExcl'    : 53.963,
+            'priceTaxIncl'    : 59.36,
+            'taxRate'         : 10,
+            'comparedPrice'   : 69.90,
+            'quantity'        : 101,
+            'sku'             : 'A445BV',
+            'width'           : '22',
+            'height'          : '24',
+            'depth'           : '15',
+            'weight'          : '3',
+            'extraShippingFee': 3.00,
+            'active'          : true,
+            'action'    :true,
+        },
+        {
+            'id'              : '7',
+            'username'            : 'Josefina Hendry',
+            'userType'   :'Candidate',
+            'userRole':'View',
+            'status':'Active',
+            
+
+          'modified':'29/06/2020',
+            'name'            : 'Never Stop Changing - Canvas Print',
+            'handle'          : 'never-stop-changing-canvas-print',
+            'description'     : 'Excepteur commodo ipsum in ex esse elit ea id voluptate id occaecat. Sunt Lorem ipsum ut proident eu aliquip velit non minim. Sunt velit deserunt veniam eu non veniam. Eiusmod sit ex et id incididunt labore aliqua eu aute dolor cillum ex mollit mollit. Incididunt voluptate adipisicing eiusmod non ipsum cupidatat excepteur enim in pariatur eu. Labore dolor qui exercitation amet labore laboris Lorem do adipisicing. Minim non consectetur adipisicing esse ut occaecat incididunt eiusmod commodo et cillum pariatur.',
+            'categories'      : [
+                'Canvas Print',
+                'Nature'
+            ],
+            'tags'            : [
+                'canvas-print',
+                'nature'
+            ],
+            'featuredImageId' : 7,
+            'images'          : [
+                {
+                    'id'  : 0,
+                    'url' : 'assets/images/ecommerce/a-walk-amongst-friends.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 1,
+                    'url' : 'assets/images/ecommerce/braies-lake.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 2,
+                    'url' : 'assets/images/ecommerce/fall-glow.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 3,
+                    'url' : 'assets/images/ecommerce/first-snow.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 4,
+                    'url' : 'assets/images/ecommerce/lago-di-braies.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 5,
+                    'url' : 'assets/images/ecommerce/lago-di-sorapis.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 6,
+                    'url' : 'assets/images/ecommerce/never-stop-changing.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 7,
+                    'url' : 'assets/images/ecommerce/Velazquez.jpg',
+                    'type': 'image'
+                },
         //         {
         //             'id'  : 8,
         //             'url' : 'assets/images/ecommerce/morain-lake.jpg',
@@ -649,20 +590,108 @@ export class ECommerceFakeDb
         //             'url' : 'assets/images/ecommerce/yosemite.jpg',
         //             'type': 'image'
         //         }
-        //     ],
-        //     'priceTaxExcl'    : 63.390,
-        //     'priceTaxIncl'    : 69.73,
-        //     'taxRate'         : 10,
-        //     'comparedPrice'   : 79.90,
-        //     'quantity'        : 4,
-        //     'sku'             : 'A445BV',
-        //     'width'           : '22',
-        //     'height'          : '24',
-        //     'depth'           : '15',
-        //     'weight'          : '3',
-        //     'extraShippingFee': 3.00,
-        //     'active'          : false
-        // },
+            ],
+            'priceTaxExcl'    : 58.372,
+            'priceTaxIncl'    : 64.21,
+            'taxRate'         : 10,
+            'comparedPrice'   : 69.90,
+            'quantity'        : 34,
+            'sku'             : 'A445BV',
+            'width'           : '22',
+            'height'          : '24',
+            'depth'           : '15',
+            'weight'          : '3',
+            'extraShippingFee': 3.00,
+            'active'          : true,
+            'action'    :true,
+        },
+        {
+            'id'              : '8',
+            'username'            : 'Carl James',
+            'userType'   :'Client',
+            'userRole':'Consultant',
+            'status':'Active',
+            
+
+          'modified':'01/07/2020',
+            'name'            : 'Reaching - Canvas Print',
+            'handle'          : 'reaching-canvas-print',
+            'description'     : 'Velit cillum cupidatat eiusmod ea quis sit. Consequat dolore elit sunt sunt voluptate irure incididunt consectetur non. Dolore veniam ipsum anim commodo ex. Proident ipsum nostrud ullamco sit. Ad dolore nulla qui mollit laborum ex ipsum.',
+            'categories'      : [
+                'Canvas Print',
+                'Nature'
+            ],
+            'tags'            : [
+                'canvas-print',
+                'nature'
+            ],
+            'featuredImageId' : 8,
+            'images'          : [
+                {
+                    'id'  : 0,
+                    'url' : 'assets/images/ecommerce/a-walk-amongst-friends.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 1,
+                    'url' : 'assets/images/ecommerce/braies-lake.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 2,
+                    'url' : 'assets/images/ecommerce/fall-glow.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 3,
+                    'url' : 'assets/images/ecommerce/first-snow.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 4,
+                    'url' : 'assets/images/ecommerce/lago-di-braies.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 5,
+                    'url' : 'assets/images/ecommerce/lago-di-sorapis.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 6,
+                    'url' : 'assets/images/ecommerce/never-stop-changing.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 7,
+                    'url' : 'assets/images/ecommerce/reaching.jpg',
+                    'type': 'image'
+                },
+                {
+                    'id'  : 8,
+                    'url' : 'assets/images/ecommerce/carl.jpg',
+                    'type': 'image'
+                },
+                // {
+        //             'id'  : 9,
+        //             'url' : 'assets/images/ecommerce/yosemite.jpg',
+        //             'type': 'image'
+        //         }
+            ],
+            'priceTaxExcl'    : 63.390,
+            'priceTaxIncl'    : 69.73,
+            'taxRate'         : 10,
+            'comparedPrice'   : 79.90,
+            'quantity'        : 4,
+            'sku'             : 'A445BV',
+            'width'           : '22',
+            'height'          : '24',
+            'depth'           : '15',
+            'weight'          : '3',
+            'extraShippingFee': 3.00,
+            'active'          : false,
+            'action'    :true,
+        },
         // {
         //     'id'              : '9',
         //     'name'            : 'Morain Lake - Canvas Print',

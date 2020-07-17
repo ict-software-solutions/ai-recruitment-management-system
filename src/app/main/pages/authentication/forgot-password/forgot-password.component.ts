@@ -62,7 +62,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         Swal.fire({
             position: 'center',
             icon: 'success',
-            text: 'Reset Password link send your email id successfully',
+            text: 'Reset Password link sent to your email id',
             confirmButtonText: 'OK',
         });
     }

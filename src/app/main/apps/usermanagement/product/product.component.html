@@ -88,7 +88,7 @@
               </mat-form-field>
               <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>Last Name</mat-label>
-                <input matInput placeholder="Last Name" name="lastName" formControlName="lastNname" required>
+                <input matInput placeholder="Last Name" name="lastName" formControlName="lastName" required>
               </mat-form-field>
 
             </div>
@@ -132,10 +132,12 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
+           
               <mat-form-field appearance="outline" fxFlex="33">
-                <!-- <mat-form-field fxFlex="30"  appearance="outline"> -->
                 <mat-label>Valid From</mat-label>
-                <input matInput>
+                <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
               </mat-form-field>
 
 
@@ -148,25 +150,28 @@
 
               <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>Password Since</mat-label>
-                <input matInput>
+                <input matInput [matDatepicker]="picker2" name="passwordSince" formControlName="passwordSince">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+                
               </mat-form-field>
+
               <mat-form-field appearance="outline" fxFlex="34" class="px-8">
                 <mat-label>Password Expiry Date</mat-label>
-                <input matInput>
+                <input matInput [matDatepicker]="picker3" name="passwordExpiryDate" formControlName="passwordExpiryDate">
+                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
+                
               </mat-form-field>
 
               <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>Valid To</mat-label>
-                <input matInput>
+                <input matInput [matDatepicker]="picker4" name="validTo" formControlName="validTo">
+                <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                <mat-datepicker #picker4></mat-datepicker>
+              
               </mat-form-field>
             </div>
-
-
-
-
-
-
-
             <!-- <div fxLayout="row" fxLayoutAlign="space-between"> -->
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
               <div fxFlex="35" appearance="outline">
@@ -180,7 +185,7 @@
               </div>
               <div fxFlex="16" appearance="outline">
                 <mat-checkbox (change)="changePassword()" formControlName="check"
-                  style="  color: rgb(0, 102, 153);font-size: 12px;">Change Password</mat-checkbox>
+                  style="font-size: 12px;">Change Password</mat-checkbox>
               </div>
               <!-- <mat-form-field fxFlex="30" *ngIf ="show" appearance="outline"> -->
               <mat-form-field *ngIf="show" appearance="outline" fxFlex="25" class="px-8">

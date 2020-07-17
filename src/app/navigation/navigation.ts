@@ -2,8 +2,8 @@ import { FuseNavigation } from '@fuse/types';
 export const navigation: FuseNavigation[] = [
     {
         id: 'applications',
-        title: 'Applications',
-        translate: 'NAV.APPLICATIONS',
+        title: '',
+        
         type: 'group',
         icon: 'apps',
         children: [
@@ -36,7 +36,7 @@ export const navigation: FuseNavigation[] = [
                     {
                         id        : 'products',
                         title     : 'User Management',
-                        icon: 'account_circle',
+                        icon      : 'people',
                         type      : 'item',
                         url       : '/apps/e-commerce/products',
                         exactMatch: true
@@ -44,7 +44,7 @@ export const navigation: FuseNavigation[] = [
                     {
                         id        : 'products',
                         title     : 'Role Management',
-                        icon: 'account_circle',
+                        icon      : 'account_circle',
                         type      : 'item',
                         url       : '/apps/contacts',
                         exactMatch: true

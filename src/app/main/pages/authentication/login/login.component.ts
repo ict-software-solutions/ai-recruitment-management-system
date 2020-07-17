@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Your account is activated!',
+                title: 'Your account has been activated successfully',
                 showConfirmButton: true,
             });
         }

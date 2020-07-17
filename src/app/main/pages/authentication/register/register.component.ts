@@ -70,7 +70,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Account activation link send your email id',
+                title: 'Active your account with the link sent to your email address',
                 showConfirmButton: true,
             });
 
