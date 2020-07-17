@@ -157,7 +157,7 @@
                                 <mat-label>Current Password</mat-label>
                                 <input matInput type="password" [type]="hide ? 'password' : 'text'"
                                 formControlName="password" required>
-                                <mat-icon matSuffix class="secondary-text"  (click)="hide = !hide"> {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                <mat-icon matSuffix class="secondary-text1"  (click)="hide = !hide"> {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                 <mat-error>
                                     Password is required
                                 </mat-error>
@@ -168,7 +168,7 @@
                                 <input matInput type="Password" [type]="hide1 ? 'password' : 'text'"
                                     formControlName="newPassword"
                                     pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*?/]).{8,15})" required>
-                                <mat-icon matSuffix class="secondary-text" (click)="hide1 = !hide">
+                                <mat-icon matSuffix class="secondary-text1" (click)="hide1 = !hide">
                                     {{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
                                 <mat-error *ngIf="form.get('newPassword').hasError('required')">New password is required
                                 </mat-error>
