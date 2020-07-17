@@ -17,7 +17,7 @@
                             <div class="title">
                                 <img class="profile-image avatar" src="assets/images/avatars/Nancy.jpg" style="    margin: -7px 8px -10px -7px;">
 <span style="    margin-left: -32px;">
-    <button mat-mini-fab color="accent" aria-label="Example icon button with a filter list icon">
+    <button mat-mini-fab color="accent" aria-label="Example icon button with a filter list icon"style="margin-top: 16px;">
         <mat-icon>local_see</mat-icon>
       </button>
     <!-- <button mat-icon-button color="primary">
@@ -34,16 +34,17 @@
     margin-top: 4px;
     opacity: 0;" >
 </span>
-<span style="margin-left: 12px;">My Profile</span>
+<div style="margin-left: 20px; display: inline;">My Profile</div>
                                     
-                                    <span> 
+                                    <div style="display:inline;"> 
                             <button mat-icon-button color="light"(click)="Edit()" *ngIf="!enableEdit"style="float: right;margin-right:10px;" >
                                 <mat-icon style="line-height: 13px;">edit</mat-icon>Edit
-                            </button></span>
+                            </button></div>
                             <button mat-raised-button color="light"  *ngIf="enableEdit"
-                            class="submit-button" style="margin-right:-5px;width: 100px; float: right;margin-top: -7px;" (click)="updateProfile(form.value)" >Save</button>
+                            class="submit-button" style="margin-right: -2px;;width: 100px;float: right; padding: 5px;" 
+                            (click)="updateProfile(form.value)" >Save</button>
                                 <button mat-raised-button color="light" (click)="Edit()" *ngIf="enableEdit" 
-                                class="submit-button" style="margin-right:10px;width: 100px; float: right;margin-top: -7px;" (click)="canceledit()">Cancel</button>
+                                class="submit-button" style="margin-right: 10px;width: 100px;float: right; padding: 5px;" (click)="canceledit()">Cancel</button>
                             </div>
                          
                         </header>
