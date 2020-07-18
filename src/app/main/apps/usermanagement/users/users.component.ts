@@ -6,14 +6,16 @@ import { MatSort } from '@angular/material/sort';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { FuseUtils } from '@fuse/utils';
-import { EcommerceProductsService } from 'app/main/apps/usermanagement/products/products.service';
+import { UserManagementService } from 'app/main/apps/usermanagement/users/users.service';
 import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { userDetails } from 'app/models/user-details';
+import { AuthService } from 'app/service/auth.service';
 
 @Component({
     selector: 'e-commerce-products',
-    templateUrl: './products.component.html',
+    templateUrl: './users.component.html',
     styleUrls: ['./products.component.scss'],
     animations: fuseAnimations,
     encapsulation: ViewEncapsulation.None
@@ -22,34 +24,40 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 export class EcommerceProductsComponent implements OnInit, OnDestroy {
 
     dataSource: FilesDataSource | null;
-    displayedColumns = ['image', 'username', 'userType', 'userRole', 'modified', 'active', 'action'];
+    displayedColumns = ['image', 'firstName', 'lastName', 'userType', 'userRole', 'action'];
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
     @ViewChild(MatSort, { static: true }) sort: MatSort;
     @ViewChild('filter', { static: true }) filter: ElementRef;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-    private _unsubscribeAll: Subject<any>;
+    private unsubscribeAll: Subject<any>;
+    user:userDetails;
+    usersDetails: any;
+
 
     constructor(
         public dialog: MatDialog,
-        private _ecommerceProductsService: EcommerceProductsService,
-        public _matDialog: MatDialog) {
-        this._unsubscribeAll = new Subject();
+        private authService: AuthService,
+        private userManagementService: UserManagementService,
+        public matDialog: MatDialog) {
+        this.unsubscribeAll = new Subject();
+        
     }
 
     ngOnInit(): void {
-        this.dataSource = new FilesDataSource(this._ecommerceProductsService, this.paginator, this.sort);
+        this.dataSource = new FilesDataSource(this.userManagementService, this.paginator, this.sort);
         fromEvent(this.filter.nativeElement, 'keyup').pipe(
-            takeUntil(this._unsubscribeAll),
+            takeUntil(this.unsubscribeAll),
             debounceTime(150),
             distinctUntilChanged()
         ).subscribe(() => {
             if (!this.dataSource) { return; }
             this.dataSource.filter = this.filter.nativeElement.value;
         });
+        this.getAllUsers();
     }
 
     deleteContact(): void {
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+        this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
@@ -57,10 +65,17 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
+    getAllUsers() {
+        this.authService.getAllUsers(this.user).subscribe(res => {
+            this.usersDetails = res
+            console.log("result",res);
+            // this.products-table.patchValue(res);
+        })
+    }
 
     ngOnDestroy() {
-        this._unsubscribeAll.next();
-        this._unsubscribeAll.complete();
+        this.unsubscribeAll.next();
+        this.unsubscribeAll.complete();
         this.dataSource = null;
         this.displayedColumns = null;
         this.paginator = null;
@@ -68,8 +83,8 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
         this.filter = null;
         this.confirmDialogRef = null;
         this.dialog = null;
-        this._ecommerceProductsService = null;
-        this._matDialog = null;
+        this.userManagementService = null;
+        this.matDialog = null;
     }
 }
 
@@ -81,18 +96,18 @@ export class FilesDataSource extends DataSource<any>
     /**
      * Constructor
      *
-     * @param {EcommerceProductsService} _ecommerceProductsService
+     * @param {UserManagementService} _ecommerceProductsService
      * @param {MatPaginator} _matPaginator
      * @param {MatSort} _matSort
      */
     constructor(
-        private _ecommerceProductsService: EcommerceProductsService,
+        private ecommerceProductsService: UserManagementService,
         private _matPaginator: MatPaginator,
         private _matSort: MatSort
     ) {
         super();
 
-        this.filteredData = this._ecommerceProductsService.products;
+        this.filteredData = this.ecommerceProductsService.products;
     }
 
     /**
@@ -102,7 +117,7 @@ export class FilesDataSource extends DataSource<any>
      */
     connect(): Observable<any[]> {
         const displayDataChanges = [
-            this._ecommerceProductsService.onProductsChanged,
+            this.ecommerceProductsService.onProductsChanged,
             this._matPaginator.page,
             this._filterChange,
             this._matSort.sortChange
@@ -111,7 +126,7 @@ export class FilesDataSource extends DataSource<any>
         return merge(...displayDataChanges)
             .pipe(
                 map(() => {
-                    let data = this._ecommerceProductsService.products.slice();
+                    let data = this.ecommerceProductsService.products.slice();
 
                     data = this.filterData(data);
 
@@ -148,16 +163,6 @@ export class FilesDataSource extends DataSource<any>
         this._filterChange.next(filter);
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Filter data
-     *
-     * @param data
-     * @returns {any}
-     */
     filterData(data): any {
         if (!this.filter) {
             return data;
@@ -207,10 +212,6 @@ export class FilesDataSource extends DataSource<any>
             return (valueA < valueB ? -1 : 1) * (this._matSort.direction === 'asc' ? 1 : -1);
         });
     }
-
-    /**
-     * Disconnect
-     */
     disconnect(): void {
     }
 }

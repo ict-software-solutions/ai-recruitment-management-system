@@ -105,7 +105,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
             passwordExpiryDate:['',Validators.required],
             password: ['', Validators.required],
             passwordNew: ['', [Validators.minLength(8), Validators.maxLength(15)]],
-            check: [''],
+            check1: [''],
         });
     }
 

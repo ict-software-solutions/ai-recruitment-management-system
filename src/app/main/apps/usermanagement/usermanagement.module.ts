@@ -24,8 +24,8 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { EcommerceProductComponent } from 'app/main/apps/usermanagement/product/product.component';
 import { EcommerceProductService } from 'app/main/apps/usermanagement/product/product.service';
-import { EcommerceProductsComponent } from 'app/main/apps/usermanagement/products/products.component';
-import { EcommerceProductsService } from 'app/main/apps/usermanagement/products/products.service';
+import { EcommerceProductsComponent } from 'app/main/apps/usermanagement/users/users.component';
+import { UserManagementService } from 'app/main/apps/usermanagement/users/users.service';
 // import { EcommerceOrdersComponent } from 'app/main/apps/user/orders/orders.component';
 // import { EcommerceOrdersService } from 'app/main/apps/e-comme/orders/orders.service';
 // import { EcommerceOrderComponent } from 'app/main/apps/e-commerce/order/order.component';
@@ -36,7 +36,7 @@ const routes: Routes = [
         path: 'products',
         component: EcommerceProductsComponent,
         resolve: {
-            data: EcommerceProductsService
+            data: UserManagementService
         }
     },
     {
@@ -107,7 +107,7 @@ const routes: Routes = [
         FuseWidgetModule
     ],
     providers: [
-        EcommerceProductsService,
+        UserManagementService,
         EcommerceProductService
         // EcommerceOrdersService,
         // EcommerceOrderService

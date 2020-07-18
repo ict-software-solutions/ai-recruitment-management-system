@@ -82,6 +82,16 @@ export class AuthService {
     return this.httpClient.post(url,resendAddress)
   }
 
+getAllUsers(object){
+  const httpOptions ={
+    headers:new HttpHeaders({'Authorization':'Bearer' + object.token})
+  };
+  console.log("getAllUsers", object.token);
+  let url = apiURL.USER +"/" + object.token
+  return this.httpClient.get(url,httpOptions)
+}
+
+
   logout() {
     sessionStorage.clear();
     localStorage.clear();

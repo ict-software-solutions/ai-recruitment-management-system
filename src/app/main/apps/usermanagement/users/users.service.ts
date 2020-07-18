@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
-export class EcommerceProductsService implements Resolve<any>
+export class UserManagementService implements Resolve<any>
 {
     products: any[];
     onProductsChanged: BehaviorSubject<any>;
