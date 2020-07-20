@@ -69,7 +69,7 @@ const appRoutes: Routes = [
     // Material
     MatButtonModule,
     MatIconModule,
-    // MatRadioModule,
+    MatRadioModule,
 
     // Fuse modules
     FuseModule.forRoot(fuseConfig),

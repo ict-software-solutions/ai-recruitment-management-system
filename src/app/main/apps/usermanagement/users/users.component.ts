@@ -20,6 +20,7 @@ import { userInfo } from 'os';
 import { usersList } from 'app/models/user-details';
 import {MatTableDataSource} from "@angular/material/table";
 import {ThemePalette} from '@angular/material/core';
+import {Router, NavigationExtras} from "@angular/router";
 import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
 import { Product } from '../product/product.model';
 
@@ -67,6 +68,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy{
     constructor(
         private userService: UserService,
         public dialog: MatDialog,
+        private router: Router,
         private authService: AuthService,
         private airmsService: AirmsService,
         private userManagementService: UserManagementService,
@@ -192,6 +194,14 @@ onDelete(userId:string,object): void {
         // this.dataSourceGifts.sort = this.sortGifts;
         // this.dataSourceGifts.paginator = this.paginatorGifts;
       }
+      public onTap() {
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                "userName": "Nic",
+            }
+        };
+        this.router.navigate(['/apps/profile/forms'], navigationExtras);
+     }
     ngOnDestroy() {
         this.unsubscribeAll.next();
         this.unsubscribeAll.complete();
