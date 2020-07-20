@@ -23,6 +23,9 @@ import 'hammerjs';
 import { LogPublishersService } from './service/shared/log-publishers.service';
 import { LogService } from './service/shared/log.service';
 import { Keepalive, NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+
 
 
 const appRoutes: Routes = [
@@ -83,7 +86,8 @@ const appRoutes: Routes = [
         // App modules
         LayoutModule,
         AppStoreModule,
-        MatCardModule
+        MatCardModule,
+        MatProgressSpinnerModule
     ],
     bootstrap: [
         AppComponent

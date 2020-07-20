@@ -1,7 +1,7 @@
 <div id="products" class="page-layout carded fullwidth inner-scroll">
     <div class="top-bg accent"></div>
     <div class="center">
-        <!-- HEADER -->
+      
         <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
             fxLayoutAlign.gt-sm="space-between center">
             <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
@@ -13,7 +13,7 @@
                     User Management
                 </span>
             </div>
-            <!-- SEARCH -->
+           
             <div class="search-wrapper mx-32 mx-md-0">
                 <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon>search</mat-icon>
@@ -29,9 +29,22 @@
         <!-- / HEADER -->
         <!-- CONTENT CARD -->
         <div class="content-card">
-            <mat-table class="products-table" #table [dataSource]="dataSource" matSort
-                [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
-                <!-- Image Column -->
+            <!-- <mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="firstName">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header style="color:dodgerblue;">FIRST NAME
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{ element.firstName }}</mat-cell>
+                </ng-container>
+
+                
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+              </mat-table> -->
+              
+            <mat-table  [dataSource]="dataSource" matSort
+                [@animateStagger]="{ value: '50' }" fusePerfectScrollbar >
+              
                 <ng-container matColumnDef="image" style="width: 200px;">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let product">
@@ -41,55 +54,66 @@
                             [src]="'assets/images/ecommerce/product-image-placeholder.png'" />
                     </mat-cell>
                 </ng-container>
-                <!-- Name Column -->
+              
                 <ng-container matColumnDef="firstName" style="width: 200px; text-overflow: ellipsis;">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>First Name</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef>First Name</mat-header-cell>
                     <mat-cell *matCellDef="let product">
                         <p class="text-truncate">{{ product.firstName }}</p>
                     </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="lastName" style="width: 200px; text-overflow: ellipsis;">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef >Last Name</mat-header-cell>
                     <mat-cell *matCellDef="let product">
                         <p class="text-truncate">{{ product.lastName }}</p>
                     </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="userType">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>User Type</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef >User Type</mat-header-cell>
                     <mat-cell *matCellDef="let product">
-                        <p class="text-truncate"></p>
+                        <p class="text-truncate">{{product.userType}}</p>
                     </mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="userRole">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>User Role</mat-header-cell>
+                <ng-container matColumnDef="roleName">
+                    <mat-header-cell *matHeaderCellDef >User Role</mat-header-cell>
                     <mat-cell *matCellDef="let product">
-                        <p class="text-truncate"></p>
+                        <p class="text-truncate">{{product.roles.roleName}}</p>
                     </mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="action">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header style="justify-content: center;">Action
+                <ng-container matColumnDef="userId">
+                    <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action
                     </mat-header-cell>
                     <mat-cell *matCellDef="let product" style="justify-content: center;">
-                        <button mat-icon-button *ngIf="product.action" style="color: #42a1f5;"
-                            [routerLink]="'/apps/e-commerce/products/' + product.id + '/' + product.handle">
+                        <button mat-icon-button style="color: #42a1f5;"
+                         [routerLink]="'/apps/profile/forms'"
+                        (click)="onSelect(product)">
                             <mat-icon>edit</mat-icon>
-                        </button><span>
+                        </button>
+                        <span>
                             <button mat-icon-button color="accent" style="color: red; background-color: white;"
-                                (click)="deleteContact()">
+                                (click)="onDelete(product.userId)">
                                 <mat-icon>delete</mat-icon>
                             </button></span>
                     </mat-cell>
                 </ng-container>
 
                 <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-                <mat-row *matRowDef="let product; columns: displayedColumns" class="product"> </mat-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns" class="product" > </mat-row>
             </mat-table>
-
-            <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10"
+            <div *ngIf="isLoading" 
+            style="display: flex; justify-content: center; align-items: center;text-align: center;">
+        <h3 style="color:blue;font-size:bold;">Loading..</h3>
+        <mat-progress-spinner *ngIf="isLoading"
+        class="example-margin"
+        [color]="color"
+        [mode]="mode"
+        [value]="value">
+    </mat-progress-spinner>
+        </div>
+            <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
                 [pageSizeOptions]="[5, 10, 25, 100]">
             </mat-paginator>
         </div>

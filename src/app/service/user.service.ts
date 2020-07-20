@@ -11,3 +11,9 @@ export class UserService {
   private userProfileUpdateSub = new BehaviorSubject<any>(null);
   userProfileUpdated$ = this.userProfileUpdateSub.asObservable();
 }
+export class UserDetailService {
+  constructor(private httpClient: HttpClient) { }
+  private userDetailUpdateSub = new BehaviorSubject<any>(null);
+  userDetailUpdated$ = this.userDetailUpdateSub.asObservable();
+}
+

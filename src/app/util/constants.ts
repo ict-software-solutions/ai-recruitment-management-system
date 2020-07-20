@@ -16,6 +16,9 @@ export const EMAIL_PATTERN = /^\w+([\.-]?\w+)*@\w+(\-]?\w+)*(\.-]?\w+)*(\.\w{2,3
 export const LOGGED_IN_USER = '$$AIRMS-USER$$';
 export const LOGGED_IN_USER_INFO = '$$AIRMS-USER-INFO$$';
 export const SIGNUP = '$$AIRMS-USER$$';
+export const GET_ALL_USER ='$$AIRMS-ALL-USERS$$';
+export const GET_USERS ='$$AIRMS-USERS-INFO$$';
+
 
 
 // export const EDIT = '$$AIRMS-USER-INFO$$'+

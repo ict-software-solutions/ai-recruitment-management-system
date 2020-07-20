@@ -1,5 +1,5 @@
 import { DataSource } from '@angular/cdk/collections';
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, OnDestroy ,Inject} from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -10,9 +10,22 @@ import { UserManagementService } from 'app/main/apps/usermanagement/users/users.
 import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { userDetails } from 'app/models/user-details';
-import { AuthService } from 'app/service/auth.service';
 
+import { AuthService } from 'app/service/auth.service';
+import {  GET_ALL_USER, SIGNUP } from 'app/util/constants';
+import { AirmsService } from 'app/service/airms.service';
+import { Subscription } from 'rxjs';
+import { UserService } from 'app/service/user.service';
+import { userInfo } from 'os';
+import { usersList } from 'app/models/user-details';
+import {MatTableDataSource} from "@angular/material/table";
+import {ThemePalette} from '@angular/material/core';
+import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
+import { Product } from '../product/product.model';
+
+
+
+    
 @Component({
     selector: 'e-commerce-products',
     templateUrl: './users.component.html',
@@ -21,30 +34,55 @@ import { AuthService } from 'app/service/auth.service';
     encapsulation: ViewEncapsulation.None
 })
 
-export class EcommerceProductsComponent implements OnInit, OnDestroy {
-
-    dataSource: FilesDataSource | null;
-    displayedColumns = ['image', 'firstName', 'lastName', 'userType', 'userRole', 'action'];
+export class EcommerceProductsComponent implements OnInit, OnDestroy{
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-    @ViewChild(MatSort, { static: true }) sort: MatSort;
+    // @ViewChild(MatSort, { static: true }) sort: MatSort;
     @ViewChild('filter', { static: true }) filter: ElementRef;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+    // dataSource : any| FilesDataSource | null ;
+    dataSource =  new MatTableDataSource<any>();
+    dataSource1 =  new MatTableDataSource<any>();
+    @ViewChild("sort") sort: MatSort;
+    // @ViewChild("paginator") paginator: MatPaginator;
     private unsubscribeAll: Subject<any>;
-    user:userDetails;
-    usersDetails: any;
-
+    // userDetailSubscription: Subscription;
+    userDetailSubscription: Subscription;
+    $:any;
+    // userInfo: users;
+    userDetailUpdateSubscription: Subscription;
+    user1: usersList;
+    details: any;
+    userData:any;
+    deleteinfo:any;
+    
+    userProfileUpdateSubscription: Subscription;
+    displayedColumns : string[]= ['image','firstName', 'lastName', 'userType', 'roleName', 'userId'];
+    isLoading = true;
+    color: ThemePalette = 'primary';
+    mode: ProgressSpinnerMode = 'determinate';
+    value = 50;
+   
+    // displayedColumns : string[]= ['firstName'];
 
     constructor(
+        private userService: UserService,
         public dialog: MatDialog,
         private authService: AuthService,
+        private airmsService: AirmsService,
         private userManagementService: UserManagementService,
-        public matDialog: MatDialog) {
-        this.unsubscribeAll = new Subject();
-        
+        public matDialog: MatDialog) 
+        {
+            this.unsubscribeAll = new Subject();
+            this.user1 = airmsService.getSessionStorage(SIGNUP)
+            this.unsubscribeAll = new Subject();
+           
     }
 
     ngOnInit(): void {
-        this.dataSource = new FilesDataSource(this.userManagementService, this.paginator, this.sort);
+
+        //We want to use this code for mat sort and filter  (important)
+
+        /*this.dataSource = new FilesDataSource(this.userManagementService, this.paginator, this.sort);
         fromEvent(this.filter.nativeElement, 'keyup').pipe(
             takeUntil(this.unsubscribeAll),
             debounceTime(150),
@@ -52,27 +90,108 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
         ).subscribe(() => {
             if (!this.dataSource) { return; }
             this.dataSource.filter = this.filter.nativeElement.value;
-        });
-        this.getAllUsers();
+        });*/
+        this.getAllUsers()
+        this.getAllInfo()
+        // this.deleteContact()
+      
     }
+  
 
-    deleteContact(): void {
-        this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: false
-        });
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(() => {
-            this.confirmDialogRef = null;
-        });
-    }
-    getAllUsers() {
-        this.authService.getAllUsers(this.user).subscribe(res => {
-            this.usersDetails = res
-            console.log("result",res);
-            // this.products-table.patchValue(res);
+    // deleteContact(): void {
+    //     this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
+    //         disableClose: false
+    //     });
+    //     this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+    //     this.confirmDialogRef.afterClosed().subscribe(result => {
+
+         
+    //         this.confirmDialogRef = null;
+    //     });
+    // }
+    // onDelete(userId:string){
+    //     console.log(userId)
+
+    // }
+    
+    
+// onDelete(userId:string): void {
+//         this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
+//             disableClose: false
+//         });
+//         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+//         this.authService.deleteUser(userId,Object).subscribe(result => {
+// this.getAllUsers()
+         
+//             this.confirmDialogRef = null;
+//         });
+//     }
+onDelete(userId:string,object): void {
+    if(confirm('are you sure want to delete?')){
+        this.authService.deleteUser(userId,object).subscribe(res =>{
+            this.deleteinfo = res
+           
+            console.log("deleterrow",this.deleteinfo);
         })
     }
+//     this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+//     this.authService.deleteUser(userId,Object).subscribe(result => {
+// this.getAllUsers()
+     
+//         this.confirmDialogRef = null;
+//     });
+}
 
+    // deleteContact(contact): void {
+    //     this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+    //         disableClose: false
+    //     });
+    //     this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+    //     this.confirmDialogRef.afterClosed().subscribe(result => {
+    //         if (result) {
+    //             this._contactsService.deleteContact(contact);
+    //         }
+    //         this.confirmDialogRef = null;
+    //     });
+    // }
+    getAllUsers() {
+        this.authService.getAllUsers(this.user1).subscribe(res => {
+            this.details = res
+           
+            console.log("details",this.details);
+            this.isLoading = false;
+            this.dataSource.data  =  this.details;
+        },
+        error=>this.isLoading=false
+        );
+    }
+    // onRowClicked(row) {
+    //     console.log('Row clicked: ',row);
+    // }
+    onSelect(selectedItem:any){
+        console.log("selectedItemId",selectedItem.userId,selectedItem.firstName,selectedItem.lastName,
+        selectedItem.userType,
+        selectedItem.roles.roleName,
+        )
+    }
+  
+    getAllInfo() {
+        this.authService.getAllInfo(this.user1).subscribe(res => {
+            this.userData = res
+            console.log("userData",this.userData);
+            this.dataSource1.data = this.userData;
+            
+        })
+    }
+    connect(): Observable<any> {
+        return this.authService.getAllUsers(Object);
+      }
+      ngAfterViewInit() {
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        // this.dataSourceGifts.sort = this.sortGifts;
+        // this.dataSourceGifts.paginator = this.paginatorGifts;
+      }
     ngOnDestroy() {
         this.unsubscribeAll.next();
         this.unsubscribeAll.complete();
@@ -215,3 +334,12 @@ export class FilesDataSource extends DataSource<any>
     disconnect(): void {
     }
 }
+// export class UserDataSource extends DataSource<any> {
+//     constructor(private authService: AuthService) {
+//       super();
+//     }
+//     connect(): Observable<product[]> {
+//       return this.authService.getAllUsers();
+//     }
+//     disconnect() {}
+//   }

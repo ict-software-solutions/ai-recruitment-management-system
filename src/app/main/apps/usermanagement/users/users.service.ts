@@ -60,4 +60,5 @@ export class UserManagementService implements Resolve<any>
                 }, reject);
         });
     }
+    
 }

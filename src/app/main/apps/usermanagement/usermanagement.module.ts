@@ -26,6 +26,7 @@ import { EcommerceProductComponent } from 'app/main/apps/usermanagement/product/
 import { EcommerceProductService } from 'app/main/apps/usermanagement/product/product.service';
 import { EcommerceProductsComponent } from 'app/main/apps/usermanagement/users/users.component';
 import { UserManagementService } from 'app/main/apps/usermanagement/users/users.service';
+
 // import { EcommerceOrdersComponent } from 'app/main/apps/user/orders/orders.component';
 // import { EcommerceOrdersService } from 'app/main/apps/e-comme/orders/orders.service';
 // import { EcommerceOrderComponent } from 'app/main/apps/e-commerce/order/order.component';

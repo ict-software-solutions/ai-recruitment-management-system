@@ -1,13 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { apiURL } from 'app/util/constants';
-import { BehaviorSubject, observable } from 'rxjs';
+import { BehaviorSubject, observable, Observable } from 'rxjs';
+import { Product } from 'app/main/apps/usermanagement/product/product.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   constructor(private httpClient: HttpClient) { }
+
 
   signup(value) {
     const param = {
@@ -25,11 +27,11 @@ export class AuthService {
     return this.httpClient.post(apiURL.LOGIN_URL, param);
   }
 
-  private userProfileUpdateSub = new BehaviorSubject<any>(null);
-  userProfileUpdated$ = this.userProfileUpdateSub.asObservable();
-  userProfileUpdateDone(value) {
-    this.userProfileUpdateSub.next(value);
-  }
+  // private userProfileUpdateSub = new BehaviorSubject<any>(null);
+  // userProfileUpdated$ = this.userProfileUpdateSub.asObservable();
+  // userProfileUpdateDone(value) {
+  //   this.userProfileUpdateSub.next(value);
+  // }
 
   resetPassword(param) {
     if (param.changePassword) {
@@ -50,7 +52,8 @@ export class AuthService {
     return this.httpClient.post(url, emailObject)
   }
 
-  getUserById(access_token, userId) {
+  getUserById
+  (access_token, userId) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Authorization': 'Bearer ' + access_token })
     };
@@ -83,13 +86,51 @@ export class AuthService {
   }
 
 getAllUsers(object){
+ 
   const httpOptions ={
-    headers:new HttpHeaders({'Authorization':'Bearer' + object.token})
+    headers:new HttpHeaders({'Authorization': 'Bearer ' + object.token}),
+ 
   };
-  console.log("getAllUsers", object.token);
-  let url = apiURL.USER +"/" + object.token
+  console.log('object',object);
+  console.log("token", object.token);
+  console.log("getAllUsers", this.getAllUsers);
+  let url = apiURL.USER 
   return this.httpClient.get(url,httpOptions)
+
 }
+
+getAllInfo(object) {
+  const httpOptions = {
+    headers: new HttpHeaders({ 'Authorization': 'Bearer ' + object.token })
+  };
+  console.log("getAllinfo", object.userId);
+  let url = apiURL.USER + "/" + object.userId
+
+  return this.httpClient.get(url, httpOptions)
+}
+deleteUser(userId:string,object){
+  const httpOptions = {
+    headers: new HttpHeaders({ 'Authorization': 'Bearer ' + object.token })
+  };
+  console.log(object.token)
+  console.log(object.userId)
+  let url = apiURL.USER + "/" + userId
+  return this.httpClient.delete(url,httpOptions)
+}
+// getAllUserById(access_token, userId) {
+//   const httpOptions = {
+//     headers: new HttpHeaders({ 'Authorization': 'Bearer ' + access_token })
+//   };
+//   return this.httpClient.get(apiURL.USER + '/' + userId, httpOptions);
+// }
+
+
+
+// private userDetailUpdateSub = new BehaviorSubject<any>(null);
+// userDetailUpdated$ = this.userProfileUpdateSub.asObservable();
+// userDetailUpdateDone(value) {
+//   this.userProfileUpdateSub.next(value);
+// }
 
 
   logout() {
