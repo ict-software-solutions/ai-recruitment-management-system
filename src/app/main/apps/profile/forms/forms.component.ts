@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import {MatRadioModule} from '@angular/material/radio';
 import { Subject } from 'rxjs';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
@@ -9,9 +10,12 @@ import { LOGGED_IN_USER_INFO, SIGNUP } from 'app/util/constants';
 import { AirmsService } from 'app/service/airms.service';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
+import { usertype } from 'app/models/user-type';
+import { Router, ActivatedRoute } from "@angular/router";
 import { UserService } from 'app/service/user.service';
 import { userInfo } from 'os';
 import { AuthService } from 'app/service/auth.service';
+
 
 let $: any;
 @Component({
@@ -45,17 +49,34 @@ export class FormsComponent implements OnInit, OnDestroy {
     isLoading: false;
     profileDetails: any;
     viewMode = true;
+    userName: "";
+    labelPosition: 'before' | 'after' = 'after';
     errorMessage = '';
     oldPasswordWrong = false;
+    getUserById: boolean;
+    status:"";
+   
+
+    usertype: usertype[] = [
+        { value: 'employee-0', viewValue: 'Employee' },
+        { value: 'client-1', viewValue: 'Client' },
+        { value: 'candidate-2', viewValue: 'Candidate' }
+    ];
+    userrole = ['Admin', 'Manager', 'Candidate Consultant', 'Client Consultant', 'Candidate View', 'client', 'customer'];
+
 
     constructor(private userService: UserService,
         public dialog: MatDialog,
+        public radio : MatRadioModule,
         private _formBuilder: FormBuilder,
         private datePipe: DatePipe,
+        private route: ActivatedRoute,
+        private router: Router,
         private airmsService: AirmsService,
         private authService: AuthService,
 
     ) {
+        
         this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
         this.user = airmsService.getSessionStorage(SIGNUP)
         this.lastLogin = datePipe.transform(this.userInfo.lastLogin, 'MMM dd, yyyy hh:mm:ss a');
@@ -88,6 +109,17 @@ export class FormsComponent implements OnInit, OnDestroy {
             check: [''],
         });
 
+        this.route.queryParams.subscribe(params => {
+          this.userName = params["userName"];
+          console.log(params);
+          if (params.userName==='Nic') {
+              this.getUserById = false;
+          }
+          else{
+              this.getUserById=true;
+          }
+
+        });
         this.form.get('password').valueChanges;
         this.form.get('password').valueChanges
             .pipe(takeUntil(this.unsubscribeAll)).subscribe(() => {
@@ -210,6 +242,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.unsubscribeAll.next();
         this.unsubscribeAll.complete();
         this.contactProfilePic = null;
+        this.getUserById=null;
     }
 }
 
