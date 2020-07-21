@@ -1,8 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { apiURL } from 'app/util/constants';
-import { BehaviorSubject, observable, Observable } from 'rxjs';
-import { Product } from 'app/main/apps/usermanagement/product/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -87,15 +85,15 @@ export class AuthService {
 
 getAllUsers(object){
  
-  const httpOptions ={
+  /* const httpOptions ={
     headers:new HttpHeaders({'Authorization': 'Bearer ' + object.token}),
  
-  };
+  }; */
   console.log('object',object);
   console.log("token", object.token);
   console.log("getAllUsers", this.getAllUsers);
   let url = apiURL.USER 
-  return this.httpClient.get(url,httpOptions)
+  return this.httpClient.get(url)
 
 }
 

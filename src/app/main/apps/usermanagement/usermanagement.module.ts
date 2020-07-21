@@ -1,5 +1,6 @@
 import { AgmCoreModule } from '@agm/core';
-import { NgModule } from '@angular/core';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -26,6 +27,7 @@ import { EcommerceProductComponent } from 'app/main/apps/usermanagement/product/
 import { EcommerceProductService } from 'app/main/apps/usermanagement/product/product.service';
 import { EcommerceProductsComponent } from 'app/main/apps/usermanagement/users/users.component';
 import { UserManagementService } from 'app/main/apps/usermanagement/users/users.service';
+import { TokenInterceptor } from 'app/service/shared/token.interceptor';
 
 // import { EcommerceOrdersComponent } from 'app/main/apps/user/orders/orders.component';
 // import { EcommerceOrdersService } from 'app/main/apps/e-comme/orders/orders.service';
@@ -115,4 +117,14 @@ const routes: Routes = [
     ]
 })
 export class EcommerceModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: EcommerceModule,
+            providers: [{
+                provide: HTTP_INTERCEPTORS,
+                useClass: TokenInterceptor,
+                multi: true
+            }]
+        };
+    }
 }
