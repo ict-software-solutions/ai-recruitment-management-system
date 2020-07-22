@@ -107,20 +107,27 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.route.queryParams.subscribe(params => {
           this.userName = params["userName"];
           console.log(params);
+          if(params.viewMode === "false"){
+              this.Edit();
+          }
+         
+          
+          console.log(params.userId);
+          this.user=<any>Number(params.userId);
           if (params.userName==='Nic') {
               this.getUserById = false;
           }
           else{
               this.getUserById=true;
           }
-
+          this.getProfileInfo(Number(params.userId));
         });
         this.form.get('password').valueChanges;
         this.form.get('password').valueChanges
             .pipe(takeUntil(this.unsubscribeAll)).subscribe(() => {
                 this.form.get('passwordConfirm').updateValueAndValidity();
             });
-        this.getProfileInfo();
+      
     }
 
     unsubscribe(subscription: Subscription) {
@@ -134,8 +141,9 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.enableEdit = !this.enableEdit;
     }
 
-    getProfileInfo() {
-        this.authService.getProfileInfo(this.user).subscribe(res => {
+    getProfileInfo(userId) {
+        console.log("USERID",userId);
+        this.authService.getProfileInfo(userId).subscribe(res => {
             this.profileDetails = res
             this.form.patchValue(res);
         })

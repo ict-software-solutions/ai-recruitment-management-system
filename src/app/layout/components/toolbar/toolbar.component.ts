@@ -197,7 +197,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         let navigationExtras: NavigationExtras = {
             queryParams: {
                 // "userName": "Nic",
-                userId:this.userId
+                userId:this.userId,
+                viewMode:true
             }
         };
         this.router.navigate(['/apps/profile/forms'], navigationExtras);

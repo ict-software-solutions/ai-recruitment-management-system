@@ -126,20 +126,49 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
 
         })
     }
+    // onDelete(userId): void {
+    //     console.log(userId);
+    //     if (confirm('are you sure want to delete?')) {
+    //         this.authService.deleteUser(userId).subscribe(res => {
+    //             this.deleteinfo = res
+    //             console.log("deleterrow", this.deleteinfo);
+    //         })
+    //     }
+    // }
     onDelete(userId): void {
         console.log(userId);
-        if (confirm('are you sure want to delete?')) {
-            this.authService.deleteUser(userId).subscribe(res => {
-                this.deleteinfo = res
+        this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
+          disableClose: false,
+        });
+       this.confirmDialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?";
+        this.confirmDialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.authService.deleteUser(userId).subscribe((res) => {
+                this.deleteinfo = res;
                 console.log("deleterrow", this.deleteinfo);
-            })
-        }
-    }
+              });
+              this.getAllUsers();
+          }
+       
+          this.confirmDialogRef = null;
+        });
+      }
      onTap(userId) {
         console.log("userId",userId);
         let navigationExtras: NavigationExtras = {
             queryParams: {
-                userId:userId
+                userId:userId,
+                viewMode:false
+            }
+        };
+        this.router.navigate(['/apps/profile/forms'], navigationExtras);
+    }
+    addUser() {
+        // console.log("userId",userId);
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                // userId:userId,
+                viewMode:false
             }
         };
         this.router.navigate(['/apps/profile/forms'], navigationExtras);
