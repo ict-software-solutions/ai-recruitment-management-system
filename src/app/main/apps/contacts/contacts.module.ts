@@ -11,6 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
 import {MatListModule} from '@angular/material/list';
@@ -47,7 +48,7 @@ const routes: Routes = [
     ],
     imports        : [
         RouterModule.forChild(routes),
-
+        DragDropModule,
         MatButtonModule,
         MatCheckboxModule,
         MatDatepickerModule,
@@ -67,6 +68,10 @@ const routes: Routes = [
         MatRadioModule,
         MatGridListModule
         // AngularDualListBoxModule
+    ],
+    exports:[
+        DragDropModule
+
     ],
     providers      : [
         ContactsService

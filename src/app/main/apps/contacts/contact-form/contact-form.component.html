@@ -1,150 +1,146 @@
 <div class="dialog-content-wrapper">
-  <mat-toolbar matDialogTitle class="mat-accent m-0" style="height: 64px;">
-      <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
-          <span class="title dialog-title">{{dialogTitle}}</span>
-          <div class="icon"align="right">
-              <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
-               
-                  <button mat-mini-fab color="light"(click)="matDialogRef.close()" style="margin-left:10px;margin-top: 10px;"><mat-icon>close</mat-icon></button>
-                  
-                     
-              </div>
-          </div>
-         
-      </mat-toolbar-row>
-
-      <mat-toolbar-row class="toolbar-bottom py-16" fxLayout="column" fxLayoutAlign="center center">
-          <!-- <img [src]="contact.avatar" class="avatar contact-avatar huge m-0"
-               [alt]="contact.name"/>
-          <div class="contact-name mt-8">{{contact.name}} {{contact.lastName}}</div> -->
-      </mat-toolbar-row>
+  <mat-toolbar matDialogTitle class="mat-accent m-0">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title">{{ dialogTitle }}</span>
+      <div class="icon" align="right">
+        <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+          <button mat-mini-fab color="light" (click)="matDialogRef.close()" style="margin-left: 10px; margin-top: 10px;">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-toolbar-row>
   </mat-toolbar>
 
   <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
     <div class="container">
-    <div fxFlex="50" style="height:380px;">
-<mat-card style="height: 360px;">
- <form [formGroup]="contactForm">
-    <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
-              <mat-form-field appearance="outline" fxFlex="100">
-                  <mat-label>Role Name</mat-label>
-                  <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                  <input formControlName="vacancies" matInput>
+      <div fxLayout="row">
+        <div fxFlex="100">
+          <form [formGroup]="contactForm">
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <mat-form-field appearance="outline" fxFlex="100%" fxFlex.gt-md="50%" class="mr-8">
+                <mat-label>Role Name</mat-label>
+                <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                <input formControlName="vacancies" matInput />
               </mat-form-field>
-    </div>
-              <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
-            <mat-form-field appearance="outline" fxFlex="100">
-              <mat-label>Status</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let status of status" [value]="status.value">
-                  {{status.viewValue}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-              </div>
-          
-          
-          <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
-              <mat-form-field appearance="outline" fxFlex ="100" style="    height: 100px;">
-                  <mat-label>Description</mat-label>
-                  <textarea name="notes" formControlName="notes" matInput type="text" max-rows="5" value="  Has access to only interview schedule change screen interview schedule change screen">
-                  
-                  </textarea>
+              <mat-form-field appearance="outline" fxFlex="100%" fxFlex.gt-md="50%" class="ml-8">
+                <mat-label>Status</mat-label>
+                <mat-select>
+                  <mat-option *ngFor="let status of status" [value]="status.value">
+                    {{ status.viewValue }}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
-          </div>
-
-      </form>
-    </mat-card>
-    </div>
-
-        <div fxFlex="50" style="height:380px; margin-left:10px;">
-         <mat-card style="height: 360px;background-color: aliceblue;border:1px solid aliceblue;">  
-        
-                <div style="text-align: center;    text-align: center;
-                margin-bottom: 9px;
-                margin-top: -9px;
-                font-weight: bold;">Role Mapping</div>
-                
-            <mat-grid-list cols="2" rowHeight="2:.80"  [gutterSize]="'30px'" style="margin-left: 12px;
-            margin-right: 12px;">
-
-           
-                <mat-grid-tile>
-                    <div >
-                        <button mat-raised-button  (click)="selectdashboard()"   [ngClass]="{'white' : toggle1, 'blue': !toggle1}" class="tile_button">Dashboard<div class="tik" style="display: inline;" *ngIf="selectdash"><mat-icon class="tile_icon" style="font-size: small;">check_circle</mat-icon></div><span><br><mat-icon style="margin-bottom: 19px;">dashboard</mat-icon></span>
-                         
-                        </button>
-                    </div>
-                </mat-grid-tile>
-                <!-- <mat-grid-tile>
-                    <div >
-                        <button mat-raised-button  (click)="selectcalander()"  [ngClass]="{'white' : toggle2, 'blue': !toggle2}" class="tile_button">Calendar<span class="tik" *ngIf="selectcal "><mat-icon class="tile_icon"style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon  style="margin-bottom: 19px;">today</mat-icon></span></button>
-                    </div>
-                </mat-grid-tile> -->
-               <mat-grid-tile>
-                    <div >
-                        <button mat-raised-button  (click)="selectProfile()"  [ngClass]="{'white' : toggle3, 'blue': !toggle3}" class="tile_button">Edit Profile<span class="tik" *ngIf="selectpro"><mat-icon class="tile_icon" style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon style="margin-bottom: 19px;">edit</mat-icon></span></button>
-                    </div>
-                </mat-grid-tile>
-               <mat-grid-tile>
-                    <div >
-                        <button mat-raised-button (click)="userManagement()"  [ngClass]="{'white' : toggle4, 'blue': !toggle4}" class="tile_button">User Management<span class="tik" *ngIf="selectuser"><mat-icon class="tile_icon" style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon style="margin-bottom: 19px;">account_circle</mat-icon></span></button>
-                    </div>
-                </mat-grid-tile>
-              
-            <mat-grid-tile>  <div >
-                    <button mat-raised-button   (click)="rolemanagement()" [ngClass]="{'white' : toggle5, 'blue': !toggle5}">Role Management<span class="tik" *ngIf="selectrole"><mat-icon class="tile_icon" style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>check_circle</mat-icon></span></button>
-                </div></mat-grid-tile>
-               
-<!-- 
-                    <mat-grid-tile>  <div >
-                    <button mat-raised-button color="basic">Add<span><br><mat-icon>add_cicle</mat-icon></span></button>
-                </div></mat-grid-tile>  -->
-                <!-- <mat-grid-tile>5</mat-grid-tile>
-                <mat-grid-tile>6</mat-grid-tile> -->
-              </mat-grid-list>
-              <div style="float:right;margin-bottom: 10px;    margin-top: 140px;
-              margin-right: 20px;">
-                <a class="link" style="cursor: pointer;">Select all</a></div>
-            </mat-card>
-        
             </div>
-</div>
-    
-      
-     
+
+            <div fxLayout="row" class="textarea-wrapper">
+              <mat-form-field appearance="outline" fxFlex="100%" fxFlex.gt-md="100%">
+                <mat-label>Description</mat-label>
+                <textarea
+                  name="notes"
+                  formControlName="notes"
+                  matInput
+                  type="text"
+                  max-rows="2"
+                  style="height: 28px;"
+                  value=" Has access to only interview schedule change screen interview schedule change screen"
+                >
+                </textarea>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row">
+              <div fxFlex="100%" fxFlex.gt-md="50%" class="mr-8">
+                <div class="example-container">
+                  <div
+                    cdkDropList
+                    #todoList="cdkDropList"
+                    [cdkDropListData]="todo"
+                    [cdkDropListConnectedTo]="[doneList]"
+                    class="example-list"
+                    (cdkDropListDropped)="drop($event)"
+                  >
+                    <h6 class="box-title">Unmapped Screens</h6>
+                    <button mat-button color="primary" class="add-all-btn" (click)="addScreen()">
+                      <mat-icon class="mr-6">arrow_forward</mat-icon>Add All
+                    </button>
+                    <mat-card class="example-card" *ngFor="let item of todo" cdkDrag>
+                      <h6 class="card-title">
+                        <mat-icon class="mr-6 fs-small">{{ item.icon }}</mat-icon
+                        >{{ item.title }}
+                      </h6>
+                    </mat-card>
+                  </div>
+                </div>
+              </div>
+              <div fxFlex="100%" fxFlex.gt-md="50%" class="ml-8">
+                <div class="example-container">
+                  <!-- <h2>Done</h2> -->
+
+                  <div
+                    cdkDropList
+                    #doneList="cdkDropList"
+                    [cdkDropListData]="done"
+                    [cdkDropListConnectedTo]="[todoList]"
+                    class="example-list"
+                    (cdkDropListDropped)="drop($event)"
+                  >
+                    <h6 class="box-title">Mapped Screens</h6>
+                    <button mat-button color="primary" class="add-all-btn" (click)="removeScreen()">
+                      <mat-icon class="mr-6">arrow_backward</mat-icon>Remove All
+                    </button>
+                    <mat-card class="example-card" *ngFor="let item of done" cdkDrag>
+                      <h6 class="card-title">
+                        <mat-icon class="mr-6 fs-small">{{ item.icon }}</mat-icon
+                        >{{ item.title }}
+                      </h6>
+                    </mat-card>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div mat-dialog-actions class="m-0 p-12" fxLayout="row" fxLayoutAlign="end center" >
+  <div mat-dialog-actions class="m-0 p-12" fxLayout="row" fxLayoutAlign="end center">
+    <button
+      *ngIf="action === 'edit'"
+      mat-raised-button
+      color="accent"
+      class="mr-8"
+      (click)="matDialogRef.close(['delete', contactForm])"
+      aria-label="Delete"
+      matTooltip="Delete"
+    >
+      Cancel
+    </button>
 
-      <button *ngIf="action === 'edit'"
-      mat-raised-button color="accent"
-              class="mr-8"
-              (click)="matDialogRef.close(['delete',contactForm])"
-              aria-label="Delete"
-              matTooltip="Delete">
-          Cancel
-      </button>
+    <button
+      *ngIf="action !== 'edit'"
+      mat-raised-button
+      color="accent"
+      class="save-button"
+      (click)="matDialogRef.close(contactForm)"
+      [disabled]="contactForm.invalid"
+      aria-label="SAVE"
+      style="margin-right: 10px;"
+    >
+      Add
+    </button>
 
-      <button *ngIf="action !== 'edit'"
-              mat-raised-button color="accent"
-              class="save-button"
-              (click)="matDialogRef.close(contactForm)"
-              [disabled]="contactForm.invalid"
-              aria-label="SAVE"
-              style="    margin-right: 10px;">
-          Add
-      </button>
-
-      <button *ngIf="action === 'edit'"
-      mat-raised-button color="accent"
-              class="save-button"
-              (click)="matDialogRef.close(['save',contactForm])"
-              [disabled]="contactForm.invalid"
-              aria-label="SAVE"
-              style="margin-right: 10px;">
-          Save
-      </button>
-
+    <button
+      *ngIf="action === 'edit'"
+      mat-raised-button
+      color="accent"
+      class="save-button"
+      (click)="matDialogRef.close(['save', contactForm])"
+      [disabled]="contactForm.invalid"
+      aria-label="SAVE"
+      style="margin-right: 10px;"
+    >
+      Save
+    </button>
   </div>
 </div>

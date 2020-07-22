@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 import { fuseAnimations } from '@fuse/animations';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
@@ -19,6 +20,20 @@ import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/conta
 })
 export class ContactsComponent implements OnInit, OnDestroy
 {
+    todo = [
+        'Get to work',
+        'Pick up groceries',
+        'Go home',
+        'Fall asleep'
+      ];
+    
+      done = [
+        'Get up',
+        'Brush teeth',
+        'Take a shower',
+        'Check e-mail',
+        'Walk dog'
+      ];
     dialogRef: any;
     hasSelectedContacts: boolean;
     searchInput: FormControl;
@@ -125,4 +140,14 @@ export class ContactsComponent implements OnInit, OnDestroy
     {
         this._fuseSidebarService.getSidebar(name).toggleOpen();
     }
+    drop(event: CdkDragDrop<string[]>) {
+        if (event.previousContainer === event.container) {
+          moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+        } else {
+          transferArrayItem(event.previousContainer.data,
+                            event.container.data,
+                            event.previousIndex,
+                            event.currentIndex);
+        }
+      }
 }

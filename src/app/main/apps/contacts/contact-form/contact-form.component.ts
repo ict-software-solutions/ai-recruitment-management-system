@@ -1,20 +1,60 @@
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Contact } from 'app/main/apps/contacts/contact.model';
-import { usertype } from 'app/models/user-type';
+import { Component, Inject, ViewEncapsulation } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { Contact } from "app/main/apps/contacts/contact.model";
+import { usertype } from "app/models/user-type";
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
 @Component({
-  selector: 'contacts-contact-form-dialog',
-  templateUrl: './contact-form.component.html',
-  styleUrls: ['./contact-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: "contacts-contact-form-dialog",
+  templateUrl: "./contact-form.component.html",
+  styleUrls: ["./contact-form.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
-
 export class ContactsContactFormDialogComponent {
+  totScreens = [
+    {
+      title: "Dashboard",
+      icon: "dashboard",
+    },
+    {
+      title: "Calendar",
+      icon: "today",
+    },
+    {
+      title: "User Management",
+      icon: "person",
+    },
+    {
+      title: "Edit Profile",
+      icon: "edit",
+    },
+  ];
+  todo = [
+    {
+      title: "Dashboard",
+      icon: "dashboard",
+    },
+    {
+      title: "Calendar",
+      icon: "today",
+    },
+  ];
+
+  done = [
+    {
+      title: "User Management",
+      icon: "person",
+    },
+    {
+      title: "Edit Profile",
+      icon: "edit",
+    },
+  ];
+
   screens = ["dashboard", "Calander", "User Management", "Edit Profile"];
   status: usertype[] = [
-    { value: 'employee-0', viewValue: 'Activated' },
-    { value: 'client-1', viewValue: 'Locked' }
+    { value: "employee-0", viewValue: "Activated" },
+    { value: "client-1", viewValue: "Locked" },
   ];
   items = [];
   selectedItems: Item[];
@@ -22,7 +62,7 @@ export class ContactsContactFormDialogComponent {
   contact: Contact;
   contactForm: FormGroup;
   dialogTitle: string;
-  labelPosition: 'before' | 'after' = 'after';
+  labelPosition: "before" | "after" = "after";
   selected = false;
   selectdash = false;
   selectcal = false;
@@ -38,19 +78,27 @@ export class ContactsContactFormDialogComponent {
   constructor(
     public matDialogRef: MatDialogRef<ContactsContactFormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private _data: any,
-    private _formBuilder: FormBuilder) {
+    private _formBuilder: FormBuilder
+  ) {
     this.action = _data.action;
-    if (this.action === 'edit') {
-      this.dialogTitle = 'Edit Role';
+    if (this.action === "edit") {
+      this.dialogTitle = "Edit Role";
       this.contact = _data.contact;
     } else {
-      this.dialogTitle = 'New Role';
+      this.dialogTitle = "New Role";
       this.contact = new Contact({});
     }
     this.contactForm = this.createContactForm();
   }
 
-  ngOnInit() { }
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+    }
+  }
+  ngOnInit() {}
 
   select(value: any) {
     this.items.push(value);
@@ -63,6 +111,16 @@ export class ContactsContactFormDialogComponent {
       this.compareResult();
     }
   }
+  addScreen() {
+    this.todo = [];
+    this.done = [];
+    this.done = this.totScreens;
+  }
+  removeScreen() {
+    this.todo = [];
+    this.done = [];
+    this.todo = this.totScreens;
+  }
 
   shuffleArray(arr) {
     for (let c = arr.length - 1; c > 0; c--) {
@@ -74,10 +132,10 @@ export class ContactsContactFormDialogComponent {
     return arr;
   }
   compareResult() {
-    if (this.selectedItems.map(x => x.name).toString() === this.screens.toString()) {
-      alert('They are in the same order')
+    if (this.selectedItems.map((x) => x.name).toString() === this.screens.toString()) {
+      alert("They are in the same order");
     } else {
-      alert('They have different order')
+      alert("They have different order");
     }
   }
 
@@ -92,15 +150,15 @@ export class ContactsContactFormDialogComponent {
   }
   selectProfile() {
     this.selectpro = !this.selectpro;
-    this.toggle3= !this.toggle3;
+    this.toggle3 = !this.toggle3;
   }
   userManagement() {
     this.selectuser = !this.selectuser;
-    this.toggle4= !this.toggle4;
+    this.toggle4 = !this.toggle4;
   }
   rolemanagement() {
     this.selectrole = !this.selectrole;
-    this.toggle5= !this.toggle5;
+    this.toggle5 = !this.toggle5;
   }
   createContactForm(): FormGroup {
     return this._formBuilder.group({
@@ -108,7 +166,8 @@ export class ContactsContactFormDialogComponent {
       name: [this.contact.name],
       lastName: [this.contact.lastName],
       avatar: [this.contact.avatar],
-      nickname: [this.contact.nickname], company: [this.contact.company],
+      nickname: [this.contact.nickname],
+      company: [this.contact.company],
       jobTitle: [this.contact.jobTitle],
       email: [this.contact.email],
       phone: [this.contact.phone],
