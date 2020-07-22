@@ -4,19 +4,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseUtils } from '@fuse/utils';
-import { Product } from 'app/main/apps/usermanagement/product/product.model';
-import { EcommerceProductService } from 'app/main/apps/usermanagement/product/product.service';
+import { Product } from 'app/main/apps/usermanagement/addusers/addusers.model';
+import { EcommerceProductService } from 'app/main/apps/usermanagement/addusers/addusers.service';
 import { usertype } from 'app/models/user-type';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    selector: 'e-commerce-product',
-    templateUrl: './product.component.html',
-    styleUrls: ['./product.component.scss'],
+    selector: 'usermanagement-adduser',
+    templateUrl: './addusers.component.html',
+    styleUrls: ['./addusers.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
-
 })
 export class EcommerceProductComponent implements OnInit, OnDestroy {
     product: Product;

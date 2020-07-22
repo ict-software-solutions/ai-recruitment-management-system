@@ -1,7 +1,7 @@
 @import "src/@fuse/scss/fuse";
 
 e-commerce-products {
-  #products {
+  #users {
     .top-bg {
       @include media-breakpoint("lt-md") {
         height: 256px;

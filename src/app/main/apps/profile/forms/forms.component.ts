@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { Subject } from 'rxjs';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
@@ -16,7 +16,6 @@ import { UserService } from 'app/service/user.service';
 import { userInfo } from 'os';
 import { AuthService } from 'app/service/auth.service';
 
-
 let $: any;
 @Component({
     selector: 'forms',
@@ -30,7 +29,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     }
     form: FormGroup;
     dialogRef: any;
-    showPassword = true;
+    showPassword = true; s
     inboundClick = false;
     ResetPasswordSubscription: Subscription;
     getUserSubscription: Subscription;
@@ -54,8 +53,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     errorMessage = '';
     oldPasswordWrong = false;
     getUserById: boolean;
-    status:"";
-   
+    status: "";
 
     usertype: usertype[] = [
         { value: 'employee-0', viewValue: 'Employee' },
@@ -64,10 +62,9 @@ export class FormsComponent implements OnInit, OnDestroy {
     ];
     userrole = ['Admin', 'Manager', 'Candidate Consultant', 'Client Consultant', 'Candidate View', 'client', 'customer'];
 
-
     constructor(private userService: UserService,
         public dialog: MatDialog,
-        public radio : MatRadioModule,
+        public radio: MatRadioModule,
         private _formBuilder: FormBuilder,
         private datePipe: DatePipe,
         private route: ActivatedRoute,
@@ -76,13 +73,11 @@ export class FormsComponent implements OnInit, OnDestroy {
         private authService: AuthService,
 
     ) {
-        
         this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
         this.user = airmsService.getSessionStorage(SIGNUP)
         this.lastLogin = datePipe.transform(this.userInfo.lastLogin, 'MMM dd, yyyy hh:mm:ss a');
         this.unsubscribeAll = new Subject();
         this.userProfileUpdateSubscription = this.userService.userProfileUpdated$.subscribe(res => {
-
             if (res !== null) {
                 this.form.patchValue(res);
             }
@@ -110,14 +105,14 @@ export class FormsComponent implements OnInit, OnDestroy {
         });
 
         this.route.queryParams.subscribe(params => {
-          this.userName = params["userName"];
-          console.log(params);
-          if (params.userName==='Nic') {
-              this.getUserById = false;
-          }
-          else{
-              this.getUserById=true;
-          }
+            this.userName = params["userName"];
+            console.log(params);
+            if (params.userName === 'Nic') {
+                this.getUserById = false;
+            }
+            else {
+                this.getUserById = true;
+            }
 
         });
         this.form.get('password').valueChanges;
@@ -242,7 +237,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.unsubscribeAll.next();
         this.unsubscribeAll.complete();
         this.contactProfilePic = null;
-        this.getUserById=null;
+        this.getUserById = null;
     }
 }
 

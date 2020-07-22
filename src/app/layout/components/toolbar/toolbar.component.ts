@@ -9,12 +9,14 @@ import { userDetails } from 'app/models/user-details';
 import { navigation } from 'app/navigation/navigation';
 import { AirmsService } from 'app/service/airms.service';
 import { AuthService } from 'app/service/auth.service';
-import { LOGGED_IN_USER_INFO } from 'app/util/constants';
+import { LOGGED_IN_USER_INFO ,SIGNUP} from 'app/util/constants';
 import * as _ from 'lodash';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { isThisHour } from 'date-fns';
+import { usersList } from 'app/models/user-details';
+import { userInfo } from 'os';
 // import {MatDialog} from '@angular/material/dialog';
 // import { ResetPasswordModule } from 'app/main/pages/authentication/reset-password/reset-password.module';
 // import { ResetPasswordComponent } from 'app/main/pages/authentication/reset-password/reset-password.component';
@@ -40,18 +42,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     TIME_OUT = 300;
     alertMessages = [];
     userInfo: userDetails;
-    
+    user: userDetails;
+    user1: usersList;
+    userData:any;
+    userId:String;
+
     // Private
     private _unsubscribeAll: Subject<any>;
     toolbarSubscription: Subscription;
 
-    /**
-     * Constructor
-     *
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseSidebarService} _fuseSidebarService
-     * @param {TranslateService} _translateService
-     */
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -63,8 +62,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private router: Router
         // public dialog: MatDialog
     ) {
-        this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
-        // Set the defaults
         this.userStatusOptions = [
             {
                 title: 'Online',
@@ -108,14 +105,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         this.navigation = navigation;
 
-        // Set the private defaults
+        
         this._unsubscribeAll = new Subject();
         idle.setIdle(this.WAITING_TIME);
         // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
         idle.setTimeout(this.TIME_OUT);
         // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
         idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
-
         idle.onIdleEnd.subscribe(() => {
             this.reset();
             this.idleState = 'No longer idle.';
@@ -123,10 +119,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         idle.onTimeout.subscribe(() => {
             this.idleState = 'Timed out!';
             this.timedOut = true;
-            //   Swal.close();
-
-            //   this.authService.logout();
-            //   this.logUserActivity('Session Expired', 'Auto Sign Out');
         });
         idle.onIdleStart.subscribe(() => {
             this.idleState = 'You\'ve gone idle!';
@@ -143,7 +135,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.lastPing = new Date();
         });
         this.reset();
-
+        
     }
 
     reset() {
@@ -167,6 +159,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     ngOnInit(): void {
+        this.userInfo =this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+        console.log("userinfo",this.userInfo);
+        this.user = this.airmsService.getSessionStorage(SIGNUP);
+        console.log("user",this.user);
+        this.userId=this.user.userId;
+        console.log("UserId",this.userId);
+    
         // Subscribe to the config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
@@ -175,7 +174,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.rightNavbar = settings.layout.navbar.position === 'right';
                 this.hiddenNavbar = settings.layout.navbar.hidden === true;
             });
-
         // Set the selected language from default languages
         this.selectedLanguage = _.find(this.languages, { id: this._translateService.currentLang });
     }
@@ -190,7 +188,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             subscription.unsubscribe();
         }
     }
-
+    clickProfile(userId){
+        console.log("userId",userId);
+    }
+    getAllInfo(){
+        
+    }
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this.unsubscribe(this.toolbarSubscription);
@@ -221,47 +224,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this._translateService=null;
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Toggle sidebar open
-     *
-     * @param key
-     */
     toggleSidebarOpen(key): void {
         this._fuseSidebarService.getSidebar(key).toggleOpen();
     }
 
-    /**
-     * Search
-     *
-     * @param value
-     */
     search(value): void {
         // Do your search here...
         console.log(value);
     }
-
-    /**
-     * Set the language
-     *
-     * @param lang
-     */
     setLanguage(lang): void {
-        // Set the selected language for the toolbar
         this.selectedLanguage = lang;
-
-        // Use the selected language for translations
         this._translateService.use(lang.id);
     }
-    // openDialog() {
-    //     const dialogRef = this.dialog.open(ResetPasswordComponent);
-
-    //     dialogRef.afterClosed().subscribe(result => {
-    //       console.log(`Dialog result: ${result}`);
-    //     });
-    //   }
 }
 export class ResetPasswordComponent { }
