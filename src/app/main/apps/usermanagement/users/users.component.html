@@ -71,7 +71,7 @@
                 <ng-container matColumnDef="userId">
                     <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action </mat-header-cell>
                     <mat-cell *matCellDef="let product" style="justify-content: center;">
-                        <button mat-icon-button style="color: #42a1f5;" (click)="onTap(product.userId)">
+                        <button mat-icon-button style="color: #42a1f5;" (click)="onTap(product.userId,product.userType)">
                             <mat-icon>edit</mat-icon>
                         </button>
                         <span>

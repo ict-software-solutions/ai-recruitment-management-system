@@ -62,6 +62,8 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
     userInfo: userDetails;
     user: userDetails;
     userId:String;
+    userName:String;
+    userType:String;
 
     constructor(
         private userService: UserService,
@@ -83,8 +85,8 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
         console.log("userinfo",this.userInfo);
         this.user = this.airmsService.getSessionStorage(SIGNUP);
         console.log("user",this.user);
-        this.userId=this.user.userId;
-        console.log("UserId",this.userId);
+        this.userName=this.user.userName;
+        console.log("UserName",this.userName);
         //We want to use this code for mat sort and filter  (important)
 
         /*this.dataSource = new FilesDataSource(this.userManagementService, this.paginator, this.sort);
@@ -153,11 +155,11 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
           this.confirmDialogRef = null;
         });
       }
-     onTap(userId) {
-        console.log("userId",userId);
+      onTap(userId,userType) {
         let navigationExtras: NavigationExtras = {
             queryParams: {
                 userId:userId,
+                userType:userType,
                 viewMode:false
             }
         };
