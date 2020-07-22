@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatRadioModule } from '@angular/material/radio';
+import {MatRadioModule} from '@angular/material/radio';
 import { Subject } from 'rxjs';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
@@ -29,7 +29,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     }
     form: FormGroup;
     dialogRef: any;
-    showPassword = true; s
+    showPassword = true;s
     inboundClick = false;
     ResetPasswordSubscription: Subscription;
     getUserSubscription: Subscription;
@@ -53,8 +53,8 @@ export class FormsComponent implements OnInit, OnDestroy {
     errorMessage = '';
     oldPasswordWrong = false;
     getUserById: boolean;
-    status: "";
-
+    status:"";
+   
     usertype: usertype[] = [
         { value: 'employee-0', viewValue: 'Employee' },
         { value: 'client-1', viewValue: 'Client' },
@@ -64,7 +64,7 @@ export class FormsComponent implements OnInit, OnDestroy {
 
     constructor(private userService: UserService,
         public dialog: MatDialog,
-        public radio: MatRadioModule,
+        public radio : MatRadioModule,
         private _formBuilder: FormBuilder,
         private datePipe: DatePipe,
         private route: ActivatedRoute,
@@ -105,14 +105,14 @@ export class FormsComponent implements OnInit, OnDestroy {
         });
 
         this.route.queryParams.subscribe(params => {
-            this.userName = params["userName"];
-            console.log(params);
-            if (params.userName === 'Nic') {
-                this.getUserById = false;
-            }
-            else {
-                this.getUserById = true;
-            }
+          this.userName = params["userName"];
+          console.log(params);
+          if (params.userName==='Nic') {
+              this.getUserById = false;
+          }
+          else{
+              this.getUserById=true;
+          }
 
         });
         this.form.get('password').valueChanges;
@@ -237,7 +237,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.unsubscribeAll.next();
         this.unsubscribeAll.complete();
         this.contactProfilePic = null;
-        this.getUserById = null;
+        this.getUserById=null;
     }
 }
 
