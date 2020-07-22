@@ -17,6 +17,8 @@ import Swal from 'sweetalert2';
 import { isThisHour } from 'date-fns';
 import { usersList } from 'app/models/user-details';
 import { userInfo } from 'os';
+import {  NavigationExtras } from "@angular/router";
+
 // import {MatDialog} from '@angular/material/dialog';
 // import { ResetPasswordModule } from 'app/main/pages/authentication/reset-password/reset-password.module';
 // import { ResetPasswordComponent } from 'app/main/pages/authentication/reset-password/reset-password.component';
@@ -192,14 +194,21 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         console.log("userId",userId);
     }
     getAllInfo(){
-        
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                // "userName": "Nic",
+                userId:this.userId,
+                viewMode:true
+            }
+        };
+        this.router.navigate(['/apps/profile/forms'], navigationExtras);
     }
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this.unsubscribe(this.toolbarSubscription);
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
-        this.router = null;
+        
         this.authService = null;
         this.navigation=null;
         this.languages=null;

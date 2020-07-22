@@ -22,6 +22,9 @@ import { ThemePalette } from '@angular/material/core';
 import { Router, NavigationExtras } from "@angular/router";
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { Product } from '../addusers/addusers.model';
+import { userDetails } from 'app/models/user-details';
+import { LOGGED_IN_USER_INFO} from 'app/util/constants';
+import {  ActivatedRoute } from "@angular/router";
 
 @Component({
     selector: 'e-commerce-products',
@@ -56,11 +59,15 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
     color: ThemePalette = 'primary';
     mode: ProgressSpinnerMode = 'determinate';
     value = 50;
+    userInfo: userDetails;
+    user: userDetails;
+    userId:String;
 
     constructor(
         private userService: UserService,
         public dialog: MatDialog,
         private router: Router,
+        private route: ActivatedRoute,
         private authService: AuthService,
         private airmsService: AirmsService,
         private userManagementService: UserManagementService,
@@ -72,7 +79,12 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-
+        this.userInfo =this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+        console.log("userinfo",this.userInfo);
+        this.user = this.airmsService.getSessionStorage(SIGNUP);
+        console.log("user",this.user);
+        this.userId=this.user.userId;
+        console.log("UserId",this.userId);
         //We want to use this code for mat sort and filter  (important)
 
         /*this.dataSource = new FilesDataSource(this.userManagementService, this.paginator, this.sort);
@@ -114,14 +126,52 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
 
         })
     }
+    // onDelete(userId): void {
+    //     console.log(userId);
+    //     if (confirm('are you sure want to delete?')) {
+    //         this.authService.deleteUser(userId).subscribe(res => {
+    //             this.deleteinfo = res
+    //             console.log("deleterrow", this.deleteinfo);
+    //         })
+    //     }
+    // }
     onDelete(userId): void {
         console.log(userId);
-        if (confirm('are you sure want to delete?')) {
-            this.authService.deleteUser(userId).subscribe(res => {
-                this.deleteinfo = res
+        this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
+          disableClose: false,
+        });
+       this.confirmDialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?";
+        this.confirmDialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.authService.deleteUser(userId).subscribe((res) => {
+                this.deleteinfo = res;
                 console.log("deleterrow", this.deleteinfo);
-            })
-        }
+              });
+              this.getAllUsers();
+          }
+       
+          this.confirmDialogRef = null;
+        });
+      }
+     onTap(userId) {
+        console.log("userId",userId);
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                userId:userId,
+                viewMode:false
+            }
+        };
+        this.router.navigate(['/apps/profile/forms'], navigationExtras);
+    }
+    addUser() {
+        // console.log("userId",userId);
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                // userId:userId,
+                viewMode:false
+            }
+        };
+        this.router.navigate(['/apps/profile/forms'], navigationExtras);
     }
     //reuse code
     /*onDelete(userId): void {
@@ -147,14 +197,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
         // this.dataSourceGifts.sort = this.sortGifts;
         // this.dataSourceGifts.paginator = this.paginatorGifts;
     }
-    public onTap() {
-        let navigationExtras: NavigationExtras = {
-            queryParams: {
-                "userName": "Nic",
-            }
-        };
-        this.router.navigate(['/apps/profile/myprofile'], navigationExtras);
-    }
+  
     ngOnDestroy() {
         this.unsubscribeAll.next();
         this.unsubscribeAll.complete();

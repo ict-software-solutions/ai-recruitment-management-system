@@ -52,13 +52,13 @@ export class AuthService {
     return this.httpClient.get(apiURL.USER + '/' + userId, httpOptions);
   }
 
-  getProfileInfo(object) {
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Authorization': 'Bearer ' + object.token })
-    };
-    console.log("getProfileinfo", object.userId);
-    let url = apiURL.USER + "/" + object.userId
-    return this.httpClient.get(url, httpOptions)
+  getProfileInfo(userId) {
+    // const httpOptions = {
+    //   headers: new HttpHeaders({ 'Authorization': 'Bearer ' + object.token })
+    // };
+    console.log("getProfileinfo",userId);
+    let url = apiURL.USER + "/" + userId
+    return this.httpClient.get(url)
   }
 
   updateProfileDetails(value, user) {
