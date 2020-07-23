@@ -31,11 +31,11 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
     shown: boolean;
 
     usertype: usertype[] = [
-        { value: 'employee-0', viewValue: 'Employee' },
-        { value: 'client-1', viewValue: 'Client' },
-        { value: 'candidate-2', viewValue: 'Candidate' }
+        { value: 'Employee'},
+        { value: 'Client'},
+        { value: 'Candidate'}
     ];
-    userrole = ['Admin', 'Manager', 'Candidate Consultant', 'Client Consultant', 'Candidate View', 'client', 'customer'];
+   roleName = ['Admin', 'Manager', 'Candidate Consultant', 'Client Consultant', 'Candidate View', 'client', 'customer'];
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -83,7 +83,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
         this.disabled = null;
         this.shown = null;
         this.usertype = null;
-        this.userrole = null;
+        this.roleName = null;
         this.ecommerceProductService = null;
         this.formBuilder = null;
         this.location = null;

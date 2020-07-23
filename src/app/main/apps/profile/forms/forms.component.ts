@@ -10,7 +10,7 @@ import { LOGGED_IN_USER_INFO, SIGNUP } from "app/util/constants";
 import { AirmsService } from "app/service/airms.service";
 import { DatePipe } from "@angular/common";
 import Swal from "sweetalert2";
-import { usertype } from "app/models/user-type";
+import { usertype, rolename } from "app/models/user-type";
 import { Router, ActivatedRoute } from "@angular/router";
 import { UserService } from "app/service/user.service";
 import { userInfo } from "os";
@@ -36,6 +36,7 @@ export class FormsComponent implements OnInit, OnDestroy {
   getUserSubscription: Subscription;
   hide = true;
   hide1 = true;
+  hide2 = true;
   private unsubscribeAll: Subject<any>;
   enableEdit = false;
   showPasswordsection = false;
@@ -44,7 +45,6 @@ export class FormsComponent implements OnInit, OnDestroy {
   user: userDetails;
   confirmDialogs: any;
   contactProfilePic: any;
-  $: any;
   userProfileUpdateSubscription: Subscription;
   isLoading: false;
   profileDetails: any;
@@ -52,18 +52,20 @@ export class FormsComponent implements OnInit, OnDestroy {
   userName: "";
   userId: "";
   userType: "";
+  name:"";
   labelPosition: "before" | "after" = "after";
   errorMessage = "";
   oldPasswordWrong = false;
   getUserById: boolean;
+  getRole=true;
   status: "";
 
   usertypes: usertype[] = [
-    { value: "employee-0", viewValue: "Employee" },
-    { value: "client-1", viewValue: "Client" },
-    { value: "candidate-2", viewValue: "Candidate" },
+    { value: "Employee"},
+    { value: "Client" },
+    { value: "Candidate"}
   ];
-  userroles = ["Admin", "Manager", "Candidate Consultant", "Client Consultant", "Candidate View", "client", "customer"];
+  roleNames: rolename[] = [{value:"Admin"},{value: "Manager"}, {value:"Candidate Consultant"},{value: "Client Consultant"},{value: "Candidate View"}, {value:"client"},{value: "customer"}];
 
   constructor(
     private userService: UserService,
@@ -99,6 +101,8 @@ export class FormsComponent implements OnInit, OnDestroy {
       position: [""],
       address: [""],
       postalcode: [""],
+      roleName:[""],
+      userType:[""],
       city: [""],
       state: [""],
       country: [""],
@@ -107,11 +111,9 @@ export class FormsComponent implements OnInit, OnDestroy {
       check: [""],
       validFrom:[''],
       validTo:[''],
-      userType: [""],
-      // roleName: [""],
       passwordExpiry:[""],
       passwordSince:[""],
-      roleName:[""],
+      passwordNew:["", [Validators.minLength(8), Validators.maxLength(15)]]
     });
 
     this.route.queryParams.subscribe((params) => {
@@ -123,7 +125,14 @@ export class FormsComponent implements OnInit, OnDestroy {
         }
         console.log(params.userId);
         this.user = <any>Number(params.userId);
-      } else {
+      } else if(this.name = params["name"]){
+        console.log(params);
+        params.viewMode==="false";
+        this.Edit();
+        this.getUserById = false;
+        this.getRole = false;
+      }
+      else {
         this.userId = params["userId"];
         console.log(params);
         this.getUserById = true;
@@ -157,15 +166,11 @@ export class FormsComponent implements OnInit, OnDestroy {
     this.authService.getProfileInfo(userId).subscribe((res) => {
       this.profileDetails = res;
       this.form.patchValue(res);
+      this.form.controls["userType"].patchValue(this.profileDetails.userType);
+      this.form.controls["roleName"].patchValue(this.profileDetails.roles.roleName);
     });
   }
-  // getProfileInfo() {
-  //   this.authService.getProfileInfo(this.user).subscribe((res) => {
-  //     this.profileDetails = res;
-  //     this.form.patchValue(res);
-  //   });
-  // }
-
+  
   canceledit() {
     this.viewMode = true;
 

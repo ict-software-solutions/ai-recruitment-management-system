@@ -41,19 +41,20 @@
                   Cancel
                 </button>
               </div>
-              <h1 style="margin-left: 20px; display: inline; position: relative;">My Profile</h1>
+              <h1 style="margin-left: 20px; display: inline; position: relative;" *ngIf="getRole">My Profile</h1>
+              <h1 style="margin-left: 20px; display: inline; position: relative;" *ngIf="getRole===false" >New User</h1>
             </header>
 
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" style="margin-top: 20px;">
               <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                 <mat-label>First Name</mat-label>
-                <input matInput type="text" ngModel formControlName="firstName" type="text" [readonly]="viewMode" />
+                <input matInput type="text"  formControlName="firstName" type="text" [readonly]="viewMode" />
                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                 <!-- <mat-error>First Name is required!</mat-error> -->
               </mat-form-field>
               <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
                 <mat-label>Middle Name</mat-label>
-                <input matInput type="text" ngModel formControlName="middleName" type="text" [readonly]="viewMode" />
+                <input matInput type="text"  formControlName="middleName" type="text" [readonly]="viewMode" />
                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                 <!-- <mat-error>First Name is required!</mat-error> -->
               </mat-form-field>
@@ -137,9 +138,10 @@
               <!-- <mat-form-field fxFlex="30"  appearance="outline"> -->
               <mat-form-field appearance="outline" fxFlex="33" >
                 <mat-label>User Type</mat-label>
-                <mat-select [disabled]="viewMode" formControlName="userType">
-                  <mat-option *ngFor="let usertype of usertypes" [value]="null">
-                    {{ userType }}
+                 <mat-select [disabled]="viewMode" formControlName="userType">
+                  <mat-option *ngFor="let usertype of usertypes" [value]="usertype.value">
+                    {{ usertype.value }}
+            
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -147,20 +149,11 @@
               <mat-form-field appearance="outline" fxFlex="34" class="px-8" >
                 <mat-label>User Role</mat-label>
                 <mat-select [disabled]="viewMode" formControlName="roleName">
-                  <mat-option *ngFor="let userRole of userroles" [value]="userrole">
-                    {{ userrole }}
+                  <mat-option *ngFor="let rolename of roleNames" [value]="rolename.value" >
+                    {{ rolename.value }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-
-              <!-- <mat-form-field class="full-width">
-                <mat-select placeholder="Type" (change)="onValueChange()" formControlName="type" required id="type"
-                  [disabled]="userType !== superAdmin">
-                  <mat-option *ngFor="let type of types" [value]="type">
-                    {{type}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field> -->
 
               <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>Valid From</mat-label>
@@ -200,22 +193,20 @@
 
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
               <div fxFlex="35" appearance="outline" *ngIf="getUserById === false">
-                <!-- <section class="example-section">
-                  <label class="example-margin">Account Status:</label>
-                  <mat-checkbox labelPosition="after">Activated
-                </mat-checkbox>
-                <mat-checkbox labelPosition="after">Locked
-                </mat-checkbox>
-                </section> -->
                 <section class="tp-section" *ngIf="enableEdit">
                   <label class="example-margin">Account Status:</label>&nbsp;
-                  <input type="radio" value="activated" name="status" ngModel /> Activated &nbsp;
-                  <input type="radio" value="locked" name="status" ngModel /> Locked
+                  <input type="radio" value="activated" [checked]="true" name="status"  /> Activated &nbsp;
+                  <input type="radio" value="locked" name="status"  /> Locked
                 </section>
               </div>
               <div fxFlex="16" appearance="outline">
-                <mat-checkbox (change)="changePassword($event.checked)" (click)="onValueChange()" *ngIf="enableEdit"
-                  formControlName="check">Change Password</mat-checkbox>
+                <mat-checkbox
+                  (change)="changePassword($event.checked)"
+                  (click)="onValueChange()"
+                  *ngIf="enableEdit && getRole"
+                  formControlName="check"
+                  >Change Password</mat-checkbox
+                >
               </div>
               <mat-form-field appearance="outline" fxFlex="25" *ngIf="showPasswordsection && enableEdit"
                 style="left: 5px;">
@@ -242,7 +233,31 @@
                   *ngIf="form.get('newPassword').hasError('pattern') && form.get('newPassword').value.length > 7">
                   Make your password strong use(A-Z,a-z,0-9,(*@!?/)</mat-error>
               </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="32" *ngIf="enableEdit && getRole === false" style="left: -166px;">
+                <mat-label>Password</mat-label>
+                <input
+                  matInput
+                  type="password"
+                  [type]="hide2 ? 'password' : 'text'"
+                  formControlName="passwordNew"
+                  pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*?/]).{8,15})"
+                  required
+                />
+                <mat-icon matSuffix class="secondary-text1" (click)="hide2 = !hide2">
+                  {{ hide2 ? "visibility_off" : "visibility" }}</mat-icon
+                >
+                <mat-error *ngIf="form.get('passwordNew').hasError('required')">
+                  Password is required
+                </mat-error>
+                <mat-error *ngIf="form.get('passwordNew').hasError('minlength')">
+                  Password too short!! Password should have a minimum of 8 characters.
+                </mat-error>
+                <mat-error *ngIf="form.get('passwordNew').hasError('pattern') && form.get('passwordNew').value.length > 7">
+                  Make your password strong use(A-Z,a-z,0-9,(*@!?/)
+                </mat-error>
+              </mat-form-field>
             </div>
+
             <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" style="margin-top: 20px;" style="float:left;"> -->
             <p style="text-align: right;">Last Login: {{ lastLogin }}</p>
           </form>

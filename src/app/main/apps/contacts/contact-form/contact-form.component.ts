@@ -34,8 +34,8 @@ export class ContactsContactFormDialogComponent {
 
   screens = ["dashboard", "Calander", "User Management", "Edit Profile"];
   status: usertype[] = [
-    { value: "employee-0", viewValue: "Activated" },
-    { value: "client-1", viewValue: "Locked" },
+    { value: "Activated"},
+    { value: "Locked"},
   ];
   items = [];
   selectedItems: Item[];

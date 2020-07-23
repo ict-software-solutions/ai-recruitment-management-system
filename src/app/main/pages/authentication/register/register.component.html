@@ -83,13 +83,13 @@
                     (click)="register(registerForm.value)" type="submit" [disabled]="registerForm.invalid">
                     CREATE AN ACCOUNT
                 </button>
+                <a class="link" *ngIf="activationLink===true" (click)="resend()" style="cursor: pointer;text-align: center;padding-left: 110px;">Resend the link</a>
                
             </form>
 
             <div class="register" fxLayout="column" fxLayoutAlign="center center">
                 <span class="text">Already have an account?</span>
                 <a class="link" (click)="cancel()" style="cursor: pointer;">Login</a>
-                <a class="link" (click)="resend()" style="cursor: pointer;">Resend</a>
             </div>
 
         </div>

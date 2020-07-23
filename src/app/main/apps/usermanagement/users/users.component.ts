@@ -64,6 +64,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
     userId:String;
     userName:String;
     userType:String;
+    firstName:String;
 
     constructor(
         private userService: UserService,
@@ -174,6 +175,16 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
                 viewMode:false
             },
             skipLocationChange: true
+        };
+        this.router.navigate(['/apps/profile/forms'], navigationExtras);
+    }
+    addRole() {
+        console.log("hi");
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+               name:"addrole",
+               viewMode:false
+            }
         };
         this.router.navigate(['/apps/profile/forms'], navigationExtras);
     }

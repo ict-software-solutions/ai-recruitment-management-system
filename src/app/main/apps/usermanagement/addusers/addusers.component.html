@@ -127,8 +127,8 @@
               <mat-form-field appearance="outline" fxFlex="34" class="px-8">
                 <mat-label>User Role</mat-label>
                 <mat-select>
-                  <mat-option *ngFor="let userrole of userrole" [value]="userrole">
-                    {{userrole}}
+                  <mat-option *ngFor="let rolename of roleName" [value]="rolename.value" >
+                    {{ rolename.value }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
