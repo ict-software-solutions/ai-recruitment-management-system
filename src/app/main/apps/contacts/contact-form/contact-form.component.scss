@@ -1,216 +1,387 @@
+// @import "src/@fuse/scss/fuse";
+
+// .contact-form-dialog {
+// width:900px;
+//     @include media-breakpoint('xs') {
+//         width: 100%;
+//     }
+
+//     @include media-breakpoint('gt-xs') {
+//         width: 400px;
+//     }
+
+//     .mat-dialog-container {
+//         padding: 0;
+
+//         .mat-toolbar {
+//             flex: 1 0 auto;
+//             min-height: initial;
+//         }
+
+//         .toolbar-bottom {
+//             height: auto;
+//         }
+//     }
+
+//     .dialog-content-wrapper {
+//         max-height: 85vh;
+//         display: flex;
+//         flex-direction: column;
+//     }
+// }
+// .mat-card{
+//     height:230px;
+//     background-color: #0099ff;
+// //     .mat-card-content{
+// // // font-size: small;
+// //     }
+// }
+
+// // .mat-list-option{
+// //     font-size: 5px;
+// // }
+// // .mat-card-header{
+// //     background-color: #0099ff;
+// //    border-radius: 5px
+// // }
+
+// .card_content
+// {
+//     margin-left:30px;
+// .mat-checkbox{
+
+//     margin-top:30px;
+
+// }
+// }
+//     .mapping{
+//         background-color: aliceblue;
+//         .mat-card-subtitle{
+
+//          height: 42px;
+//     padding: 11px;
+//     border-radius: 7px;
+//         }
+//     }
+//     .example-selection{
+//         margin-top: -18px;
+//     }
+//     .example-margin {
+//         // color: rgb(0, 102, 153);
+//       margin: 0 10px;
+//     //   margin: 0px 7px;
+//     //   font-size: 12px;
+//       // margin-left: 0px;
+//     }
+
+//     input:checked + label{
+//         background: green;
+//       }
+
+//       .mat-grid-tile{
+//         //   height:90px;
+//           border: unset;
+//         //   box-shadow: -5px 15px 22px rgba(0, 0, 0, 0.3);
+//         box-shadow: -17px 4px 13px rgba(0, 0, 0, 0.3);
+//           .mat-raised-button {
+//             height: 90px;
+//             width: 188px;
+//             // background-color:#6699ff;
+//           }
+//       }
+
+//       .tik{
+//           float: right;
+//           font-size: small;
+//           margin-right: -10px;
+
+//       }
+//       .blue{
+//         background-color: blue;
+//     }
+
+//     .white {
+//         background-color:white;
+//     }
+//     .mat-column-desc{
+//        height:100px;
+//     }
+//     textarea.mat-input-element {
+//         padding: 2px 0;
+//         margin: -2px 0;
+//         height: 100px;
+//     }
+//     .tile_button{
+//         font-size: 15px;
+//         margin-top:10px;
+//     }
+//     .tile_icon{
+//         margin-top: 13px;
+//         margin-right: 5px;
+//     }
 @import "src/@fuse/scss/fuse";
 
-.contact-form-dialog {
-width:900px;
-    @include media-breakpoint('xs') {
+#contacts {
+  .top-bg {
+    @include media-breakpoint("lt-md") {
+      height: 256px;
+    }
+  }
+
+  > .center {
+    > .header {
+      height: 136px !important;
+      min-height: 136px !important;
+      max-height: 136px !important;
+
+      .search-wrapper {
         width: 100%;
-    }
-
-    @include media-breakpoint('gt-xs') {
-        width: 400px;
-    }
-
-    .mat-dialog-container {
-        padding: 0;
-
-        .mat-toolbar {
-            flex: 1 0 auto;
-            min-height: initial;
-        }
-
-        .toolbar-bottom {
-            height: auto;
-        }
-    }
-
-    .dialog-content-wrapper {
-        max-height: 85vh;
-        display: flex;
-        flex-direction: column;
-    }
-}
-.mat-card{
-    height:230px;
-    background-color: #0099ff;
-//     .mat-card-content{
-// // font-size: small;
-//     }
-}
-
-// .mat-list-option{
-//     font-size: 5px;
-// }
-// .mat-card-header{
-//     background-color: #0099ff;
-//    border-radius: 5px
-// }
-
-.card_content
-{
-    margin-left:30px;
-.mat-checkbox{
-
-    margin-top:30px;
-
-}
-}
-    .mapping{
-        background-color: aliceblue;
-        .mat-card-subtitle{
-        
-         height: 42px;
-    padding: 11px;
-    border-radius: 7px;
-        }
-    }
-    .example-selection{
-        margin-top: -18px;
-    }
-    .example-margin {
-        // color: rgb(0, 102, 153);
-      margin: 0 10px;
-    //   margin: 0px 7px;
-    //   font-size: 12px;
-      // margin-left: 0px;
-    }
-
-    input:checked + label{
-        background: green;
-      }
-
-      .mat-grid-tile{
-        //   height:90px;
-          border: unset;
-        //   box-shadow: -5px 15px 22px rgba(0, 0, 0, 0.3);
-        box-shadow: -17px 4px 13px rgba(0, 0, 0, 0.3);
-          .mat-raised-button {
-            height: 90px;
-            width: 188px;
-            // background-color:#6699ff;
-          }
-      }
-
-      .tik{
-          float: right;
-          font-size: small;
-          margin-right: -10px;
-         
-      }
-      .blue{
-        background-color: blue;
-    }
-    
-    .white {
-        background-color:white;
-    }
-    .mat-column-desc{
-       height:100px;
-    }
-    textarea.mat-input-element {
-        padding: 2px 0;
-        margin: -2px 0;
-        height: 100px;
-    }
-    .tile_button{
-        font-size: 15px;
-        margin-top:10px;
-    }
-    .tile_icon{
-        margin-top: 13px;
-        margin-right: 5px;
-    }
-
-
-
-    .example-container {
-        width:100%;
-        max-width: 100%;
-        margin: 0 25px 25px 0;
-        display: inline-block;
-        vertical-align: top;
-      }
-      
-      .example-list {
-        border: solid 1px #ccc;
-        // min-height:64px;
-        min-height: 276px;;
-        background: #f5f5f5;
-        border-radius: 4px;
+        max-width: 480px;
+        border-radius: 28px;
         overflow: hidden;
-        display: block;
+        @include mat-elevation(1);
+        background-color: white;
+        color: black;
+        @include media-breakpoint("xs") {
+          width: 100%;
+        }
+
+        .search {
+          width: 100%;
+          height: 48px;
+          line-height: 48px;
+          padding: 0 18px;
+
+          input {
+            width: 100%;
+            height: 48px;
+            min-height: 48px;
+            max-height: 48px;
+            padding: 0 16px;
+            border: none;
+            outline: none;
+          }
+        }
       }
-      .example-card{
-        height: 42px;
-        padding: 12px 16px!important;
-        margin:0px 30px 15px 30px;
-        cursor: move;
+
+      @include media-breakpoint("lt-md") {
+        padding: 8px 0;
+        height: 192px !important;
+        min-height: 192px !important;
+        max-height: 192px !important;
       }
-      .example-card:first-child{
-        margin:0px 30px 15px 30px!important;
-      }
-      .card-title{
-        padding-left: 20px;margin:0px 4px;font-size: 14px;
-      }
-      .box-title{
-        padding:10px 30px;margin:4px;font-size: 14px;
-      }
-      .fs-small{
-          font-size: inherit;
-      }
-      .example-box {
-        padding: 20px 10px;
-        border-bottom: solid 1px #ccc;
-        color: rgba(0, 0, 0, 0.87);
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        box-sizing: border-box;
-        cursor: move;
-        background: white;
-        font-size: 14px;
-      }
-      
-      .cdk-drag-preview {
-        box-sizing: border-box;
-        border-radius: 4px;
-        box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-                    0 8px 10px 1px rgba(0, 0, 0, 0.14),
-                    0 3px 14px 2px rgba(0, 0, 0, 0.12);
-      }
-      
-      .cdk-drag-placeholder {
-        opacity: 0;
-      }
-      
-      .cdk-drag-animating {
-        transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-      }
-      
-      .example-box:last-child {
-        border: none;
-      }
-      
-      .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
-        transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-      }
-      .contact-form-dialog .dialog-content-wrapper{
-          height:800px;
-      }
-      .contact-form-dialog .mat-dialog-container .mat-toolbar {
-        max-height: 64px;
     }
-    
-    .mat-dialog-content {
-        height: 492px;
+  }
+}
+
+.center {
+  padding: 0 40px;
+}
+.page-layout.carded.fullwidth > .center > .content-card {
+  box-shadow: none;
+}
+.content {
+  overflow: hidden;
+  background: #f5f5f5;
+  box-shadow: none;
+  .sidebar {
+    &:not(.locked-open) {
+      background: #f5f5f5;
     }
-    .add-all-btn{
-    float: right;
-    top: -40px;
-    right:20px;
-    mat-icon{
-        font-size: 19px;
-    }
-    }
-  
-    
+  }
+}
+
+form {
+  background-color: #fff;
+}
+.save-button {
+  margin-right: -2px;
+  width: 100px;
+  float: right;
+  padding: 5px;
+}
+.example-container {
+  width: 100%;
+  max-width: 100%;
+  // margin: 0 25px 25px 0;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.example-list {
+  border: solid 1px #ccc;
+  // min-height:64px;
+  min-height: 276px;
+  background: #eeeded;
+  border-radius: 4px;
+  overflow: hidden;
+  display: block;
+}
+.example-card {
+  height: 42px;
+  padding: 12px 16px !important;
+  margin: 0px 30px 15px 30px;
+  cursor: move;
+}
+.example-card:first-child {
+  margin: 0px 30px 15px 30px !important;
+}
+.card-title {
+  padding-left: 20px;
+  margin: 0px 4px;
+  font-size: 14px;
+}
+.box-title {
+  padding: 10px 30px;
+  margin: 4px;
+  font-size: 14px;
+}
+.fs-small {
+  font-size: inherit;
+}
+.example-box {
+  padding: 20px 10px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: white;
+  font-size: 14px;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.contact-form-dialog .dialog-content-wrapper {
+  height: 800px;
+}
+.contact-form-dialog .mat-dialog-container .mat-toolbar {
+  max-height: 64px;
+}
+
+.mat-dialog-content {
+  height: 492px;
+}
+.add-all-btn {
+  float: right;
+  top: -40px;
+  right: 20px;
+  mat-icon {
+    font-size: 19px;
+  }
+}
+// #product {
+
+//   .header {
+//       height: 150px;
+//       .product-image {
+//           overflow: hidden;
+//           width: 56px;
+//           min-width: 56px;
+//           max-width: 56px;
+//           height: 56px;
+//           min-height: 56px;
+//           max-height: 56px;
+//           border-radius: 28px;
+
+//           img {
+//               height: 100%;
+//               width: auto;
+//               max-width: none;
+//           }
+//       }
+
+//       .subtitle {
+//           margin: 6px 0 0 0;
+//       }
+//   }
+
+//   .secondary-text1{
+//       cursor: context-menu;
+//    }
+//   .content {
+
+//       .mat-tab-group,
+//       .mat-tab-body-wrapper,
+//       .tab-content{
+//           flex: 1 1 auto;
+//           max-width: 100%;
+//       }
+
+//       .mat-tab-body-content {
+//           display: flex;
+//       }
+
+//       .mat-tab-label {
+//           height: 64px;
+//       }
+
+//       .product-image {
+//           overflow: hidden;
+//           width: 128px;
+//           height: 128px;
+//           margin-right: 16px;
+//           margin-bottom: 16px;
+//           border-radius: 4px;
+
+//           img {
+//               height: 100%;
+//               width: auto;
+//               max-width: none;
+//           }
+//       }
+
+//       // Temporary prefix alignment fix
+//       .mat-form-field-appearance-outline .mat-form-field-prefix,
+//       .mat-form-field-appearance-outline .mat-form-field-suffix {
+//           top: 0;
+//       }
+//   }
+
+// }
+// .mat-radio-button ~ .mat-radio-button {
+//   margin-left: 16px;
+// }
+// .mat-checkbox
+// {
+//     margin-top: 20px;
+// }
+// .example-section {
+//   display: flex;
+//   align-content: center;
+//   align-items: center;
+//   height: 60px;
+// }
+// .example-margin {
+//   //   color: rgb(0, 102, 153);
+//   // margin: 0 10px;
+//   margin: 0px 7px;
+//   font-size: 12px;
+//   // margin-left: 0px;
+// }
+// .ex-1
+// {
+//   overflow:scroll;
+// }

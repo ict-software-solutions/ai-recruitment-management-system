@@ -29,27 +29,8 @@ export class ContactsContactFormDialogComponent {
       icon: "edit",
     },
   ];
-  todo = [
-    {
-      title: "Dashboard",
-      icon: "dashboard",
-    },
-    {
-      title: "Calendar",
-      icon: "today",
-    },
-  ];
-
-  done = [
-    {
-      title: "User Management",
-      icon: "person",
-    },
-    {
-      title: "Edit Profile",
-      icon: "edit",
-    },
-  ];
+  todo = [];
+  done = [];
 
   screens = ["dashboard", "Calander", "User Management", "Edit Profile"];
   status: usertype[] = [
@@ -79,6 +60,7 @@ export class ContactsContactFormDialogComponent {
     private _formBuilder: FormBuilder,
     private route: ActivatedRoute
   ) {
+    this.todo=this.totScreens;
     const _data = this.route.snapshot.params;
     this.action = _data.action;
     if (this.action === "edit") {
