@@ -67,6 +67,14 @@
                         <p class="text-truncate">{{ product.roles.roleName }}</p>
                     </mat-cell>
                 </ng-container>
+                <ng-container matColumnDef="activated">
+                    <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                    <mat-cell *matCellDef="let product" style="color: #006699;justify-content: end center;">
+                      <!-- <p class="text-truncate font-weight-600">{{product.activated }}</p> -->
+                        <p class="text-truncate font-weight-600" *ngIf="product.activated === true">Active</p>
+                      <p class="text-truncate font-weight-600" *ngIf="product.activated === false">Inactive</p>
+                    </mat-cell>
+                  </ng-container>
 
                 <ng-container matColumnDef="userId">
                     <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action </mat-header-cell>

@@ -1,12 +1,12 @@
 <mat-table #table [dataSource]="dataSource" [@animateStagger]="{ value: '50' }">
   <!-- Checkbox Column -->
-  <ng-container matColumnDef="checkbox">
+  <!-- <ng-container matColumnDef="checkbox">
     <mat-header-cell *matHeaderCellDef></mat-header-cell>
     <mat-cell *matCellDef="let contact">
       <mat-checkbox [(ngModel)]="checkboxes[contact.id]" (ngModelChange)="onSelectedChange(contact.id)" (click)="$event.stopPropagation()">
       </mat-checkbox>
     </mat-cell>
-  </ng-container>
+  </ng-container> -->
 
   <!-- Avatar Column -->
   <!-- <ng-container matColumnDef="avatar">
@@ -21,14 +21,14 @@
   <ng-container matColumnDef="rolename">
     <mat-header-cell *matHeaderCellDef> Role Name</mat-header-cell>
     <mat-cell *matCellDef="let contact">
-      <p class="text-truncate font-weight-600">{{ contact.rolename }}</p>
+      <p class="text-truncate font-weight-600">{{ contact.roleName }}</p>
     </mat-cell>
   </ng-container>
   <!--Description-->
   <ng-container matColumnDef="desc">
     <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
     <mat-cell *matCellDef="let contact">
-      <p class="text-truncate font-weight-600">{{ contact.desc }}</p>
+      <p class="text-truncate font-weight-600">{{contact.roleDescription}}</p>
     </mat-cell>
   </ng-container>
   <!-- Email Column -->
@@ -41,10 +41,13 @@
         </mat-cell>
     </ng-container> -->
   <!--status-->
-  <ng-container matColumnDef="status">
+  <ng-container matColumnDef="active">
     <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
     <mat-cell *matCellDef="let contact" style="color: #006699;justify-content: end center;">
-      <p class="text-truncate font-weight-600">{{ contact.status }}</p>
+      <!-- <p class="text-truncate font-weight-600">{{contact.active }}</p> -->
+      <p class="text-truncate font-weight-600"  *ngIf="contact.active === true" >Activated</p>
+      <p class="text-truncate font-weight-600"  *ngIf="contact.active === false" >Inactivate</p>
+
     </mat-cell>
   </ng-container>
   <!-- Phone Column -->
@@ -52,12 +55,12 @@
     <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Phone</mat-header-cell>
     <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md >
       <p class="phone text-truncate">
-        {{ contact.phone }}
+        
       </p>
     </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="buttons">
+  <!-- <ng-container matColumnDef="buttons">
     <mat-header-cell *matHeaderCellDef mat-sort-header style="justify-content: center;padding-right: 52px;">Action
     </mat-header-cell>
     <mat-cell *matCellDef="let contact" style="justify-content:start;">
@@ -65,10 +68,23 @@
             <mat-icon>edit</mat-icon>
         </button><span>
             <button mat-icon-button color="accent" style=" color:red;background-color: white;"
-            (click)="deleteContact(contact)">
+            (click)="onDelete(contact.roleId)">
                 <mat-icon>delete</mat-icon>
             </button></span>
     </mat-cell>
+</ng-container> -->
+<ng-container matColumnDef="roleId">
+  <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action </mat-header-cell>
+  <mat-cell *matCellDef="let product" style="justify-content: center;">
+      <button mat-icon-button style="color: #42a1f5;" (click)="onEdit(product.roleId)">
+          <mat-icon>edit</mat-icon>
+      </button>
+      <span>
+          <button mat-icon-button color="accent" style="color: red; background-color: white;"
+              (click)="onDelete(product.roleId)">
+              <mat-icon>delete</mat-icon>
+          </button></span>
+  </mat-cell>
 </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

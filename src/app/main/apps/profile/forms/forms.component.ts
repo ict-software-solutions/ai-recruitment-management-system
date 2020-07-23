@@ -58,12 +58,12 @@ export class FormsComponent implements OnInit, OnDestroy {
   getUserById: boolean;
   status: "";
 
-  usertype: usertype[] = [
+  usertypes: usertype[] = [
     { value: "employee-0", viewValue: "Employee" },
     { value: "client-1", viewValue: "Client" },
     { value: "candidate-2", viewValue: "Candidate" },
   ];
-  userrole = ["Admin", "Manager", "Candidate Consultant", "Client Consultant", "Candidate View", "client", "customer"];
+  userroles = ["Admin", "Manager", "Candidate Consultant", "Client Consultant", "Candidate View", "client", "customer"];
 
   constructor(
     private userService: UserService,
@@ -94,7 +94,7 @@ export class FormsComponent implements OnInit, OnDestroy {
       middleName: [""],
       lastName: [""],
       emailAddress: [""],
-      mobile: [""],
+      mobileNumber: [""],
       companyname: [""],
       position: [""],
       address: [""],
@@ -105,6 +105,13 @@ export class FormsComponent implements OnInit, OnDestroy {
       password: ["", Validators.required],
       newPassword: ["", [Validators.minLength(8), Validators.maxLength(15)]],
       check: [""],
+      validFrom:[''],
+      validTo:[''],
+      userType: [""],
+      // roleName: [""],
+      passwordExpiry:[""],
+      passwordSince:[""],
+      roleName:[""],
     });
 
     this.route.queryParams.subscribe((params) => {
@@ -173,14 +180,18 @@ export class FormsComponent implements OnInit, OnDestroy {
       middleName: value.middleName,
       lastName: value.lastName,
       emailAddress: value.emailAddress,
-      mobileNumber: value.mobile,
+      mobileNumber: value.mobileNumber,
       company: value.companyname,
       address: value.address,
       city: value.city,
       state: value.state,
       postalCode: value.postalCode,
       userId: this.user.userId,
+      // userId:value.userId
+      passwordExpiry:value.passwordExpiry,
+      // mobileNumber:this.value.mobileNumber
     };
+  
     if (value.check === true) {
       if (value.password != value.newPassword) {
         updateObject["password"] = value.password;

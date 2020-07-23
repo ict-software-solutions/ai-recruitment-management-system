@@ -24,6 +24,9 @@ import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/conta
 import { MatSelectModule } from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from 'app/service/shared/token.interceptor';
+import { ModuleWithProviders } from '@angular/core';
 // import { shadows } from '@material-ui/system';
 
 // import { AngularDualListBoxModule } from 'angular-dual-listbox';
@@ -82,4 +85,14 @@ const routes: Routes = [
 })
 export class ContactsModule
 {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: ContactsModule,
+            providers: [{
+                provide: HTTP_INTERCEPTORS,
+                useClass: TokenInterceptor,
+                multi: true
+            }]
+        };
+    }
 }
