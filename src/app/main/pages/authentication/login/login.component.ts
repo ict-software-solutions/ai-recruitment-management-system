@@ -84,7 +84,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             let navigationExtras: NavigationExtras = {
                 queryParams: {
                     type, email, token
-                }
+                },
+                skipLocationChange: true
             };
             this.router.navigate(['/pages/auth/reset-password'], navigationExtras);
         }
@@ -129,7 +130,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                     let navigationExtras: NavigationExtras = {
                         queryParams: {
                             userName: this.loginForm.get("userName").value
-                        }
+                        },
+                        skipLocationChange: true
                     };
                     this.router.navigate(['/pages/auth/reset-password'], navigationExtras);
                 });

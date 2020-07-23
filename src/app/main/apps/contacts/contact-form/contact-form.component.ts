@@ -1,9 +1,9 @@
-import { Component, Inject, ViewEncapsulation } from "@angular/core";
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
+import { Component, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { ActivatedRoute } from '@angular/router';
 import { Contact } from "app/main/apps/contacts/contact.model";
 import { usertype } from "app/models/user-type";
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
 @Component({
   selector: "contacts-contact-form-dialog",
   templateUrl: "./contact-form.component.html",
@@ -76,10 +76,10 @@ export class ContactsContactFormDialogComponent {
   toggle5 = true;
 
   constructor(
-    public matDialogRef: MatDialogRef<ContactsContactFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private _data: any,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private route: ActivatedRoute
   ) {
+    const _data = this.route.snapshot.params;
     this.action = _data.action;
     if (this.action === "edit") {
       this.dialogTitle = "Edit Role";

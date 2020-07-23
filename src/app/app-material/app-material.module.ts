@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -49,6 +49,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatInputModule,
     MatListModule,
     MatMenuModule,
+    MatRippleModule,
     MatProgressBarModule,
     MatNativeDateModule,
     MatToolbarModule,

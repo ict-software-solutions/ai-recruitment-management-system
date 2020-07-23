@@ -1,10 +1,9 @@
 import { DataSource } from '@angular/cdk/collections';
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { NavigationExtras, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -30,6 +29,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any>;
 
     constructor(
+        private router: Router,
         private _contactsService: ContactsService,
         public _matDialog: MatDialog) {
         this._unsubscribeAll = new Subject();
@@ -79,33 +79,18 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
         this.confirmDialogRef = null;
         this._contactsService = null;
         this._matDialog = null;
+        this.router = null;
     }
 
     editContact(contact): void {
-        this.dialogRef = this._matDialog.open(ContactsContactFormDialogComponent, {
-            panelClass: 'contact-form-dialog',
-            width: '900px',
-            data: {
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
                 contact: contact,
                 action: 'edit',
-            }
-        });
-
-        this.dialogRef.afterClosed().subscribe(response => {
-            if (!response) {
-                return;
-            }
-            const actionType: string = response[0];
-            const formData: FormGroup = response[1];
-            switch (actionType) {
-                case 'save':
-                    this._contactsService.updateContact(formData.getRawValue());
-                    break;
-                case 'delete':
-                    this.deleteContact(contact);
-                    break;
-            }
-        });
+            },
+            skipLocationChange: true
+        };
+        this.router.navigate(['apps/contacts/addRole'], navigationExtras);
     }
 
     deleteContact(contact): void {

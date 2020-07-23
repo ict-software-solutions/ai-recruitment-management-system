@@ -1,52 +1,49 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatCardModule} from '@angular/material/card';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import { FuseSharedModule } from '@fuse/shared.module';
+import { RouterModule, Routes } from '@angular/router';
 import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
-import {MatListModule} from '@angular/material/list';
+import { FuseSharedModule } from '@fuse/shared.module';
+import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
+import { ContactsContactListComponent } from 'app/main/apps/contacts/contact-list/contact-list.component';
 import { ContactsComponent } from 'app/main/apps/contacts/contacts.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
-import { ContactsContactListComponent } from 'app/main/apps/contacts/contact-list/contact-list.component';
 import { ContactsSelectedBarComponent } from 'app/main/apps/contacts/selected-bar/selected-bar.component';
-// import { ContactsMainSidebarComponent } from 'app/main/apps/contacts/sidebars/main/main.component';
-import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
-import { MatSelectModule } from '@angular/material/select';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatGridListModule} from '@angular/material/grid-list';
-// import { shadows } from '@material-ui/system';
 
-// import { AngularDualListBoxModule } from 'angular-dual-listbox';
-// import {MatCheckboxModule} from '@angular/material/checkbox';
-const routes: Routes = [
-    {
-        path     : '**',
+const routes: Routes = [{
+        path: 'addRole',
+        component: ContactsContactFormDialogComponent
+    }, {
+        path: '**',
         component: ContactsComponent,
-        resolve  : {
+        resolve: {
             contacts: ContactsService
         }
     }
 ];
 
 @NgModule({
-    declarations   : [
+    declarations: [
         ContactsComponent,
         ContactsContactListComponent,
         ContactsSelectedBarComponent,
-        // ContactsMainSidebarComponent,
-        ContactsContactFormDialogComponent
+        ContactsContactFormDialogComponent,
     ],
-    imports        : [
+    imports: [
         RouterModule.forChild(routes),
         DragDropModule,
         MatButtonModule,
@@ -67,18 +64,11 @@ const routes: Routes = [
         MatSelectModule,
         MatRadioModule,
         MatGridListModule
-        // AngularDualListBoxModule
-    ],
-    exports:[
-        DragDropModule
 
     ],
-    providers      : [
-        ContactsService
-    ],
-    entryComponents: [
-        ContactsContactFormDialogComponent
-    ]
+    exports:[DragDropModule],
+    providers: [ContactsService],
+    entryComponents: [ContactsContactFormDialogComponent]
 })
 export class ContactsModule
 {

@@ -16,7 +16,7 @@
         "e2e": "ng e2e",
         "bundle-report": "webpack-bundle-analyzer dist/stats.json",
         "format:fix": "pretty-quick --staged",
-        "precommit": "run-s format:fix lint"        
+        "precommit": "run-s format:fix lint"
     },
     "private": true,
     "dependencies": {

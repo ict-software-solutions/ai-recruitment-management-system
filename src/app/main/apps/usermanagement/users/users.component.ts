@@ -161,7 +161,8 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
                 userId:userId,
                 userType:userType,
                 viewMode:false
-            }
+            },
+            skipLocationChange: true
         };
         this.router.navigate(['/apps/profile/forms'], navigationExtras);
     }
@@ -171,7 +172,8 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
             queryParams: {
                 // userId:userId,
                 viewMode:false
-            }
+            },
+            skipLocationChange: true
         };
         this.router.navigate(['/apps/profile/forms'], navigationExtras);
     }

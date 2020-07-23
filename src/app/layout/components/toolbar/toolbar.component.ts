@@ -199,7 +199,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 // "userName": "Nic",
                 userId:this.userId,
                 viewMode:true
-            }
+            },
+            skipLocationChange: true
         };
         this.router.navigate(['/apps/profile/forms'], navigationExtras);
     }
