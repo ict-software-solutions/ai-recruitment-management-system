@@ -8,7 +8,6 @@ import { apiURL } from 'app/util/constants';
 export class AuthService {
   constructor(private httpClient: HttpClient) { }
 
-
   signup(value) {
     const param = {
       "userType": value.userType,
@@ -88,6 +87,8 @@ export class AuthService {
 
   }
 
+
+
   getAllInfo(object) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Authorization': 'Bearer ' + object.token })
@@ -109,6 +110,18 @@ export class AuthService {
     console.log(userId)
     let url = apiURL.USER + "/" + userId
     return this.httpClient.delete(url)
+  }
+  getAllRoles(object) {
+    // const httpOptions ={
+    //   headers:new HttpHeaders({'Authorization': 'Bearer ' + object.token}),
+   
+    // }; 
+    console.log('object', object);
+    console.log("token", object.token);
+    console.log("getAllRoles", this.getAllRoles);
+    let url = apiURL.ROLES
+    return this.httpClient.get(url)
+
   }
 
   logout() {

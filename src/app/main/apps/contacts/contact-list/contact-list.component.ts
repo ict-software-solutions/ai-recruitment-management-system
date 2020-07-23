@@ -1,10 +1,13 @@
 import { DataSource } from '@angular/cdk/collections';
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatTableDataSource } from "@angular/material/table";
 import { NavigationExtras, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
+import { roleList } from 'app/models/user-details';
+import { AuthService } from 'app/service/auth.service';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -20,23 +23,29 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     @ViewChild('dialogContent') dialogContent: TemplateRef<any>;
     contacts: any;
     user: any;
-    dataSource: FilesDataSource | null;
-    displayedColumns = ['checkbox', 'rolename', 'desc', 'status', 'buttons'];
+    // dataSource: FilesDataSource | null;
+    displayedColumns = ['rolename', 'desc', 'active', 'roleId'];
     selectedContacts: any[];
     checkboxes: {};
     dialogRef: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     private _unsubscribeAll: Subject<any>;
-
+    roleList:any;
+    isLoading = true;
+    details: any;
+    user1: roleList;
+    dataSource = new MatTableDataSource<any>();
+    deleteinfo:any;
     constructor(
         private router: Router,
+        private authService: AuthService,
         private _contactsService: ContactsService,
-        public _matDialog: MatDialog) {
+        public matDialog: MatDialog) {
         this._unsubscribeAll = new Subject();
     }
 
     ngOnInit(): void {
-        this.dataSource = new FilesDataSource(this._contactsService);
+        // this.dataSource = new FilesDataSource(this._contactsService);
         this._contactsService.onContactsChanged.pipe(takeUntil(this._unsubscribeAll))
             .subscribe(contacts => {
                 this.contacts = contacts;
@@ -63,6 +72,17 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
             .subscribe(() => {
                 this._contactsService.deselectContacts();
             });
+            this.getAllRoles()
+    }
+    getAllRoles(){
+        this.authService.getAllRoles(this.user).subscribe(res => {
+            this.roleList = res
+            console.log("rolelist", this.roleList);
+            // this.isLoading = false;
+            this.dataSource.data = this.roleList;
+        },
+            // error => this.isLoading = false
+        ); 
     }
 
     ngOnDestroy(): void {
@@ -78,9 +98,36 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
         this.dialogRef = null;
         this.confirmDialogRef = null;
         this._contactsService = null;
-        this._matDialog = null;
         this.router = null;
     }
+
+    editRole(roleId)
+        {
+            let navigationExtras: NavigationExtras = {
+                queryParams: {
+                    roleId:roleId
+                
+                }
+            };
+        }
+        onDelete(userId): void {
+            console.log(userId);
+            this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
+              disableClose: false,
+            });
+           this.confirmDialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?";
+            this.confirmDialogRef.afterClosed().subscribe((result) => {
+              if (result) {
+                this.authService.deleteUser(userId).subscribe((res) => {
+                    this.deleteinfo = res;
+                    console.log("deleterrow", this.deleteinfo);
+                  });
+                  this.getAllRoles();
+              }
+           
+              this.confirmDialogRef = null;
+            });
+          }
 
     editContact(contact): void {
         let navigationExtras: NavigationExtras = {
@@ -94,7 +141,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     }
 
     deleteContact(contact): void {
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+        this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';

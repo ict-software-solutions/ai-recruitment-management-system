@@ -54,7 +54,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
     userData: any;
     deleteinfo: any;
     userProfileUpdateSubscription: Subscription;
-    displayedColumns: string[] = ['image', 'firstName', 'lastName', 'userType', 'roleName', 'userId'];
+    displayedColumns: string[] = ['image', 'firstName', 'lastName', 'userType', 'roleName','activated','userId'];
     isLoading = true;
     color: ThemePalette = 'primary';
     mode: ProgressSpinnerMode = 'determinate';

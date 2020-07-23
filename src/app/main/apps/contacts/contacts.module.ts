@@ -1,5 +1,6 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { NgModule } from '@angular/core';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -23,6 +24,8 @@ import { ContactsContactListComponent } from 'app/main/apps/contacts/contact-lis
 import { ContactsComponent } from 'app/main/apps/contacts/contacts.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { ContactsSelectedBarComponent } from 'app/main/apps/contacts/selected-bar/selected-bar.component';
+import { TokenInterceptor } from 'app/service/shared/token.interceptor';
+// import { shadows } from '@material-ui/system';
 
 const routes: Routes = [{
         path: 'addRole',
@@ -72,4 +75,14 @@ const routes: Routes = [{
 })
 export class ContactsModule
 {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: ContactsModule,
+            providers: [{
+                provide: HTTP_INTERCEPTORS,
+                useClass: TokenInterceptor,
+                multi: true
+            }]
+        };
+    }
 }

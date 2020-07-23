@@ -43,3 +43,15 @@ export interface usersList{
            type:string;
 }
 }
+
+export interface roleList{
+        active: true
+createdBy: string;
+createdOn: string;
+modifiedBy: string;
+modifiedOn: null
+roleDescription: string;
+roleId: number;
+roleName: string;
+screenMapping: null
+}
