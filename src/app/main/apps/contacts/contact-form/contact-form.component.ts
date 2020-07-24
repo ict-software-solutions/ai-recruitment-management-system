@@ -6,6 +6,7 @@ import { Contact } from "app/main/apps/contacts/contact.model";
 import { usertype } from "app/models/user-type";
 import { AuthService } from "app/service/auth.service";
 import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -18,6 +19,7 @@ export class ContactsContactFormDialogComponent {
   form: FormGroup;
   roleId:any;
   rolesDetails: any;
+  selected1 = 'active';
    usertypes: usertype[] = [
     { value: "Active"},
     { value: "InActive" },
@@ -68,7 +70,7 @@ export class ContactsContactFormDialogComponent {
   toggle4 = true;
   toggle5 = true;
   active:boolean;
-  selected1 = 'active';
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -116,6 +118,41 @@ export class ContactsContactFormDialogComponent {
     this.authService.getAllRolesInfo(roleId).subscribe((res) => {
       this.rolesDetails = res;
       this.contactForm.patchValue(res);
+    });
+  }
+  updateRole(value){
+    let updateObject = {
+      roleName: value.roleName,
+      roleDescription: value.roleDescription,
+      active: value.active,
+      roleId:value.roleId
+    };
+
+    
+
+    this.authService.updateRolesInfo(updateObject).subscribe(
+      (res) => {
+    //  alert("hi");
+    Swal.fire({
+      title: "Role Updated",
+      icon: "success",
+      confirmButtonText: "Ok",
+    }).then((res) => {
+      if (res.value === true) {
+        this.canceledit();
+        // this.enableEdit = false;
+      }
+    });
+      },
+    );
+  }
+
+  canceledit() {
+    // this.viewMode = true;
+
+    this.authService.getAllRolesInfo(this.roleId).subscribe((res) => {
+      this.rolesDetails = res;
+      this.form.patchValue(res);
     });
   }
   select(value: any) {

@@ -52,27 +52,30 @@ export class AuthService {
   }
 
   getProfileInfo(userId) {
-    // const httpOptions = {
-    //   headers: new HttpHeaders({ 'Authorization': 'Bearer ' + object.token })
-    // };
     console.log("getProfileinfo",userId);
     let url = apiURL.USER + "/" + userId
     return this.httpClient.get(url)
   }
 
   updateProfileDetails(value, param) {
-    // console.log("user",user);
-    // const httpOptions = {
-    //   headers: new HttpHeaders({ 'Authorization': 'Bearer ' + user.token })
-    // };
     console.log("value", value);
-    let url = apiURL.USER + "/" + value.userId
-    if(value.Id === 0){
-      return this.httpClient.post(apiURL.ADDUSER_URL,param)
+    // console.log("")
+    let url = apiURL.USER + "/" + value.id
+    if(value.id === 0){
+      console.log("if");
+      return this.httpClient.post(apiURL.ADDUSER_URL,value)
     }
     else{
+      console.log("else");
     return this.httpClient.put(url, value)
     }
+  }
+
+  
+  updateRolesInfo(value){
+console.log("value",value);
+let url = apiURL.ROLES + "/" + value.roleId
+return this.httpClient.put(url,value)
   }
   sendResetLink(emailAddress) {
     let url = apiURL.FORGOT_PASSWORD

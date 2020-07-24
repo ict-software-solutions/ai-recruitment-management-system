@@ -184,10 +184,11 @@ export class FormsComponent implements OnInit, OnDestroy {
   }
  
   updateProfile(value) {
-    value.id=this.Id
-    // this.user = <any>Number(params.Id);
+    // value.id=this.Id
+    // this.userId = <any>Number(params.Id);
 
-    console.log("USERID",this.user)
+    console.log("USERID",this.user)//user->token ,userId
+
     let updateObject = {
       firstName: value.firstName,
       middleName: value.middleName,
@@ -202,6 +203,7 @@ export class FormsComponent implements OnInit, OnDestroy {
       userId: this.userId ,
       // userId:value.userId
       passwordExpiry:value.passwordExpiry,
+      id:this.Id
       // mobileNumber:this.value.mobileNumber
    
     };
@@ -222,6 +224,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     }
     this.authService.updateProfileDetails(updateObject, this.user).subscribe(
       (res) => {
+        console.log("user in update",this.user);//toke,user id
         Swal.fire({
           title: "Profile Updated",
           icon: "success",
