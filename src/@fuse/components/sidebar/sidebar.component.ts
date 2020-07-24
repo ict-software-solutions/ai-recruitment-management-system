@@ -1,14 +1,15 @@
-import {
-    ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnDestroy, OnInit, Output, Renderer2, ViewEncapsulation
-} from '@angular/core';
 import { animate, AnimationBuilder, AnimationPlayer, style } from '@angular/animations';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnDestroy, OnInit, Output, Renderer2, ViewEncapsulation } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
+import { FuseConfigService } from '@fuse/services/config.service';
+import { FuseMatchMediaService } from '@fuse/services/match-media.service';
+import { navigation } from 'app/navigation/navigation';
+import { AirmsService } from 'app/service/airms.service';
+import { CLIENT, LOGGED_IN_USER_INFO, ROLE_MANAGEMENT } from 'app/util/constants';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
+import { FuseNavigationService } from '../navigation/navigation.service';
 import { FuseSidebarService } from './sidebar.service';
-import { FuseMatchMediaService } from '@fuse/services/match-media.service';
-import { FuseConfigService } from '@fuse/services/config.service';
 
 @Component({
     selector     : 'fuse-sidebar',
@@ -16,8 +17,9 @@ import { FuseConfigService } from '@fuse/services/config.service';
     styleUrls    : ['./sidebar.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class FuseSidebarComponent implements OnInit, OnDestroy
-{
+    
+export class FuseSidebarComponent implements OnInit, OnDestroy {
+
     // Name
     @Input()
     name: string;
@@ -74,33 +76,36 @@ export class FuseSidebarComponent implements OnInit, OnDestroy
     private _backdrop: HTMLElement | null = null;
     private _player: AnimationPlayer;
     private _unsubscribeAll: Subject<any>;
+    navigation: any;
 
     @HostBinding('class.animations-enabled')
     private _animationsEnabled: boolean;
 
-    /**
-     * Constructor
-     *
-     * @param {AnimationBuilder} _animationBuilder
-     * @param {ChangeDetectorRef} _changeDetectorRef
-     * @param {ElementRef} _elementRef
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseMatchMediaService} _fuseMatchMediaService
-     * @param {FuseSidebarService} _fuseSidebarService
-     * @param {MediaObserver} _mediaObserver
-     * @param {Renderer2} _renderer
-     */
     constructor(
         private _animationBuilder: AnimationBuilder,
         private _changeDetectorRef: ChangeDetectorRef,
         private _elementRef: ElementRef,
+        private airmsService: AirmsService,
         private _fuseConfigService: FuseConfigService,
         private _fuseMatchMediaService: FuseMatchMediaService,
         private _fuseSidebarService: FuseSidebarService,
         private _mediaObserver: MediaObserver,
-        private _renderer: Renderer2
-    )
-    {
+        private _fuseNavigationService: FuseNavigationService,
+        private _renderer: Renderer2) {
+        
+        if (airmsService.getUserType() === CLIENT) {
+            navigation[0]['children'] = navigation[0]['children'].filter(nav => nav['title'] !== ROLE_MANAGEMENT);
+         }
+
+        // Get default navigation
+        this.navigation = navigation;
+
+        // Register the navigation to the service
+        this._fuseNavigationService.register('main', this.navigation);
+
+        // Set the main navigation as our current navigation
+        this._fuseNavigationService.setCurrentNavigation('main');
+        
         // Set the defaults
         this.foldedAutoTriggerOnHover = true;
         this.foldedWidth = 64;

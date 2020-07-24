@@ -20,8 +20,8 @@ export const LOGGED_IN_USER_INFO = '$$AIRMS-USER-INFO$$';
 export const SIGNUP = '$$AIRMS-USER$$';
 export const GET_ALL_USER ='$$AIRMS-ALL-USERS$$';
 export const GET_USERS ='$$AIRMS-USERS-INFO$$';
-
-
+export const CLIENT = 'Client';
+export const ROLE_MANAGEMENT = 'Role Management';
 
 // export const EDIT = '$$AIRMS-USER-INFO$$'+
 export const LAYOUT_STRUCTURE = {

@@ -1,4 +1,5 @@
 import { FuseNavigation } from '@fuse/types';
+
 export const navigation: FuseNavigation[] = [
     {
         id: 'applications',
@@ -13,24 +14,21 @@ export const navigation: FuseNavigation[] = [
                 type: 'collapsable',
                 icon: 'dashboard',
                 url: '/apps/dashboards/analytics'
-
+            }, {
+                id        : 'products',
+                title     : 'User Management',
+                icon      : 'people',
+                type      : 'item',
+                url       : '/apps/e-commerce/products',
+                exactMatch: true
+            }, {
+                id        : 'product',
+                title     : 'Role Management',
+                icon      : 'account_circle',
+                type      : 'item',
+                url       : '/apps/contacts',
+                exactMatch: true
             },
-                    {
-                        id        : 'products',
-                        title     : 'User Management',
-                        icon      : 'people',
-                        type      : 'item',
-                        url       : '/apps/e-commerce/products',
-                        exactMatch: true
-                    },
-                    {
-                        id        : 'product',
-                        title     : 'Role Management',
-                        icon      : 'account_circle',
-                        type      : 'item',
-                        url       : '/apps/contacts',
-                        exactMatch: true
-                    },
         ]
     }
    
