@@ -188,21 +188,6 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
         };
         this.router.navigate(['/apps/profile/forms'], navigationExtras);
     }
-    //reuse code
-    /*onDelete(userId): void {
-        this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: false
-        });
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result) {
-            }
-        this.authService.deleteUser(userId).subscribe(res =>{
-            this.deleteinfo = res
-            console.log("deleterrow",this.deleteinfo);
-        })
-            this.confirmDialogRef = null;
-    }*/
     connect(): Observable<any> {
         return this.authService.getAllUsers(Object);
     }

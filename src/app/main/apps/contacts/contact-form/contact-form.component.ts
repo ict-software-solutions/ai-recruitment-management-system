@@ -18,11 +18,11 @@ export class ContactsContactFormDialogComponent {
   form: FormGroup;
   roleId:any;
   rolesDetails: any;
-  usertypes: usertype[] = [
+   usertypes: usertype[] = [
     { value: "Active"},
-    { value: "InActive" }
-    // { value: "Candidate"}
-  ];
+    { value: "InActive" },
+    { value: "Candidate"}
+   ];
   totScreens = [
     {
       title: "Dashboard",
@@ -45,10 +45,10 @@ export class ContactsContactFormDialogComponent {
   done = [];
 
   screens = ["dashboard", "Calander", "User Management", "Edit Profile"];
-  status: usertype[] = [
+  status=[
     { value: "Activated"},
     { value: "Locked"},
-  ];
+  ]
   items = [];
   selectedItems: Item[];
   action: string;
@@ -67,7 +67,9 @@ export class ContactsContactFormDialogComponent {
   toggle3 = true;
   toggle4 = true;
   toggle5 = true;
- 
+  active:boolean;
+  selected1 = 'active';
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -97,8 +99,8 @@ export class ContactsContactFormDialogComponent {
     this.contactForm = this.formBuilder.group({
       roleId: [""],
       roleName: [""],
-      status:[""],
-      notes: [""]
+      active:[""],
+      roleDescription: [""]
     });
     this.route.queryParams.subscribe((params) => {
 
@@ -113,7 +115,7 @@ export class ContactsContactFormDialogComponent {
     console.log("roleID", roleId);
     this.authService.getAllRolesInfo(roleId).subscribe((res) => {
       this.rolesDetails = res;
-      this.form.patchValue(res);
+      this.contactForm.patchValue(res);
     });
   }
   select(value: any) {

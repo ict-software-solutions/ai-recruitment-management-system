@@ -125,10 +125,10 @@ export class AuthService {
   }  
   getAllRolesInfo(roleId) {
     // const httpOptions = {
-    //   headers: new HttpHeaders({ 'Authorization': 'Bearer ' + object.token })
+    //   headers: new HttpHeaders({ 'Authorization': 'Bearer ' + roleId.token })
     // };
     console.log("getroleId", roleId);
-    let url = apiURL.USER + "/" + roleId
+    let url = apiURL.ROLES + "/" + roleId
     return this.httpClient.get(url)
   }
 

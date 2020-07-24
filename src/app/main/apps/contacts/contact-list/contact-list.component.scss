@@ -18,7 +18,7 @@ contacts-contact-list {
         }
    
         .mat-column-rolename{
-            padding-left:10px;
+            padding-left:45px;
         }
         .mat-column-avatar {
             flex: 0 1 64px;
@@ -30,6 +30,7 @@ contacts-contact-list {
 .mat-column-desc{
     flex: 2 1 80px;
     width: 300px!important;
+    padding-left: 18px;
 }
 .mat-column-status{
     flex: 0 -2 50px;
