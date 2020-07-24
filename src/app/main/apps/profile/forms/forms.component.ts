@@ -59,6 +59,8 @@ export class FormsComponent implements OnInit, OnDestroy {
   getUserById: boolean;
   getRole=true;
   status: "";
+  Id =0;
+  // params:any;
 
   usertypes: usertype[] = [
     { value: "Employee"},
@@ -138,6 +140,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.getUserById = true;
       }
       this.getProfileInfo(Number(params.userId));
+     
     });
 
     this.form.get("password").valueChanges;
@@ -179,7 +182,12 @@ export class FormsComponent implements OnInit, OnDestroy {
       this.form.patchValue(res);
     });
   }
+ 
   updateProfile(value) {
+    value.id=this.Id
+    // this.user = <any>Number(params.Id);
+
+    console.log("USERID",this.user)
     let updateObject = {
       firstName: value.firstName,
       middleName: value.middleName,
@@ -191,11 +199,13 @@ export class FormsComponent implements OnInit, OnDestroy {
       city: value.city,
       state: value.state,
       postalCode: value.postalCode,
-      userId: this.user.userId,
+      userId: this.userId ,
       // userId:value.userId
       passwordExpiry:value.passwordExpiry,
       // mobileNumber:this.value.mobileNumber
+   
     };
+    // this.updateProfile(Number(params.userId));
   
     if (value.check === true) {
       if (value.password != value.newPassword) {

@@ -33,7 +33,7 @@
                 </div>
                 <button mat-raised-button color="light" *ngIf="enableEdit" class="submit-button"
                   style="margin-right: -2px; width: 100px; float: right; padding: 5px;"
-                  (click)="updateProfile(form.value)">
+                  (click)="updateProfile(form.value)"  >
                   Save
                 </button>
                 <button mat-raised-button color="light" (click)="Edit()" *ngIf="enableEdit" class="submit-button"
@@ -141,7 +141,6 @@
                  <mat-select [disabled]="viewMode" formControlName="userType">
                   <mat-option *ngFor="let usertype of usertypes" [value]="usertype.value">
                     {{ usertype.value }}
-            
                   </mat-option>
                 </mat-select>
               </mat-form-field>

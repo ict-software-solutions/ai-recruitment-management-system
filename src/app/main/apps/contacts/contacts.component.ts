@@ -10,6 +10,7 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
     selector     : 'contacts',
@@ -51,7 +52,8 @@ export class ContactsComponent implements OnInit, OnDestroy
     constructor(
         private _contactsService: ContactsService,
         private _fuseSidebarService: FuseSidebarService,
-        private _matDialog: MatDialog
+        private _matDialog: MatDialog,
+        private router: Router,
     )
     {
         // Set the defaults
@@ -104,33 +106,44 @@ export class ContactsComponent implements OnInit, OnDestroy
     /**
      * New contact
      */
-    newContact(): void
-    {
+    // newContact(): void
+    // {
 
         
-        this.dialogRef = this._matDialog.open(ContactsContactFormDialogComponent, {
-            panelClass: 'contact-form-dialog',
-            width: '900px',
-          height:'auto',  
-            // height:'900px',
-            data      : {
-                action: 'new'
-            }
+    //     this.dialogRef = this._matDialog.open(ContactsContactFormDialogComponent, {
+    //         panelClass: 'contact-form-dialog',
+    //         width: '900px',
+    //       height:'auto',  
+          
+    //         data      : {
+    //             action: 'new'
+    //         }
             
-        });
+    //     });
        
-        this.dialogRef.afterClosed()
-            .subscribe((response: FormGroup) => {
-                if ( !response )
-                {
-                    return;
-                }
+    //     this.dialogRef.afterClosed()
+    //         .subscribe((response: FormGroup) => {
+    //             if ( !response )
+    //             {
+    //                 return;
+    //             }
 
-                this._contactsService.updateContact(response.getRawValue());
-            });
+    //             this._contactsService.updateContact(response.getRawValue());
+    //         });
             
+    // }
+    newContact(){
+      
+            let navigationExtras: NavigationExtras = {
+                queryParams: {
+                    // contact: contact,
+                    // action: 'edit',
+                },
+                skipLocationChange: true
+            };
+            this.router.navigate(['apps/contacts/addRole'], navigationExtras);
+        
     }
-
     /**
      * Toggle the sidebar
      *

@@ -4,6 +4,10 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute } from '@angular/router';
 import { Contact } from "app/main/apps/contacts/contact.model";
 import { usertype } from "app/models/user-type";
+import { AuthService } from "app/service/auth.service";
+import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
+
+
 @Component({
   selector: "contacts-contact-form-dialog",
   templateUrl: "./contact-form.component.html",
@@ -11,6 +15,14 @@ import { usertype } from "app/models/user-type";
   encapsulation: ViewEncapsulation.None,
 })
 export class ContactsContactFormDialogComponent {
+  form: FormGroup;
+  roleId:any;
+  rolesDetails: any;
+  usertypes: usertype[] = [
+    { value: "Active"},
+    { value: "InActive" }
+    // { value: "Candidate"}
+  ];
   totScreens = [
     {
       title: "Dashboard",
@@ -55,10 +67,11 @@ export class ContactsContactFormDialogComponent {
   toggle3 = true;
   toggle4 = true;
   toggle5 = true;
-
+ 
   constructor(
-    private _formBuilder: FormBuilder,
-    private route: ActivatedRoute
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {
     this.todo=this.totScreens;
     const _data = this.route.snapshot.params;
@@ -70,7 +83,7 @@ export class ContactsContactFormDialogComponent {
       this.dialogTitle = "New Role";
       this.contact = new Contact({});
     }
-    this.contactForm = this.createContactForm();
+    // this.contactForm = this.createContactForm();
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -80,8 +93,29 @@ export class ContactsContactFormDialogComponent {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.contactForm = this.formBuilder.group({
+      roleId: [""],
+      roleName: [""],
+      status:[""],
+      notes: [""]
+    });
+    this.route.queryParams.subscribe((params) => {
 
+     if ((this.roleId=params["roleId"])){
+        console.log(params);
+      }
+      this.getAllRolesInfo(Number(params.roleId));
+    });
+ 
+  }
+  getAllRolesInfo(roleId) {
+    console.log("roleID", roleId);
+    this.authService.getAllRolesInfo(roleId).subscribe((res) => {
+      this.rolesDetails = res;
+      this.form.patchValue(res);
+    });
+  }
   select(value: any) {
     this.items.push(value);
   }
@@ -142,26 +176,27 @@ export class ContactsContactFormDialogComponent {
     this.selectrole = !this.selectrole;
     this.toggle5 = !this.toggle5;
   }
-  createContactForm(): FormGroup {
-    return this._formBuilder.group({
-      id: [this.contact.id],
-      name: [this.contact.name],
-      lastName: [this.contact.lastName],
-      avatar: [this.contact.avatar],
-      nickname: [this.contact.nickname],
-      company: [this.contact.company],
-      jobTitle: [this.contact.jobTitle],
-      email: [this.contact.email],
-      phone: [this.contact.phone],
-      address: [this.contact.address],
-      birthday: [this.contact.birthday],
-      notes: [this.contact.notes],
-      rolename: [this.contact.rolename],
-      desc: [this.contact.desc],
-      status: [this.contact.status],
-    });
-  }
+  // createContactForm(): FormGroup {
+  //   return this._formBuilder.group({
+  //     id: [this.contact.id],
+  //     name: [this.contact.name],
+  //     lastName: [this.contact.lastName],
+  //     avatar: [this.contact.avatar],
+  //     nickname: [this.contact.nickname],
+  //     company: [this.contact.company],
+  //     jobTitle: [this.contact.jobTitle],
+  //     email: [this.contact.email],
+  //     phone: [this.contact.phone],
+  //     address: [this.contact.address],
+  //     birthday: [this.contact.birthday],
+  //     notes: [this.contact.notes],
+  //     rolename: [this.contact.rolename],
+  //     desc: [this.contact.desc],
+  //     status: [this.contact.status],
+  //   });
+  // }
 }
+
 interface Item {
   name: string;
   selected: boolean;

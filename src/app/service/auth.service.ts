@@ -60,13 +60,19 @@ export class AuthService {
     return this.httpClient.get(url)
   }
 
-  updateProfileDetails(value, user) {
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Authorization': 'Bearer ' + user.token })
-    };
+  updateProfileDetails(value, param) {
+    // console.log("user",user);
+    // const httpOptions = {
+    //   headers: new HttpHeaders({ 'Authorization': 'Bearer ' + user.token })
+    // };
     console.log("value", value);
     let url = apiURL.USER + "/" + value.userId
-    return this.httpClient.put(url, value, httpOptions)
+    if(value.Id === 0){
+      return this.httpClient.post(apiURL.ADDUSER_URL,param)
+    }
+    else{
+    return this.httpClient.put(url, value)
+    }
   }
   sendResetLink(emailAddress) {
     let url = apiURL.FORGOT_PASSWORD
@@ -75,10 +81,6 @@ export class AuthService {
   }
 
   getAllUsers(object) {
-    /* const httpOptions ={
-      headers:new HttpHeaders({'Authorization': 'Bearer ' + object.token}),
-   
-    }; */
     console.log('object', object);
     console.log("token", object.token);
     console.log("getAllUsers", this.getAllUsers);
@@ -86,8 +88,6 @@ export class AuthService {
     return this.httpClient.get(url)
 
   }
-
-
 
   getAllInfo(object) {
     const httpOptions = {
@@ -122,6 +122,14 @@ export class AuthService {
     let url = apiURL.ROLES
     return this.httpClient.get(url)
 
+  }  
+  getAllRolesInfo(roleId) {
+    // const httpOptions = {
+    //   headers: new HttpHeaders({ 'Authorization': 'Bearer ' + object.token })
+    // };
+    console.log("getroleId", roleId);
+    let url = apiURL.USER + "/" + roleId
+    return this.httpClient.get(url)
   }
 
   logout() {

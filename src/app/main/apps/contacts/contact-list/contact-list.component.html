@@ -45,8 +45,8 @@
     <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
     <mat-cell *matCellDef="let contact" style="color: #006699;justify-content: end center;">
       <!-- <p class="text-truncate font-weight-600">{{contact.active }}</p> -->
-      <p class="text-truncate font-weight-600"  *ngIf="contact.active === true" >Activated</p>
-      <p class="text-truncate font-weight-600"  *ngIf="contact.active === false" >Inactivate</p>
+      <p class="text-truncate font-weight-600"  *ngIf="contact.active === true" >Activate</p>
+      <p class="text-truncate font-weight-600"  *ngIf="contact.active === false" >Inactive</p>
 
     </mat-cell>
   </ng-container>

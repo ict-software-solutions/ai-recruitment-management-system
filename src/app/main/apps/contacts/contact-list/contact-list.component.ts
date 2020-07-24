@@ -129,10 +129,11 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
             });
           }
 
-    editContact(contact): void {
+    editContact(roleId): void {
+        console.log("roleId",roleId);
         let navigationExtras: NavigationExtras = {
             queryParams: {
-                contact: contact,
+                roleId: roleId,
                 action: 'edit',
             },
             skipLocationChange: true
