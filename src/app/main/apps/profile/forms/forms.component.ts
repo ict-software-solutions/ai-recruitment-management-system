@@ -15,6 +15,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { UserService } from "app/service/user.service";
 import { userInfo } from "os";
 import { AuthService } from "app/service/auth.service";
+import { __param } from 'tslib';
 
 let $: any;
 @Component({
@@ -50,7 +51,7 @@ export class FormsComponent implements OnInit, OnDestroy {
   profileDetails: any;
   viewMode = true;
   userName: "";
-  userId: "";
+  userId=0;
   userType: "";
   name:"";
   labelPosition: "before" | "after" = "after";
@@ -115,7 +116,9 @@ export class FormsComponent implements OnInit, OnDestroy {
       validTo:[''],
       passwordExpiry:[""],
       passwordSince:[""],
-      passwordNew:["", [Validators.minLength(8), Validators.maxLength(15)]]
+      passwordNew:["", [Validators.minLength(8), Validators.maxLength(15)]],
+      userName:[""],
+      roleId:[""]
     });
 
     this.route.queryParams.subscribe((params) => {
@@ -168,9 +171,10 @@ export class FormsComponent implements OnInit, OnDestroy {
     console.log("USERID", userId);
     this.authService.getProfileInfo(userId).subscribe((res) => {
       this.profileDetails = res;
+      console.log(res);
       this.form.patchValue(res);
       this.form.controls["userType"].patchValue(this.profileDetails.userType);
-      this.form.controls["roleName"].patchValue(this.profileDetails.roles.roleName);
+      this.form.controls["roleId"].patchValue(this.profileDetails.roles.roleId);
     });
   }
   
@@ -203,7 +207,11 @@ export class FormsComponent implements OnInit, OnDestroy {
       userId: this.userId ,
       // userId:value.userId
       passwordExpiry:value.passwordExpiry,
-      id:this.Id
+      // id:this.Id,
+      userName: value.userName,
+      password:value.newPassword,
+      userType : value.userType,
+      roleId:value.roleId
       // mobileNumber:this.value.mobileNumber
    
     };

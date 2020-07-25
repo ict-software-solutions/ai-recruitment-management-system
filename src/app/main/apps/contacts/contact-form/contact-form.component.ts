@@ -70,6 +70,7 @@ export class ContactsContactFormDialogComponent {
   toggle4 = true;
   toggle5 = true;
   active:boolean;
+  newRole=true;
 
 
   constructor(
@@ -83,9 +84,11 @@ export class ContactsContactFormDialogComponent {
     if (this.action === "edit") {
       this.dialogTitle = "Edit Role";
       this.contact = _data.contact;
+      
     } else {
       this.dialogTitle = "New Role";
       this.contact = new Contact({});
+      this.newRole = false;
     }
     // this.contactForm = this.createContactForm();
   }

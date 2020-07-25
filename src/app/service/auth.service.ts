@@ -6,6 +6,7 @@ import { apiURL } from 'app/util/constants';
   providedIn: 'root'
 })
 export class AuthService {
+  
   constructor(private httpClient: HttpClient) { }
 
   signup(value) {
@@ -60,8 +61,8 @@ export class AuthService {
   updateProfileDetails(value, param) {
     console.log("value", value);
     // console.log("")
-    let url = apiURL.USER + "/" + value.id
-    if(value.id === 0){
+    let url = apiURL.USER + "/" + value.userId 
+    if(value.userId === 0){
       console.log("if");
       return this.httpClient.post(apiURL.ADDUSER_URL,value)
     }
