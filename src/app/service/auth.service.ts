@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  
+
   constructor(private httpClient: HttpClient) { }
 
   signup(value) {
@@ -54,36 +54,29 @@ export class AuthService {
   }
 
   getProfileInfo(userId) {
-    console.log("getProfileinfo",userId);
     let url = apiURL.USER + "/" + userId
     return this.httpClient.get(url)
   }
 
   updateProfileDetails(value, param) {
-    console.log("value", value);
-    // console.log("")
-    let url = apiURL.USER + "/" + value.userId 
-    if(value.userId === 0){
-      console.log("if");
-      return this.httpClient.post(apiURL.ADDUSER_URL,value)
+    let url = apiURL.USER + "/" + value.userId
+    if (value.userId === 0) {
+      return this.httpClient.post(apiURL.ADDUSER_URL, value)
     }
-    else{
-      console.log("else");
-    return this.httpClient.put(url, value)
+    else {
+      return this.httpClient.put(url, value)
     }
   }
 
-  updateRolesInfo(value){
-console.log("value",value);
-let url = apiURL.ROLES + "/" + value.roleId
-if(value.roleId === 0){
-  console.log("if");
-  return this.httpClient.post(apiURL.ROLES,value )
-}
-else{
-return this.httpClient.put(url,value)
+  updateRolesInfo(value) {
+    let url = apiURL.ROLES + "/" + value.roleId
+    if (value.roleId === 0) {
+      return this.httpClient.post(apiURL.ROLES, value)
+    }
+    else {
+      return this.httpClient.put(url, value)
+    }
   }
-}
   sendResetLink(emailAddress) {
     let url = apiURL.FORGOT_PASSWORD
     let resendAddress = { "emailAddress": emailAddress }
@@ -91,9 +84,6 @@ return this.httpClient.put(url,value)
   }
 
   getAllUsers(object) {
-    console.log('object', object);
-    console.log("token", object.token);
-    console.log("getAllUsers", this.getAllUsers);
     let url = apiURL.USER
     return this.httpClient.get(url)
 
@@ -103,7 +93,6 @@ return this.httpClient.put(url,value)
     const httpOptions = {
       headers: new HttpHeaders({ 'Authorization': 'Bearer ' + object.token })
     };
-    console.log("getAllinfo", object.userId);
     let url = apiURL.USER + "/" + object.userId
     return this.httpClient.get(url, httpOptions)
   }
@@ -111,37 +100,29 @@ return this.httpClient.put(url,value)
     const httpOptions = {
       headers: new HttpHeaders({ 'Authorization': 'Bearer ' + object.token })
     };
-    console.log("getAllinfo", object.userId);
     let url = apiURL.USER + "/" + object.userId
     return this.httpClient.get(url, httpOptions)
   }
 
   deleteUser(userId) {
-    console.log(userId)
     let url = apiURL.USER + "/" + userId
     return this.httpClient.delete(url)
   }
   deleteRole(roleId) {
-    console.log(roleId)
     let url = apiURL.ROLES + "/" + roleId
     return this.httpClient.delete(url)
   }
   getAllRoles(object) {
-    console.log('object', object);
-    console.log("token", object.token);
-    console.log("getAllRoles", this.getAllRoles);
     let url = apiURL.ROLES
     return this.httpClient.get(url)
-  }  
+  }
 
-    getRoleList(){
-      console.log("rolelist");
-      let url = apiURL.ROLES 
-      return this.httpClient.get(url)
-    }
-  
+  getRoleList() {
+    let url = apiURL.ROLES
+    return this.httpClient.get(url)
+  }
+
   getAllRolesInfo(roleId) {
-    console.log("getroleId", roleId);
     let url = apiURL.ROLES + "/" + roleId
     return this.httpClient.get(url)
   }
@@ -149,6 +130,5 @@ return this.httpClient.put(url,value)
   logout() {
     sessionStorage.clear();
     localStorage.clear();
-    console.clear();
   }
 }

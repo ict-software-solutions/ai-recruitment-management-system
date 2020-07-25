@@ -1,108 +1,117 @@
 <div id="users" class="page-layout carded fullwidth inner-scroll">
-    <div class="top-bg accent"></div>
-    <div class="center">
-        <!--HEADER-->
-        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
-            fxLayoutAlign.gt-sm="space-between center">
-            <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="logo-icon s-32 mr-16"
-                    [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
-                    people
-                </mat-icon>
-                <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">
-                    User Management
-                </span>
-            </div>
+  <div class="top-bg accent"></div>
+  <div class="center">
+    <!--HEADER-->
+    <div
+      class="header accent"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      fxLayout.gt-sm="row"
+      fxLayoutAlign.gt-sm="space-between center"
+    >
+      <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
+          people
+        </mat-icon>
+        <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">
+          User Management
+        </span>
+      </div>
 
-            <div class="search-wrapper mx-32 mx-md-0">
-                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
-                    <mat-icon>search</mat-icon>
-                    <input #filter placeholder="Search" />
-                </div>
-            </div>
-
-            <button mat-raised-button 
-                class="add-product-button fuse-white mt-24 mt-md-0" (click)="addRole()">
-                <span>Add User</span>
-            </button>
+      <div class="search-wrapper mx-32 mx-md-0">
+        <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon>search</mat-icon>
+          <input #filter placeholder="Search" />
         </div>
-        <!-- / HEADER -->
+      </div>
 
-        <div class="content-card">
-            <mat-table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
-                <ng-container matColumnDef="image" style="width: 200px;">
-                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                    <mat-cell *matCellDef="let product">
-                        <img class="product-image" *ngIf="product.featuredImageId" [alt]="product.name"
-                            [src]="product.images[product.featuredImageId].url" />
-                        <img *ngIf="!product.featuredImageId"
-                            [src]="'assets/images/ecommerce/product-image-placeholder.png'" />
-                    </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="firstName" style="width: 200px; text-overflow: ellipsis;">
-                    <mat-header-cell *matHeaderCellDef>First Name</mat-header-cell>
-                    <mat-cell *matCellDef="let product">
-                        <p class="text-truncate">{{ product.firstName }}</p>
-                    </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="lastName" style="width: 200px; text-overflow: ellipsis;">
-                    <mat-header-cell *matHeaderCellDef>Last Name</mat-header-cell>
-                    <mat-cell *matCellDef="let product">
-                        <p class="text-truncate">{{ product.lastName }}</p>
-                    </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="userType">
-                    <mat-header-cell *matHeaderCellDef>User Type</mat-header-cell>
-                    <mat-cell *matCellDef="let product">
-                        <p class="text-truncate">{{ product.userType }}</p>
-                    </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="roleName">
-                    <mat-header-cell *matHeaderCellDef>User Role</mat-header-cell>
-                    <mat-cell *matCellDef="let product">
-                        <p class="text-truncate">{{ product.roles.roleName }}</p>
-                    </mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="activated">
-                    <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
-                    <mat-cell *matCellDef="let product" style="color: #006699;justify-content: end center;">
-                      <!-- <p class="text-truncate font-weight-600">{{product.activated }}</p> -->
-                        <p class="text-truncate font-weight-600" *ngIf="product.activated === true">Active</p>
-                      <p class="text-truncate font-weight-600" *ngIf="product.activated === false">Inactive</p>
-                    </mat-cell>
-                  </ng-container>
-
-                <ng-container matColumnDef="userId">
-                    <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action </mat-header-cell>
-                    <mat-cell *matCellDef="let product" style="justify-content: center;">
-                        <button mat-icon-button style="color: #42a1f5;" (click)="onTap(product.userId,product.userType)">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        <span>
-                            <button mat-icon-button color="accent" style="color: red; background-color: white;"
-                                (click)="onDelete(product.userId)">
-                                <mat-icon>delete</mat-icon>
-                            </button></span>
-                    </mat-cell>
-                </ng-container>
-
-                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns" class="product"> </mat-row>
-            </mat-table>
-            <div *ngIf="isLoading"
-                style="display: flex; justify-content: center; align-items: center; text-align: center;">
-                <h3 style="color: blue; font-size: bold;">Loading..</h3>
-                <mat-progress-spinner *ngIf="isLoading" class="example-margin" [color]="color" [mode]="mode"
-                    [value]="value">
-                </mat-progress-spinner>
-            </div>
-            <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
-                [pageSizeOptions]="[5, 10, 25, 100]">
-            </mat-paginator>
-        </div>
+      <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" (click)="addRole()">
+        <span>Add User</span>
+      </button>
     </div>
+    <!-- / HEADER -->
+
+    <div class="content-card">
+      <mat-table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
+        <ng-container matColumnDef="image" style="width: 200px;">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let product">
+            <img
+              class="product-image"
+              *ngIf="product.featuredImageId"
+              [alt]="product.name"
+              [src]="product.images[product.featuredImageId].url"
+            />
+            <img *ngIf="!product.featuredImageId" [src]="'assets/images/ecommerce/product-image-placeholder.png'" />
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="firstName" style="width: 200px; text-overflow: ellipsis;">
+          <mat-header-cell *matHeaderCellDef>First Name</mat-header-cell>
+          <mat-cell *matCellDef="let product">
+            <p class="text-truncate">{{ product.firstName }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="lastName" style="width: 200px; text-overflow: ellipsis;">
+          <mat-header-cell *matHeaderCellDef>Last Name</mat-header-cell>
+          <mat-cell *matCellDef="let product">
+            <p class="text-truncate">{{ product.lastName }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="userType">
+          <mat-header-cell *matHeaderCellDef>User Type</mat-header-cell>
+          <mat-cell *matCellDef="let product">
+            <p class="text-truncate">{{ product.userType }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="roleName">
+          <mat-header-cell *matHeaderCellDef>User Role</mat-header-cell>
+          <mat-cell *matCellDef="let product">
+            <p class="text-truncate">{{ product.roles.roleName }}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="activated">
+          <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+          <mat-cell *matCellDef="let product" style="color: #006699; justify-content: end center;">
+            <!-- <p class="text-truncate font-weight-600">{{product.activated }}</p> -->
+            <p class="text-truncate font-weight-600" *ngIf="product.activated === true">Active</p>
+            <p class="text-truncate font-weight-600" *ngIf="product.activated === false">Inactive</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="userId">
+          <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action </mat-header-cell>
+          <mat-cell *matCellDef="let product" style="justify-content: center;">
+            <button mat-icon-button style="color: #42a1f5;" (click)="onTap(product.userId, product.userType)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <span>
+              <button mat-icon-button color="accent" style="color: red; background-color: white;" (click)="onDelete(product.userId)">
+                <mat-icon>delete</mat-icon>
+              </button></span
+            >
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns" class="product"> </mat-row>
+      </mat-table>
+      <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; text-align: center;">
+        <h3 style="color: blue; font-size: bold;">Loading..</h3>
+        <mat-progress-spinner *ngIf="isLoading" class="example-margin" [color]="color" [mode]="mode" [value]="value">
+        </mat-progress-spinner>
+      </div>
+      <mat-paginator
+        #paginator
+        [length]="dataSource.filteredData.length"
+        [pageIndex]="0"
+        [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+      >
+      </mat-paginator>
+    </div>
+  </div>
 </div>
