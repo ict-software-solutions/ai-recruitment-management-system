@@ -60,6 +60,7 @@ export class FormsComponent implements OnInit, OnDestroy {
   getRole = true;
   status: "";
   Id = 0;
+  resCode="";
   isLoaded = false;
   roleLists: any;
   usertypes: usertype[] = [
@@ -82,6 +83,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     this.user = airmsService.getSessionStorage(SIGNUP);
     this.lastLogin = datePipe.transform(this.userInfo.lastLogin, "MMM dd, yyyy hh:mm:ss a");
     this.unsubscribeAll = new Subject();
+    this.errorMessage = "";
     this.userProfileUpdateSubscription = this.userService.userProfileUpdated$.subscribe((res) => {
       if (res !== null) {
         this.form.patchValue(res);
@@ -114,7 +116,7 @@ export class FormsComponent implements OnInit, OnDestroy {
       passwordExpiry: [""],
       passwordSince: [""],
       passwordNew: ["", [Validators.minLength(8), Validators.maxLength(15)]],
-      userName: [""],
+      userName: ["", [Validators.minLength(6), Validators.maxLength(30)]],
 
     });
 
@@ -205,7 +207,6 @@ export class FormsComponent implements OnInit, OnDestroy {
       userType: value.userType,
       roleId: value.roleId
     };
-
     if (value.check === true) {
       if (value.password != value.newPassword) {
         updateObject["password"] = value.password;
@@ -218,7 +219,9 @@ export class FormsComponent implements OnInit, OnDestroy {
         });
         return;
       }
+
     }
+
     this.authService.updateProfileDetails(updateObject, this.user).subscribe(
       (res) => {
         console.log("user in update", this.user);
@@ -234,7 +237,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         });
       },
       (error) => {
-        if (error.error.message === "old password does not match") {
+           if (error.error.message === "old password does not match") {
           this.errorMessage = error.error.message;
           this.oldPasswordWrong = true;
           Swal.fire({
@@ -244,6 +247,24 @@ export class FormsComponent implements OnInit, OnDestroy {
             showConfirmButton: true,
           });
         }
+        else if (error.error.resCode=== "EML-EXT") {
+         Swal.fire({
+           position: "center",
+           icon: "warning",
+           title: "Email already Exist",
+           showConfirmButton: true,
+         });
+
+       }
+       else if (error.error.resCode=== "URN-EXT") {
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "Username already exist",
+          showConfirmButton: true,
+        });
+
+      }
       }
     );
   }
