@@ -192,12 +192,14 @@ export class FormsComponent implements OnInit, OnDestroy {
       userId: this.userId,
       passwordExpiry: value.passwordExpiry,
       userName: value.userName,
-      password: value.newPassword,
+
       userType: value.userType,
       roleId: value.roleId,
     };
     if (value.check === true) {
-      if (value.password != value.newPassword) {
+      if (this.userId != 0 && this.getUserById === false) {
+        updateObject["newPassword"] = value.newPassword;
+      } else if (value.password != value.newPassword) {
         updateObject["password"] = value.password;
         updateObject["newPassword"] = value.newPassword;
       } else {
@@ -208,6 +210,8 @@ export class FormsComponent implements OnInit, OnDestroy {
         });
         return;
       }
+    } else {
+      updateObject["password"] = value.newPassword;
     }
 
     this.authService.updateProfileDetails(updateObject, this.user).subscribe(
