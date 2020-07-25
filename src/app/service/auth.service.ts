@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { apiURL } from 'app/util/constants';
-
+import { CalendarUtils } from 'angular-calendar';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -72,12 +73,17 @@ export class AuthService {
     }
   }
 
-  
   updateRolesInfo(value){
 console.log("value",value);
 let url = apiURL.ROLES + "/" + value.roleId
+if(value.roleId === 0){
+  console.log("if");
+  return this.httpClient.post(apiURL.ROLES,value )
+}
+else{
 return this.httpClient.put(url,value)
   }
+}
   sendResetLink(emailAddress) {
     let url = apiURL.FORGOT_PASSWORD
     let resendAddress = { "emailAddress": emailAddress }
@@ -115,22 +121,26 @@ return this.httpClient.put(url,value)
     let url = apiURL.USER + "/" + userId
     return this.httpClient.delete(url)
   }
+  deleteRole(roleId) {
+    console.log(roleId)
+    let url = apiURL.ROLES + "/" + roleId
+    return this.httpClient.delete(url)
+  }
   getAllRoles(object) {
-    // const httpOptions ={
-    //   headers:new HttpHeaders({'Authorization': 'Bearer ' + object.token}),
-   
-    // }; 
     console.log('object', object);
     console.log("token", object.token);
     console.log("getAllRoles", this.getAllRoles);
     let url = apiURL.ROLES
     return this.httpClient.get(url)
-
   }  
+
+    getRoleList(){
+      console.log("rolelist");
+      let url = apiURL.ROLES 
+      return this.httpClient.get(url)
+    }
+  
   getAllRolesInfo(roleId) {
-    // const httpOptions = {
-    //   headers: new HttpHeaders({ 'Authorization': 'Bearer ' + roleId.token })
-    // };
     console.log("getroleId", roleId);
     let url = apiURL.ROLES + "/" + roleId
     return this.httpClient.get(url)

@@ -6,6 +6,7 @@ import { Contact } from "app/main/apps/contacts/contact.model";
 import { usertype } from "app/models/user-type";
 import { AuthService } from "app/service/auth.service";
 import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
+import { NavigationExtras, Router } from '@angular/router';
 import Swal from "sweetalert2";
 
 
@@ -20,6 +21,10 @@ export class ContactsContactFormDialogComponent {
   roleId:any;
   rolesDetails: any;
   selected1 = 'active';
+  Id =0;
+  errorMessage = '';
+  message = '';
+ 
    usertypes: usertype[] = [
     { value: "Active"},
     { value: "InActive" },
@@ -76,7 +81,8 @@ export class ContactsContactFormDialogComponent {
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router,
   ) {
     this.todo=this.totScreens;
     const _data = this.route.snapshot.params;
@@ -108,11 +114,14 @@ export class ContactsContactFormDialogComponent {
       roleDescription: [""]
     });
     this.route.queryParams.subscribe((params) => {
+      console.log("params",params.roleId);
 
-     if ((this.roleId=params["roleId"])){
-        console.log(params);
-      }
-      this.getAllRolesInfo(Number(params.roleId));
+      if(params.roleId != undefined){
+
+     
+      
+     this.Id=Number(params.roleId);
+      this.getAllRolesInfo(Number(params.roleId));}
     });
  
   }
@@ -124,39 +133,60 @@ export class ContactsContactFormDialogComponent {
     });
   }
   updateRole(value){
+    // console.log("valu")
+    this.errorMessage = '';
+    this.message='';
     let updateObject = {
+   
       roleName: value.roleName,
       roleDescription: value.roleDescription,
       active: value.active,
-      roleId:value.roleId
+      roleId:this.Id
+      // id:this.Id
+      
     };
-
-    
-
+    console.log("updateobject",updateObject);
     this.authService.updateRolesInfo(updateObject).subscribe(
       (res) => {
+       
+
     //  alert("hi");
+    console.log("added")
     Swal.fire({
-      title: "Role Updated",
+      title: "Role Added",
       icon: "success",
       confirmButtonText: "Ok",
-    }).then((res) => {
-      if (res.value === true) {
-        this.canceledit();
-        // this.enableEdit = false;
-      }
-    });
-      },
-    );
+
+    }),error =>{
+      console.log("error");
+      alert("hi");
+      if (error.message === "Role Already Exist") {
+
+
+    }
+    }
+})
+//  ,error => {
+//       console.log("error");
+//       if (error.error.resCode === 'RL-AL-ET') {
+//           // this.passwordExpired = true;
+//           // Swal.fire({
+//           //     title: 'Role Already Exists',
+//           //     icon: 'warning',
+//           //     showConfirmButton: true,
+              
+//           // });
+//         }
+//       }
+      // });
   }
 
   canceledit() {
     // this.viewMode = true;
+    this.router.navigate(["/apps/contacts"]);
+    // this.router.navigate(['./contacts-contact-list'])
 
-    this.authService.getAllRolesInfo(this.roleId).subscribe((res) => {
-      this.rolesDetails = res;
-      this.form.patchValue(res);
-    });
+ 
   }
   select(value: any) {
     this.items.push(value);

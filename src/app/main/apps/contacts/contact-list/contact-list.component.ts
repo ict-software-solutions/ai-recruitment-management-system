@@ -10,6 +10,7 @@ import { roleList } from 'app/models/user-details';
 import { AuthService } from 'app/service/auth.service';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'contacts-contact-list',
@@ -36,6 +37,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     user1: roleList;
     dataSource = new MatTableDataSource<any>();
     deleteinfo:any;
+    message = '';
     constructor(
         private router: Router,
         private authService: AuthService,
@@ -110,24 +112,48 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
                 }
             };
         }
-        onDelete(userId): void {
-            console.log(userId);
+        onDelete(roleId): void {
+            console.log(roleId);
             this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
               disableClose: false,
             });
            this.confirmDialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?";
             this.confirmDialogRef.afterClosed().subscribe((result) => {
               if (result) {
-                this.authService.deleteUser(userId).subscribe((res) => {
+                this.authService.deleteRole(roleId).subscribe((res) => {
                     this.deleteinfo = res;
                     console.log("deleterrow", this.deleteinfo);
+
+                    // if (res.message === "DELETED"){
+
+                    //     Swal.fire({
+                    //         text: 'Activation link send your email successfully',
+                    //         icon: 'success',
+                    //         showConfirmButton: true,
+                    //     })
+                    // }
                   });
+                  
                   this.getAllRoles();
+                  
               }
            
               this.confirmDialogRef = null;
             });
           }
+
+        //   resend() {
+        //     this.errorMessage = '';
+        //     this.authService.resendActivationMail(this.loginForm.value.userName).subscribe((res: any) => {
+        //         if (res.message === "activation link send successfully") {
+        //             Swal.fire({
+        //                 text: 'Activation link send your email successfully',
+        //                 icon: 'success',
+        //                 showConfirmButton: true,
+        //             })
+        //         }
+        //     })
+        // }
 
     editContact(roleId): void {
         console.log("roleId",roleId);

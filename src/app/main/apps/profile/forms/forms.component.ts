@@ -26,7 +26,6 @@ let $: any;
 export class FormsComponent implements OnInit, OnDestroy {
   lastLogin: string;
   onFileSelected(event) {
-    // console.log(event);
   }
   form: FormGroup;
   dialogRef: any;
@@ -51,25 +50,23 @@ export class FormsComponent implements OnInit, OnDestroy {
   profileDetails: any;
   viewMode = true;
   userName: "";
-  userId=0;
+  userId = 0;
   userType: "";
-  name:"";
+  name: "";
   labelPosition: "before" | "after" = "after";
   errorMessage = "";
   oldPasswordWrong = false;
   getUserById: boolean;
-  getRole=true;
+  getRole = true;
   status: "";
-  Id =0;
-  // params:any;
-
+  Id = 0;
+  isLoaded = false;
+  roleLists: any;
   usertypes: usertype[] = [
-    { value: "Employee"},
+    { value: "Employee" },
     { value: "Client" },
-    { value: "Candidate"}
+    { value: "Candidate" }
   ];
-  roleNames: rolename[] = [{value:"Admin"},{value: "Manager"}, {value:"Candidate Consultant"},{value: "Client Consultant"},{value: "Candidate View"}, {value:"client"},{value: "customer"}];
-
   constructor(
     private userService: UserService,
     public dialog: MatDialog,
@@ -104,48 +101,45 @@ export class FormsComponent implements OnInit, OnDestroy {
       position: [""],
       address: [""],
       postalcode: [""],
-      roleName:[""],
-      userType:[""],
+      roleId: [""],
+      userType: [""],
       city: [""],
       state: [""],
       country: [""],
       password: ["", Validators.required],
       newPassword: ["", [Validators.minLength(8), Validators.maxLength(15)]],
       check: [""],
-      validFrom:[''],
-      validTo:[''],
-      passwordExpiry:[""],
-      passwordSince:[""],
-      passwordNew:["", [Validators.minLength(8), Validators.maxLength(15)]],
-      userName:[""],
-      roleId:[""]
+      validFrom: [''],
+      validTo: [''],
+      passwordExpiry: [""],
+      passwordSince: [""],
+      passwordNew: ["", [Validators.minLength(8), Validators.maxLength(15)]],
+      userName: [""],
+
     });
 
     this.route.queryParams.subscribe((params) => {
-      if ((this.userId = params["userId"]) && (this.userType = params["userType"])) {
-        console.log(params);
-        if (params.viewMode === "false") {
-          this.Edit();
-          this.getUserById = false;
-        }
-        console.log(params.userId);
-        this.user = <any>Number(params.userId);
-      } else if(this.name = params["name"]){
-        console.log(params);
-        params.viewMode==="false";
+      console.log("params", params)
+      if (params["name"] === "addrole") {
         this.Edit();
         this.getUserById = false;
         this.getRole = false;
+        this.userId = 0;
+      }
+      else if (params["userId"] && params["userType"]) {
+        this.Edit();
+        this.getUserById = false;
+        this.getRole = false;
+        this.userId = Number(params["userId"]);
+        this.getProfileInfo(this.userId);
       }
       else {
-        this.userId = params["userId"];
-        console.log(params);
+        this.userId = Number(params["userId"]);
+        this.getProfileInfo(this.userId);
         this.getUserById = true;
       }
-      this.getProfileInfo(Number(params.userId));
-     
+      this.getRoles();
     });
-
     this.form.get("password").valueChanges;
     this.form
       .get("password")
@@ -153,13 +147,18 @@ export class FormsComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.form.get("passwordConfirm").updateValueAndValidity();
       });
-    // this.getProfileInfo();
   }
 
   unsubscribe(subscription: Subscription) {
     if (subscription !== null && subscription !== undefined) {
       subscription.unsubscribe();
     }
+  }
+  getRoles() {
+    this.authService.getRoleList().subscribe((res) => {
+      console.log("list", res);
+      this.roleLists = res;
+    })
   }
 
   Edit() {
@@ -177,22 +176,17 @@ export class FormsComponent implements OnInit, OnDestroy {
       this.form.controls["roleId"].patchValue(this.profileDetails.roles.roleId);
     });
   }
-  
+
   canceledit() {
     this.viewMode = true;
-
     this.authService.getProfileInfo(this.user).subscribe((res) => {
       this.profileDetails = res;
       this.form.patchValue(res);
     });
   }
- 
+
   updateProfile(value) {
-    // value.id=this.Id
-    // this.userId = <any>Number(params.Id);
-
-    console.log("USERID",this.user)//user->token ,userId
-
+    console.log("USERID", this.userId)
     let updateObject = {
       firstName: value.firstName,
       middleName: value.middleName,
@@ -204,19 +198,14 @@ export class FormsComponent implements OnInit, OnDestroy {
       city: value.city,
       state: value.state,
       postalCode: value.postalCode,
-      userId: this.userId ,
-      // userId:value.userId
-      passwordExpiry:value.passwordExpiry,
-      // id:this.Id,
+      userId: this.userId,
+      passwordExpiry: value.passwordExpiry,
       userName: value.userName,
-      password:value.newPassword,
-      userType : value.userType,
-      roleId:value.roleId
-      // mobileNumber:this.value.mobileNumber
-   
+      password: value.newPassword,
+      userType: value.userType,
+      roleId: value.roleId
     };
-    // this.updateProfile(Number(params.userId));
-  
+
     if (value.check === true) {
       if (value.password != value.newPassword) {
         updateObject["password"] = value.password;
@@ -232,7 +221,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     }
     this.authService.updateProfileDetails(updateObject, this.user).subscribe(
       (res) => {
-        console.log("user in update",this.user);//toke,user id
+        console.log("user in update", this.user);
         Swal.fire({
           title: "Profile Updated",
           icon: "success",
@@ -272,7 +261,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         text: "Please upload a profile picture, jpg or jpeg, with size less than 8MB.",
       };
       const areYouSure = this.airmsService.swalOKButton(swalObject);
-      Swal.fire(areYouSure).then(() => {});
+      Swal.fire(areYouSure).then(() => { });
     } else {
       const that = this;
       this.confirmDialogs = true;
@@ -295,7 +284,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     this.unsubscribeAll.complete();
     this.contactProfilePic = null;
     this.getUserById = null;
-    this.viewMode=null;
+    this.viewMode = null;
   }
 }
 
