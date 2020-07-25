@@ -65,7 +65,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.logUserActivity("CREATE AN ACCOUNT", LOG_MESSAGES.CLICK);
     this.alreadyExist = false;
     this.activationLink = false;
-    
+
     this.errorMessage = "";
     this.signupSubscription = this.authService.signup(value).subscribe(
       () => {
@@ -92,7 +92,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     );
   }
   resend() {
-    console.log("resend the mail");
     this.errorMessage = "";
     this.authService.resendActivationMail(this.registerForm.value.userName).subscribe((res: any) => {
       if (res.message === "activation link send successfully") {

@@ -6,7 +6,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { takeUntil } from "rxjs/operators";
 import { Subscription } from "rxjs";
 import { userDetails } from "app/models/user-details";
-import { LOGGED_IN_USER_INFO, SIGNUP } from "app/util/constants";
+import { LOGGED_IN_USER_INFO, SIGNUP, EMAIL_PATTERN } from "app/util/constants";
 import { AirmsService } from "app/service/airms.service";
 import { DatePipe } from "@angular/common";
 import Swal from "sweetalert2";
@@ -15,7 +15,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { UserService } from "app/service/user.service";
 import { userInfo } from "os";
 import { AuthService } from "app/service/auth.service";
-import { __param } from 'tslib';
+import { __param } from "tslib";
 
 let $: any;
 @Component({
@@ -25,8 +25,7 @@ let $: any;
 })
 export class FormsComponent implements OnInit, OnDestroy {
   lastLogin: string;
-  onFileSelected(event) {
-  }
+  onFileSelected(event) {}
   form: FormGroup;
   dialogRef: any;
   showPassword = true;
@@ -60,14 +59,10 @@ export class FormsComponent implements OnInit, OnDestroy {
   getRole = true;
   status: "";
   Id = 0;
-  resCode="";
+  resCode = "";
   isLoaded = false;
   roleLists: any;
-  usertypes: usertype[] = [
-    { value: "Employee" },
-    { value: "Client" },
-    { value: "Candidate" }
-  ];
+  usertypes: usertype[] = [{ value: "Employee" }, { value: "Client" }, { value: "Candidate" }];
   constructor(
     private userService: UserService,
     public dialog: MatDialog,
@@ -97,7 +92,7 @@ export class FormsComponent implements OnInit, OnDestroy {
       firstName: [""],
       middleName: [""],
       lastName: [""],
-      emailAddress: [""],
+      emailAddress: ["", [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
       mobileNumber: [""],
       companyname: [""],
       position: [""],
@@ -111,31 +106,27 @@ export class FormsComponent implements OnInit, OnDestroy {
       password: ["", Validators.required],
       newPassword: ["", [Validators.minLength(8), Validators.maxLength(15)]],
       check: [""],
-      validFrom: [''],
-      validTo: [''],
+      validFrom: [""],
+      validTo: [""],
       passwordExpiry: [""],
       passwordSince: [""],
       passwordNew: ["", [Validators.minLength(8), Validators.maxLength(15)]],
       userName: ["", [Validators.minLength(6), Validators.maxLength(30)]],
-
     });
 
     this.route.queryParams.subscribe((params) => {
-      console.log("params", params)
       if (params["name"] === "addrole") {
         this.Edit();
         this.getUserById = false;
         this.getRole = false;
         this.userId = 0;
-      }
-      else if (params["userId"] && params["userType"]) {
+      } else if (params["userId"] && params["userType"]) {
         this.Edit();
         this.getUserById = false;
         this.getRole = false;
         this.userId = Number(params["userId"]);
         this.getProfileInfo(this.userId);
-      }
-      else {
+      } else {
         this.userId = Number(params["userId"]);
         this.getProfileInfo(this.userId);
         this.getUserById = true;
@@ -158,9 +149,8 @@ export class FormsComponent implements OnInit, OnDestroy {
   }
   getRoles() {
     this.authService.getRoleList().subscribe((res) => {
-      console.log("list", res);
       this.roleLists = res;
-    })
+    });
   }
 
   Edit() {
@@ -169,10 +159,8 @@ export class FormsComponent implements OnInit, OnDestroy {
   }
 
   getProfileInfo(userId) {
-    console.log("USERID", userId);
     this.authService.getProfileInfo(userId).subscribe((res) => {
       this.profileDetails = res;
-      console.log(res);
       this.form.patchValue(res);
       this.form.controls["userType"].patchValue(this.profileDetails.userType);
       this.form.controls["roleId"].patchValue(this.profileDetails.roles.roleId);
@@ -180,15 +168,16 @@ export class FormsComponent implements OnInit, OnDestroy {
   }
 
   canceledit() {
-    this.viewMode = true;
+    this.router.navigate(["/apps/e-commerce/products"]);
     this.authService.getProfileInfo(this.user).subscribe((res) => {
       this.profileDetails = res;
       this.form.patchValue(res);
     });
   }
-
+  edit() {
+    this.enableEdit == true;
+  }
   updateProfile(value) {
-    console.log("USERID", this.userId)
     let updateObject = {
       firstName: value.firstName,
       middleName: value.middleName,
@@ -205,7 +194,7 @@ export class FormsComponent implements OnInit, OnDestroy {
       userName: value.userName,
       password: value.newPassword,
       userType: value.userType,
-      roleId: value.roleId
+      roleId: value.roleId,
     };
     if (value.check === true) {
       if (value.password != value.newPassword) {
@@ -219,25 +208,24 @@ export class FormsComponent implements OnInit, OnDestroy {
         });
         return;
       }
-
     }
 
     this.authService.updateProfileDetails(updateObject, this.user).subscribe(
       (res) => {
-        console.log("user in update", this.user);
         Swal.fire({
-          title: "Profile Updated",
+          title: "Profile Saved",
           icon: "success",
           confirmButtonText: "Ok",
         }).then((res) => {
           if (res.value === true) {
             this.canceledit();
-            this.enableEdit = false;
+            this.router.navigate(["/apps/e-commerce/products"]);
           }
         });
       },
+
       (error) => {
-           if (error.error.message === "old password does not match") {
+        if (error.error.message === "old password does not match") {
           this.errorMessage = error.error.message;
           this.oldPasswordWrong = true;
           Swal.fire({
@@ -246,25 +234,21 @@ export class FormsComponent implements OnInit, OnDestroy {
             title: "Current password is wrong",
             showConfirmButton: true,
           });
+        } else if (error.error.resCode === "EML-EXT") {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Email already Exist",
+            showConfirmButton: true,
+          });
+        } else if (error.error.resCode === "URN-EXT") {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Username already exist",
+            showConfirmButton: true,
+          });
         }
-        else if (error.error.resCode=== "EML-EXT") {
-         Swal.fire({
-           position: "center",
-           icon: "warning",
-           title: "Email already Exist",
-           showConfirmButton: true,
-         });
-
-       }
-       else if (error.error.resCode=== "URN-EXT") {
-        Swal.fire({
-          position: "center",
-          icon: "warning",
-          title: "Username already exist",
-          showConfirmButton: true,
-        });
-
-      }
       }
     );
   }
@@ -282,7 +266,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         text: "Please upload a profile picture, jpg or jpeg, with size less than 8MB.",
       };
       const areYouSure = this.airmsService.swalOKButton(swalObject);
-      Swal.fire(areYouSure).then(() => { });
+      Swal.fire(areYouSure).then(() => {});
     } else {
       const that = this;
       this.confirmDialogs = true;
