@@ -24,20 +24,21 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     @ViewChild('dialogContent') dialogContent: TemplateRef<any>;
     contacts: any;
     user: any;
-    // dataSource: FilesDataSource | null;
     displayedColumns = ['rolename', 'desc', 'active', 'roleId'];
     selectedContacts: any[];
     checkboxes: {};
     dialogRef: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     private _unsubscribeAll: Subject<any>;
-    roleList:any;
+    roleList: any;
     isLoading = true;
     details: any;
     user1: roleList;
     dataSource = new MatTableDataSource<any>();
-    deleteinfo:any;
+    deleteinfo: any;
     message = '';
+    view = false;
+    status:any;
     constructor(
         private router: Router,
         private authService: AuthService,
@@ -47,7 +48,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        // this.dataSource = new FilesDataSource(this._contactsService);
         this._contactsService.onContactsChanged.pipe(takeUntil(this._unsubscribeAll))
             .subscribe(contacts => {
                 this.contacts = contacts;
@@ -74,17 +74,14 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
             .subscribe(() => {
                 this._contactsService.deselectContacts();
             });
-            this.getAllRoles()
+        this.getAllRoles()
     }
-    getAllRoles(){
+    getAllRoles() {
         this.authService.getAllRoles(this.user).subscribe(res => {
             this.roleList = res
-            console.log("rolelist", this.roleList);
-            // this.isLoading = false;
             this.dataSource.data = this.roleList;
         },
-            // error => this.isLoading = false
-        ); 
+        );
     }
 
     ngOnDestroy(): void {
@@ -103,60 +100,30 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
         this.router = null;
     }
 
-    editRole(roleId)
-        {
-            let navigationExtras: NavigationExtras = {
-                queryParams: {
-                    roleId:roleId
-                
-                }
-            };
-        }
-        onDelete(roleId): void {
-            console.log(roleId);
-            this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
-              disableClose: false,
-            });
-           this.confirmDialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?";
-            this.confirmDialogRef.afterClosed().subscribe((result) => {
-              if (result) {
+    editRole(roleId) {
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                roleId: roleId
+            }
+        };
+    }
+    onDelete(roleId): void {
+        this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: false,
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?";
+        this.confirmDialogRef.afterClosed().subscribe((result) => {
+            if (result) {
                 this.authService.deleteRole(roleId).subscribe((res) => {
                     this.deleteinfo = res;
-                    console.log("deleterrow", this.deleteinfo);
-
-                    // if (res.message === "DELETED"){
-
-                    //     Swal.fire({
-                    //         text: 'Activation link send your email successfully',
-                    //         icon: 'success',
-                    //         showConfirmButton: true,
-                    //     })
-                    // }
-                  });
-                  
-                  this.getAllRoles();
-                  
-              }
-           
-              this.confirmDialogRef = null;
-            });
-          }
-
-        //   resend() {
-        //     this.errorMessage = '';
-        //     this.authService.resendActivationMail(this.loginForm.value.userName).subscribe((res: any) => {
-        //         if (res.message === "activation link send successfully") {
-        //             Swal.fire({
-        //                 text: 'Activation link send your email successfully',
-        //                 icon: 'success',
-        //                 showConfirmButton: true,
-        //             })
-        //         }
-        //     })
-        // }
+                });
+                this.getAllRoles();
+            }
+            this.confirmDialogRef = null;
+        });
+    }
 
     editContact(roleId): void {
-        console.log("roleId",roleId);
         let navigationExtras: NavigationExtras = {
             queryParams: {
                 roleId: roleId,
@@ -164,6 +131,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
             },
             skipLocationChange: true
         };
+        this.view = false;
         this.router.navigate(['apps/contacts/addRole'], navigationExtras);
     }
 
@@ -196,28 +164,14 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
 
 export class FilesDataSource extends DataSource<any>
 {
-    /**
-     * Constructor
-     *
-     * @param {ContactsService} _contactsService
-     */
     constructor(
         private _contactsService: ContactsService
     ) {
         super();
     }
-
-    /**
-     * Connect function called by the table to retrieve one stream containing the data to render.
-     * @returns {Observable<any[]>}
-     */
     connect(): Observable<any[]> {
         return this._contactsService.onContactsChanged;
     }
-
-    /**
-     * Disconnect
-     */
     disconnect(): void {
     }
 }

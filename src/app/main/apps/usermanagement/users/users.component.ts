@@ -23,8 +23,8 @@ import { Router, NavigationExtras } from "@angular/router";
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { Product } from '../addusers/addusers.model';
 import { userDetails } from 'app/models/user-details';
-import { LOGGED_IN_USER_INFO} from 'app/util/constants';
-import {  ActivatedRoute } from "@angular/router";
+import { LOGGED_IN_USER_INFO } from 'app/util/constants';
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
     selector: 'e-commerce-products',
@@ -54,17 +54,17 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
     userData: any;
     deleteinfo: any;
     userProfileUpdateSubscription: Subscription;
-    displayedColumns: string[] = ['image', 'firstName', 'lastName', 'userType', 'roleName','activated','userId'];
+    displayedColumns: string[] = ['image', 'firstName', 'lastName', 'userType', 'roleName', 'activated', 'userId'];
     isLoading = true;
     color: ThemePalette = 'primary';
     mode: ProgressSpinnerMode = 'determinate';
     value = 50;
     userInfo: userDetails;
     user: userDetails;
-    userId:String;
-    userName:String;
-    userType:String;
-    firstName:String;
+    userId: String;
+    userName: String;
+    userType: String;
+    firstName: String;
 
     constructor(
         private userService: UserService,
@@ -82,12 +82,12 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.userInfo =this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
-        console.log("userinfo",this.userInfo);
+        this.userInfo = this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+        console.log("userinfo", this.userInfo);
         this.user = this.airmsService.getSessionStorage(SIGNUP);
-        console.log("user",this.user);
-        this.userName=this.user.userName;
-        console.log("UserName",this.userName);
+        console.log("user", this.user);
+        this.userName = this.user.userName;
+        console.log("UserName", this.userName);
         //We want to use this code for mat sort and filter  (important)
 
         /*this.dataSource = new FilesDataSource(this.userManagementService, this.paginator, this.sort);
@@ -129,50 +129,40 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
 
         })
     }
-    // onDelete(userId): void {
-    //     console.log(userId);
-    //     if (confirm('are you sure want to delete?')) {
-    //         this.authService.deleteUser(userId).subscribe(res => {
-    //             this.deleteinfo = res
-    //             console.log("deleterrow", this.deleteinfo);
-    //         })
-    //     }
-    // }
+
     onDelete(userId): void {
         console.log(userId);
         this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
-          disableClose: false,
+            disableClose: false,
         });
-       this.confirmDialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?";
+        this.confirmDialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?";
         this.confirmDialogRef.afterClosed().subscribe((result) => {
-          if (result) {
-            this.authService.deleteUser(userId).subscribe((res) => {
-                this.deleteinfo = res;
-                console.log("deleterrow", this.deleteinfo);
-              });
-              this.getAllUsers();
-          }
-       
-          this.confirmDialogRef = null;
+            if (result) {
+                this.authService.deleteUser(userId).subscribe((res) => {
+                    this.deleteinfo = res;
+                    console.log("deleterrow", this.deleteinfo);
+                });
+                this.getAllUsers();
+            }
+
+            this.confirmDialogRef = null;
         });
-      }
-      onTap(userId,userType) {
+    }
+    onTap(userId, userType) {
         let navigationExtras: NavigationExtras = {
             queryParams: {
-                userId:userId,
-                userType:userType,
-                viewMode:false
+                userId: userId,
+                userType: userType,
+                viewMode: false
             },
             skipLocationChange: true
         };
         this.router.navigate(['/apps/profile/forms'], navigationExtras);
     }
     addUser() {
-        // console.log("userId",userId);
         let navigationExtras: NavigationExtras = {
             queryParams: {
-                // userId:userId,
-                viewMode:false
+                viewMode: false
             },
             skipLocationChange: true
         };
@@ -182,8 +172,8 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
         console.log("hi");
         let navigationExtras: NavigationExtras = {
             queryParams: {
-               name:"addrole",
-               viewMode:false
+                name: "addrole",
+                viewMode: false
             }
         };
         this.router.navigate(['/apps/profile/forms'], navigationExtras);
@@ -197,7 +187,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
         // this.dataSourceGifts.sort = this.sortGifts;
         // this.dataSourceGifts.paginator = this.paginatorGifts;
     }
-  
+
     ngOnDestroy() {
         this.unsubscribeAll.next();
         this.unsubscribeAll.complete();
@@ -238,13 +228,9 @@ export class FilesDataSource extends DataSource<any>
             .pipe(
                 map(() => {
                     let data = this.ecommerceProductsService.products.slice();
-
                     data = this.filterData(data);
-
                     this.filteredData = [...data];
-
                     data = this.sortData(data);
-
                     // Grab the page's slice of data.
                     const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
                     return data.splice(startIndex, this._matPaginator.pageSize);
@@ -314,12 +300,3 @@ export class FilesDataSource extends DataSource<any>
     disconnect(): void {
     }
 }
-// export class UserDataSource extends DataSource<any> {
-//     constructor(private authService: AuthService) {
-//       super();
-//     }
-//     connect(): Observable<product[]> {
-//       return this.authService.getAllUsers();
-//     }
-//     disconnect() {}
-//   }

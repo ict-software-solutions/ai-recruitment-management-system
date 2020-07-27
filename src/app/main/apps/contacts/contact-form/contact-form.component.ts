@@ -18,18 +18,20 @@ import Swal from "sweetalert2";
 })
 export class ContactsContactFormDialogComponent {
   form: FormGroup;
-  roleId:any;
   rolesDetails: any;
   selected1 = 'active';
-  Id =0;
+  roleId = 0;
   errorMessage = '';
   message = '';
- 
-   usertypes: usertype[] = [
-    { value: "Active"},
+  buttonShow = true;
+  buttonHide = false;
+  view = false;
+
+  usertypes: usertype[] = [
+    { value: "Active" },
     { value: "InActive" },
-    { value: "Candidate"}
-   ];
+    { value: "Candidate" }
+  ];
   totScreens = [
     {
       title: "Dashboard",
@@ -52,9 +54,9 @@ export class ContactsContactFormDialogComponent {
   done = [];
 
   screens = ["dashboard", "Calander", "User Management", "Edit Profile"];
-  status=[
-    { value: "Activated"},
-    { value: "Locked"},
+  status = [
+    { value: "Activated" },
+    { value: "Locked" },
   ]
   items = [];
   selectedItems: Item[];
@@ -74,9 +76,8 @@ export class ContactsContactFormDialogComponent {
   toggle3 = true;
   toggle4 = true;
   toggle5 = true;
-  active:boolean;
-  newRole=true;
-
+  active: boolean;
+  newRole = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -84,19 +85,18 @@ export class ContactsContactFormDialogComponent {
     private authService: AuthService,
     private router: Router,
   ) {
-    this.todo=this.totScreens;
+    this.todo = this.totScreens;
     const _data = this.route.snapshot.params;
     this.action = _data.action;
     if (this.action === "edit") {
       this.dialogTitle = "Edit Role";
       this.contact = _data.contact;
-      
+
     } else {
       this.dialogTitle = "New Role";
       this.contact = new Contact({});
       this.newRole = false;
     }
-    // this.contactForm = this.createContactForm();
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -110,83 +110,69 @@ export class ContactsContactFormDialogComponent {
     this.contactForm = this.formBuilder.group({
       roleId: [""],
       roleName: [""],
-      active:[""],
-      roleDescription: [""]
+      active: [],
+      roleDescription: [""],
+      screen: [""]
     });
     this.route.queryParams.subscribe((params) => {
-      console.log("params",params.roleId);
-
-      if(params.roleId != undefined){
-
-     
-      
-     this.Id=Number(params.roleId);
-      this.getAllRolesInfo(Number(params.roleId));}
+      if (params.roleId != undefined) {
+        this.roleId = Number(params.roleId);
+        this.getAllRolesInfo(Number(params.roleId));
+      }
+      else {
+        this.roleId = 0;
+      }
     });
- 
   }
   getAllRolesInfo(roleId) {
-    console.log("roleID", roleId);
     this.authService.getAllRolesInfo(roleId).subscribe((res) => {
       this.rolesDetails = res;
       this.contactForm.patchValue(res);
+      if (this.rolesDetails.active === true) {
+        this.contactForm.controls["active"].patchValue("true")
+      } else {
+        this.contactForm.controls["active"].patchValue("false")
+      }
     });
   }
-  updateRole(value){
-    // console.log("valu")
+  updateRole(value) {
     this.errorMessage = '';
-    this.message='';
+    this.message = '';
     let updateObject = {
-   
       roleName: value.roleName,
       roleDescription: value.roleDescription,
-      active: value.active,
-      roleId:this.Id
-      // id:this.Id
-      
+      active: Boolean(value.active),
+      roleId: this.roleId
     };
-    console.log("updateobject",updateObject);
     this.authService.updateRolesInfo(updateObject).subscribe(
       (res) => {
-       
-
-    //  alert("hi");
-    console.log("added")
-    Swal.fire({
-      title: "Role Added",
-      icon: "success",
-      confirmButtonText: "Ok",
-
-    }),error =>{
-      console.log("error");
-      alert("hi");
-      if (error.message === "Role Already Exist") {
-
-
-    }
-    }
-})
-//  ,error => {
-//       console.log("error");
-//       if (error.error.resCode === 'RL-AL-ET') {
-//           // this.passwordExpired = true;
-//           // Swal.fire({
-//           //     title: 'Role Already Exists',
-//           //     icon: 'warning',
-//           //     showConfirmButton: true,
-              
-//           // });
-//         }
-//       }
-      // });
+        Swal.fire({
+          title: "Role Saved",
+          icon: "success",
+          confirmButtonText: "Ok",
+        }).then((res) => {
+          if (res.value === true) {
+            this.canceledit();
+            this.router.navigate(['/apps/contacts'])
+          }
+        });
+      },
+      (error) => {
+        if (error.error.resCode === "RL-AL-ET") {
+          this.errorMessage = error.error.message;
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Role already exists",
+            showConfirmButton: true,
+          });
+        }
+      }
+    );
   }
 
   canceledit() {
-    // this.viewMode = true;
     this.router.navigate(["/apps/contacts"]);
-    // this.router.navigate(['./contacts-contact-list'])
-
- 
   }
   select(value: any) {
     this.items.push(value);
@@ -230,7 +216,6 @@ export class ContactsContactFormDialogComponent {
   selectdashboard() {
     this.selectdash = !this.selectdash;
     this.toggle1 = !this.toggle1;
-    // this.status = this.toggle ? 'Enable' : 'Disable';
   }
   selectcalander() {
     this.selectcal = !this.selectcal;
@@ -248,25 +233,6 @@ export class ContactsContactFormDialogComponent {
     this.selectrole = !this.selectrole;
     this.toggle5 = !this.toggle5;
   }
-  // createContactForm(): FormGroup {
-  //   return this._formBuilder.group({
-  //     id: [this.contact.id],
-  //     name: [this.contact.name],
-  //     lastName: [this.contact.lastName],
-  //     avatar: [this.contact.avatar],
-  //     nickname: [this.contact.nickname],
-  //     company: [this.contact.company],
-  //     jobTitle: [this.contact.jobTitle],
-  //     email: [this.contact.email],
-  //     phone: [this.contact.phone],
-  //     address: [this.contact.address],
-  //     birthday: [this.contact.birthday],
-  //     notes: [this.contact.notes],
-  //     rolename: [this.contact.rolename],
-  //     desc: [this.contact.desc],
-  //     status: [this.contact.status],
-  //   });
-  // }
 }
 
 interface Item {

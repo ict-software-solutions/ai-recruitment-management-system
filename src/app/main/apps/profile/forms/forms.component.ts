@@ -25,7 +25,7 @@ let $: any;
 })
 export class FormsComponent implements OnInit, OnDestroy {
   lastLogin: string;
-  onFileSelected(event) {}
+  onFileSelected(event) { }
   form: FormGroup;
   dialogRef: any;
   showPassword = true;
@@ -192,7 +192,6 @@ export class FormsComponent implements OnInit, OnDestroy {
       userId: this.userId,
       passwordExpiry: value.passwordExpiry,
       userName: value.userName,
-
       userType: value.userType,
       roleId: value.roleId,
     };
@@ -253,6 +252,23 @@ export class FormsComponent implements OnInit, OnDestroy {
             showConfirmButton: true,
           });
         }
+        else if (error.error.resCode === "EML-EXT") {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Email already Exist",
+            showConfirmButton: true,
+          });
+
+        }
+        else if (error.error.resCode === "URN-EXT") {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Username already exist",
+            showConfirmButton: true,
+          });
+        }
       }
     );
   }
@@ -270,7 +286,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         text: "Please upload a profile picture, jpg or jpeg, with size less than 8MB.",
       };
       const areYouSure = this.airmsService.swalOKButton(swalObject);
-      Swal.fire(areYouSure).then(() => {});
+      Swal.fire(areYouSure).then(() => { });
     } else {
       const that = this;
       this.confirmDialogs = true;
