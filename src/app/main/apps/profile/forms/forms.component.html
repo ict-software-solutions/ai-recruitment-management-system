@@ -193,15 +193,18 @@
 
               <mat-form-field appearance="outline" fxFlex="33" *ngIf="getRole === false && userId === 0">
                 <mat-label>User Name</mat-label>
-                <input matInput formControlName="userName" pattern="[a-zA-Z][a-z0-9_.-]*" required />
+                <input matInput formControlName="userName"
+                    pattern="[a-zA-Z][a-z0-9_.-]*" required>
                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-
-                <mat-error *ngIf="form.get('userName').hasError('required')"> User name is required </mat-error>
-                <mat-error *ngIf="form.get('userName').hasError('minlength')">User name must be at least 6 characters
+                 <mat-error *ngIf="form.get('userName').hasError('required')"> User name is required
                 </mat-error>
-                <mat-error *ngIf="form.get('userName').hasError('pattern') && form.get('userName').value.length > 5">
-                  Please enter valid user name use(A-Z,a-z,0-9,_/-)</mat-error>
-              </mat-form-field>
+                <mat-error *ngIf="form.get('userName').hasError('minlength')">User name must be at least 6
+                    charecters</mat-error>
+                <mat-error
+                    *ngIf="form.get('userName').hasError('pattern') && form.get('userName').value.length > 5">
+                    Please enter valid user name use(A-Z,a-z,0-9,_/-)</mat-error> 
+            </mat-form-field>
+              
             </div>
 
             <!-- <div fxLayout="row" fxLayoutAlign="space-between"> -->
