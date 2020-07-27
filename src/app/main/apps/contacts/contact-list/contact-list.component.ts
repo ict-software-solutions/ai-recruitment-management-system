@@ -2,15 +2,19 @@ import { DataSource } from '@angular/cdk/collections';
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { NavigationExtras, Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { roleList } from 'app/models/user-details';
 import { AuthService } from 'app/service/auth.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject,BehaviorSubject, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { FuseUtils } from '@fuse/utils';
 
 @Component({
     selector: 'contacts-contact-list',
@@ -22,6 +26,8 @@ import Swal from 'sweetalert2';
 
 export class ContactsContactListComponent implements OnInit, OnDestroy {
     @ViewChild('dialogContent') dialogContent: TemplateRef<any>;
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+    @ViewChild(MatSort, { static: true }) sort: MatSort;
     contacts: any;
     user: any;
     displayedColumns = ['rolename', 'desc', 'active', 'roleId'];
@@ -83,6 +89,16 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
         },
         );
     }
+    connect(): Observable<any> {
+        return this.authService.getAllRoles(Object);
+    }
+    ngAfterViewInit() {
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        // this.dataSourceGifts.sort = this.sortGifts;
+        // this.dataSourceGifts.paginator = this.paginatorGifts;
+    }
+   
 
     ngOnDestroy(): void {
         this._unsubscribeAll.next();
@@ -90,6 +106,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
         this.dialogContent = null;
         this.contacts = null;
         this.user = null;
+        this.paginator=null;
         this.dataSource = null;
         this.displayedColumns = null;
         this.selectedContacts = null;
@@ -164,14 +181,63 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
 
 export class FilesDataSource extends DataSource<any>
 {
+    private _filterChange = new BehaviorSubject('');
+    private _filteredDataChange = new BehaviorSubject('');
     constructor(
-        private _contactsService: ContactsService
+        private _contactsService: ContactsService,
+        private _matPaginator: MatPaginator,
+        private _matSort: MatSort
     ) {
         super();
     }
     connect(): Observable<any[]> {
-        return this._contactsService.onContactsChanged;
+        const displayDataChanges = [
+           this._contactsService.onContactsChanged,
+           this._matPaginator.page,
+           this._filterChange,
+           this._matSort.sortChange
+        ]
+        return merge(...displayDataChanges)
+        .pipe(
+            map(() => {
+                let data = this._contactsService.contacts.slice();
+                data = this.filterData(data);
+                this.filteredData = [...data];
+                data = this.sortData(data);
+                // Grab the page's slice of data.
+                const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
+                return data.splice(startIndex, this._matPaginator.pageSize);
+            }
+            ));
     }
-    disconnect(): void {
+    get filteredData(): any {
+        return this._filteredDataChange.value;
+    }
+
+    set filteredData(value: any) {
+        this._filteredDataChange.next(value);
+    }
+
+    // Filter
+    get filter(): string {
+        return this._filterChange.value;
+    }
+
+    set filter(filter: string) {
+        this._filterChange.next(filter);
+    }
+    filterData(data): any {
+        if (!this.filter) {
+            return data;
+        }
+        return FuseUtils.filterArrayByString(data, this.filter);
+    }
+        
+        sortData(data): any[] {
+            if (!this._matSort.active || this._matSort.direction === '') {
+                return data;
+            }
+}
+    disconnect() {
     }
 }

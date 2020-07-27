@@ -1,6 +1,8 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
 import { Component, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 import { Contact } from "app/main/apps/contacts/contact.model";
 import { usertype } from "app/models/user-type";
@@ -17,6 +19,7 @@ import Swal from "sweetalert2";
   encapsulation: ViewEncapsulation.None,
 })
 export class ContactsContactFormDialogComponent {
+  
   form: FormGroup;
   rolesDetails: any;
   selected1 = 'active';

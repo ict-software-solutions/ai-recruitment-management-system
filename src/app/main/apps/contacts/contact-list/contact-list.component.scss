@@ -2,7 +2,7 @@
 
 contacts-contact-list {
   
-    display: flex;
+    display: block !important;
     flex: 1 1 auto;
     width: 100%;
 
@@ -74,3 +74,4 @@ contacts-contact-list {
         bottom: auto;
     }
 }
+
