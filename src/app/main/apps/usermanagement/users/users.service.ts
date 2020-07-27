@@ -10,12 +10,10 @@ export class UserManagementService implements Resolve<any>
     onProductsChanged: BehaviorSubject<any>;
     constructor(
         private _httpClient: HttpClient
-    )
-    {
+    ) {
         this.onProductsChanged = new BehaviorSubject({});
     }
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
-    {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
         return new Promise((resolve, reject) => {
             Promise.all([
             ]).then(
@@ -26,6 +24,6 @@ export class UserManagementService implements Resolve<any>
             );
         });
     }
-   
-    
+
+
 }

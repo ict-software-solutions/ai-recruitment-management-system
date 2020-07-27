@@ -31,11 +31,11 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
     shown: boolean;
 
     usertype: usertype[] = [
-        { value: 'Employee'},
-        { value: 'Client'},
-        { value: 'Candidate'}
+        { value: 'Employee' },
+        { value: 'Client' },
+        { value: 'Candidate' }
     ];
-   roleName = ['Admin', 'Manager', 'Candidate Consultant', 'Client Consultant', 'Candidate View', 'client', 'customer'];
+    roleName = ['Admin', 'Manager', 'Candidate Consultant', 'Client Consultant', 'Candidate View', 'client', 'customer'];
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -98,10 +98,10 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
             email: ['', Validators.required],
             mobile: ['', Validators.required],
             dob: ['', Validators.required],
-            validFrom:['',Validators.required],
-            validTo:['',Validators.required],
-            passwordSince:['',Validators.required],
-            passwordExpiryDate:['',Validators.required],
+            validFrom: ['', Validators.required],
+            validTo: ['', Validators.required],
+            passwordSince: ['', Validators.required],
+            passwordExpiryDate: ['', Validators.required],
             password: ['', Validators.required],
             passwordNew: ['', [Validators.minLength(8), Validators.maxLength(15)]],
             check1: [''],
