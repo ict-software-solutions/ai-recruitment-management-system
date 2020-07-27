@@ -263,22 +263,23 @@
               </mat-form-field>
             </div>
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" style="margin-top: -36px;"
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" style="margin-top: 1px;"
               *ngIf="getRole === false && userId === 0">
-              <mat-form-field appearance="outline" fxFlex="33" class="px-8">
-                <mat-label>Valid To</mat-label>
-                <input matInput [matDatepicker]="picker4" name="validTo" formControlName="validTo"
-                  [readonly]="viewMode" />
-                <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-                <mat-datepicker #picker4></mat-datepicker>
-              </mat-form-field>
-
-              <mat-form-field appearance="outline" fxFlex="34" class="px-8">
+             
+              <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>Valid From</mat-label>
                 <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom"
                   [readonly]="viewMode" />
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" fxFlex="34" class="px-8">
+                <mat-label>Valid To</mat-label>
+                <input matInput [matDatepicker]="picker4" name="validTo" formControlName="validTo"
+                  [readonly]="viewMode" />
+                <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                <mat-datepicker #picker4></mat-datepicker>
               </mat-form-field>
 
               <mat-form-field appearance="outline" fxFlex="33">
