@@ -20,7 +20,9 @@
           >
             <header class="accent" style="height: 80px; font-size: bold; font-size: 17px; padding: 16px;">
               <div class="title">
-                <img class="profile-image avatar" src="assets/images/avatars/Nancy.jpg" style="margin: -7px 8px -10px -7px;" />
+                  <div id="photos" class="row"></div>
+                <!-- <img class="profile-image avatar" src="assets/images/avatars/Nancy.jpg"
+                  style="margin: -7px 8px -10px -7px;" /> -->
                 <span style="margin-left: -32px;">
                   <button mat-mini-fab color="accent" aria-label="Example icon button with a filter list icon" style="margin-top: 16px;">
                     <mat-icon>local_see</mat-icon>
@@ -38,6 +40,7 @@
                     style="width: 27px; height: 19px; margin-left: -45px; margin-top: 4px; opacity: 0;"
                   />
                 </span>
+
 
                 <div style="display: inline;">
                   <button mat-icon-button color="light" (click)="Edit()" *ngIf="!enableEdit" style="float: right; margin-right: 10px;">

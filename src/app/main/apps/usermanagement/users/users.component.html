@@ -36,13 +36,19 @@
         <ng-container matColumnDef="image" style="width: 200px;">
           <mat-header-cell *matHeaderCellDef></mat-header-cell>
           <mat-cell *matCellDef="let product">
-            <img
+            <div *ngIf="product.profileImage !=null &&  product.profileImage !== ''">
+              <img [src]=" product.profileImage" height="50" width="50" style="border-radius: 40px">
+            </div>
+            <div *ngIf="product.profileImage==null  || product.profileImage === ''">
+              <img src="./assets/images/generic.jpg" height="50" width="50" style="border-radius: 40px">
+            </div>
+            <!-- <img
               class="product-image"
               *ngIf="product.featuredImageId"
               [alt]="product.name"
               [src]="product.images[product.featuredImageId].url"
             />
-            <img *ngIf="!product.featuredImageId" [src]="'assets/images/ecommerce/product-image-placeholder.png'" />
+            <img *ngIf="!product.featuredImageId" [src]="'assets/images/ecommerce/product-image-placeholder.png'" /> -->
           </mat-cell>
         </ng-container>
 
@@ -101,8 +107,8 @@
       </mat-table>
       <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; text-align: center;">
         <h3 style="color: blue; font-size: bold;">Loading..</h3>
-        <mat-progress-spinner *ngIf="isLoading" class="example-margin" [color]="color" [mode]="mode" [value]="value">
-        </mat-progress-spinner>
+        <!-- <mat-progress-spinner *ngIf="isLoading" class="example-margin" [color]="color" [mode]="mode" [value]="value">
+        </mat-progress-spinner> -->
       </div>
       <mat-paginator
         #paginator

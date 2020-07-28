@@ -18,6 +18,7 @@ import { isThisHour } from 'date-fns';
 import { usersList } from 'app/models/user-details';
 import { userInfo } from 'os';
 import {  NavigationExtras } from "@angular/router";
+declare var $: any;
 
 // import {MatDialog} from '@angular/material/dialog';
 // import { ResetPasswordModule } from 'app/main/pages/authentication/reset-password/reset-password.module';
@@ -167,7 +168,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         console.log("user",this.user);
         this.userId=this.user.userId;
         console.log("UserId",this.userId);
-    
+        if (this.userInfo.profileImage !== null && this.userInfo.profileImage !== '') {
+            this.userInfo.profileImage = atob(this.userInfo.profileImage);
+            setTimeout(() => {
+              $('#profilePic').append('<div><img src=' + 'data:image/jpeg;base64' +
+                this.userInfo.profileImage +
+                ' class="img-thumbnail img-rounded" height="50" width="50" style="border-radius: 40px"></div>');
+            }, 100);
+          } else {
+            setTimeout(() => {
+              $('#profilePic').append('<div><img src="' +
+                '../../assets/images/generic.jpg"' +
+                'class="img-thumbnail img-rounded" height="50" width="50" style="border-radius: 50px"></div>');
+            }, 100);
+          }
         // Subscribe to the config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))

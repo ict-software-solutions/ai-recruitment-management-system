@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LOGGED_IN_USER_INFO } from 'app/util/constants';
+import { LOGGED_IN_USER_INFO, IP_ADDRESS } from 'app/util/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +21,15 @@ export class AirmsService {
     return this.getSessionStorage(LOGGED_IN_USER_INFO);
   }
 
-  getUserType() { 
+  getIpAddressInfo() {
+    return this.getSessionStorage(IP_ADDRESS);
+  }
+
+  getUserRole() { 
     const user = this.getUserInfo();
-    return user['userType'];
+    if (user!== undefined && user!== null) {
+    return user['roleName'];
+    }
   }
 
   public getBrowserName() {

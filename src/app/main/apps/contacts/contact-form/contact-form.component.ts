@@ -130,12 +130,13 @@ export class ContactsContactFormDialogComponent {
   getAllRolesInfo(roleId) {
     this.authService.getAllRolesInfo(roleId).subscribe((res) => {
       this.rolesDetails = res;
+      console.log('res', res);
       this.contactForm.patchValue(res);
-      if (this.rolesDetails.active === true) {
-        this.contactForm.controls["active"].patchValue("true")
-      } else {
-        this.contactForm.controls["active"].patchValue("false")
-      }
+      // if (this.rolesDetails.active === true) {
+      //   this.contactForm.controls["active"].patchValue("true")
+      // } else {
+      //   this.contactForm.controls["active"].patchValue("false")
+      // }
     });
   }
   updateRole(value) {
@@ -144,7 +145,7 @@ export class ContactsContactFormDialogComponent {
     let updateObject = {
       roleName: value.roleName,
       roleDescription: value.roleDescription,
-      active: Boolean(value.active),
+      active: value.active,
       roleId: this.roleId
     };
     this.authService.updateRolesInfo(updateObject).subscribe(

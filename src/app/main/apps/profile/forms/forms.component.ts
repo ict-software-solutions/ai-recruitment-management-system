@@ -6,7 +6,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { takeUntil } from "rxjs/operators";
 import { Subscription } from "rxjs";
 import { userDetails } from "app/models/user-details";
-import { LOGGED_IN_USER_INFO, SIGNUP, EMAIL_PATTERN } from "app/util/constants";
+import { LOGGED_IN_USER_INFO, SIGNUP, EMAIL_PATTERN, IP_ADDRESS } from "app/util/constants";
 import { AirmsService } from "app/service/airms.service";
 import { DatePipe } from "@angular/common";
 import Swal from "sweetalert2";
@@ -16,8 +16,8 @@ import { UserService } from "app/service/user.service";
 import { userInfo } from "os";
 import { AuthService } from "app/service/auth.service";
 import { __param } from "tslib";
+declare var $: any;
 
-let $: any;
 @Component({
   selector: "forms",
   templateUrl: "./forms.component.html",
@@ -42,6 +42,7 @@ export class FormsComponent implements OnInit, OnDestroy {
   check = false;
   userInfo: userDetails;
   user: userDetails;
+  userIpAddress: any;
   confirmDialogs: any;
   contactProfilePic: any;
   userProfileUpdateSubscription: Subscription;
@@ -76,6 +77,8 @@ export class FormsComponent implements OnInit, OnDestroy {
   ) {
     this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
     this.user = airmsService.getSessionStorage(SIGNUP);
+    this.userIpAddress = airmsService.getSessionStorage(IP_ADDRESS);
+    console.log('user ip address', this.userIpAddress);
     this.lastLogin = datePipe.transform(this.userInfo.lastLogin, "MMM dd, yyyy hh:mm:ss a");
     this.unsubscribeAll = new Subject();
     this.errorMessage = "";
@@ -116,20 +119,24 @@ export class FormsComponent implements OnInit, OnDestroy {
 
     this.route.queryParams.subscribe((params) => {
       if (params["name"] === "addrole") {
+        /** Add User */
         this.Edit();
         this.getUserById = false;
         this.getRole = false;
         this.userId = 0;
       } else if (params["userId"] && params["userType"]) {
+        /** Edit User */
         this.Edit();
         this.getUserById = false;
         this.getRole = false;
         this.userId = Number(params["userId"]);
         this.getProfileInfo(this.userId);
       } else {
+        /** My Profile */
         this.userId = Number(params["userId"]);
         this.getProfileInfo(this.userId);
         this.getUserById = true;
+        console.log('my profile');
       }
       this.getRoles();
     });
@@ -164,6 +171,20 @@ export class FormsComponent implements OnInit, OnDestroy {
       this.form.patchValue(res);
       this.form.controls["userType"].patchValue(this.profileDetails.userType);
       this.form.controls["roleId"].patchValue(this.profileDetails.roles.roleId);
+      if (this.profileDetails.profileImage !== null && this.profileDetails.profileImage !== '') {
+        this.profileDetails.profileImage = atob(this.profileDetails.profileImage);
+        setTimeout(() => {
+          $('#photos').append('<div><img src=' + 'data:image/jpeg;base64' +
+            this.profileDetails.profileImage +
+            ' class="img-thumbnail img-rounded" height="50" width="50" style="border-radius: 40px"></div>');
+        }, 100);
+      } else {
+        setTimeout(() => {
+          $('#photos').append('<div><img src="' +
+            '../../assets/images/generic.jpg"' +
+            'class="img-thumbnail img-rounded" height="50" width="50" style="border-radius: 50px"></div>');
+        }, 100);
+      }
     });
   }
 
@@ -178,6 +199,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     this.enableEdit == true;
   }
   updateProfile(value) {
+    console.log('this.contactProfilePic', this.contactProfilePic);
     let updateObject = {
       firstName: value.firstName,
       middleName: value.middleName,
@@ -193,14 +215,24 @@ export class FormsComponent implements OnInit, OnDestroy {
       passwordExpiry: value.passwordExpiry,
       userName: value.userName,
       userType: value.userType,
-      roleId: value.roleId,
+      roleId: value.roleId
     };
+    if (this.contactProfilePic !== null && this.contactProfilePic !== undefined && 
+      this.contactProfilePic !== '') {
+      updateObject['profileImage'] = btoa(this.contactProfilePic);   
+      console.log('updateObject profile pic if', updateObject);
+    } else {
+      updateObject['profileImage'] = null;
+      console.log('updateObject profile pic');
+    }
     if (value.check === true) {
       if (this.userId != 0 && this.getUserById === false) {
         updateObject["newPassword"] = value.newPassword;
+        updateObject['lastIPAddress'] = this.userIpAddress;
       } else if (value.password != value.newPassword) {
         updateObject["password"] = value.password;
         updateObject["newPassword"] = value.newPassword;
+        updateObject['lastIPAddress'] = this.userIpAddress;
       } else {
         Swal.fire({
           title: "New password cannot be the same as Old Password",
@@ -213,9 +245,10 @@ export class FormsComponent implements OnInit, OnDestroy {
       updateObject["password"] = value.newPassword;
     }
 
+
     this.authService.updateProfileDetails(updateObject, this.user).subscribe(
       (res) => {
-        Swal.fire({
+      Swal.fire({
           title: "Profile Saved",
           icon: "success",
           confirmButtonText: "Ok",
@@ -271,6 +304,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         }
       }
     );
+      
   }
   changePassword(checked) {
     this.showPasswordsection = !this.showPasswordsection;
@@ -283,7 +317,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     if (imageDetails.size > 30000 && !imageDetails.type.includes("jpg") && !imageDetails.type.includes("jpeg")) {
       const swalObject = {
         title: "<strong>Invalid Image Found</strong>",
-        text: "Please upload a profile picture, jpg or jpeg, with size less than 8MB.",
+        text: "Please upload a profile picture, jpg or jpeg, with size less than 30KB.",
       };
       const areYouSure = this.airmsService.swalOKButton(swalObject);
       Swal.fire(areYouSure).then(() => { });
@@ -293,8 +327,10 @@ export class FormsComponent implements OnInit, OnDestroy {
       const reader = new FileReader();
       reader.onload = () => {
         that.contactProfilePic = reader.result;
+        
         $(".img-thumbnail").remove();
-        $("#photos").append("<div><img  src=" + reader.result + ' id ="img"  class="img-thumbnail img-rounded"></div>');
+        $("#photos").append('<div><img  src=' + reader.result + 
+        ' id ="img"  class="img-thumbnail img-rounded"height="50" width="50" style="border-radius: 50px"></div>');
       };
       reader.readAsDataURL(imageDetails);
       this.form.markAsDirty();
@@ -302,6 +338,11 @@ export class FormsComponent implements OnInit, OnDestroy {
   }
   getClipboardContent() {
     return window.navigator["clipboard"].readText();
+  }
+  formControlChanges() {
+    this.form.controls.get['email'].dirty();
+
+
   }
   ngOnDestroy(): void {
     this.unsubscribe(this.getUserSubscription);
