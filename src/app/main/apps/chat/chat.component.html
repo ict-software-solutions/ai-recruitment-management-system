@@ -1,0 +1,174 @@
+<div id="chat" class="page-layout carded fullwidth inner-scroll">
+    <!-- <div class="ex-1"> -->
+   
+    <div class="center">
+   
+    
+  
+  
+        <!-- CONTENT CARD -->
+        <h1></h1>
+        <div class="content-card">
+<!-- <div class="mat-card"> -->
+        <!-- <div class="content-card"> -->
+
+            <header class="accent" style="height: 80px; font-size: bold; font-size: 17px; padding: 16px;">
+                <div class="title"><p>
+<mat-icon>desktop_mac</mat-icon><span ><h1 style="margin-top: -34px;
+    margin-left: 41px;">System Activities</h1></span></p>
+  
+
+
+                </div>
+                <div><button mat-raised-button style="    float: right;
+                    margin-top: -57px;
+                    height: 43px;
+                    margin-right: 10px;">Filter By</button></div>
+
+                    </header>
+            <mat-tab-group animationDuration="0ms">
+                <mat-tab label="Audit Log" >
+<!-- <mat-card> -->
+    <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" style="margin-top: 18px; margin-left:
+    18px;margin-right: 18px;">
+       <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-label>From</mat-label>
+        <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom"
+          >
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-label>To</mat-label>
+        <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom"
+          >
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline"fxFlex="33" class="pr-4">
+        <mat-label>User Type</mat-label>
+        <mat-select>
+          <mat-option value="option1">Client</mat-option>
+          <mat-option value="option2">Candidate</mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div> -->
+             <div class="content-card" style="height: 500px;">
+
+    <mat-table [dataSource]="dataSource" fusePerfectScrollbar >
+       
+        <!-- Position Column -->
+        <ng-container matColumnDef="user">
+          <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.user}} </mat-cell>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="screen">
+          <mat-header-cell *matHeaderCellDef> Screen </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.screen}} </mat-cell>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.action}} </mat-cell>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="date">
+          <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.date}} </mat-cell>
+        </ng-container>
+      
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      
+      </mat-table>
+ 
+      <mat-paginator 
+      #paginator
+      
+      [pageIndex]="0"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      >
+      </mat-paginator>
+    </div>
+<!--                       
+                    </mat-card>       -->
+
+                    
+                </mat-tab>
+                <mat-tab label="Client Machine Log">
+                    <!-- <div class="content-card" style="height: 500px;">
+
+                        <mat-table [dataSource]="dataSource"   fusePerfectScrollbar>
+                            <div class="ex-1">
+                            <ng-container matColumnDef="user">
+                              <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
+                              <mat-cell *matCellDef="let element"> {{element.user}} </mat-cell>
+                            </ng-container>
+                          
+                            <ng-container matColumnDef="screen">
+                              <mat-header-cell *matHeaderCellDef> Screen </mat-header-cell>
+                              <mat-cell *matCellDef="let element"> {{element.screen}} </mat-cell>
+                            </ng-container>
+                          
+                            <ng-container matColumnDef="action">
+                              <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                              <mat-cell *matCellDef="let element"> {{element.action}} </mat-cell>
+                            </ng-container>
+                          
+                            <ng-container matColumnDef="date">
+                              <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                              <mat-cell *matCellDef="let element"> {{element.date}} </mat-cell>
+                            </ng-container>
+                          
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </div>
+                          </mat-table>
+                     
+                          <mat-paginator 
+                          #paginator
+                          
+                          [pageIndex]="0"
+                          [pageSize]="5"
+                          [pageSizeOptions]="[5, 10, 25, 100]"
+                          >
+                          </mat-paginator>
+                        </div> -->
+                </mat-tab>
+                <div>
+                    <mat-form-field  appearance="legacy" fxFlex="33" class="pr-4">
+                        <mat-label>From</mat-label>
+                        <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom"
+                          >
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+                </div>
+              </mat-tab-group>
+        
+
+        <!-- </div>  -->
+        <!-- / CONTENT CARD -->
+<!-- </div> -->
+</div>
+
+<!-- <button mat-icon-button class="warn mat-elevation-z2 theme-options-button"
+        [ngClass]="{'right-side-panel': fuseConfig.layout.sidepanel.position === 'right',
+                    'side-panel-hidden': fuseConfig.layout.sidepanel.hidden === true}"
+        (click)="toggleSidebarOpen('themeOptionsPanel')">
+     <mat-icon>settings</mat-icon> 
+</button>
+
+<fuse-sidebar name="themeOptionsPanel" class="theme-options-sidebar" position="right" [invisibleOverlay]="true">
+    <fuse-theme-options></fuse-theme-options>
+</fuse-sidebar> -->
+    </div>
+    <!-- / CENTER -->
+<!-- </div> -->
+
+</div>

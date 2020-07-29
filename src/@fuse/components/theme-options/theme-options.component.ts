@@ -65,90 +65,38 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
         // Build the config form
         // noinspection TypeScriptValidateTypes
         this.form = this._formBuilder.group({
-            colorTheme      : new FormControl(),
-            customScrollbars: new FormControl(),
-            layout          : this._formBuilder.group({
-                style    : new FormControl(),
-                width    : new FormControl(),
-                navbar   : this._formBuilder.group({
-                    primaryBackground  : new FormControl(),
-                    secondaryBackground: new FormControl(),
-                    folded             : new FormControl(),
-                    hidden             : new FormControl(),
-                    position           : new FormControl(),
-                    variant            : new FormControl()
-                }),
-                toolbar  : this._formBuilder.group({
-                    background           : new FormControl(),
-                    customBackgroundColor: new FormControl(),
-                    hidden               : new FormControl(),
-                    position             : new FormControl()
-                }),
-                footer   : this._formBuilder.group({
-                    background           : new FormControl(),
-                    customBackgroundColor: new FormControl(),
-                    hidden               : new FormControl(),
-                    position             : new FormControl()
-                }),
-                sidepanel: this._formBuilder.group({
-                    hidden  : new FormControl(),
-                    position: new FormControl()
-                })
-            })
+           
         });
 
         // Subscribe to the config changes
-        this._fuseConfigService.config
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((config) => {
-
-                // Update the stored config
-                this.fuseConfig = config;
-
-                // Set the config form values without emitting an event
-                // so that we don't end up with an infinite loop
-                this.form.setValue(config, {emitEvent: false});
-            });
+        
 
         // Subscribe to the specific form value changes (layout.style)
-        this.form.get('layout.style').valueChanges
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((value) => {
-
-                // Reset the form values based on the
-                // selected layout style
-                this._resetFormValues(value);
-            });
+       
 
         // Subscribe to the form value changes
-        this.form.valueChanges
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((config) => {
-
-                // Update the config
-                this._fuseConfigService.config = config;
-            });
+       
 
         // Add customize nav item that opens the bar programmatically
-        const customFunctionNavItem = {
-            id      : 'custom-function',
-            title   : 'Custom Function',
-            type    : 'group',
-            icon    : 'settings',
-            children: [
-                {
-                    id      : 'customize',
-                    title   : 'Customize',
-                    type    : 'item',
-                    icon    : 'settings',
-                    function: () => {
-                        this.toggleSidebarOpen('themeOptionsPanel');
-                    }
-                }
-            ]
-        };
+        // const customFunctionNavItem = {
+        //     id      : 'custom-function',
+        //     title   : 'Custom Function',
+        //     type    : 'group',
+        //     icon    : 'settings',
+        //     children: [
+        //         {
+        //             id      : 'customize',
+        //             title   : 'Customize',
+        //             type    : 'item',
+        //             icon    : 'settings',
+        //             function: () => {
+        //                 this.toggleSidebarOpen('themeOptionsPanel');
+        //             }
+        //         }
+        //     ]
+        // };
 
-        this._fuseNavigationService.addNavigationItem(customFunctionNavItem, 'end');
+        // this._fuseNavigationService.addNavigationItem(customFunctionNavItem, 'end');
     }
 
     /**
@@ -180,148 +128,14 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
         switch ( value )
         {
             // Vertical Layout #1
-            case 'vertical-layout-1':
-            {
-                this.form.patchValue({
-                    layout: {
-                        width    : 'fullwidth',
-                        navbar   : {
-                            primaryBackground  : 'fuse-navy-700',
-                            secondaryBackground: 'fuse-navy-900',
-                            folded             : false,
-                            hidden             : false,
-                            position           : 'left',
-                            variant            : 'vertical-style-1'
-                        },
-                        toolbar  : {
-                            background           : 'fuse-white-500',
-                            customBackgroundColor: false,
-                            hidden               : false,
-                            position             : 'below-static'
-                        },
-                        footer   : {
-                            background           : 'fuse-navy-900',
-                            customBackgroundColor: true,
-                            hidden               : false,
-                            position             : 'below-static'
-                        },
-                        sidepanel: {
-                            hidden  : false,
-                            position: 'right'
-                        }
-                    }
-                });
-
-                break;
-            }
-
+           
             // Vertical Layout #2
-            case 'vertical-layout-2':
-            {
-                this.form.patchValue({
-                    layout: {
-                        width    : 'fullwidth',
-                        navbar   : {
-                            primaryBackground  : 'fuse-navy-700',
-                            secondaryBackground: 'fuse-navy-900',
-                            folded             : false,
-                            hidden             : false,
-                            position           : 'left',
-                            variant            : 'vertical-style-1'
-                        },
-                        toolbar  : {
-                            background           : 'fuse-white-500',
-                            customBackgroundColor: false,
-                            hidden               : false,
-                            position             : 'below'
-                        },
-                        footer   : {
-                            background           : 'fuse-navy-900',
-                            customBackgroundColor: true,
-                            hidden               : false,
-                            position             : 'below'
-                        },
-                        sidepanel: {
-                            hidden  : false,
-                            position: 'right'
-                        }
-                    }
-                });
-
-                break;
-            }
+           
 
             // Vertical Layout #3
-            case 'vertical-layout-3':
-            {
-                this.form.patchValue({
-                    layout: {
-                        width    : 'fullwidth',
-                        navbar   : {
-                            primaryBackground  : 'fuse-navy-700',
-                            secondaryBackground: 'fuse-navy-900',
-                            folded             : false,
-                            hidden             : false,
-                            position           : 'left',
-                            layout             : 'vertical-style-1'
-                        },
-                        toolbar  : {
-                            background           : 'fuse-white-500',
-                            customBackgroundColor: false,
-                            hidden               : false,
-                            position             : 'above-static'
-                        },
-                        footer   : {
-                            background           : 'fuse-navy-900',
-                            customBackgroundColor: true,
-                            hidden               : false,
-                            position             : 'above-static'
-                        },
-                        sidepanel: {
-                            hidden  : false,
-                            position: 'right'
-                        }
-                    }
-                });
-
-                break;
-            }
-
+         
             // Horizontal Layout #1
-            case 'horizontal-layout-1':
-            {
-                this.form.patchValue({
-                    layout: {
-                        width    : 'fullwidth',
-                        navbar   : {
-                            primaryBackground  : 'fuse-navy-700',
-                            secondaryBackground: 'fuse-navy-900',
-                            folded             : false,
-                            hidden             : false,
-                            position           : 'top',
-                            variant            : 'vertical-style-1'
-                        },
-                        toolbar  : {
-                            background           : 'fuse-white-500',
-                            customBackgroundColor: false,
-                            hidden               : false,
-                            position             : 'above'
-                        },
-                        footer   : {
-                            background           : 'fuse-navy-900',
-                            customBackgroundColor: true,
-                            hidden               : false,
-                            position             : 'above-fixed'
-                        },
-                        sidepanel: {
-                            hidden  : false,
-                            position: 'right'
-                        }
-                    }
-                });
-
-                break;
-            }
+           
         }
     }
 

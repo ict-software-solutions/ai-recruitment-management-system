@@ -17,7 +17,6 @@ import { FuseMaterialColorPickerModule } from '@fuse/components/material-color-p
 import { FuseSidebarModule } from '@fuse/components/sidebar/sidebar.module';
 
 import { FuseThemeOptionsComponent } from '@fuse/components/theme-options/theme-options.component';
-
 @NgModule({
     declarations: [
         FuseThemeOptionsComponent

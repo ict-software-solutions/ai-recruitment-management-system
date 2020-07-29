@@ -93,9 +93,7 @@ export class FuseSidebarComponent implements OnInit, OnDestroy {
         private _fuseNavigationService: FuseNavigationService,
         private _renderer: Renderer2) {
         
-        if (airmsService.getUserType() === CLIENT) {
-            navigation[0]['children'] = navigation[0]['children'].filter(nav => nav['title'] !== ROLE_MANAGEMENT);
-         }
+       
 
         // Get default navigation
         this.navigation = navigation;

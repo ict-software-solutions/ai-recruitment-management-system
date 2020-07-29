@@ -33,13 +33,19 @@ const routes = [
         path: 'scrumboard',
         loadChildren: () => import('./scrumboard/scrumboard.module').then(m => m.ScrumboardModule)
     },
+    {
+        path        : 'chat',
+        loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule)
+    },
+   
+   
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routes),
         FuseSharedModule
-    ]
+    ],
 })
 export class AppsModule {
 }
