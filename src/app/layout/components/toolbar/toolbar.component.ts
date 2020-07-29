@@ -18,6 +18,7 @@ import { isThisHour } from 'date-fns';
 import { usersList } from 'app/models/user-details';
 import { userInfo } from 'os';
 import {  NavigationExtras } from "@angular/router";
+import { UserService } from 'app/service/user.service';
 declare var $: any;
 
 // import {MatDialog} from '@angular/material/dialog';
@@ -49,6 +50,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     user1: usersList;
     userData:any;
     userId:String;
+    updateUserInfoSubscription: Subscription;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -62,7 +64,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private _translateService: TranslateService,
         private keepalive: Keepalive,
         private authService: AuthService,
-        private router: Router
+        private router: Router,
+        private userService: UserService
         // public dialog: MatDialog
     ) {
         this.userStatusOptions = [
@@ -162,26 +165,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     ngOnInit(): void {
-        this.userInfo =this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
-        console.log("userinfo",this.userInfo);
-        this.user = this.airmsService.getSessionStorage(SIGNUP);
-        console.log("user",this.user);
-        this.userId=this.user.userId;
-        console.log("UserId",this.userId);
-        if (this.userInfo.profileImage !== null && this.userInfo.profileImage !== '') {
-            this.userInfo.profileImage = atob(this.userInfo.profileImage);
-            setTimeout(() => {
-              $('#profilePic').append('<div><img src=' + 'data:image/jpeg;base64' +
-                this.userInfo.profileImage +
-                ' class="img-thumbnail img-rounded" height="50" width="50" style="border-radius: 40px"></div>');
-            }, 100);
-          } else {
-            setTimeout(() => {
-              $('#profilePic').append('<div><img src="' +
-                '../../assets/images/generic.jpg"' +
-                'class="img-thumbnail img-rounded" height="50" width="50" style="border-radius: 50px"></div>');
-            }, 100);
-          }
+        this.updatedUserInfo();
         // Subscribe to the config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
@@ -193,7 +177,35 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         // Set the selected language from default languages
         this.selectedLanguage = _.find(this.languages, { id: this._translateService.currentLang });
     }
-
+    updatedUserInfo() {
+        this.updateUserInfoSubscription = this.userService.userProfileUpdateSub.subscribe(res=>{
+            if (res!== null) {
+                this.getUserInfo();
+            } else {
+                this.getUserInfo();
+            }
+        });
+    }
+    getUserInfo() {
+        this.userInfo =this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+        this.user = this.airmsService.getSessionStorage(SIGNUP);
+        this.userId=this.userInfo.userId;
+        if (this.userInfo.profileImage !== null && this.userInfo.profileImage !== '') {
+            this.userInfo.profileImage = atob(this.userInfo.profileImage);
+            setTimeout(() => {
+            $(".img-thumbnail2").remove();
+              $('#profilePic').append('<div><img src=' + 'data:image/jpeg;base64' +
+                this.userInfo.profileImage +
+                ' class="img-thumbnail2 img-rounded" height="50" width="50" style="border-radius: 40px"></div>');
+            }, 100);
+          } else {
+            setTimeout(() => {
+              $('#profilePic').append('<div><img src="' +
+                '../../assets/images/generic.jpg"' +
+                'class="img-thumbnail img-rounded" height="50" width="50" style="border-radius: 50px"></div>');
+            }, 100);
+          }
+    }
     logoutAIRMS() {
         this.authService.logout();
         this.router.navigate(['']);
@@ -221,6 +233,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this.unsubscribe(this.toolbarSubscription);
+        this.unsubscribe(this.updateUserInfoSubscription);
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
         

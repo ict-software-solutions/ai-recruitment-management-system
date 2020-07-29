@@ -25,7 +25,7 @@ declare var $: any;
 })
 export class FormsComponent implements OnInit, OnDestroy {
   lastLogin: string;
-  onFileSelected(event) { }
+  onFileSelected(event) {}
   form: FormGroup;
   dialogRef: any;
   showPassword = true;
@@ -46,6 +46,8 @@ export class FormsComponent implements OnInit, OnDestroy {
   confirmDialogs: any;
   contactProfilePic: any;
   userProfileUpdateSubscription: Subscription;
+  getProfileInfoSubscription: Subscription;
+  updateProfileSubscription: Subscription;
   isLoading: false;
   profileDetails: any;
   viewMode = true;
@@ -63,6 +65,7 @@ export class FormsComponent implements OnInit, OnDestroy {
   resCode = "";
   isLoaded = false;
   roleLists: any;
+  flagForScreen = '';
   usertypes: usertype[] = [{ value: "Employee" }, { value: "Client" }, { value: "Candidate" }];
   constructor(
     private userService: UserService,
@@ -78,7 +81,6 @@ export class FormsComponent implements OnInit, OnDestroy {
     this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
     this.user = airmsService.getSessionStorage(SIGNUP);
     this.userIpAddress = airmsService.getSessionStorage(IP_ADDRESS);
-    console.log('user ip address', this.userIpAddress);
     this.lastLogin = datePipe.transform(this.userInfo.lastLogin, "MMM dd, yyyy hh:mm:ss a");
     this.unsubscribeAll = new Subject();
     this.errorMessage = "";
@@ -124,6 +126,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.getUserById = false;
         this.getRole = false;
         this.userId = 0;
+        this.flagForScreen = 'addUser';
       } else if (params["userId"] && params["userType"]) {
         /** Edit User */
         this.Edit();
@@ -131,12 +134,13 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.getRole = false;
         this.userId = Number(params["userId"]);
         this.getProfileInfo(this.userId);
+        this.flagForScreen = 'editUser';
       } else {
         /** My Profile */
         this.userId = Number(params["userId"]);
         this.getProfileInfo(this.userId);
         this.getUserById = true;
-        console.log('my profile');
+        this.flagForScreen = 'myProfile';
       }
       this.getRoles();
     });
@@ -166,40 +170,51 @@ export class FormsComponent implements OnInit, OnDestroy {
   }
 
   getProfileInfo(userId) {
-    this.authService.getProfileInfo(userId).subscribe((res) => {
+   this.getProfileInfoSubscription = this.authService.getProfileInfo(userId).subscribe((res) => {
       this.profileDetails = res;
       this.form.patchValue(res);
       this.form.controls["userType"].patchValue(this.profileDetails.userType);
       this.form.controls["roleId"].patchValue(this.profileDetails.roles.roleId);
-      if (this.profileDetails.profileImage !== null && this.profileDetails.profileImage !== '') {
+      if (this.profileDetails.profileImage !== null && this.profileDetails.profileImage !== "") {
         this.profileDetails.profileImage = atob(this.profileDetails.profileImage);
+        this.contactProfilePic = this.profileDetails.profileImage;
         setTimeout(() => {
-          $('#photos').append('<div><img src=' + 'data:image/jpeg;base64' +
-            this.profileDetails.profileImage +
-            ' class="img-thumbnail img-rounded" height="50" width="50" style="border-radius: 40px"></div>');
+          $(".img-thumbnail").remove();
+          $("#photos").append(
+            "<img src=" +
+              "data:image/jpeg;base64" +
+              this.profileDetails.profileImage +
+              ' class="img-thumbnail img-rounded" height="50" width="50" style="border-radius: 40px">'
+          );
         }, 100);
       } else {
         setTimeout(() => {
-          $('#photos').append('<div><img src="' +
-            '../../assets/images/generic.jpg"' +
-            'class="img-thumbnail img-rounded" height="50" width="50" style="border-radius: 50px"></div>');
+          $(".img-thumbnail").remove();
+          $("#photos").append(
+            '<img src="' +
+              '../../assets/images/generic.jpg"' +
+              'class="img-thumbnail img-rounded" height="50" width="50" style="border-radius: 50px">'
+          );
         }, 100);
       }
     });
   }
 
   canceledit() {
+    if (this.flagForScreen === 'myProfile') {
+      this.getProfileInfo(this.userId);
+      this.getUserById = true;                  
+      this.getRole = true;
+      this.viewMode = true;
+      this.enableEdit = !this.enableEdit;
+    } else {
     this.router.navigate(["/apps/e-commerce/products"]);
-    this.authService.getProfileInfo(this.user).subscribe((res) => {
-      this.profileDetails = res;
-      this.form.patchValue(res);
-    });
+  }
   }
   edit() {
     this.enableEdit == true;
   }
   updateProfile(value) {
-    console.log('this.contactProfilePic', this.contactProfilePic);
     let updateObject = {
       firstName: value.firstName,
       middleName: value.middleName,
@@ -215,24 +230,21 @@ export class FormsComponent implements OnInit, OnDestroy {
       passwordExpiry: value.passwordExpiry,
       userName: value.userName,
       userType: value.userType,
-      roleId: value.roleId
+      roleId: value.roleId,
     };
-    if (this.contactProfilePic !== null && this.contactProfilePic !== undefined && 
-      this.contactProfilePic !== '') {
-      updateObject['profileImage'] = btoa(this.contactProfilePic);   
-      console.log('updateObject profile pic if', updateObject);
+    if (this.contactProfilePic !== null && this.contactProfilePic !== undefined && this.contactProfilePic !== "") {
+      updateObject["profileImage"] = btoa(this.contactProfilePic);
     } else {
-      updateObject['profileImage'] = null;
-      console.log('updateObject profile pic');
+      updateObject["profileImage"] = null;
     }
     if (value.check === true) {
       if (this.userId != 0 && this.getUserById === false) {
         updateObject["newPassword"] = value.newPassword;
-        updateObject['lastIPAddress'] = this.userIpAddress;
+        updateObject["lastIPAddress"] = this.userIpAddress;
       } else if (value.password != value.newPassword) {
         updateObject["password"] = value.password;
         updateObject["newPassword"] = value.newPassword;
-        updateObject['lastIPAddress'] = this.userIpAddress;
+        updateObject["lastIPAddress"] = this.userIpAddress;
       } else {
         Swal.fire({
           title: "New password cannot be the same as Old Password",
@@ -245,10 +257,34 @@ export class FormsComponent implements OnInit, OnDestroy {
       updateObject["password"] = value.newPassword;
     }
 
-
-    this.authService.updateProfileDetails(updateObject, this.user).subscribe(
+    this.updateProfileSubscription = this.authService.updateProfileDetails(updateObject, this.user).subscribe(
       (res) => {
-      Swal.fire({
+        if (this.userId === Number(this.userInfo.userId)) {
+          if (this.form.get('emailAddress').dirty || this.form.get('userName').dirty || this.form.get('newPassword').dirty) {
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: "You have made changes in Email or Username or Password",
+              confirmButtonText: "Ok"
+            });
+            this.logoutAIRMS();
+          } else {
+            this.updateUserInLocalStorge(res);
+            Swal.fire({
+              title: "Profile Saved",
+              icon: "success",
+              confirmButtonText: "Ok",
+            }).then((res) => {
+              if (res.value === true) {
+                  this.getUserById = true;                  
+                  this.getRole = true;
+                  this.viewMode = true;
+                  this.enableEdit = !this.enableEdit;
+              }
+            });
+          }
+        } else {
+        Swal.fire({
           title: "Profile Saved",
           icon: "success",
           confirmButtonText: "Ok",
@@ -258,6 +294,7 @@ export class FormsComponent implements OnInit, OnDestroy {
             this.router.navigate(["/apps/e-commerce/products"]);
           }
         });
+      }
       },
 
       (error) => {
@@ -284,17 +321,14 @@ export class FormsComponent implements OnInit, OnDestroy {
             title: "Username already exist",
             showConfirmButton: true,
           });
-        }
-        else if (error.error.resCode === "EML-EXT") {
+        } else if (error.error.resCode === "EML-EXT") {
           Swal.fire({
             position: "center",
             icon: "warning",
             title: "Email already Exist",
             showConfirmButton: true,
           });
-
-        }
-        else if (error.error.resCode === "URN-EXT") {
+        } else if (error.error.resCode === "URN-EXT") {
           Swal.fire({
             position: "center",
             icon: "warning",
@@ -304,7 +338,23 @@ export class FormsComponent implements OnInit, OnDestroy {
         }
       }
     );
-      
+  }
+  updateUserInLocalStorge(res) {
+    let user_info = {
+      userName: res["userName"],
+      userType: res["userType"],
+      userId: res["userId"],
+      profileImage: res["profileImage"],
+      emailAddress: res["emailAddress"],
+      company: res["company"],
+      firstName: res["firstName"],
+      lastName: res["lastName"],
+      roleId: this.userInfo["roleId"],
+      roleName: this.userInfo["roleName"],
+      lastLogin: this.userInfo["lastLogin"]
+    }
+    this.airmsService.setSessionStorage(LOGGED_IN_USER_INFO, user_info);
+    this.userService.publishUserDetail(true);
   }
   changePassword(checked) {
     this.showPasswordsection = !this.showPasswordsection;
@@ -314,23 +364,27 @@ export class FormsComponent implements OnInit, OnDestroy {
   }
   uploadFile(e) {
     const imageDetails = e.target.files[0];
-    if (imageDetails.size > 30000 && !imageDetails.type.includes("jpg") && !imageDetails.type.includes("jpeg")) {
-      const swalObject = {
+    console.log('imageDetails', imageDetails.size, !imageDetails.type.includes("jpeg"));
+    if (imageDetails.size > 30000 || (!imageDetails.type.includes("jpg") && !imageDetails.type.includes("jpeg"))) {
+      Swal.fire({
         title: "<strong>Invalid Image Found</strong>",
         text: "Please upload a profile picture, jpg or jpeg, with size less than 30KB.",
-      };
-      const areYouSure = this.airmsService.swalOKButton(swalObject);
-      Swal.fire(areYouSure).then(() => { });
+        icon: "warning",
+        confirmButtonText: "Ok",
+      });
+      return;
     } else {
       const that = this;
       this.confirmDialogs = true;
       const reader = new FileReader();
       reader.onload = () => {
         that.contactProfilePic = reader.result;
-        
         $(".img-thumbnail").remove();
-        $("#photos").append('<div><img  src=' + reader.result + 
-        ' id ="img"  class="img-thumbnail img-rounded"height="50" width="50" style="border-radius: 50px"></div>');
+        $("#photos").append(
+          "<div><img  src=" + 'data:image/jpeg;base64' +
+            reader.result +
+            ' id ="img"  class="img-thumbnail img-rounded"height="30" width="30" style="border-radius: 40px"></div>'
+        );
       };
       reader.readAsDataURL(imageDetails);
       this.form.markAsDirty();
@@ -339,13 +393,14 @@ export class FormsComponent implements OnInit, OnDestroy {
   getClipboardContent() {
     return window.navigator["clipboard"].readText();
   }
-  formControlChanges() {
-    this.form.controls.get['email'].dirty();
 
-
-  }
+  logoutAIRMS() {
+    this.authService.logout();
+    this.router.navigate(['']);
+}
   ngOnDestroy(): void {
     this.unsubscribe(this.getUserSubscription);
+    this.unsubscribe(this.updateProfileSubscription);
     this.unsubscribeAll.next();
     this.unsubscribeAll.complete();
     this.contactProfilePic = null;

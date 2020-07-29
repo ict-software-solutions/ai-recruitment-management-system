@@ -21,7 +21,8 @@
       <div class="search-wrapper mx-32 mx-md-0">
         <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
           <mat-icon>search</mat-icon>
-          <input #filter placeholder="Search" />
+          <input #filter placeholder="Search" 
+          (keyup)="searchFromTable($event.target.value)" />
         </div>
       </div>
 

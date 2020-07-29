@@ -95,7 +95,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
   getSystemIp() {
     $.getJSON("https://api64.ipify.org?format=json", (data) => {
-      console.log("data", data);
       sessionStorage.setItem(IP_ADDRESS, JSON.stringify(data.ip));
     });
   }
@@ -109,7 +108,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginSubscription = this.authService.login(value).subscribe(
       (res) => {
         this.logUserActivity("LOGIN", LOG_MESSAGES.SUCCESS);
-        console.log("login response", res);
         loginInfo = res;
         const userInfo = { token: res["token"], userId: res["userId"] };
         this.airmsService.setSessionStorage(LOGGED_IN_USER, userInfo);
@@ -118,6 +116,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             let user_info = {
               userName: userDetails["userName"],
               userType: userDetails["userType"],
+              userId: userDetails["userId"],
               profileImage: userDetails["profileImage"],
               emailAddress: userDetails["emailAddress"],
               company: userDetails["company"],
@@ -125,12 +124,10 @@ export class LoginComponent implements OnInit, OnDestroy {
               lastName: userDetails["lastName"],
               roleId: userDetails["roles"]["roleId"],
               roleName: userDetails["roles"]["roleName"],
-              lastLogin: loginInfo.lastLogin,
+              lastLogin: loginInfo["lastLogin"]
             };
             this.airmsService.setSessionStorage(LOGGED_IN_USER_INFO, user_info);
             this.logUserActivity("Login - fetch user", LOG_MESSAGES.SUCCESS);
-            const ip_address = sessionStorage.getItem("user_ip_address");
-            console.log(ip_address);
             this.router.navigate(["../../apps/dashboards/analytics"]);
             this.loginSubscription.unsubscribe();
           },

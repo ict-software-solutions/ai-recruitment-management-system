@@ -190,6 +190,10 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
   connect(): Observable<any> {
     return this.authService.getAllUsers(Object);
   }
+  searchFromTable(filterValue) {
+    filterValue = filterValue.trim().toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;

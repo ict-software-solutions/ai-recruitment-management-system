@@ -7,8 +7,9 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { userDetails } from 'app/models/user-details';
 import { AirmsService } from 'app/service/airms.service';
 import { LOGGED_IN_USER_INFO } from 'app/util/constants';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { delay, filter, take, takeUntil } from 'rxjs/operators';
+import { UserService } from 'app/service/user.service';
 
 @Component({
     selector: 'navbar-vertical-style-1',
@@ -24,15 +25,17 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
     userInfo: userDetails;
     private _fusePerfectScrollbar: FusePerfectScrollbarDirective;
     private _unsubscribeAll: Subject<any>;
+    updateUserInfoSubscription: Subscription;
 
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseNavigationService: FuseNavigationService,
         private _fuseSidebarService: FuseSidebarService,
         private _router: Router,
-        private airmsService: AirmsService) {
-        this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+        private airmsService: AirmsService,
+        private userService: UserService) {
         this._unsubscribeAll = new Subject();
+        this.updatedUserInfo();
     }
 
     @ViewChild(FusePerfectScrollbarDirective, { static: true })
@@ -78,6 +81,15 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
             takeUntil(this._unsubscribeAll)
         ).subscribe(() => {
             this.navigation = this._fuseNavigationService.getCurrentNavigation();
+        });
+    }
+    updatedUserInfo() {
+        this.updateUserInfoSubscription = this.userService.userProfileUpdateSub.subscribe(res=>{
+            if (res!== null) {
+                this.userInfo =this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+            } else {
+                this.userInfo =this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+            }
         });
     }
 

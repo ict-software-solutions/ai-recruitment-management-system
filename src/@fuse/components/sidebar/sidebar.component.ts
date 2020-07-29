@@ -5,7 +5,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseMatchMediaService } from '@fuse/services/match-media.service';
 import { navigation } from 'app/navigation/navigation';
 import { AirmsService } from 'app/service/airms.service';
-import { CLIENT, LOGGED_IN_USER_INFO, ROLE_MANAGEMENT } from 'app/util/constants';
+import { CLIENT, LOGGED_IN_USER_INFO, ROLE_MANAGEMENT, MANAGER, USER_MANAGEMENT, CANDIDATECONSULTANT, CANDIDATEVIEW, CLIENTCONSULTANT, CLIENTVIEW, TECHSUPPORT, CUSTOMER } from 'app/util/constants';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FuseNavigationService } from '../navigation/navigation.service';
@@ -67,7 +67,8 @@ export class FuseSidebarComponent implements OnInit, OnDestroy {
     // Opened changed
     @Output()
     openedChanged: EventEmitter<boolean>;
-
+    navigationArray = [];
+    sidemenuArray = [];
     // Private
     private _folded: boolean;
     private _fuseConfig: any;
@@ -92,14 +93,36 @@ export class FuseSidebarComponent implements OnInit, OnDestroy {
         private _mediaObserver: MediaObserver,
         private _fuseNavigationService: FuseNavigationService,
         private _renderer: Renderer2) {
-        
-       
 
+        //this.sidemenuArray = navigation;
+        this.navigationArray = JSON.parse(JSON.stringify(navigation));
+        // console.log('this.navigationArray', this.navigationArray);
+        // console.log('this.navigation', navigation);
+        // if (airmsService.getUserRole() === MANAGER) {
+        //     this.navigationArray[0]['children'] = this.navigationArray[0]['children'].filter(nav => nav['title'] !== USER_MANAGEMENT);
+        //     console.log('Manager', this.navigationArray);
+        //  } else if (airmsService.getUserRole() === CANDIDATECONSULTANT || airmsService.getUserRole() === CLIENT || airmsService.getUserRole() === CLIENTVIEW) {
+        //     this.navigationArray[0]['children'] = this.navigationArray[0]['children'].filter(nav => nav['title'] !== USER_MANAGEMENT && nav['title']!== ROLE_MANAGEMENT);
+        //     console.log('Candidate consultant client and client view', this.navigationArray);
+        //  } else if (airmsService.getUserRole() === CANDIDATEVIEW) {
+        //     this.navigationArray[0]['children'] = this.navigationArray[0]['children'].filter(nav => nav['title'] !== USER_MANAGEMENT && nav['title']!== ROLE_MANAGEMENT); 
+        //  } else if (airmsService.getUserRole() === CLIENTCONSULTANT) {
+        //     this.navigationArray[0]['children'] = this.navigationArray[0]['children'].filter(nav => nav['title'] !== USER_MANAGEMENT && nav['title']!== ROLE_MANAGEMENT); 
+        //  } else if (airmsService.getUserRole() === CUSTOMER) {
+        //     this.navigationArray[0]['children'] = this.navigationArray[0]['children'].filter(nav => nav['title'] !== USER_MANAGEMENT && nav['title']!== ROLE_MANAGEMENT); 
+        //  } else if (airmsService.getUserRole() === TECHSUPPORT) {
+        //     this.navigationArray[0]['children'] = this.navigationArray[0]['children'].filter(nav => nav['title'] !== USER_MANAGEMENT && nav['title']!== ROLE_MANAGEMENT);  
+        //  } 
+
+        //  console.log('this.navigation 123', navigation);
+        //  console.log('this.navigationArray 123', this.navigationArray);
+        //  this.navigation = [];
         // Get default navigation
-        this.navigation = navigation;
-
+        this.navigation = JSON.parse(JSON.stringify(this.navigationArray));
+        console.log('Final array', this.navigation);
+        this._fuseSidebarService.unregister(this.name);
         // Register the navigation to the service
-        this._fuseNavigationService.register('main', this.navigation);
+       this._fuseNavigationService.register('main', this.navigation);
 
         // Set the main navigation as our current navigation
         this._fuseNavigationService.setCurrentNavigation('main');
@@ -254,6 +277,9 @@ export class FuseSidebarComponent implements OnInit, OnDestroy {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
+        this.sidemenuArray = null;
+        this.navigationArray = null;
+        this.navigation = null;
     }
 
     // -----------------------------------------------------------------------------------------------------
