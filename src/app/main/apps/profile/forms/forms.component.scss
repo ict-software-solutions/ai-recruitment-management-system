@@ -1,36 +1,38 @@
-
-
-.ex-1
-{
-    overflow:scroll;
+.ex-1 {
+  overflow: scroll;
 }
 
-.mat-form-field{
-    height: 76px;
+.mat-form-field {
+  height: 76px;
 }
-.photos img{
-width: 64px;
-height: 64px;
-// margin: -7px 8px -10px -7px;
+.photos img {
+  width: 64px;
+  height: 64px;
+  // margin: -7px 8px -10px -7px;
 }
-.title{
-    display: inline;
+.title {
+  display: inline;
 }
 
-.secondary-text1{
-    cursor: context-menu;
- }
- .avatar {
-    width: 64px;
-    // min-width: 40px;
-    height: 64px;
-    line-height: 40px;
-    margin: 0 8px 0 0;
-    border-radius: 50%;
-    font-size: 17px;
-    font-weight: 600;
-    text-align: center;
+.secondary-text1 {
+  cursor: context-menu;
+}
+.avatar {
+  width: 64px;
+  // min-width: 40px;
+  height: 64px;
+  line-height: 40px;
+  margin: 0 8px 0 0;
+  border-radius: 50%;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
+}
+.mat-error {
+  display: block;
+  font-size: 10px;
+  margin-top: -1px;
 }
 // img {
-   
+
 // }
