@@ -119,7 +119,6 @@ export class FormsComponent implements OnInit, OnDestroy {
     });
 
     this.route.queryParams.subscribe((params) => {
-      console.log('form params', params);
       if (params["name"] === "addrole") {
         /** Add User */
         this.Edit();

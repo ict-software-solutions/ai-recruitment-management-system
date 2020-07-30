@@ -29,6 +29,9 @@ import { EcommerceProductService } from 'app/main/apps/usermanagement/addusers/a
 import { EcommerceProductsComponent } from 'app/main/apps/usermanagement/users/users.component';
 import { UserManagementService } from 'app/main/apps/usermanagement/users/users.service';
 import { TokenInterceptor } from 'app/service/shared/token.interceptor';
+// import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+// import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+
 
 const routes: Routes = [
     {
@@ -58,7 +61,9 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         EcommerceProductsComponent,
-        EcommerceProductComponent
+        EcommerceProductComponent,
+        // FuseConfirmDialogComponent
+       
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -91,6 +96,12 @@ const routes: Routes = [
         FuseSharedModule,
         FuseWidgetModule
     ],
+    // exports:[
+    //     FuseConfirmDialogComponent
+    // ],
+    // entryComponents: [
+    //     FuseConfirmDialogComponent
+    // ],
     providers: [
         UserManagementService,
         EcommerceProductService

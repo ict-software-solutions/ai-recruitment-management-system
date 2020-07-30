@@ -67,7 +67,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
-    public dialog: MatDialog,
+    // public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService,
@@ -82,11 +82,8 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userInfo = this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
-    console.log("userinfo", this.userInfo);
     this.user = this.airmsService.getSessionStorage(SIGNUP);
-    console.log("user", this.user);
     this.userName = this.user.userName;
-    console.log("UserName", this.userName);
     //We want to use this code for mat sort and filter  (important)
 
     /*this.dataSource = new FilesDataSource(this.userManagementService, this.paginator, this.sort);
@@ -140,12 +137,16 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
   }
 
   onDelete(userId): void {
+  
     console.log(userId);
     this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
       disableClose: false,
+  
+    
     });
     this.confirmDialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?";
     this.confirmDialogRef.afterClosed().subscribe((result) => {
+     
       if (result) {
         this.authService.deleteUser(userId).subscribe((res) => {
           this.deleteinfo = res;
@@ -157,6 +158,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
       this.confirmDialogRef = null;
     });
   }
+  
   onTap(userId, userType) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
@@ -178,7 +180,6 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
     this.router.navigate(["/apps/profile/forms"], navigationExtras);
   }
   addRole() {
-    console.log("hi");
     let navigationExtras: NavigationExtras = {
       queryParams: {
         name: "addrole",
@@ -210,7 +211,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
     this.sort == null;
     this.filter = null;
     this.confirmDialogRef = null;
-    this.dialog = null;
+    // this.dialog = null;
     this.userManagementService = null;
     this.matDialog = null;
   }

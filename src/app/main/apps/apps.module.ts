@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FuseSharedModule } from '@fuse/shared.module';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes = [
     {
@@ -42,9 +44,20 @@ const routes = [
 ];
 
 @NgModule({
+    declarations: [
+        FuseConfirmDialogComponent
+       
+    ],
     imports: [
         RouterModule.forChild(routes),
-        FuseSharedModule
+        FuseSharedModule,
+        MatButtonModule
+    ],
+    exports:[
+        FuseConfirmDialogComponent
+    ],
+    entryComponents: [
+        FuseConfirmDialogComponent
     ],
 })
 export class AppsModule {

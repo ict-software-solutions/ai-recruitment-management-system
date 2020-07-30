@@ -217,7 +217,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
     }
     clickProfile(userId){
-        console.log("userId",userId);
     }
     getAllInfo(){
         let navigationExtras: NavigationExtras = {

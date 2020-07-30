@@ -18,6 +18,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { ChatComponent } from 'app/main/apps/chat/chat.component';
 import { ChatService } from 'app/main/apps/chat/chat.service';
+import { FuseSidebarModule } from '@fuse/components';
 
 const routes: Routes = [
     {
@@ -53,11 +54,11 @@ const routes: Routes = [
         MatToolbarModule,
         MatTabsModule,
         MatTableModule,
-
         FuseSharedModule,
         MatDatepickerModule,
         MatSelectModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        FuseSidebarModule,
     ],
     providers   : [
         ChatService
