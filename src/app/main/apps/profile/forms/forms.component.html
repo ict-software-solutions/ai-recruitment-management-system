@@ -27,11 +27,11 @@
 
                 <div style="margin-top: -78px;
                 margin-left: 85px;">
-                  <h1 *ngIf="getUserById === false && userId != 0">
+                  <h1 *ngIf="showForMyProfile === false && userId != 0">
                     Edit Info
                   </h1>
-                  <h1 *ngIf="getRole === false && userId === 0">Add User</h1>
-                  <h1 *ngIf="getUserById === true">My
+                  <h1 *ngIf="showForAddEditUser === false && userId === 0">Add User</h1>
+                  <h1 *ngIf="showForMyProfile === true">My
                     Profile</h1>
                 </div>
 
@@ -44,28 +44,28 @@
                   </button>
 
 
-                  <button mat-raised-button color="light" *ngIf="enableEdit && getRole" class="submit-button" style="margin-right: 10px;
+                  <button mat-raised-button color="light" *ngIf="showForMyProfile && enableEdit == true" class="submit-button" style="margin-right: 10px;
                   width: 100px;
                   padding: 5px;" (click)="updateProfile(form.value)">
                     Save
                   </button>
                   <button mat-raised-button color="light" class="submit-button"
-                    style="margin-right: 10px; width: 100px;" *ngIf="getRole === false && userId === 0"
+                    style="margin-right: 10px; width: 100px;" *ngIf="showForAddEditUser === false && userId === 0"
                     (click)="updateProfile(form.value)">
                     Add
                   </button>
                   <button mat-raised-button color="light" class="submit-button"
-                    style="margin-right: 10px; width: 100px;" *ngIf="getUserById === false && userId != 0"
+                    style="margin-right: 10px; width: 100px;" *ngIf="showForMyProfile === false && userId != 0"
                     (click)="updateProfile(form.value)">
                     Update
                   </button>
-                  <button mat-raised-button color="light" (click)="Edit()" *ngIf="enableEdit && getUserById === false"
+                  <button mat-raised-button color="light" (click)="Edit()" *ngIf="enableEdit && showForMyProfile === false"
                     class="submit-button" style="margin-right: 10px; width: 100px; padding: 5px;"
                     (click)="canceledit()">
-                    Cancel
+                    Cancel 
                   </button>
-                  <button mat-raised-button color="light" (click)="Edit()" *ngIf="enableEdit && getUserById === true"
-                    class="submit-button" style="margin-right: 10px; width: 100px;  padding: 5px;" (click)="edit()">
+                  <button mat-raised-button color="light" (click)="edit()" *ngIf="enableEdit && showForMyProfile === true"
+                    class="submit-button" style="margin-right: 10px; width: 100px;  padding: 5px;" (click)="canceledit()">
                     Cancel
                   </button>
                 </div>
@@ -94,11 +94,11 @@
                 <!-- <mat-error>Last Name is required!</mat-error> -->
               </mat-form-field>
             </div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" *ngIf="flagForScreen == 'myProfile' || flagForScreen == 'editUser'">
 
               <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                 <mat-label>User Name</mat-label>
-                <input matInput type="text" formControlName="firstName" type="text" [readonly]="viewMode" />
+                <input matInput type="text" formControlName="userName" type="text" [readonly]="viewMode" />
                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                 <!-- <mat-error>First Name is required!</mat-error> -->
               </mat-form-field>
@@ -128,7 +128,35 @@
               </mat-form-field>
             </div>
 
-            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="0 0 auto" *ngIf="getUserById === true">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" *ngIf="flagForScreen == 'addUser'">
+
+              <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                <mat-label>Email
+                  <span style="color: green;">
+                    <mat-icon>check_circle</mat-icon>
+                  </span>
+                </mat-label>
+                <input matInput type="email" formControlName="emailAddress" [readonly]="viewMode" />
+                <mat-icon matSuffix class="secondary-text">mail</mat-icon>
+                <mat-error *ngIf="form.get('emailAddress').hasError('required')"> Email id is required</mat-error>
+                <mat-error
+                  *ngIf="!form.get('emailAddress').hasError('required') && form.get('emailAddress').hasError('pattern')">
+                  Please enter a valid email address
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline"  fxFlex="50">
+                <mat-label>Mobile
+                  <span style="color: red;">
+                    <mat-icon>error_outline</mat-icon>
+                  </span></mat-label>
+                <input matInput type="tel" formControlName="mobileNumber" [readonly]="viewMode" />
+                <mat-icon matSuffix class="secondary-text">call</mat-icon>
+                <!-- <mat-error>Mobile is required!</mat-error> -->
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="0 0 auto" *ngIf="showForMyProfile === true">
               <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                 <mat-label>Company Name</mat-label>
                 <input matInput type="text" formControlName="companyname" [readonly]="viewMode" />
@@ -141,7 +169,7 @@
               </mat-form-field>
             </div>
 
-            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="0 0 auto" *ngIf="getUserById === true">
+            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="0 0 auto" *ngIf="showForMyProfile === true">
               <mat-form-field appearance="outline" fxFlex="100">
                 <mat-label>Address</mat-label>
                 <textarea matInput formControlName="address" max-rows="7" [readonly]="viewMode"> </textarea>
@@ -149,7 +177,7 @@
             </div>
 
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" *ngIf="getUserById === true"
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" *ngIf="showForMyProfile === true"
               style="margin-top: 17px;">
               <mat-form-field appearance="outline" fxFlex="23" class="pr-4">
                 <mat-label>Postal Code</mat-label>
@@ -176,7 +204,7 @@
             </div>
 
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" *ngIf="getUserById === false">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" *ngIf="showForMyProfile === false">
               <!-- <mat-form-field fxFlex="30"  appearance="outline"> -->
               <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>User Type</mat-label>
@@ -196,7 +224,7 @@
                 </mat-select>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" fxFlex="33" *ngIf="getUserById === false && userId != 0">
+              <mat-form-field appearance="outline" fxFlex="33" *ngIf="showForMyProfile === false && userId != 0">
                 <mat-label>Valid From</mat-label>
                 <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom"
                   [readonly]="viewMode" />
@@ -204,7 +232,7 @@
                 <mat-datepicker #picker1></mat-datepicker>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" fxFlex="33" *ngIf="getRole === false && userId === 0">
+              <mat-form-field appearance="outline" fxFlex="33" *ngIf="showForAddEditUser === false && userId === 0">
                 <mat-label>User Name</mat-label>
                 <input matInput formControlName="userName" pattern="[a-zA-Z][a-z0-9_.-]*" required>
                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
@@ -220,7 +248,7 @@
 
             <!-- <div fxLayout="row" fxLayoutAlign="space-between"> -->
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto"
-              *ngIf="getUserById === false && userId != 0">
+              *ngIf="showForMyProfile === false && userId != 0">
               <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>Password Since</mat-label>
                 <input matInput [matDatepicker]="picker2" name="passwordSince" formControlName="passwordSince"
@@ -247,7 +275,7 @@
             </div>
 
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto"
-              *ngIf="getUserById === false && userId != 0">
+              *ngIf="showForMyProfile === false && userId != 0">
               <div fxFlex="35" appearance="outline">
                 <section class="tp-section">
                   <label class="example-margin">Account Status:</label>&nbsp;
@@ -261,7 +289,7 @@
               </div>
 
               <mat-form-field appearance="outline" fxFlex="25" class="px-8"
-                *ngIf="showPasswordsection && enableEdit && getUserById === false && userId != 0">
+                *ngIf="showPasswordsection && enableEdit && showForMyProfile === false && userId != 0">
                 <mat-label>New Password</mat-label>
                 <input matInput type="Password" [type]="hide1 ? 'password' : 'text'" formControlName="newPassword"
                   pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*?/]).{8,15})" required />
@@ -277,7 +305,7 @@
             </div>
 
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto"
-              *ngIf="getRole === false && userId === 0">
+              *ngIf="showForAddEditUser === false && userId === 0">
 
               <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>Valid From</mat-label>
@@ -315,7 +343,7 @@
             </div>
 
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto"
-              *ngIf="getUserById === true && enableEdit">
+              *ngIf="showForMyProfile === true && enableEdit">
               <div fxFlex="35" appearance="outline">
                 <section class="tp-section">
                   <label class="example-margin">Account Status:</label>&nbsp;

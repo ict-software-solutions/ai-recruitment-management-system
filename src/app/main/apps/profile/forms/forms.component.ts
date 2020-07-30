@@ -51,15 +51,14 @@ export class FormsComponent implements OnInit, OnDestroy {
   isLoading: false;
   profileDetails: any;
   viewMode = true;
-  userName: "";
   userId = 0;
   userType: "";
   name: "";
   labelPosition: "before" | "after" = "after";
   errorMessage = "";
   oldPasswordWrong = false;
-  getUserById: boolean;
-  getRole = true;
+  showForMyProfile = true;
+  showForAddEditUser = true;
   status: "";
   Id = 0;
   resCode = "";
@@ -120,18 +119,19 @@ export class FormsComponent implements OnInit, OnDestroy {
     });
 
     this.route.queryParams.subscribe((params) => {
+      console.log('form params', params);
       if (params["name"] === "addrole") {
         /** Add User */
         this.Edit();
-        this.getUserById = false;
-        this.getRole = false;
+        this.showForMyProfile = false;
+        this.showForAddEditUser = false;
         this.userId = 0;
         this.flagForScreen = 'addUser';
       } else if (params["userId"] && params["userType"]) {
         /** Edit User */
         this.Edit();
-        this.getUserById = false;
-        this.getRole = false;
+        this.showForMyProfile = false;
+        this.showForAddEditUser = false;
         this.userId = Number(params["userId"]);
         this.getProfileInfo(this.userId);
         this.flagForScreen = 'editUser';
@@ -139,8 +139,10 @@ export class FormsComponent implements OnInit, OnDestroy {
         /** My Profile */
         this.userId = Number(params["userId"]);
         this.getProfileInfo(this.userId);
-        this.getUserById = true;
+        this.showForMyProfile = true;
         this.flagForScreen = 'myProfile';
+        this.enableEdit = false;
+        this.viewMode = true;
       }
       this.getRoles();
     });
@@ -170,6 +172,7 @@ export class FormsComponent implements OnInit, OnDestroy {
   }
 
   getProfileInfo(userId) {
+   // this.ngOnInit();
     this.getProfileInfoSubscription = this.authService.getProfileInfo(userId).subscribe((res) => {
       this.profileDetails = res;
       this.form.patchValue(res);
@@ -203,8 +206,8 @@ export class FormsComponent implements OnInit, OnDestroy {
   canceledit() {
     if (this.flagForScreen === 'myProfile') {
       this.getProfileInfo(this.userId);
-      this.getUserById = true;
-      this.getRole = true;
+      this.showForMyProfile = true;
+      this.showForAddEditUser = true;
       this.viewMode = true;
       this.enableEdit = !this.enableEdit;
     } else {
@@ -238,7 +241,7 @@ export class FormsComponent implements OnInit, OnDestroy {
       updateObject["profileImage"] = null;
     }
     if (value.check === true) {
-      if (this.userId != 0 && this.getUserById === false) {
+      if (this.userId != 0 && this.showForMyProfile === false) {
         updateObject["newPassword"] = value.newPassword;
         updateObject["lastIPAddress"] = this.userIpAddress;
       } else if (value.password != value.newPassword) {
@@ -276,8 +279,8 @@ export class FormsComponent implements OnInit, OnDestroy {
               confirmButtonText: "Ok",
             }).then((res) => {
               if (res.value === true) {
-                this.getUserById = true;
-                this.getRole = true;
+                this.showForMyProfile = true;
+                this.showForMyProfile = true;
                 this.viewMode = true;
                 this.enableEdit = !this.enableEdit;
               }
@@ -404,7 +407,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     this.unsubscribeAll.next();
     this.unsubscribeAll.complete();
     this.contactProfilePic = null;
-    this.getUserById = null;
+    this.showForMyProfile = null;
     this.viewMode = null;
   }
 }
