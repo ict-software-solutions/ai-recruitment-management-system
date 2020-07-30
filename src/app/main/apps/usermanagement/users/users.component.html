@@ -2,13 +2,8 @@
   <div class="top-bg accent"></div>
   <div class="center">
     <!--HEADER-->
-    <div
-      class="header accent"
-      fxLayout="column"
-      fxLayoutAlign="center center"
-      fxLayout.gt-sm="row"
-      fxLayoutAlign.gt-sm="space-between center"
-    >
+    <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+      fxLayoutAlign.gt-sm="space-between center">
       <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
         <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
           people
@@ -21,8 +16,7 @@
       <div class="search-wrapper mx-32 mx-md-0">
         <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
           <mat-icon>search</mat-icon>
-          <input #filter placeholder="Search" 
-          (keyup)="searchFromTable($event.target.value)" />
+          <input #filter placeholder="Search" (keyup)="searchFromTable($event.target.value)" />
         </div>
       </div>
 
@@ -38,18 +32,11 @@
           <mat-header-cell *matHeaderCellDef></mat-header-cell>
           <mat-cell *matCellDef="let product">
             <div *ngIf="product.profileImage !=null &&  product.profileImage !== ''">
-              <img [src]=" product.profileImage" height="50" width="50" style="border-radius: 40px">
+              <img [src]=" product.profileImage" style="border-radius: 40px;height:40px;width:40px;">
             </div>
             <div *ngIf="product.profileImage==null  || product.profileImage === ''">
-              <img src="./assets/images/generic.jpg" height="50" width="50" style="border-radius: 40px">
+              <img src="./assets/images/generic.jpg" style="border-radius: 40px;height:40px;width:40px;">
             </div>
-            <!-- <img
-              class="product-image"
-              *ngIf="product.featuredImageId"
-              [alt]="product.name"
-              [src]="product.images[product.featuredImageId].url"
-            />
-            <img *ngIf="!product.featuredImageId" [src]="'assets/images/ecommerce/product-image-placeholder.png'" /> -->
           </mat-cell>
         </ng-container>
 
@@ -96,10 +83,10 @@
               <mat-icon>edit</mat-icon>
             </button>
             <span>
-              <button mat-icon-button color="accent" style="color: red; background-color: white;" (click)="onDelete(product.userId)">
+              <button mat-icon-button color="accent" style="color: red; background-color: white;"
+                (click)="onDelete(product.userId)">
                 <mat-icon>delete</mat-icon>
-              </button></span
-            >
+              </button></span>
           </mat-cell>
         </ng-container>
 
@@ -111,13 +98,8 @@
         <!-- <mat-progress-spinner *ngIf="isLoading" class="example-margin" [color]="color" [mode]="mode" [value]="value">
         </mat-progress-spinner> -->
       </div>
-      <mat-paginator
-        #paginator
-        [length]="dataSource.filteredData.length"
-        [pageIndex]="0"
-        [pageSize]="5"
-        [pageSizeOptions]="[5, 10, 25, 100]"
-      >
+      <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 25, 100]">
       </mat-paginator>
     </div>
   </div>

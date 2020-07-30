@@ -25,7 +25,7 @@ declare var $: any;
 })
 export class FormsComponent implements OnInit, OnDestroy {
   lastLogin: string;
-  onFileSelected(event) {}
+  onFileSelected(event) { }
   form: FormGroup;
   dialogRef: any;
   showPassword = true;
@@ -170,7 +170,7 @@ export class FormsComponent implements OnInit, OnDestroy {
   }
 
   getProfileInfo(userId) {
-   this.getProfileInfoSubscription = this.authService.getProfileInfo(userId).subscribe((res) => {
+    this.getProfileInfoSubscription = this.authService.getProfileInfo(userId).subscribe((res) => {
       this.profileDetails = res;
       this.form.patchValue(res);
       this.form.controls["userType"].patchValue(this.profileDetails.userType);
@@ -179,21 +179,21 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.profileDetails.profileImage = atob(this.profileDetails.profileImage);
         this.contactProfilePic = this.profileDetails.profileImage;
         setTimeout(() => {
-          $(".img-thumbnail").remove();
+          $(".profile-image").remove();
           $("#photos").append(
             "<img src=" +
-              "data:image/jpeg;base64" +
-              this.profileDetails.profileImage +
-              ' class="img-thumbnail img-rounded" height="50" width="50" style="border-radius: 40px">'
+            "data:image/jpeg;base64" +
+            this.profileDetails.profileImage +
+            ' class="profile-image avatar"  style="margin: -7px 8px -10px -7px;height:64px;width:64px;">'
           );
         }, 100);
       } else {
         setTimeout(() => {
-          $(".img-thumbnail").remove();
+          $(".profile-image").remove();
           $("#photos").append(
             '<img src="' +
-              '../../assets/images/generic.jpg"' +
-              'class="img-thumbnail img-rounded" height="50" width="50" style="border-radius: 50px">'
+            '../../assets/images/generic.jpg"' +
+            'class="profile-image avatar"  style="margin: -7px 8px -10px -7px; height:64px;width:64px;">'
           );
         }, 100);
       }
@@ -203,13 +203,13 @@ export class FormsComponent implements OnInit, OnDestroy {
   canceledit() {
     if (this.flagForScreen === 'myProfile') {
       this.getProfileInfo(this.userId);
-      this.getUserById = true;                  
+      this.getUserById = true;
       this.getRole = true;
       this.viewMode = true;
       this.enableEdit = !this.enableEdit;
     } else {
-    this.router.navigate(["/apps/e-commerce/products"]);
-  }
+      this.router.navigate(["/apps/e-commerce/products"]);
+    }
   }
   edit() {
     this.enableEdit == true;
@@ -276,25 +276,25 @@ export class FormsComponent implements OnInit, OnDestroy {
               confirmButtonText: "Ok",
             }).then((res) => {
               if (res.value === true) {
-                  this.getUserById = true;                  
-                  this.getRole = true;
-                  this.viewMode = true;
-                  this.enableEdit = !this.enableEdit;
+                this.getUserById = true;
+                this.getRole = true;
+                this.viewMode = true;
+                this.enableEdit = !this.enableEdit;
               }
             });
           }
         } else {
-        Swal.fire({
-          title: "Profile Saved",
-          icon: "success",
-          confirmButtonText: "Ok",
-        }).then((res) => {
-          if (res.value === true) {
-            this.canceledit();
-            this.router.navigate(["/apps/e-commerce/products"]);
-          }
-        });
-      }
+          Swal.fire({
+            title: "Profile Saved",
+            icon: "success",
+            confirmButtonText: "Ok",
+          }).then((res) => {
+            if (res.value === true) {
+              this.canceledit();
+              this.router.navigate(["/apps/e-commerce/products"]);
+            }
+          });
+        }
       },
 
       (error) => {
@@ -379,11 +379,11 @@ export class FormsComponent implements OnInit, OnDestroy {
       const reader = new FileReader();
       reader.onload = () => {
         that.contactProfilePic = reader.result;
-        $(".img-thumbnail").remove();
+        $(".profile-image").remove();
         $("#photos").append(
-          "<div><img  src=" + 'data:image/jpeg;base64' +
-            reader.result +
-            ' id ="img"  class="img-thumbnail img-rounded"height="30" width="30" style="border-radius: 40px"></div>'
+          "<img  src=" + 'data:image/jpeg;base64' +
+          reader.result +
+          ' id ="img"  class="profile-image avatar"  style="margin: -7px 8px -10px -7px;height:64px;width:64px;">'
         );
       };
       reader.readAsDataURL(imageDetails);
@@ -397,7 +397,7 @@ export class FormsComponent implements OnInit, OnDestroy {
   logoutAIRMS() {
     this.authService.logout();
     this.router.navigate(['']);
-}
+  }
   ngOnDestroy(): void {
     this.unsubscribe(this.getUserSubscription);
     this.unsubscribe(this.updateProfileSubscription);

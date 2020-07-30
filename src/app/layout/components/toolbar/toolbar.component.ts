@@ -194,15 +194,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.userInfo.profileImage = atob(this.userInfo.profileImage);
             setTimeout(() => {
             $(".img-thumbnail2").remove();
-              $('#profilePic').append('<div><img src=' + 'data:image/jpeg;base64' +
+              $('#profilePic').append('<img src=' + 'data:image/jpeg;base64' +
                 this.userInfo.profileImage +
-                ' class="img-thumbnail2 img-rounded" height="50" width="50" style="border-radius: 40px"></div>');
+                ' class="img-thumbnail2 img-rounded"style="margin: -7px 8px -10px -7px;height:53px;width:53px;border-radius:33px">');
             }, 100);
           } else {
             setTimeout(() => {
-              $('#profilePic').append('<div><img src="' +
+              $('#profilePic').append('<img src="' +
                 '../../assets/images/generic.jpg"' +
-                'class="img-thumbnail img-rounded" height="50" width="50" style="border-radius: 50px"></div>');
+                'class="img-thumbnail img-rounded" style="margin: -7px 8px -10px -7px;height:53px;width:53px;border-radius:33px;">');
             }, 100);
           }
     }

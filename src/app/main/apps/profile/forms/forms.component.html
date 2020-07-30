@@ -7,75 +7,71 @@
             name="form" [formGroup]="form" style="height: 650px !important;">
             <header class="accent" style="height: 80px; font-size: bold; font-size: 17px; padding: 16px;">
               <div class="title">
-                <div style="display: inline;">
-                  <button mat-icon-button color="light" (click)="Edit()" *ngIf="!enableEdit" style="float: right; margin-right: 10px;">
-                    <mat-icon style="line-height: 13px;">edit</mat-icon>Edit
-                  </button>
+                <div id="photos">
+                  <img class="profile-image avatar" src="assets/images/avatars/generic.jpg"
+                    style="margin: -7px 8px -10px -7px;" />
                 </div>
-                  <div id="photos" class="row"></div>
-                <!-- <img class="profile-image avatar" src="assets/images/avatars/Nancy.jpg"
-                  style="margin: -7px 8px -10px -7px;" /> -->
-                <span style="margin-left: -32px;"  *ngIf="enableEdit">
-                  <button mat-mini-fab color="accent" aria-label="Example icon button with a filter list icon" style="margin-top: 16px;">
+                <div style="    margin-left: 32px;
+                /* margin-left: 32px; */
+                margin-top: -27px;">
+                  <button mat-mini-fab color="accent" aria-label="Example icon button with a filter list icon">
                     <mat-icon>local_see</mat-icon>
                   </button>
-                  <!-- <button mat-icon-button color="primary">
-                    <mat-icon>local_see</mat-icon>
-                </button> -->
-                </span>
-                <span>
-                  <label for="file-upload" class="custom-file-upload"> </label>
-                  <input id="file-upload" type="file" (input)="uploadFile($event)"
-                    style="width: 27px; height: 19px; margin-left: -45px; margin-top: 4px; opacity: 0;" />
-                </span>
+                  <input id="file-upload" type="file" (input)="uploadFile($event)" style="      margin-left: -90px;
+                  margin-top: 8px;
+                  opacity: 0;
+                  cursor: pointer;
+                  height: 46px;" />
 
+                </div>
 
-                <div style="display: inline;">
+                <div style="margin-top: -78px;
+                margin-left: 85px;">
+                  <h1 *ngIf="getUserById === false && userId != 0">
+                    Edit Info
+                  </h1>
+                  <h1 *ngIf="getRole === false && userId === 0">Add User</h1>
+                  <h1 *ngIf="getUserById === true">My
+                    Profile</h1>
+                </div>
+
+                <div style="float: right;
+                margin-top: -60px;
+                display: flex;">
                   <button mat-icon-button color="light" (click)="Edit()" *ngIf="!enableEdit"
-                    style="float: right; margin-right: 10px;">
+                    style="margin-right: 17px;">
                     <mat-icon style="line-height: 13px;">edit</mat-icon>Edit
                   </button>
+
+
+                  <button mat-raised-button color="light" *ngIf="enableEdit && getRole" class="submit-button" style="margin-right: 10px;
+                  width: 100px;
+                  padding: 5px;" (click)="updateProfile(form.value)">
+                    Save
+                  </button>
+                  <button mat-raised-button color="light" class="submit-button"
+                    style="margin-right: 10px; width: 100px;" *ngIf="getRole === false && userId === 0"
+                    (click)="updateProfile(form.value)">
+                    Add
+                  </button>
+                  <button mat-raised-button color="light" class="submit-button"
+                    style="margin-right: -2px; width: 100px;" *ngIf="getUserById === false && userId != 0"
+                    (click)="updateProfile(form.value)">
+                    Update
+                  </button>
+                  <button mat-raised-button color="light" (click)="Edit()" *ngIf="enableEdit && getUserById === false"
+                    class="submit-button" style="margin-right: 10px; width: 100px; padding: 5px;"
+                    (click)="canceledit()">
+                    Cancel
+                  </button>
+                  <button mat-raised-button color="light" (click)="Edit()" *ngIf="enableEdit && getUserById === true"
+                    class="submit-button" style="margin-right: 10px; width: 100px;  padding: 5px;" (click)="edit()">
+                    Cancel
+                  </button>
                 </div>
-                <button mat-raised-button color="light" *ngIf="enableEdit && getRole" class="submit-button"
-                  style="margin-right: -2px; width: 100px; float: right; padding: 5px;"
-                  (click)="updateProfile(form.value)">
-                  Save
-                </button>
-                <button mat-raised-button color="light" class="submit-button"
-                  style="margin-right: -2px; width: 100px; float: right; padding: 5px;"
-                  *ngIf="getRole === false && userId === 0" (click)="updateProfile(form.value)">
-                  Add
-                </button>
-                <button mat-raised-button color="light" class="submit-button"
-                  style="margin-right: -2px; width: 100px; float: right; padding: 5px;"
-                  *ngIf="getUserById === false && userId != 0" (click)="updateProfile(form.value)">
-                  Update
-                </button>
-                <button mat-raised-button color="light" (click)="Edit()" *ngIf="enableEdit && getUserById === false"
-                  class="submit-button" style="margin-right: 10px; width: 100px; float: right; padding: 5px;"
-                  (click)="canceledit()">
-                  Cancel
-                </button>
-                <button
-                  mat-raised-button
-                  color="light"
-                  (click)="canceledit()"
-                  *ngIf="enableEdit && getUserById === true"
-                  class="submit-button"
-                  style="margin-right: 10px; width: 100px; float: right; padding: 5px;"
-                  (click)="edit()"
-                >
-                  Cancel
-                </button>
+
               </div>
-              <h1 style="margin-left: 20px; display: inline; position: relative;"
-                *ngIf="getUserById === false && userId != 0">
-                Edit Info
-              </h1>
-              <h1 style="margin-left: 20px; display: inline; position: relative;"
-                *ngIf="getRole === false && userId === 0">Add User</h1>
-              <h1 style="margin-left: 20px; display: inline; position: relative;" *ngIf="getUserById === true">My
-                Profile</h1>
+
             </header>
 
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" style="margin-top: 18px;">
@@ -144,9 +140,10 @@
                 <textarea matInput formControlName="address" max-rows="7" [readonly]="viewMode"> </textarea>
               </mat-form-field>
             </div>
-            
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" *ngIf="getUserById === true" style="margin-top: 17px;">
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" *ngIf="getUserById === true"
+              style="margin-top: 17px;">
               <mat-form-field appearance="outline" fxFlex="23" class="pr-4">
                 <mat-label>Postal Code</mat-label>
                 <input matInput type="tel" #postalcode value="94043" formControlName="postalcode" maxlength="5"
@@ -171,9 +168,8 @@
               </mat-form-field>
             </div>
 
-           
-            <div fxLayout="row"  fxLayoutAlign="start center" fxFlex="0 0 auto"
-              *ngIf="getUserById === false">
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" *ngIf="getUserById === false">
               <!-- <mat-form-field fxFlex="30"  appearance="outline"> -->
               <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>User Type</mat-label>
@@ -203,18 +199,16 @@
 
               <mat-form-field appearance="outline" fxFlex="33" *ngIf="getRole === false && userId === 0">
                 <mat-label>User Name</mat-label>
-                <input matInput formControlName="userName"
-                    pattern="[a-zA-Z][a-z0-9_.-]*" required>
+                <input matInput formControlName="userName" pattern="[a-zA-Z][a-z0-9_.-]*" required>
                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                 <mat-error *ngIf="form.get('userName').hasError('required')"> User name is required
+                <mat-error *ngIf="form.get('userName').hasError('required')"> User name is required
                 </mat-error>
                 <mat-error *ngIf="form.get('userName').hasError('minlength')">User name must be at least 6
-                    charecters</mat-error>
-                <mat-error
-                    *ngIf="form.get('userName').hasError('pattern') && form.get('userName').value.length > 5">
-                    Please enter valid user name use(A-Z,a-z,0-9,_/-)</mat-error> 
-            </mat-form-field>
-              
+                  charecters</mat-error>
+                <mat-error *ngIf="form.get('userName').hasError('pattern') && form.get('userName').value.length > 5">
+                  Please enter valid user name use(A-Z,a-z,0-9,_/-)</mat-error>
+              </mat-form-field>
+
             </div>
 
             <!-- <div fxLayout="row" fxLayoutAlign="space-between"> -->
@@ -277,7 +271,7 @@
 
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto"
               *ngIf="getRole === false && userId === 0">
-             
+
               <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>Valid From</mat-label>
                 <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom"
