@@ -36,14 +36,14 @@ contacts-contact-list {
     flex: 0 -2 50px;
 }
  .mat-header-row {
-    height: 64px!important;
+    height: 56px!important;
     }
 
         .mat-row {
             position: relative;
             cursor: pointer;
             padding: 8px;
-            height: 59px;
+            height: 48px;
 
             .mat-cell {
                 min-width: 0;
@@ -60,7 +60,6 @@ contacts-contact-list {
         }
     }
 }
-
 #add-contact-button {
     position: absolute;
     bottom: 12px;

@@ -89,17 +89,29 @@
               </button></span>
           </mat-cell>
         </ng-container>
-
+      
         <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns" class="product"> </mat-row>
       </mat-table>
-      <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; text-align: center;">
-        <h3 style="color: blue; font-size: bold;">Loading..</h3>
-        <!-- <mat-progress-spinner *ngIf="isLoading" class="example-margin" [color]="color" [mode]="mode" [value]="value">
-        </mat-progress-spinner> -->
-      </div>
-      <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
-        [pageSizeOptions]="[5, 10, 25, 100]">
+      <!-- <div *ngIf="isLoading"  style="
+      margin-left: 50%;
+      margin-right: 30%; margin-top: 10%;" >
+            
+        <mat-spinner diameter="40"></mat-spinner>
+      </div> -->
+
+      <div *ngIf="isLoading"
+      style="display: flex; justify-content: center; align-items: center; text-align: center;margin-top: 25px;">
+      <h3 style="color: blue; font-size: 20px;"><b>Loading..</b></h3>
+  </div>
+   
+      <mat-paginator
+        #paginator
+        [length]="dataSource.filteredData.length"
+        [pageIndex]="0"
+        [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+      >
       </mat-paginator>
     </div>
   </div>

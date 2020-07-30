@@ -16,9 +16,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule, Routes } from '@angular/router';
-import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
+import { FuseConfirmDialogModule, FuseSidebarModule} from '@fuse/components';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import { ContactsContactListComponent } from 'app/main/apps/contacts/contact-list/contact-list.component';
@@ -57,6 +58,7 @@ const routes: Routes = [{
         MatIconModule,
         MatInputModule,
         MatMenuModule,
+        MatProgressSpinnerModule,
         MatRippleModule,
         MatTableModule,
         MatToolbarModule,

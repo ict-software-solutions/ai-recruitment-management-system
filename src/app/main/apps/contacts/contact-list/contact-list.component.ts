@@ -6,7 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { NavigationExtras, Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { fuseAnimations } from '@fuse/animations';
+import { fuseAnimations} from '@fuse/animations';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { roleList } from 'app/models/user-details';
@@ -15,6 +15,7 @@ import { Observable, Subject,BehaviorSubject, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FuseUtils } from '@fuse/utils';
+
 
 @Component({
     selector: 'contacts-contact-list',
@@ -85,10 +86,13 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     getAllRoles() {
         this.authService.getAllRoles(this.user).subscribe(res => {
             this.roleList = res
+            this.isLoading = false;
             this.dataSource.data = this.roleList;
         },
-        );
-    }
+        error => this.isLoading = false
+    );
+}
+
     connect(): Observable<any> {
         return this.authService.getAllRoles(Object);
     }
@@ -178,7 +182,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
         this._contactsService.updateUserData(this.user);
     }
 }
-
 export class FilesDataSource extends DataSource<any>
 {
     private _filterChange = new BehaviorSubject('');

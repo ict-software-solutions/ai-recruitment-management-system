@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"><mat-table #table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"><mat-table #table [dataSource]="dataSource"  matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
   <!-- Name Column -->
   <ng-container matColumnDef="rolename">
     <mat-header-cell *matHeaderCellDef> Role Name</mat-header-cell>
@@ -51,6 +51,13 @@
   >
   </mat-row>
 </mat-table>
+
+</div>
+<div *ngIf="isLoading"  style="
+margin-left: 50%;
+margin-right: 30%; margin-top: 10%;" >
+      
+  <mat-spinner diameter="40"></mat-spinner>
 </div>
 <div>
 
