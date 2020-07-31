@@ -200,9 +200,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }, 100);
           } else {
             setTimeout(() => {
+                $(".img-thumbnail2").remove();
               $('#profilePic').append('<img src="' +
                 '../../assets/images/generic.jpg"' +
-                'class="img-thumbnail img-rounded" style="margin: -7px 8px -10px -7px;height:53px;width:53px;border-radius:33px;">');
+                'class="img-thumbnail2 img-rounded" style="margin: -7px 8px -10px -7px;height:53px;width:53px;border-radius:33px;">');
             }, 100);
           }
     }

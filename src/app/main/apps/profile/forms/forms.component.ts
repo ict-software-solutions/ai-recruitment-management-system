@@ -216,6 +216,24 @@ export class FormsComponent implements OnInit, OnDestroy {
   edit() {
     this.enableEdit == true;
   }
+  emailChange(screenType, email) {
+    if (screenType === 'myProfile') {
+      if (this.userInfo.emailAddress !== email) {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You're trying to change the Email, So further details will be sent to this new mail Id",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'No'
+        }).then((result) => {
+           if (result.dismiss === Swal.DismissReason.cancel) {
+            this.form.controls["emailAddress"].patchValue(this.userInfo.emailAddress);
+          }
+        })
+      }
+    }
+  }
   updateProfile(value) {
     let updateObject = {
       firstName: value.firstName,
@@ -366,7 +384,6 @@ export class FormsComponent implements OnInit, OnDestroy {
   }
   uploadFile(e) {
     const imageDetails = e.target.files[0];
-    console.log('imageDetails', imageDetails.size, !imageDetails.type.includes("jpeg"));
     if (imageDetails.size > 30000 || (!imageDetails.type.includes("jpg") && !imageDetails.type.includes("jpeg"))) {
       Swal.fire({
         title: "<strong>Invalid Image Found</strong>",
