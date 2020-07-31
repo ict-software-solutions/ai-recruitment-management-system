@@ -44,7 +44,8 @@
                   </button>
 
 
-                  <button mat-raised-button color="light" *ngIf="showForMyProfile && enableEdit == true" class="submit-button" style="margin-right: 10px;
+                  <button mat-raised-button color="light" *ngIf="showForMyProfile && enableEdit == true"
+                    class="submit-button" style="margin-right: 10px;
                   width: 100px;
                   padding: 5px;" (click)="updateProfile(form.value)">
                     Save
@@ -59,13 +60,14 @@
                     (click)="updateProfile(form.value)">
                     Update
                   </button>
-                  <button mat-raised-button color="light" (click)="Edit()" *ngIf="enableEdit && showForMyProfile === false"
-                    class="submit-button" style="margin-right: 10px; width: 100px; padding: 5px;"
-                    (click)="canceledit()">
-                    Cancel 
+                  <button mat-raised-button color="light" (click)="Edit()"
+                    *ngIf="enableEdit && showForMyProfile === false" class="submit-button"
+                    style="margin-right: 10px; width: 100px; padding: 5px;" (click)="canceledit()">
+                    Cancel
                   </button>
-                  <button mat-raised-button color="light" (click)="edit()" *ngIf="enableEdit && showForMyProfile === true"
-                    class="submit-button" style="margin-right: 10px; width: 100px;  padding: 5px;" (click)="canceledit()">
+                  <button mat-raised-button color="light" (click)="edit()"
+                    *ngIf="enableEdit && showForMyProfile === true" class="submit-button"
+                    style="margin-right: 10px; width: 100px;  padding: 5px;" (click)="canceledit()">
                     Cancel
                   </button>
                 </div>
@@ -75,35 +77,36 @@
             </header>
 
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" style="margin-top: 27px;">
-              <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+              <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>First Name</mat-label>
                 <input matInput type="text" formControlName="firstName" type="text" [readonly]="viewMode" />
                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                 <mat-error *ngIf="form.get('firstName').hasError('required')"> Firstname is required</mat-error>
 
               </mat-form-field>
-              <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+              <mat-form-field appearance="outline" fxFlex="34" class="px-8">
                 <mat-label>Second Name</mat-label>
                 <input matInput type="text" formControlName="middleName" type="text" [readonly]="viewMode" />
                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                 <!-- <mat-error>First Name is required!</mat-error> -->
               </mat-form-field>
-              <mat-form-field appearance="outline" fxFlex="34">
+              <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>Last name</mat-label>
                 <input matInput type="text" formControlName="lastName" [readonly]="viewMode" />
                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                 <mat-error *ngIf="form.get('lastName').hasError('required')"> Lastname id is required</mat-error>
               </mat-form-field>
             </div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" style="margin-top:12px;" *ngIf="flagForScreen == 'myProfile' || flagForScreen == 'editUser'">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" style="margin-top:12px;"
+              *ngIf="flagForScreen == 'myProfile' || flagForScreen == 'editUser'">
 
-              <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+              <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>User Name</mat-label>
                 <input matInput type="text" formControlName="userName" type="text" [readonly]="viewMode" />
                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                 <mat-error *ngIf="form.get('userName').hasError('required')">Username is required</mat-error>
               </mat-form-field>
-              <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+              <mat-form-field appearance="outline" fxFlex="34" class="px-8">
                 <mat-label>Email
                   <span style="color: green;">
                     <mat-icon>check_circle</mat-icon>
@@ -118,7 +121,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance="outline"  fxFlex="34">
+              <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>Mobile
                   <span style="color: red;">
                     <mat-icon>error_outline</mat-icon>
@@ -129,7 +132,8 @@
               </mat-form-field>
             </div>
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto"style="margin-top:12px;" *ngIf="flagForScreen == 'addUser'">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" style="margin-top:12px;"
+              *ngIf="flagForScreen == 'addUser'">
 
               <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                 <mat-label>Email
@@ -146,7 +150,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance="outline"  fxFlex="50">
+              <mat-form-field appearance="outline" fxFlex="50">
                 <mat-label>Mobile
                   <span style="color: red;">
                     <mat-icon>error_outline</mat-icon>
@@ -157,7 +161,8 @@
               </mat-form-field>
             </div>
 
-            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="0 0 auto"style="margin-top:12px;" *ngIf="showForMyProfile === true">
+            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="0 0 auto" style="margin-top:12px;"
+              *ngIf="showForMyProfile === true">
               <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                 <mat-label>Company Name</mat-label>
                 <input matInput type="text" formControlName="companyname" [readonly]="viewMode" />
@@ -170,7 +175,8 @@
               </mat-form-field>
             </div>
 
-            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="0 0 auto"style="margin-top:12px;" *ngIf="showForMyProfile === true">
+            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="0 0 auto" style="margin-top:12px;"
+              *ngIf="showForMyProfile === true">
               <mat-form-field appearance="outline" fxFlex="100">
                 <mat-label>Address</mat-label>
                 <textarea matInput formControlName="address" max-rows="7" [readonly]="viewMode"> </textarea>
@@ -178,8 +184,8 @@
             </div>
 
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" style="margin-top:25px;"*ngIf="showForMyProfile === true"
-              >
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" style="margin-top:25px;"
+              *ngIf="showForMyProfile === true">
               <mat-form-field appearance="outline" fxFlex="23" class="pr-4">
                 <mat-label>Postal Code</mat-label>
                 <input matInput type="tel" #postalcode value="94043" formControlName="postalcode" maxlength="5"
@@ -205,7 +211,8 @@
             </div>
 
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" style="margin-top:12px;"*ngIf="showForMyProfile === false">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" style="margin-top:12px;"
+              *ngIf="showForMyProfile === false">
               <!-- <mat-form-field fxFlex="30"  appearance="outline"> -->
               <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>User Type</mat-label>
@@ -248,7 +255,7 @@
             </div>
 
             <!-- <div fxLayout="row" fxLayoutAlign="space-between"> -->
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto"style="margin-top:12px;"
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" style="margin-top:12px;"
               *ngIf="showForMyProfile === false && userId != 0">
               <mat-form-field appearance="outline" fxFlex="33">
                 <mat-label>Password Since</mat-label>
@@ -275,16 +282,16 @@
               </mat-form-field>
             </div>
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto"style="margin-top:12px;"
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="0 0 auto" style="margin-top:12px;"
               *ngIf="showForMyProfile === false && userId != 0">
-              <div fxFlex="33"appearance="outline">
+              <div fxFlex="33" appearance="outline">
                 <section class="tp-section">
                   <label class="example-margin">Account Status:</label>&nbsp;
                   <input type="radio" value="activated" [checked]="true" name="status" /> Activated &nbsp;
                   <input type="radio" value="locked" name="status" /> Locked
                 </section>
               </div>
-              <div  fxFlex="34" class="px-8" appearance="outline">
+              <div fxFlex="34" class="px-8" appearance="outline">
                 <mat-checkbox (change)="changePassword($event.checked)" (click)="onValueChange()"
                   formControlName="check">Change Password</mat-checkbox>
               </div>
@@ -348,10 +355,10 @@
               <div fxFlex="23" class="pr-4" appearance="outline">
                 <section class="tp-section">
                   <label class="example-margin">Account Status:</label>&nbsp;
-                <div style="margin-top:8px;">
-                  <input type="radio" value="activated" [checked]="true" name="status" /> Activated &nbsp;
-                  <input type="radio" value="locked" name="status" /> Locked
-                </div>
+                  <div style="margin-top:8px;">
+                    <input type="radio" value="activated" [checked]="true" name="status" /> Activated &nbsp;
+                    <input type="radio" value="locked" name="status" /> Locked
+                  </div>
                 </section>
               </div>
               <div fxFlex="25" class="pr-4" appearance="outline" style="margin-top:17px;">
@@ -383,7 +390,6 @@
                   Make your password strong use(A-Z,a-z,0-9,(*@!?/)</mat-error>
               </mat-form-field>
             </div>
-
             <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" style="margin-top: 20px;" style="float:left;"> -->
             <p style="text-align: right;">Last Login: {{ lastLogin }}</p>
           </form>
