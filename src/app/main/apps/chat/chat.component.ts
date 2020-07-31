@@ -25,7 +25,7 @@ export interface PeriodicElement {
 }
 const ELEMENT_DATA: PeriodicElement[] = [
     { createdBy: 'Karthiga', screen:'Profile',whereArise: 'Profile-view',level:'', whatEnsue: 'View', field:'User Type',oldValue:'Client',newValue:'Employee', whenOccur: 'Jul 27,2020  08.00.11AM' },
-    { createdBy: 'Tamilselvi balasubramaniyam maniyam',screen:'User Management',level:'', whereArise: 'Profile-view', field:'User Role',oldValue:'Client view',newValue:'Candidate view', whatEnsue: 'View',   whenOccur: 'Jul 26,2020  08.00.11AM' },
+    { createdBy: 'Tamilselvi balasubramaniyam',screen:'User Management',level:'', whereArise: 'Profile-view', field:'User Role',oldValue:'Client view',newValue:'Candidate view', whatEnsue: 'View',   whenOccur: 'Jul 26,2020  08.00.11AM' },
     {createdBy: 'Janani', screen:'Role Management',whereArise: 'Role Management', level:'',whatEnsue:'Update',  field:'User Type',oldValue:'Client',newValue:'Candidate', whenOccur: 'Jul 27,2020  08.00.11AM' },
     { createdBy: 'Karthiga', screen:'Profile',whereArise: 'Profile-update',level:'',whatEnsue: 'update',  field:'User Type',oldValue:'Camdidate',newValue:'Client', whenOccur: 'Jul 27,2020  08.00.11AM' },
     {createdBy: 'Janani', screen:'Role Management',whereArise: 'Role Management-Add',level:'',whatEnsue: 'view',  field:'User Role',oldValue:'Client',newValue:'Admin', whenOccur: 'Jul 27,2020  08.00.11AM' },
@@ -46,7 +46,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class ChatComponent implements OnInit, OnDestroy {
     displayedColumns: string[] = ['createdBy', 'whereArise', 'whatEnsue', 'whenOccur'];
     displayedColumns1:string[]=['createdBy','screen','whereArise','level','whatEnsue','whenOccur'];
-    displayedColumns2:string[]=['createdBy','screen','whereArise','field','oldValue','newValue','whenOccur'];
+    fieldHistory:string[]=['createdBy','screen','whereArise','field','oldValue','newValue','whenOccur'];
 
     dataSource = new MatTableDataSource(ELEMENT_DATA);
     dialogRef: any;
@@ -75,6 +75,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     {
         this._fuseSidebarService.getSidebar(name).toggleOpen();
     }
+
+    toggleSidebarClosed(name):void{
+        this._fuseSidebarService.getSidebar(name).toggleOpen();
+
+    }
+
+    // toggleSidebarOpen(key): void {
+    //     this._fuseSidebarService.getSidebar(key).toggleOpen();
+    // }
     cancel() {
         
         // this.router.navigate([""]);

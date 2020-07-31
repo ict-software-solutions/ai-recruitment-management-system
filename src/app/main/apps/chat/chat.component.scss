@@ -72,22 +72,39 @@
   margin-top: 10px;
 }
 
-.mat-column-user {
-  flex: 0 1 280;
-  text-overflow: ellipsis;
+.mat-column-createdBy {
+  width:150px;
+  // flex: 0 1 190;
+  // text-overflow: ellipsis;
 }
 .mat-column-screen {
-  flex: 0 1 230px;
-  text-overflow: ellipsis;
+  width:100px;
+  // flex: 0 1 190px;
+  // text-overflow: ellipsis;
 }
 
-.mat-column-action {
-  flex: 0 1 280px;
-  text-overflow: ellipsis;
+.mat-column-field {
+  width:80px;
+  // flex: 0 1 190px;
+  // text-overflow: ellipsis;
+}
+.mat-column-oldValue {
+  width:70px;
+  margin-left: 0px;
+  // flex: 0 1 280px;
+  // text-overflow: ellipsis;
+}
+.mat-column-newValue {
+  width:70px;
+  margin-left: 0px;
+  // flex: 0 1 280px;
+  // text-overflow: ellipsis;
 }
 .mat-column-date {
-  flex: 0 1 190px;
-  text-overflow: ellipsis;
+  width:100px;
+  // flex: 0 1 190px;
+  // text-overflow: ellipsis;
+  
 }
 .ex-1 {
   overflow: scroll;
@@ -151,6 +168,7 @@
   font-size: 20px;
   font-weight: 600;
   padding-left: 4px;
+  color: #0066ff;
 }
 .note_title{
   font-weight: bold;
@@ -170,4 +188,13 @@
   height: 2px;
   transition: 500ms cubic-bezier(0.35, 0, 0.25, 1);
   ;
+}
+.mat-cell, .mat-footer-cell {
+  font-size: 14px;
+}
+.mat-header-cell {
+  font-size: 12px;
+  font-weight: 500;
+  flex: 0 0 250;
+  margin-left: 0px;
 }

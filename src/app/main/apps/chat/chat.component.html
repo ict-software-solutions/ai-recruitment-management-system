@@ -14,10 +14,15 @@
           </p>
         </div>
         <div style="float: right;margin-top: -55px;">
-          <button mat-raised-button class="sidebar-toggle " (click)="toggleSidebar('project-dashboard-right-sidebar-1')"
+          <button mat-raised-button class="sidebar-toggle" (click)="toggleSidebar('project-dashboard-right-sidebar-1')"
             style="margin-right: 10px;">
             Filter By
           </button>
+          <!-- <button mat-icon-button class="toggle-sidebar-folded"
+                (click)="toggleSidebarFolded()" fxHide.lt-lg>
+            <mat-icon class="secondary-text">menu</mat-icon>
+        </button> -->
+
         </div>
 
       </header>
@@ -26,39 +31,39 @@
           <mat-table [dataSource]="dataSource"  fusePerfectScrollbar>
 
             <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef> CreatedBy </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.createdBy}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.createdBy}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="screen" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef style="margin-right: -8px;"> Screen </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.screen}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef>Screen</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.screen}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="field" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef style="margin-right: 13px;"> Field </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.field}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef >Field</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.field}}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="whereArise" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef style="margin-right: -10px;"> WhereArise </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.whereArise}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef >WhereArise</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.whereArise}}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="oldValue" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef style="margin-right: 13px;"> old Value </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.oldValue}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef >Old Value</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.oldValue}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="newValue" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef style="margin-right: 13px;"> New Value </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.newValue}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef >New Value</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.newValue}}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef style="margin-right: 13px;"> WhenOccur </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.whenOccur}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef >WhenOccur</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.whenOccur}}</mat-cell>
             </ng-container>
 
-            <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns2;"></mat-row>
+            <mat-header-row *matHeaderRowDef="fieldHistory"></mat-header-row>
+            <mat-row *matRowDef="let row; columns:fieldHistory;"></mat-row>
           </mat-table>
           <mat-paginator  [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
           </mat-paginator>
@@ -78,23 +83,23 @@
             <mat-table [dataSource]="dataSource"  fusePerfectScrollbar>
 
               <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
-                <mat-header-cell *matHeaderCellDef> CreatedBy </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.createdBy}} </mat-cell>
+                <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.createdBy}}</mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="whereArise" style="text-overflow: ellipsis;">
-                <mat-header-cell *matHeaderCellDef style="margin-right: -10px;"> WhereArise </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.whereArise}} </mat-cell>
+                <mat-header-cell *matHeaderCellDef >WhereArise</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.whereArise}}</mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="whatEnsue" style="text-overflow: ellipsis;">
-                <mat-header-cell *matHeaderCellDef style="margin-right: -8px;"> WhatEnsue </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.whatEnsue}} </mat-cell>
+                <mat-header-cell *matHeaderCellDef >WhatEnsue</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.whatEnsue}}</mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
-                <mat-header-cell *matHeaderCellDef style="margin-right: 13px;"> WhenOccur </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.whenOccur}} </mat-cell>
+                <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.whenOccur}}</mat-cell>
               </ng-container>
 
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -120,29 +125,29 @@
           <mat-table [dataSource]="dataSource"  fusePerfectScrollbar>
 
             <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef> CreatedBy </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.createdBy}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.createdBy}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="screen" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef> Screen </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.screen}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef>Screen</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.screen}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="whereArise" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef style="margin-right: -10px;"> WhereArise </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.whereArise}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef >WhereArise</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.whereArise}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="level" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef style="margin-right: -10px;">Level </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.level}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef >Level</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.level}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="whatEnsue" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef style="margin-right: -8px;"> WhatEnsue </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.whatEnsue}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef >WhatEnsue</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.whatEnsue}}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef style="margin-right: 13px;"> WhenOccur </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.whenOccur}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef >WhenOccur</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.whenOccur}}</mat-cell>
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
@@ -167,54 +172,68 @@
 
     </div>
 
-  </div>
+ </div>
 
   </div>
-  <fuse-sidebar class="sidebar" name="project-dashboard-right-sidebar-1" position="right">
-    <div class="content">
-      <div style="padding: 18px;">
-        <div class="header1" style="display: inline;">
 
-          <div class="title1">Filter By</div>
-  
-          <button mat-icon-button class="close-button" style="float: right;
-          margin-top: -35px;" >
-              <mat-icon>close</mat-icon>
-          </button>
-  
-      </div>
-      <div style="margin-top: 22px;">
-        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto"
-          style="height:100%">
-          <mat-form-field appearance="outline">
-            <mat-label>User Type</mat-label>
-            <mat-select>
-              <mat-option value="client">Client</mat-option>
-              <mat-option value="candidate">Candidate</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>From</mat-label>
-            <input matInput [matDatepicker]="pickerA">
-            <mat-datepicker-toggle matSuffix [for]="pickerA"></mat-datepicker-toggle>
-            <mat-datepicker #pickerA></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>To</mat-label>
-            <input matInput [matDatepicker]="pickerB">
-            <mat-datepicker-toggle matSuffix [for]="pickerB"></mat-datepicker-toggle>
-            <mat-datepicker #pickerB></mat-datepicker>
-          </mat-form-field>
-          <button mat-raised-button color="accent" (click)="cancel()">Search
-          </button>
-        </form>
-      </div>
-        <div>
+  <!-- </div> -->
 
-        </div>
+<!-- </div> -->
+<fuse-sidebar class="sidebar" name="project-dashboard-right-sidebar-1" position="right">
+  <div class="content">
+    <div style="padding: 18px;">
+      <div class="header1" style="display: inline;">
+        <div class="title1">Filter By</div>
+      <button mat-icon-button class="sidebar-toggle"
+      (click)="toggleSidebarClosed('project-dashboard-right-sidebar-1')">
+  <mat-icon class="secondary-text">arrow_forward</mat-icon>
+</button>
+
+    </div>
+    <div style="margin-top: 22px;">
+      <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto"
+        style="height:100%">
+        <mat-form-field appearance="outline">
+          <mat-label>Key Word</mat-label>
+          <input matInput type="text"><div style="float: right;
+          margin-top: -34px;"> 
+            <button  mat-mini-fab  color="accent" aria-label="Example icon button with a home icon">
+              <mat-icon color="basic">search</mat-icon>
+            </button>
+          </div>
+          <!-- <mat-icon matSuffix class="secondary-text"></mat-icon> -->
+          <!-- <mat-error>First Name is required!</mat-error> -->
+        </mat-form-field>
+        <p style="text-align: center;margin-top: -5px;color: #0066ff;">or</p>
+        <mat-form-field appearance="outline">
+          <mat-label>User Type</mat-label>
+          <mat-select>
+            <mat-option value="client">Client</mat-option>
+            <mat-option value="candidate">Candidate</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>From</mat-label>
+          <input matInput [matDatepicker]="pickerA">
+          <mat-datepicker-toggle matSuffix [for]="pickerA"></mat-datepicker-toggle>
+          <mat-datepicker #pickerA></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>To</mat-label>
+          <input matInput [matDatepicker]="pickerB">
+          <mat-datepicker-toggle matSuffix [for]="pickerB"></mat-datepicker-toggle>
+          <mat-datepicker #pickerB></mat-datepicker>
+        </mat-form-field>
+        <button mat-raised-button color="accent" (click)="cancel()">Search
+        </button>
+     
+      </form>
+    </div>
+      <div>
+
       </div>
     </div>
+  </div>
 
-  </fuse-sidebar>
+</fuse-sidebar>
 </div>
-<!-- </div> -->
