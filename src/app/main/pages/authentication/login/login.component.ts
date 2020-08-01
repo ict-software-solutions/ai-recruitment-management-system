@@ -1,14 +1,14 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation, Inject } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router, ActivatedRoute, NavigationExtras } from "@angular/router";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { fuseAnimations } from "@fuse/animations";
 import { FuseConfigService } from "@fuse/services/config.service";
 import { AirmsService } from "app/service/airms.service";
 import { LogService } from "app/service/shared/log.service";
-import { LAYOUT_STRUCTURE, LOGGED_IN_USER, LOG_LEVELS, LOG_MESSAGES, TROY_LOGO, LOGGED_IN_USER_INFO, IP_ADDRESS } from "app/util/constants";
+import { IP_ADDRESS, LAYOUT_STRUCTURE, LOGGED_IN_USER_INFO, LOG_LEVELS, LOG_MESSAGES, TROY_LOGO } from "app/util/constants";
 import { Subscription } from "rxjs";
-import { AuthService } from "../../../../service/auth.service";
 import Swal from "sweetalert2";
+import { AuthService } from "../../../../service/auth.service";
 declare var $: any;
 declare var jQuery: any;
 export interface DialogData {
@@ -109,8 +109,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       (res) => {
         this.logUserActivity("LOGIN", LOG_MESSAGES.SUCCESS);
         loginInfo = res;
-        const userInfo = { token: res["token"], userId: res["userId"] };
-        this.airmsService.setSessionStorage(LOGGED_IN_USER, userInfo);
         this.getUserSubscription = this.authService.getUserById(res["token"], res["userId"]).subscribe(
           (userDetails) => {
             let user_info = {
@@ -130,8 +128,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.logUserActivity("Login - fetch user", LOG_MESSAGES.SUCCESS);
             this.router.navigate(["../../apps/dashboards/analytics"]);
             this.loginSubscription.unsubscribe();
-          },
-          (error) => {
+          }, (error) => {
             this.logService.logError(LOG_LEVELS.ERROR, "Login page", "On Fetch User", JSON.stringify(error));
           }
         );

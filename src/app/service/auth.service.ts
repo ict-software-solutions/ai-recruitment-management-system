@@ -1,12 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { apiURL } from 'app/util/constants';
-import { CalendarUtils } from 'angular-calendar';
-import { Observable } from 'rxjs';
+import { apiURL, LOGGED_IN_USER } from 'app/util/constants';
+import { map } from "rxjs/operators"; 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  hasUserLoggedIn: boolean = false;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -23,7 +23,19 @@ export class AuthService {
   }
 
   login(param) {
-    return this.httpClient.post(apiURL.LOGIN_URL, param);
+    return this.httpClient.post(apiURL.LOGIN_URL, param).pipe(map((response: any) => { 
+      if (response['userId'] === undefined) {
+        return false;
+      }
+      this.hasUserLoggedIn = true;
+      const userInfo = { token: response["token"], userId: response["userId"] };
+      sessionStorage.setItem(LOGGED_IN_USER, JSON.stringify(userInfo));
+      return response;
+    }));
+  }
+
+  isAuthenticated() { 
+    return this.hasUserLoggedIn;
   }
 
   resetPassword(param) {

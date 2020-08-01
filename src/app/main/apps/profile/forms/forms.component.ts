@@ -25,7 +25,7 @@ declare var $: any;
 })
 export class FormsComponent implements OnInit, OnDestroy {
   lastLogin: string;
-  onFileSelected(event) { }
+  onFileSelected(event) {}
   form: FormGroup;
   dialogRef: any;
   showPassword = true;
@@ -64,7 +64,7 @@ export class FormsComponent implements OnInit, OnDestroy {
   resCode = "";
   isLoaded = false;
   roleLists: any;
-  flagForScreen = '';
+  flagForScreen = "";
   usertypes: usertype[] = [{ value: "Employee" }, { value: "Client" }, { value: "Candidate" }];
   constructor(
     private userService: UserService,
@@ -93,17 +93,17 @@ export class FormsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.form = this._formBuilder.group({
       userId: ["", Validators.required],
-      firstName: ["",Validators.required],
+      firstName: ["", Validators.required],
       middleName: [""],
-      lastName: ["",Validators.required],
+      lastName: ["", Validators.required],
       emailAddress: ["", [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
       mobileNumber: [""],
       companyname: [""],
       position: [""],
       address: [""],
       postalcode: [""],
-      roleId: ["",Validators.required],
-      userType: ["",Validators.required],
+      roleId: ["", Validators.required],
+      userType: ["", Validators.required],
       city: [""],
       state: [""],
       country: [""],
@@ -114,8 +114,7 @@ export class FormsComponent implements OnInit, OnDestroy {
       validTo: [""],
       passwordExpiry: [""],
       passwordSince: [""],
-      passwordNew: ["", [Validators.minLength(8), Validators.maxLength(15)]],
-      userName: ["", [Validators.minLength(6), Validators.maxLength(30)]],
+      userName: ["", [Validators.minLength(6), Validators.maxLength(30), Validators.required]],
     });
 
     this.route.queryParams.subscribe((params) => {
@@ -125,7 +124,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.showForMyProfile = false;
         this.showForAddEditUser = false;
         this.userId = 0;
-        this.flagForScreen = 'addUser';
+        this.flagForScreen = "addUser";
       } else if (params["userId"] && params["userType"]) {
         /** Edit User */
         this.Edit();
@@ -133,25 +132,20 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.showForAddEditUser = false;
         this.userId = Number(params["userId"]);
         this.getProfileInfo(this.userId);
-        this.flagForScreen = 'editUser';
+        this.flagForScreen = "editUser";
       } else {
         /** My Profile */
         this.userId = Number(params["userId"]);
         this.getProfileInfo(this.userId);
         this.showForMyProfile = true;
-        this.flagForScreen = 'myProfile';
+        this.flagForScreen = "myProfile";
         this.enableEdit = false;
         this.viewMode = true;
       }
       this.getRoles();
     });
     this.form.get("password").valueChanges;
-    this.form
-      .get("password")
-      .valueChanges.pipe(takeUntil(this.unsubscribeAll))
-      .subscribe(() => {
-        this.form.get("passwordConfirm").updateValueAndValidity();
-      });
+    this.form.controls["userId"].patchValue(this.userId);
   }
 
   unsubscribe(subscription: Subscription) {
@@ -171,7 +165,6 @@ export class FormsComponent implements OnInit, OnDestroy {
   }
 
   getProfileInfo(userId) {
-   // this.ngOnInit();
     this.getProfileInfoSubscription = this.authService.getProfileInfo(userId).subscribe((res) => {
       this.profileDetails = res;
       this.form.patchValue(res);
@@ -184,9 +177,9 @@ export class FormsComponent implements OnInit, OnDestroy {
           $(".profile-image").remove();
           $("#photos").append(
             "<img src=" +
-            "data:image/jpeg;base64" +
-            this.profileDetails.profileImage +
-            ' class="profile-image avatar"  style="margin: -7px 8px -10px -7px;height:64px;width:64px;">'
+              "data:image/jpeg;base64" +
+              this.profileDetails.profileImage +
+              ' class="profile-image avatar"  style="margin: -7px 8px -10px -7px;height:64px;width:64px;">'
           );
         }, 100);
       } else {
@@ -194,8 +187,8 @@ export class FormsComponent implements OnInit, OnDestroy {
           $(".profile-image").remove();
           $("#photos").append(
             '<img src="' +
-            '../../assets/images/generic.jpg"' +
-            'class="profile-image avatar"  style="margin: -7px 8px -10px -7px; height:64px;width:64px;">'
+              '../../assets/images/generic.jpg"' +
+              'class="profile-image avatar"  style="margin: -7px 8px -10px -7px; height:64px;width:64px;">'
           );
         }, 100);
       }
@@ -203,7 +196,7 @@ export class FormsComponent implements OnInit, OnDestroy {
   }
 
   canceledit() {
-    if (this.flagForScreen === 'myProfile') {
+    if (this.flagForScreen === "myProfile") {
       this.getProfileInfo(this.userId);
       this.showForMyProfile = true;
       this.showForAddEditUser = true;
@@ -217,147 +210,165 @@ export class FormsComponent implements OnInit, OnDestroy {
     this.enableEdit == true;
   }
   emailChange(screenType, email) {
-    if (screenType === 'myProfile') {
+    if (screenType === "myProfile") {
       if (this.userInfo.emailAddress !== email) {
         Swal.fire({
-          title: 'Are you sure?',
+          title: "Are you sure?",
           text: "You're trying to change the Email, So further details will be sent to this new mail Id",
-          icon: 'warning',
+          icon: "warning",
           showCancelButton: true,
-          confirmButtonText: 'Yes',
-          cancelButtonText: 'No'
+          confirmButtonText: "Yes",
+          cancelButtonText: "No",
         }).then((result) => {
-           if (result.dismiss === Swal.DismissReason.cancel) {
+          if (result.dismiss === Swal.DismissReason.cancel) {
             this.form.controls["emailAddress"].patchValue(this.userInfo.emailAddress);
           }
-        })
+        });
       }
     }
   }
   updateProfile(value) {
-    let updateObject = {
-      firstName: value.firstName,
-      middleName: value.middleName,
-      lastName: value.lastName,
-      emailAddress: value.emailAddress,
-      mobileNumber: value.mobileNumber,
-      company: value.companyname,
-      address: value.address,
-      city: value.city,
-      state: value.state,
-      postalCode: value.postalCode,
-      userId: this.userId,
-      passwordExpiry: value.passwordExpiry,
-      userName: value.userName,
-      userType: value.userType,
-      roleId: value.roleId,
-    };
-    if (this.contactProfilePic !== null && this.contactProfilePic !== undefined && this.contactProfilePic !== "") {
-      updateObject["profileImage"] = btoa(this.contactProfilePic);
-    } else {
-      updateObject["profileImage"] = null;
-    }
-    if (value.check === true) {
-      if (this.userId != 0 && this.showForMyProfile === false) {
-        updateObject["newPassword"] = value.newPassword;
-        updateObject["lastIPAddress"] = this.userIpAddress;
-      } else if (value.password != value.newPassword) {
-        updateObject["password"] = value.password;
-        updateObject["newPassword"] = value.newPassword;
-        updateObject["lastIPAddress"] = this.userIpAddress;
+    console.log('this.form',this.form);
+    console.log(value);
+    if (this.form.valid) {
+      let updateObject = {
+        firstName: value.firstName,
+        middleName: value.middleName,
+        lastName: value.lastName,
+        emailAddress: value.emailAddress,
+        mobileNumber: value.mobileNumber,
+        company: value.companyname,
+        address: value.address,
+        city: value.city,
+        state: value.state,
+        postalCode: value.postalCode,
+        userId: this.userId,
+        passwordExpiry: value.passwordExpiry,
+        userName: value.userName,
+        userType: value.userType,
+        roleId: value.roleId,
+      };
+      if (this.contactProfilePic !== null && this.contactProfilePic !== undefined && this.contactProfilePic !== "") {
+        updateObject["profileImage"] = btoa(this.contactProfilePic);
       } else {
-        Swal.fire({
-          title: "New password cannot be the same as Old Password",
-          icon: "warning",
-          confirmButtonText: "Ok",
-        });
-        return;
+        updateObject["profileImage"] = null;
       }
-    } else {
-      updateObject["password"] = value.newPassword;
-    }
+      if (value.check === true) {
+        if (this.userId != 0 && this.showForMyProfile === false) {
+          updateObject["newPassword"] = value.newPassword;
+          updateObject["lastIPAddress"] = this.userIpAddress;
+        } else if (value.password != value.newPassword) {
+          updateObject["password"] = value.password;
+          updateObject["newPassword"] = value.newPassword;
+          updateObject["lastIPAddress"] = this.userIpAddress;
+        } else {
+          Swal.fire({
+            title: "New password cannot be the same as Old Password",
+            icon: "warning",
+            confirmButtonText: "Ok",
+          });
+          return;
+        }
+      } else {
+        updateObject["password"] = value.password;
+      }
 
-    this.updateProfileSubscription = this.authService.updateProfileDetails(updateObject, this.user).subscribe(
-      (res) => {
-        if (this.userId === Number(this.userInfo.userId)) {
-          if (this.form.get('emailAddress').dirty || this.form.get('userName').dirty || this.form.get('newPassword').dirty) {
-            Swal.fire({
-              position: "center",
-              icon: "warning",
-              title: "You have made changes in Email or Username or Password",
-              confirmButtonText: "Ok"
-            });
-            this.logoutAIRMS();
+      this.updateProfileSubscription = this.authService.updateProfileDetails(updateObject, this.user).subscribe(
+        (res) => {
+          if (this.userId === Number(this.userInfo.userId)) {
+            if (this.form.get('emailAddress').dirty || this.form.get('userName').dirty || this.form.get('newPassword').dirty) {
+              Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "You have made changes in Email or Username or Password",
+                confirmButtonText: "Ok"
+              });
+              this.logoutAIRMS();
+            } else {
+              this.updateUserInLocalStorge(res);
+              Swal.fire({
+                title: "Profile Saved",
+                icon: "success",
+                confirmButtonText: "Ok",
+              }).then((res) => {
+                if (res.value === true) {
+                  this.showForMyProfile = true;
+                  this.showForMyProfile = true;
+                  this.viewMode = true;
+                  this.enableEdit = !this.enableEdit;
+                }
+              });
+            }
           } else {
-            this.updateUserInLocalStorge(res);
             Swal.fire({
               title: "Profile Saved",
               icon: "success",
               confirmButtonText: "Ok",
             }).then((res) => {
               if (res.value === true) {
-                this.showForMyProfile = true;
-                this.showForMyProfile = true;
-                this.viewMode = true;
-                this.enableEdit = !this.enableEdit;
+                this.canceledit();
+                this.router.navigate(["/apps/e-commerce/products"]);
               }
             });
           }
-        } else {
-          Swal.fire({
-            title: "Profile Saved",
-            icon: "success",
-            confirmButtonText: "Ok",
-          }).then((res) => {
-            if (res.value === true) {
-              this.canceledit();
-              this.router.navigate(["/apps/e-commerce/products"]);
-            }
-          });
-        }
-      },
+        },
 
-      (error) => {
-        if (error.error.message === "old password does not match") {
-          this.errorMessage = error.error.message;
-          this.oldPasswordWrong = true;
-          Swal.fire({
-            position: "center",
-            icon: "warning",
-            title: "Current password is wrong",
-            showConfirmButton: true,
-          });
-        } else if (error.error.resCode === "EML-EXT") {
-          Swal.fire({
-            position: "center",
-            icon: "warning",
-            title: "Email already Exist",
-            showConfirmButton: true,
-          });
-        } else if (error.error.resCode === "URN-EXT") {
-          Swal.fire({
-            position: "center",
-            icon: "warning",
-            title: "Username already exist",
-            showConfirmButton: true,
-          });
-        } else if (error.error.resCode === "EML-EXT") {
-          Swal.fire({
-            position: "center",
-            icon: "warning",
-            title: "Email already Exist",
-            showConfirmButton: true,
-          });
-        } else if (error.error.resCode === "URN-EXT") {
-          Swal.fire({
-            position: "center",
-            icon: "warning",
-            title: "Username already exist",
-            showConfirmButton: true,
-          });
+        (error) => {
+          if (error.error.message === "old password does not match") {
+            this.errorMessage = error.error.message;
+            this.oldPasswordWrong = true;
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: "Current password is wrong",
+              showConfirmButton: true,
+            });
+          } else if (error.error.resCode === "EML-EXT") {
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: "Email already Exist",
+              showConfirmButton: true,
+            });
+          } else if (error.error.resCode === "URN-EXT") {
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: "Username already exist",
+              showConfirmButton: true,
+            });
+          } else if (error.error.resCode === "EML-EXT") {
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: "Email already Exist",
+              showConfirmButton: true,
+            });
+          } else if (error.error.resCode === "URN-EXT") {
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: "Username already exist",
+              showConfirmButton: true,
+            });
+          }
+        }
+      );
+    } else {
+      this.checkForFormFields();
+    }
+  }
+  checkForFormFields() {
+    for (const prop in this.form.controls) {
+      if (Object.prototype.hasOwnProperty.call(this.form.controls, prop)) {
+        if (this.form.controls[prop].pristine) {
+          this.form.controls[prop].markAsTouched();
         }
       }
-    );
+    }
+  }
+  setPassword(value) {
+    this.form.controls["password"].patchValue(value.newPassword);
   }
   updateUserInLocalStorge(res) {
     let user_info = {
@@ -371,8 +382,8 @@ export class FormsComponent implements OnInit, OnDestroy {
       lastName: res["lastName"],
       roleId: this.userInfo["roleId"],
       roleName: this.userInfo["roleName"],
-      lastLogin: this.userInfo["lastLogin"]
-    }
+      lastLogin: this.userInfo["lastLogin"],
+    };
     this.airmsService.setSessionStorage(LOGGED_IN_USER_INFO, user_info);
     this.userService.publishUserDetail(true);
   }
@@ -400,9 +411,10 @@ export class FormsComponent implements OnInit, OnDestroy {
         that.contactProfilePic = reader.result;
         $(".profile-image").remove();
         $("#photos").append(
-          "<img  src=" + 'data:image/jpeg;base64' +
-          reader.result +
-          ' id ="img"  class="profile-image avatar"  style="margin: -7px 8px -10px -7px;height:64px;width:64px;">'
+          "<img  src=" +
+            "data:image/jpeg;base64" +
+            reader.result +
+            ' id ="img"  class="profile-image avatar"  style="margin: -7px 8px -10px -7px;height:64px;width:64px;">'
         );
       };
       reader.readAsDataURL(imageDetails);
@@ -415,7 +427,7 @@ export class FormsComponent implements OnInit, OnDestroy {
 
   logoutAIRMS() {
     this.authService.logout();
-    this.router.navigate(['']);
+    this.router.navigate([""]);
   }
   ngOnDestroy(): void {
     this.unsubscribe(this.getUserSubscription);

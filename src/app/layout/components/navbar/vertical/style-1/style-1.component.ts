@@ -53,7 +53,9 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
         this._router.events.pipe(filter((event) => event instanceof NavigationEnd), take(1)
         ).subscribe(() => {
             setTimeout(() => {
-                this._fusePerfectScrollbar.scrollToElement('navbar .nav-link.active', -120);
+                if (this._fusePerfectScrollbar !== null) {
+                    this._fusePerfectScrollbar.scrollToElement('navbar .nav-link.active', -120);
+                }
             });
         });
     }
@@ -84,11 +86,11 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
         });
     }
     updatedUserInfo() {
-        this.updateUserInfoSubscription = this.userService.userProfileUpdateSub.subscribe(res=>{
-            if (res!== null) {
-                this.userInfo =this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+        this.updateUserInfoSubscription = this.userService.userProfileUpdateSub.subscribe(res => {
+            if (res !== null) {
+                this.userInfo = this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
             } else {
-                this.userInfo =this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+                this.userInfo = this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
             }
         });
     }
@@ -113,6 +115,6 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
     }
 
     toggleSidebarFolded(): void {
-        this._fuseSidebarService.getSidebar('navbar').toggleFold();
+        //this._fuseSidebarService.getSidebar('navbar').toggleFold();
     }
 }

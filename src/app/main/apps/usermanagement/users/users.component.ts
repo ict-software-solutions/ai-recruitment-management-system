@@ -108,7 +108,6 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
           }
         });
         this.details = res;
-        console.log("details", this.details);
         this.isLoading = false;
 
         this.dataSource.data = this.details;
@@ -131,26 +130,20 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
   getAllInfo() {
     this.authService.getAllInfo(this.user1).subscribe((res) => {
       this.userData = res;
-      console.log("userData", this.userData);
       this.dataSource1.data = this.userData;
     });
   }
 
   onDelete(userId): void {
-  
-    console.log(userId);
     this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
       disableClose: false,
-  
-    
     });
     this.confirmDialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?";
     this.confirmDialogRef.afterClosed().subscribe((result) => {
-     
+
       if (result) {
         this.authService.deleteUser(userId).subscribe((res) => {
           this.deleteinfo = res;
-          console.log("deleterrow", this.deleteinfo);
         });
         this.getAllUsers();
       }
@@ -158,7 +151,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
       this.confirmDialogRef = null;
     });
   }
-  
+
   onTap(userId, userType) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
@@ -305,5 +298,5 @@ export class FilesDataSource extends DataSource<any> {
       return (valueA < valueB ? -1 : 1) * (this._matSort.direction === "asc" ? 1 : -1);
     });
   }
-  disconnect(): void {}
+  disconnect(): void { }
 }

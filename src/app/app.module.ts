@@ -17,6 +17,7 @@ import { LayoutModule } from "app/layout/layout.module";
 import { AppStoreModule } from "app/store/store.module";
 import "hammerjs";
 import { AppMaterialModule } from './app-material/app-material.module';
+import { AuthGuard } from './service/shared/auth.guard';
 import { LogPublishersService } from "./service/shared/log-publishers.service";
 import { LogService } from "./service/shared/log.service";
 import { TokenInterceptor } from './service/shared/token.interceptor';
@@ -24,13 +25,15 @@ import { TokenInterceptor } from './service/shared/token.interceptor';
 const appRoutes: Routes = [
     {
         path: "",
-        loadChildren: () => import("./main/pages/authentication/login/login.module").then((m) => m.LoginModule),
+        loadChildren: () => import("./main/pages/authentication/login/login.module").then((m) => m.LoginModule)
     }, {
         path: "apps",
         loadChildren: () => import("./main/apps/apps.module").then((m) => m.AppsModule),
+        canActivate: [AuthGuard]
     }, {
         path: "pages",
         loadChildren: () => import("./main/pages/pages.module").then((m) => m.PagesModule),
+        canActivate: [AuthGuard]
     }, {
         path: "**",
         redirectTo: "",
@@ -44,7 +47,7 @@ const appRoutes: Routes = [
         BrowserAnimationsModule,
         HttpClientModule,
         AppMaterialModule,
-        RouterModule.forRoot(appRoutes, { enableTracing: false }),
+        RouterModule.forRoot(appRoutes, { enableTracing: false, useHash: true }),
         TranslateModule.forRoot(),
         InMemoryWebApiModule.forRoot(FakeDbService, {
             delay: 0,
@@ -68,7 +71,8 @@ const appRoutes: Routes = [
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,
             multi: true
-        }, LogService, LogPublishersService, Keepalive],
+        }, LogService, LogPublishersService, Keepalive,
+            AuthGuard],
 
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
