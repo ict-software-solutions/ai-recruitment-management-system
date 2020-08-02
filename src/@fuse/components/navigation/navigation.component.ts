@@ -84,8 +84,8 @@ export class FuseNavigationComponent implements OnInit {
     getSideMenus(): any {
         return new Promise((resolve, reject) => {
             const userRoles = [
-                { name: 'Admin', pages: ['Dashboards', 'User Management', 'Role Management'] },
-                { name: 'Manager', pages: ['Dashboards', 'Role Management']},
+                { name: 'Admin', pages: ['Dashboards', 'User Management', 'Role Management', 'System Activities'] },
+                { name: 'Manager', pages: ['Dashboards', 'Role Management', 'System Activities']},
                 { name: 'Candidate Consultant', pages: ['Dashboards']},
                 { name: 'Client Consultant', pages: ['Dashboards']},
                 { name: 'Client', pages: ['Dashboards']},

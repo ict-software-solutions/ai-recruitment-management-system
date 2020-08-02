@@ -155,7 +155,7 @@
                   <span style="color: red;">
                     <mat-icon>error_outline</mat-icon>
                   </span></mat-label>
-                <input matInput type="tel" formControlName="mobileNumber" [readonly]="viewMode" />
+                <input matInput type="tel" formControlName="mobileNumber" [readonly]="viewMode" maxlength="10"/>
                 <mat-icon matSuffix class="secondary-text">call</mat-icon>
                 <!-- <mat-error>Mobile is required!</mat-error> -->
               </mat-form-field>
