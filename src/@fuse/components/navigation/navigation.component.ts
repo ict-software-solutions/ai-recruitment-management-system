@@ -86,6 +86,7 @@ export class FuseNavigationComponent implements OnInit {
             const userRoles = [
                 { name: 'Admin', pages: ['Dashboards', 'User Management', 'Role Management', 'System Activities'] },
                 { name: 'Manager', pages: ['Dashboards', 'Role Management', 'System Activities']},
+                { name: 'Tech Support', pages: ['Dashboards', 'Role Management', 'System Activities']},
                 { name: 'Candidate Consultant', pages: ['Dashboards']},
                 { name: 'Client Consultant', pages: ['Dashboards']},
                 { name: 'Client', pages: ['Dashboards']},

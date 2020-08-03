@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/analytics.service';
+import { AirmsService } from 'app/service/airms.service';
+import { LOGGED_IN_USER_INFO } from 'app/util/constants';
 @Component({
     selector: 'analytics-dashboard',
     templateUrl: './analytics.component.html',
@@ -15,16 +17,20 @@ export class AnalyticsDashboardComponent implements OnInit {
     defaultElevation = 2;
     raisedElevation = 8;
     name = 'Angular';
-
+    userInfo: any;
     constructor(
-        private _analyticsDashboardService: AnalyticsDashboardService
+        private _analyticsDashboardService: AnalyticsDashboardService,
+        private airmsService: AirmsService
     ) {
         // Register the custom chart.js plugin
         this._registerCustomChartJSPlugin();
+        
     }
 
     ngOnInit(): void {
         // Get the widgets from the service
+        this.userInfo = this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+        console.log('this.user', this.userInfo);
         this.widgets = this._analyticsDashboardService.widgets;
     }
     private _registerCustomChartJSPlugin(): void {

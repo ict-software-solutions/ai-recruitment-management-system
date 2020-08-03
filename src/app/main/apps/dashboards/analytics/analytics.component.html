@@ -1,7 +1,7 @@
 <div id="dashboard-analytics" class="page-layout blank" >
     <div class="content">
 
-        <div class="left mr-lg-32">
+        <div class="left mr-lg-32" *ngIf="userInfo?.roleName!== 'Candidate View'">
             <div class="pb-24 font-size-18 font-weight-300">
                 Current Month Status
             </div>

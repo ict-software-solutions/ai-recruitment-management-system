@@ -107,8 +107,8 @@ export class FormsComponent implements OnInit, OnDestroy {
       city: [""],
       state: [""],
       country: [""],
-      password: ["", Validators.required],
-      newPassword: ["", [Validators.minLength(8), Validators.maxLength(15)]],
+      password: [""],
+      newPassword: [""],
       check: [""],
       validFrom: [""],
       validTo: [""],
@@ -125,6 +125,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.showForAddEditUser = false;
         this.userId = 0;
         this.flagForScreen = "addUser";
+        this.form.controls['password'].setValidators([Validators.required]);
       } else if (params["userId"] && params["userType"]) {
         /** Edit User */
         this.Edit();
@@ -388,7 +389,23 @@ export class FormsComponent implements OnInit, OnDestroy {
     this.userService.publishUserDetail(true);
   }
   changePassword(checked) {
+    console.log('checked', checked);
     this.showPasswordsection = !this.showPasswordsection;
+    if (checked === true) {
+    if (this.flagForScreen == 'editUser') {
+      this.form.controls['newPassword'].setValidators([Validators.minLength(8), Validators.maxLength(15)]);
+    } else if (this.flagForScreen == 'myProfile') {
+      this.form.controls['password'].setValidators([Validators.required]);
+      this.form.controls['newPassword'].setValidators([Validators.minLength(8), Validators.maxLength(15)]);
+    }
+  } else {
+    console.log('else');
+    this.form.controls['password'].clearValidators();
+    this.form.controls['password'].updateValueAndValidity();
+    this.form.controls['newPassword'].clearValidators();
+    this.form.controls['newPassword'].updateValueAndValidity();
+    console.log('else', this.form);
+  }
   }
   onValueChange() {
     this.confirmDialogs = true;
