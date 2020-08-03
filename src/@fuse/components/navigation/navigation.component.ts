@@ -91,7 +91,7 @@ export class FuseNavigationComponent implements OnInit {
                 { name: 'Client Consultant', pages: ['Dashboards']},
                 { name: 'Client', pages: ['Dashboards']},
                 { name: 'Candidate View', pages: ['Dashboards']},
-                { name: 'Candidate View', pages: ['Dashboards']},
+                { name: 'Client View', pages: ['Dashboards']},
                 { name: 'Customer', pages: ['Dashboards']}
             ]
             this.navigation = [];

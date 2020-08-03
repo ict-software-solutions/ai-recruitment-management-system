@@ -125,7 +125,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.showForAddEditUser = false;
         this.userId = 0;
         this.flagForScreen = "addUser";
-        this.form.controls['password'].setValidators([Validators.required]);
+        this.form.controls['password'].setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(15)]);
       } else if (params["userId"] && params["userType"]) {
         /** Edit User */
         this.Edit();

@@ -23,14 +23,14 @@ export class AnalyticsDashboardComponent implements OnInit {
         private airmsService: AirmsService
     ) {
         // Register the custom chart.js plugin
+        this.userInfo = this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+        console.log('this.user', this.userInfo.roleName);
         this._registerCustomChartJSPlugin();
         
     }
 
     ngOnInit(): void {
         // Get the widgets from the service
-        this.userInfo = this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
-        console.log('this.user', this.userInfo);
         this.widgets = this._analyticsDashboardService.widgets;
     }
     private _registerCustomChartJSPlugin(): void {
