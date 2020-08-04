@@ -43,12 +43,10 @@
                 </div>
                
                 <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN" (click)="login(loginForm.value)" type="submit" [disabled]="loginForm.invalid">LOGIN</button>
-               
-               
-                <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"[routerLink]="'/pages/auth/register'">SIGN UP</button>
-               
-                
+
+                <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN" [routerLink]="'/pages/auth/register'">SIGN UP</button>
             </form>
+           
             <div class="title" *ngIf="showResetContent">
                 <h3 style=color:#3366ff;>Password expired</h3>
                 <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"

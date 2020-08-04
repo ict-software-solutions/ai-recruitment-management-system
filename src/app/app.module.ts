@@ -32,8 +32,7 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard]
     }, {
         path: "pages",
-        loadChildren: () => import("./main/pages/pages.module").then((m) => m.PagesModule),
-        canActivate: [AuthGuard]
+        loadChildren: () => import("./main/pages/pages.module").then((m) => m.PagesModule)
     }, {
         path: "**",
         redirectTo: "",

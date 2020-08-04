@@ -6,7 +6,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { takeUntil } from "rxjs/operators";
 import { Subscription } from "rxjs";
 import { userDetails } from "app/models/user-details";
-import { LOGGED_IN_USER_INFO, SIGNUP, EMAIL_PATTERN, IP_ADDRESS } from "app/util/constants";
+import { LOGGED_IN_USER_INFO, SIGNUP, EMAIL_PATTERN, IP_ADDRESS, USERNAME_PATTERN, MOBILENUMBER_PATTERN } from "app/util/constants";
 import { AirmsService } from "app/service/airms.service";
 import { DatePipe } from "@angular/common";
 import Swal from "sweetalert2";
@@ -97,7 +97,7 @@ export class FormsComponent implements OnInit, OnDestroy {
       middleName: [""],
       lastName: ["", Validators.required],
       emailAddress: ["", [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
-      mobileNumber: [""],
+      mobileNumber: ["", [Validators.required, Validators.minLength(10), Validators.maxLength(10),Validators.pattern(MOBILENUMBER_PATTERN)]],
       companyname: [""],
       position: [""],
       address: [""],
@@ -114,7 +114,7 @@ export class FormsComponent implements OnInit, OnDestroy {
       validTo: [""],
       passwordExpiry: [""],
       passwordSince: [""],
-      userName: ["", [Validators.minLength(6), Validators.maxLength(30), Validators.required]],
+      userName: ["", [Validators.minLength(6), Validators.maxLength(30), Validators.required, Validators.pattern(USERNAME_PATTERN)]],
     });
 
     this.route.queryParams.subscribe((params) => {

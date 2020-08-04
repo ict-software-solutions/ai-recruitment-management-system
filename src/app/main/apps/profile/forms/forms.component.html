@@ -103,7 +103,7 @@
                 <mat-label>First Name</mat-label>
                 <input matInput type="text" formControlName="firstName" type="text" [readonly]="viewMode" />
                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                <mat-error *ngIf="form.get('firstName').hasError('required')"> Firstname is required</mat-error>
+                <!-- <mat-error *ngIf="form.get('firstName').hasError('required')"> Firstname is required</mat-error> -->
               </mat-form-field>
               <mat-form-field appearance="outline" fxFlex="34%">
                 <mat-label>Second Name</mat-label>
@@ -115,7 +115,7 @@
                 <mat-label>Last name</mat-label>
                 <input matInput type="text" formControlName="lastName" [readonly]="viewMode" />
                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                <mat-error *ngIf="form.get('lastName').hasError('required')"> Lastname is required</mat-error>
+                <!-- <mat-error *ngIf="form.get('lastName').hasError('required')"> Lastname is required</mat-error> -->
               </mat-form-field>
             </div>
             <div
@@ -169,6 +169,10 @@
                 <input matInput type="tel" formControlName="mobileNumber" [readonly]="viewMode" />
                 <mat-icon matSuffix class="secondary-text">call</mat-icon>
                 <!-- <mat-error>Mobile is required!</mat-error> -->
+                <mat-error
+                *ngIf="!form.get('mobileNumber').hasError('required') && form.get('mobileNumber').hasError('pattern')">
+                Please enter a valid Mobile Number
+              </mat-error>
               </mat-form-field>
             </div>
 
@@ -198,6 +202,10 @@
                 <input matInput type="tel" formControlName="mobileNumber" [readonly]="viewMode"  />
                 <mat-icon matSuffix class="secondary-text">call</mat-icon>
                 <!-- <mat-error>Mobile is required!</mat-error> -->
+                <mat-error
+                *ngIf="!form.get('mobileNumber').hasError('required') && form.get('mobileNumber').hasError('pattern')">
+                Please enter a valid Mobile Number
+              </mat-error>
               </mat-form-field>
             </div>
 
