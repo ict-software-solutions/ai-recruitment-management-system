@@ -259,7 +259,7 @@
 
             <div fxLayout="row" fxLayoutAlign="start center"  fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" style="margin-top: 12px;" *ngIf="showForMyProfile === false">
               <!-- <mat-form-field fxFlex="30"  appearance="outline"> -->
-              <mat-form-field appearance="outline" fxFlex="33%">
+              <mat-form-field appearance="outline" fxFlex="33%" style="width: 220px;">
                 <mat-label>User Type</mat-label>
                 <mat-select [disabled]="viewMode" formControlName="userType">
                   <mat-option *ngFor="let usertype of usertypes" [value]="usertype.value">
@@ -268,7 +268,7 @@
                 </mat-select>
               </mat-form-field>
               <!-- <mat-form-field fxFlex="30"  appearance="outline"> -->
-              <mat-form-field appearance="outline" fxFlex="34%">
+              <mat-form-field appearance="outline" fxFlex="34%" style="width: 220px;">
                 <mat-label>User Role</mat-label>
                 <mat-select [disabled]="viewMode" formControlName="roleId">
                   <mat-option *ngFor="let roleList of roleLists" [value]="roleList.roleId">
@@ -277,14 +277,14 @@
                 </mat-select>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" fxFlex="33%" *ngIf="showForMyProfile === false && userId != 0">
+              <mat-form-field appearance="outline" fxFlex="82%" *ngIf="showForMyProfile === false && userId != 0">
                 <mat-label>Valid From</mat-label>
                 <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom" [readonly]="viewMode" />
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" fxFlex="33%" *ngIf="showForAddEditUser === false && userId === 0">
+              <mat-form-field appearance="outline" fxFlex="82%" *ngIf="showForAddEditUser === false && userId === 0" >
                 <mat-label>User Name</mat-label>
                 <input matInput formControlName="userName" pattern="[a-zA-Z][a-zA-Z0-9_.-]*" required />
                 <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
