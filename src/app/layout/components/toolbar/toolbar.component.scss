@@ -52,3 +52,23 @@ toolbar {
         }
     }
 }
+// .toolbar_img{
+//     margin: -7px 8px -10px -7px;
+//     height:53px;
+//     width:53px;
+//     border-radius:33px
+// }
+@media only screen and (max-width: 480px) {
+    .row1{
+        margin: 2px 8px -10px -7px;
+        height:53px;
+        width:53px;
+        border-radius:33px
+    }
+}
+.row1{
+    margin: 2px 8px -10px -7px;
+    height:53px;
+    width:53px;
+    border-radius:33px
+}

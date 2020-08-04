@@ -35,15 +35,13 @@ contacts-contact-list {
 .mat-column-status{
     flex: 0 -2 50px;
 }
- .mat-header-row {
-    height: 56px!important;
-    }
+
 
         .mat-row {
             position: relative;
             cursor: pointer;
             padding: 8px;
-            height: 48px;
+            
 
             .mat-cell {
                 min-width: 0;
@@ -73,4 +71,15 @@ contacts-contact-list {
         bottom: auto;
     }
 }
+.log-table{
+    height:350px;
+  }
 
+
+.mat-header-row {
+    height: 63px!important;
+  }
+  mat-row {
+    /* min-height: 52px; */
+    height: 52px!important;
+  }

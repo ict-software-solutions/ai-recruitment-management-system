@@ -24,3 +24,145 @@
   font-weight: 600;
   text-align: center;
 }
+// @media only screen and (max-width: 600px) {
+//   .accent {
+//     height: 300px;
+//   }
+// }
+.profile_header{
+  height: 80px; 
+  font-size: bold; 
+  font-size: 17px; 
+  padding: 16px;
+  background-color:#039be5;
+  color:white;
+}
+.info{
+  margin-top: -78px;
+  margin-left: 85px;
+}
+.buttons{
+  float: right;
+  margin-top: -60px;
+  display: flex;
+}
+.edit_buttons{
+  margin-right: 17px;
+}
+.submit-button-save{
+  margin-right: 10px;
+  width: 100px;
+  padding: 5px;
+}
+.submit-button-cancel{
+  margin-right: 10px;
+  width: 100px;
+  padding: 5px;
+}
+.submit-button-add{
+  margin-right: 10px;
+  width: 100px;
+  padding: 5px;
+}
+.submit-button-update{
+  margin-right: 10px;
+  width: 100px;
+  padding: 5px;
+}
+.image_upload{
+  margin-left: -14px;
+  margin-top: -31px;
+  opacity: 0;
+  cursor: pointer;
+  height: 46px;
+}
+.camera_button{
+  margin-left: 32px; 
+  /* margin-left: 32px; */ 
+  margin-top: -27px;
+}
+
+@media only screen and (max-width: 480px) {
+  .profile_header{
+    height: 150px; 
+    font-size: bold; 
+    font-size: 17px; 
+    padding: 16px;
+    background-color:#6699ff;
+    color:white;
+  }
+
+.info{
+  color:white;
+  margin-top: -84px;
+  // margin-bottom: -23px;
+}
+.buttons{
+  // float: right;
+  margin-top: 20px;
+  // display: flex;
+  width:100%;
+}
+
+.submit-button-save{
+  // margin-right: 10px;
+  width:50%;
+  // padding: 3px;
+}
+.submit-button-cancel{
+  // margin-right: 10px;
+  width:50%;
+  // padding: 3px;
+}
+.submit-button-update{
+  // margin-right: 10px;
+  width: 50%;
+  // padding: 5px;
+}
+.submit-button-add{
+  // margin-right: 10px;
+  width:50%;
+  // padding: 5px;
+}
+.edit_button{
+  margin-right: 17px;
+  float:right;
+}
+
+
+
+}
+@media only screen and (max-width: 730px) {
+  .submit-button-save{
+    // margin-right: 10px;
+    width:140px;
+    // padding: 3px;
+  }
+  .submit-button-cancel{
+    // margin-right: 10px;
+    width: 140px;
+    // padding: 3px;
+  }  
+  .submit-button-update{
+    // margin-right: 10px;
+    width: 140px;
+    // padding: 3px;
+  } 
+  .submit-button-add{
+    // margin-right: 10px;
+    width: 140px;
+    // padding: 3px;
+  } 
+}
+// @media only screen and (max-width: 800px){
+//   .submit-button-save{
+//     // margin-right: 10px;
+//     width:120px;
+//     // padding: 3px;
+//   }
+//   .submit-button-cancel{
+//     // margin-right: 10px;
+//     width: 120px;
+//     // padding: 3px;
+//   }  
+// }

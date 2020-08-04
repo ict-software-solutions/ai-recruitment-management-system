@@ -10,6 +10,8 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
+import { BehaviorSubject, fromEvent, merge, Observable} from "rxjs";
+
 // import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 export interface PeriodicElement {
@@ -22,19 +24,21 @@ export interface PeriodicElement {
     oldValue:string;
     newValue:string;
     field:string;
+    whereAriseScreen:string;
+    whereAriseFunction:string;
+    whatEnsueClient:string;
 }
 const ELEMENT_DATA: PeriodicElement[] = [
-    { createdBy: 'Karthiga', screen:'Profile',whereArise: 'Profile-view',level:'', whatEnsue: 'View', field:'User Type',oldValue:'Client',newValue:'Employee', whenOccur: 'Jul 27,2020  08.00.11AM' },
-    { createdBy: 'Tamilselvi balasubramaniyam',screen:'User Management',level:'', whereArise: 'Profile-view', field:'User Role',oldValue:'Client view',newValue:'Candidate view', whatEnsue: 'View',   whenOccur: 'Jul 26,2020  08.00.11AM' },
-    {createdBy: 'Janani', screen:'Role Management',whereArise: 'Role Management', level:'',whatEnsue:'Update',  field:'User Type',oldValue:'Client',newValue:'Candidate', whenOccur: 'Jul 27,2020  08.00.11AM' },
-    { createdBy: 'Karthiga', screen:'Profile',whereArise: 'Profile-update',level:'',whatEnsue: 'update',  field:'User Type',oldValue:'Camdidate',newValue:'Client', whenOccur: 'Jul 27,2020  08.00.11AM' },
-    {createdBy: 'Janani', screen:'Role Management',whereArise: 'Role Management-Add',level:'',whatEnsue: 'view',  field:'User Role',oldValue:'Client',newValue:'Admin', whenOccur: 'Jul 27,2020  08.00.11AM' },
-    { createdBy: 'Karthiga', screen:'Profile',whereArise: 'Profile-view', level:'',whatEnsue: 'view', field:'User Type',oldValue:'Client',newValue:'Candidate',  whenOccur: 'Jul 27,2020  08.00.11AM' },
-    { createdBy: 'Janani', screen:'Role Management',whereArise: 'Role Management-Add',level:'', whatEnsue: 'Add', field:'User Role',oldValue:'Admin',newValue:'Manager',  whenOccur: 'Jul 27,2020  08.00.11AM' },
-    { createdBy: 'Karthiga', screen:'Profile',whereArise: 'Profile-view', level:'',whatEnsue: 'Updated',  field:'User Type',oldValue:'Client',newValue:'350', whenOccur: 'Jul 27,2020  08.00.11AM' },
-    { createdBy: 'Karthiga',screen:'Profile Edit', whereArise: 'Profile-edit', level:'',whatEnsue: 'update', field:'User Role',oldValue:'Candidate view',newValue:'Client View',  whenOccur: 'Jul 27,2020  08.00.11AM' },
-    { createdBy: 'Janani', screen:'Role Management',whereArise: 'Role Management-view', level:'',whatEnsue: 'view',  field:'User Type',oldValue:'Client',newValue:'Client', whenOccur: 'Jul 27,2020  08.00.11AM' },
-    { createdBy: 'End', screen:'Dashboard',whereArise: 'Dashboard', level:'',whatEnsue: 'view',  field:'User Role',oldValue:'Client',newValue:'Client view', whenOccur: 'Jul 27,2020  08.00.11AM' },
+    { createdBy: 'Karthiga', screen:'Profile',whereArise: 'Edit',level:'Error', whereAriseScreen:'My Profile',whereAriseFunction:'Update',whatEnsue: 'View',whatEnsueClient:'email already exists', field:'User name',oldValue:'Karthiga',newValue:'Karthiga-01', whenOccur: 'Jul 27,2020  08.00.11AM' },
+    { createdBy: 'Tamilselvi balasubramaniyam',screen:'Profile',whereArise: 'Edit',level:'Error',whereAriseScreen:'User Management',whereAriseFunction:'Update',whatEnsueClient:'username already exists', field:'Email',oldValue:'thiga@gmail.com',newValue:'kathiga@gmail.com', whatEnsue: 'View',   whenOccur: 'Jul 26,2020  08.00.11AM' },
+    {createdBy: 'Janani', screen:'Profile',whereArise: 'Edit', level:'Error',whereAriseScreen:'Role Management',whereAriseFunction:'Update',whatEnsue:'Update', whatEnsueClient:'newpassword cannot be same as oldpassword', field:'Email',oldValue:'karthiga@gmail.com',newValue:'thiga@gmail.com', whenOccur: 'Jul 27,2020  08.00.11AM' },
+    {createdBy: 'Dinesh', screen:'User Management',whereArise: 'Add', level:'Error',whereAriseScreen:'User Management',whereAriseFunction:'Add',whatEnsue:'Update', whatEnsueClient:'email already exists', field:'User role',oldValue:'Client',newValue:'Admin', whenOccur: 'Jul 27,2020  08.00.11AM' },
+    {createdBy: 'Aravind', screen:'User Management',whereArise: 'Edit', level:'Error',whereAriseScreen:'User Management',whereAriseFunction:'Update',whatEnsue:'Update', whatEnsueClient:'email already exists', field:'User role',oldValue:'Client',newValue:'Client View', whenOccur: 'Jul 27,2020  08.00.11AM' },
+    {createdBy: 'Dinesh', screen:'User Management',whereArise: 'Add', level:'Error',whereAriseScreen:'User Management',whereAriseFunction:'Add',whatEnsue:'Update', whatEnsueClient:'email already exists', field:'User role',oldValue:'Client',newValue:'Admin', whenOccur: 'Jul 27,2020  08.00.11AM' },
+    {createdBy: 'Aravind', screen:'User Management',whereArise: 'Edit', level:'Error',whereAriseScreen:'User Management',whereAriseFunction:'Update',whatEnsue:'Update', whatEnsueClient:'email already exists', field:'User role',oldValue:'Client',newValue:'Client View', whenOccur: 'Jul 27,2020  08.00.11AM' },
+    {createdBy: 'Dinesh', screen:'User Management',whereArise: 'Add', level:'Error',whereAriseScreen:'User Management',whereAriseFunction:'Add',whatEnsue:'Update', whatEnsueClient:'email already exists', field:'User role',oldValue:'Client',newValue:'Admin', whenOccur: 'Jul 27,2020  08.00.11AM' },
+    {createdBy: 'Aravind', screen:'User Management',whereArise: 'Edit', level:'Error',whereAriseScreen:'User Management',whereAriseFunction:'Update',whatEnsue:'Update', whatEnsueClient:'email already exists', field:'User role',oldValue:'Client',newValue:'Client View', whenOccur: 'Jul 27,2020  08.00.11AM' },
+
 ];
 @Component({
     selector: 'chat',
@@ -44,14 +48,15 @@ const ELEMENT_DATA: PeriodicElement[] = [
     animations: fuseAnimations
 })
 export class ChatComponent implements OnInit, OnDestroy {
-    displayedColumns: string[] = ['createdBy', 'whereArise', 'whatEnsue', 'whenOccur'];
-    displayedColumns1:string[]=['createdBy','screen','whereArise','level','whatEnsue','whenOccur'];
-    fieldHistory:string[]=['createdBy','screen','whereArise','field','oldValue','newValue','whenOccur'];
-
+    displayedColumns_audit: string[] = ['createdBy', 'whereAriseScreen', 'whatEnsue', 'whenOccur'];
+    displayedColumns_client:string[]=['createdBy','screen','whereAriseFunction','level','whatEnsueClient','whenOccur'];
+    displayedColumns:string[]=['createdBy','screen','whereArise','field','oldValue','newValue','whenOccur'];
     dataSource = new MatTableDataSource(ELEMENT_DATA);
     dialogRef: any;
     @ViewChild(MatSort)sort:MatSort;
-    @ViewChild(MatPaginator)paginator:MatPaginator;
+    // @ViewChild(MatPaginator)paginator:MatPaginator;
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -60,16 +65,12 @@ export class ChatComponent implements OnInit, OnDestroy {
         public dialog: MatDialog,
         public _matDialog: MatDialog,
         private _fuseSidebarService: FuseSidebarService,
+        // private _matPaginator: MatPaginator
     ) {
         this._unsubscribeAll = new Subject();
     }
-
     ngOnInit(): void {
         this.dataSource.sort=this.sort;
-        // this._chatService.onChatSelected
-        //     .pipe(takeUntil(this._unsubscribeAll))
-        //     .subscribe(chatData => {
-        //     });
     }
     toggleSidebar(name): void
     {
@@ -80,17 +81,9 @@ export class ChatComponent implements OnInit, OnDestroy {
         this._fuseSidebarService.getSidebar(name).toggleOpen();
 
     }
-
-    // toggleSidebarOpen(key): void {
-    //     this._fuseSidebarService.getSidebar(key).toggleOpen();
-    // }
     cancel() {
-        
-        // this.router.navigate([""]);
-        // this.logUserActivity("RESET YOUR PASSWORD", LOG_MESSAGES.CANCEL);
       }
     
-
     ngOnDestroy(): void {
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();

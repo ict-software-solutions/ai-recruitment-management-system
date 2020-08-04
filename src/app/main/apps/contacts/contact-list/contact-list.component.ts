@@ -86,6 +86,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
     getAllRoles() {
         this.authService.getAllRoles(this.user).subscribe(res => {
             this.roleList = res
+            console.log("role",res);
             this.isLoading = false;
             this.dataSource.data = this.roleList;
         },

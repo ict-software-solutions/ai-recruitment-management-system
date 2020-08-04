@@ -128,7 +128,11 @@ e-commerce-products .products-table .mat-column-image {
   flex: 0 1 150px;
 }
 .mat-header-row {
-  min-height: 63px;
+  height: 63px!important;
+}
+mat-row, mat-footer-row {
+  /* min-height: 52px; */
+  height: 52px!important;
 }
 
 

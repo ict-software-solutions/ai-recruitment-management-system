@@ -52,7 +52,7 @@
                         charecters</mat-error>
                     <mat-error
                         *ngIf="registerForm.get('userName').hasError('pattern') && registerForm.get('userName').value.length > 5">
-                        Please enter valid user name use(A-Z,a-z,0-9,/)</mat-error>
+                        Please enter valid user name use(A-Z,a-z,0-9, _ . -)</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">

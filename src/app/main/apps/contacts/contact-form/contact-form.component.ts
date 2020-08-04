@@ -41,15 +41,15 @@ export class ContactsContactFormDialogComponent {
       icon: "dashboard",
     },
     {
-      title: "Calendar",
-      icon: "today",
+      title: "Profile",
+      icon: "edit",
     },
     {
       title: "User Management",
       icon: "person",
     },
     {
-      title: "Edit Profile",
+      title: "Role Management",
       icon: "edit",
     },
   ];

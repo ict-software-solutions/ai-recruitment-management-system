@@ -5,6 +5,7 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import { AppMaterialModule } from 'app/app-material/app-material.module';
 import { ChatComponent } from 'app/main/apps/chat/chat.component';
 import { ChatService } from 'app/main/apps/chat/chat.service';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 const routes: Routes = [
     {
@@ -25,6 +26,7 @@ const routes: Routes = [
         FuseSidebarModule,
         AppMaterialModule,
         FuseSharedModule,
+        MatButtonToggleModule,
     ],
     providers: [
         ChatService
