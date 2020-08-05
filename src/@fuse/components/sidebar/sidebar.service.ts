@@ -42,10 +42,19 @@ export class FuseSidebarService
                 {
                     id: 'chat',
                     title: 'System Activities',
-                    // translate: 'NAV.CHAT',
+               //     translate: 'NAV.CHAT',
                     type: 'item',
                     icon: 'desktop_mac',
                     url: '/apps/chat',
+
+                },
+                {
+                    id: 'configuration',
+                    title: 'Configuration',
+                //    translate: 'NAV.CONFIGURATION',
+                    type: 'item',
+                    icon: 'desktop_mac',
+                    url: '/apps/configuration',
 
                 },
             ]

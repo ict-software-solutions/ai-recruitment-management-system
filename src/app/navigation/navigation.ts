@@ -34,10 +34,20 @@ export const navigation: FuseNavigation[] = [
       {
         id: "chat",
         title: "System Activities",
-        // translate: 'NAV.CHAT',
+      //  translate: 'NAV.CHAT',
         type: "item",
         icon: "desktop_mac",
         url: "/apps/chat",
+        exactMatch: true
+      },
+      {
+        id: "configuration",
+        title: "Configuration",
+       // translate: 'NAV.CONFIGURATION',
+        type: "item",
+        icon: "desktop_mac",
+        url: "/apps/configuration",
+        exactMatch: true
       },
     ],
   },
