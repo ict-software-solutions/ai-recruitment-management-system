@@ -45,7 +45,7 @@ export const navigation: FuseNavigation[] = [
         title: "Configuration",
        // translate: 'NAV.CONFIGURATION',
         type: "item",
-        icon: "desktop_mac",
+        icon: "settings",
         url: "/apps/configuration",
         exactMatch: true
       },

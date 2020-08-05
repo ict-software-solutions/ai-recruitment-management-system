@@ -1,0 +1,25 @@
+<mat-form-field appearance="outline" style="width:250px;" *ngIf="displayData.type=='renew'&& !showDialogData">
+  <mat-label>User Name</mat-label>
+  <input matInput placeholder="User Name">
+  <mat-icon matSuffix>account_circle</mat-icon>
+</mat-form-field>
+<mat-form-field appearance="outline" style="width:250px;"
+  *ngIf="(displayData.type=='renew'||displayData.type=='edit')&& !showDialogData">
+  <mat-label>Password</mat-label>
+  <input matInput placeholder="Password">
+  <mat-icon matSuffix>lock</mat-icon>
+</mat-form-field>
+<div style="text-align: center;font-weight: bold;" *ngIf="showDialogData">
+  <h2>{{displayData.name}}</h2>
+  <p>The default value is {{displayData.value}}</p>
+  <mat-form-field appearance="outline" style="width:250px;">
+    <input type="number" class="form-control" matInput name="value" placeholder="Count" (change)="xxx()"
+      formControlName="value">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions style="padding:20px;">
+  <button mat-raised-button color="basic" style="width:100px;" (click)="cancel()">Cancel</button>
+  <button mat-raised-button class="accent" style="width:100px;" (click)="submit()"
+    *ngIf="!showDialogData">Submit</button>
+  <button mat-raised-button class="accent" style="width:100px;" (click)="save()" *ngIf="showDialogData">Save</button>
+</div>

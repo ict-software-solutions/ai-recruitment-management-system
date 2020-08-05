@@ -405,7 +405,7 @@
               style="margin-top: 12px;"
               *ngIf="showForMyProfile === true && enableEdit"
             >
-              <div fxFlex="23%" class="pr-4" appearance="outline">
+              <!-- <div fxFlex="23%" class="pr-4" appearance="outline">
                 <section class="tp-section">
                   <label class="example-margin">Account Status:</label>&nbsp;
                   <div style="margin-top: 8px;">
@@ -413,7 +413,7 @@
                     <input type="radio" value="locked" name="status" /> Locked
                   </div>
                 </section>
-              </div>
+              </div> -->
               <div fxFlex="25%" class="pr-4" appearance="outline" style="margin-top: 17px;">
                 <mat-checkbox (change)="changePassword($event.checked)" (click)="onValueChange()" formControlName="check"
                   >Change Password</mat-checkbox

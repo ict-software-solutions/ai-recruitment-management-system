@@ -3,8 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { FuseSidebarModule } from '@fuse/components';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { AppMaterialModule } from 'app/app-material/app-material.module';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import { ConfigurationComponent } from './configuration.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { ConfigurationComponent, DialogOverviewExampleDialog } from './configuration.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 const routes: Routes = [
     {
@@ -16,7 +18,8 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [
-        ConfigurationComponent
+        ConfigurationComponent,
+        DialogOverviewExampleDialog
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -25,7 +28,15 @@ const routes: Routes = [
         AppMaterialModule,
         FuseSharedModule,
         MatButtonToggleModule,
+        MatTableModule,
+        MatFormFieldModule
+
+
     ],
+
+    entryComponents: [DialogOverviewExampleDialog,
+    ],
+
     providers: []
 })
 export class ConfigurationModule { }
