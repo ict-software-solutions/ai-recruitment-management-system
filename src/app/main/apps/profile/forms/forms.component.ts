@@ -229,8 +229,6 @@ export class FormsComponent implements OnInit, OnDestroy {
     }
   }
   updateProfile(value) {
-    console.log('this.form',this.form);
-    console.log(value);
     if (this.form.valid) {
       let updateObject = {
         firstName: value.firstName,
@@ -389,7 +387,6 @@ export class FormsComponent implements OnInit, OnDestroy {
     this.userService.publishUserDetail(true);
   }
   changePassword(checked) {
-    console.log('checked', checked);
     this.showPasswordsection = !this.showPasswordsection;
     if (checked === true) {
     if (this.flagForScreen == 'editUser') {
@@ -399,12 +396,10 @@ export class FormsComponent implements OnInit, OnDestroy {
       this.form.controls['newPassword'].setValidators([Validators.minLength(8), Validators.maxLength(15)]);
     }
   } else {
-    console.log('else');
     this.form.controls['password'].clearValidators();
     this.form.controls['password'].updateValueAndValidity();
     this.form.controls['newPassword'].clearValidators();
     this.form.controls['newPassword'].updateValueAndValidity();
-    console.log('else', this.form);
   }
   }
   onValueChange() {

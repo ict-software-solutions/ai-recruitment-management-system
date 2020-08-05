@@ -15,7 +15,6 @@ import { FuseSidebarService } from './sidebar.service';
     selector: 'fuse-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss'],
-    providers: [FuseSidebarService],
     encapsulation: ViewEncapsulation.None
 })
 
@@ -68,8 +67,8 @@ export class FuseSidebarComponent implements OnInit, OnDestroy {
     // Opened changed
     @Output()
     openedChanged: EventEmitter<boolean>;
-    backupNavigation = [];
-    sidemenuArray = [];
+
+    // Private
     private _folded: boolean;
     private _fuseConfig: any;
     private _wasActive: boolean;
@@ -87,22 +86,34 @@ export class FuseSidebarComponent implements OnInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _elementRef: ElementRef,
         private airmsService: AirmsService,
+        private authService: AuthService,
         private _fuseConfigService: FuseConfigService,
         private _fuseMatchMediaService: FuseMatchMediaService,
         private _fuseSidebarService: FuseSidebarService,
         private _mediaObserver: MediaObserver,
-        private authService: AuthService,
-        private changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService,
         private _renderer: Renderer2) {
-        this.navigation = navigation;
-        this._fuseSidebarService.unregister(this.name);
-        // Register the navigation to the service
-        this._fuseNavigationService.register('main', this.navigation);
 
-        // Set the main navigation as our current navigation
-        this._fuseNavigationService.setCurrentNavigation('main');
-        this.changeDetectorRef.detectChanges();
+        // Get default navigation
+        this.navigation = navigation;
+
+        this.navigation = [];
+        if (this.authService.hasUserLoggedIn) {
+            // All async code here
+            // this.navigation = <any[]>this.getSideMenus();
+
+            // Load the navigation
+            // this.navigation = this._fuseNavigationService.getCurrentNavigation();
+            // Mark for check
+            this._changeDetectorRef.markForCheck();
+
+
+            // Register the navigation to the service
+            this._fuseNavigationService.register('main', this.navigation);
+
+            // Set the main navigation as our current navigation
+            this._fuseNavigationService.setCurrentNavigation('main');
+        }
         // Set the defaults
         this.foldedAutoTriggerOnHover = true;
         this.foldedWidth = 64;
@@ -237,14 +248,12 @@ export class FuseSidebarComponent implements OnInit, OnDestroy {
         }
 
         // Unregister the sidebar
-        // this._fuseSidebarService.unregister(this.name);
+        this._fuseSidebarService.unregister(this.name);
 
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
-        this.sidemenuArray = null;
-        this.backupNavigation = null;
-        this.navigation = [];
+        this.navigation = null;
     }
 
     // -----------------------------------------------------------------------------------------------------

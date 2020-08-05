@@ -1,29 +1,22 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
 import { TranslateService } from '@ngx-translate/core';
-import { userDetails } from 'app/models/user-details';
+import { userDetails, usersList } from 'app/models/user-details';
 import { navigation } from 'app/navigation/navigation';
 import { AirmsService } from 'app/service/airms.service';
 import { AuthService } from 'app/service/auth.service';
-import { LOGGED_IN_USER_INFO ,SIGNUP} from 'app/util/constants';
+import { UserService } from 'app/service/user.service';
+import { LOGGED_IN_USER_INFO, SIGNUP } from 'app/util/constants';
 import * as _ from 'lodash';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import { isThisHour } from 'date-fns';
-import { usersList } from 'app/models/user-details';
-import { userInfo } from 'os';
-import {  NavigationExtras } from "@angular/router";
-import { UserService } from 'app/service/user.service';
 declare var $: any;
 
-// import {MatDialog} from '@angular/material/dialog';
-// import { ResetPasswordModule } from 'app/main/pages/authentication/reset-password/reset-password.module';
-// import { ResetPasswordComponent } from 'app/main/pages/authentication/reset-password/reset-password.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -52,7 +45,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     userId:String;
     updateUserInfoSubscription: Subscription;
 
-    // Private
     private _unsubscribeAll: Subject<any>;
     toolbarSubscription: Subscription;
 
@@ -66,7 +58,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private router: Router,
         private userService: UserService
-        // public dialog: MatDialog
     ) {
         this.userStatusOptions = [
             {
@@ -187,25 +178,27 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     getUserInfo() {
-        this.userInfo =this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
-        this.user = this.airmsService.getSessionStorage(SIGNUP);
-        this.userId=this.userInfo.userId;
-        if (this.userInfo.profileImage !== null && this.userInfo.profileImage !== '') {
-            this.userInfo.profileImage = atob(this.userInfo.profileImage);
-            setTimeout(() => {
-            $(".img-thumbnail2").remove();
-              $('#profilePic').append('<img src=' + 'data:image/jpeg;base64' +
-                this.userInfo.profileImage +
-                ' class="img-thumbnail2 img-rounded"  class="toolbar_img"style="margin: -7px 8px -10px -7px;height:53px!important;width:53px!important;border-radius:33px">');
-            }, 100);
-          } else {
-            setTimeout(() => {
-                $(".img-thumbnail2").remove();
-              $('#profilePic').append('<img src="' +
-                '../../assets/images/generic.jpg"' +
-                'class="img-thumbnail2 img-rounded" class="toolbar_img"style="margin: -7px 8px -10px -7px;height:53px!important;width:53px!important;border-radius:33px;">');
-            }, 100);
-          }
+        this.userInfo = this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+        if (this.userInfo !== null) {
+            this.user = this.airmsService.getSessionStorage(SIGNUP);
+            this.userId = this.userInfo.userId;
+            if (this.userInfo.profileImage !== null && this.userInfo.profileImage !== '') {
+                this.userInfo.profileImage = atob(this.userInfo.profileImage);
+                setTimeout(() => {
+                    $(".img-thumbnail2").remove();
+                    $('#profilePic').append('<img src=' + 'data:image/jpeg;base64' +
+                        this.userInfo.profileImage +
+                        ' class="img-thumbnail2 img-rounded"style="margin: -7px 8px -10px -7px;height:53px;width:53px;border-radius:33px">');
+                }, 100);
+            } else {
+                setTimeout(() => {
+                    $(".img-thumbnail2").remove();
+                    $('#profilePic').append('<img src="' +
+                        '../../assets/images/generic.jpg"' +
+                        'class="img-thumbnail2 img-rounded" style="margin: -7px 8px -10px -7px;height:53px;width:53px;border-radius:33px;">');
+                }, 100);
+            }
+        }
     }
     logoutAIRMS() {
         this.authService.logout();

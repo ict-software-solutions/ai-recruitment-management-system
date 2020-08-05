@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { merge, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
+import { navigation } from 'app/navigation/navigation';
 import { AirmsService } from 'app/service/airms.service';
 import { AuthService } from 'app/service/auth.service';
+import { merge, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { FuseSidebarService } from '../sidebar/sidebar.service';
 
 @Component({
@@ -62,7 +62,6 @@ export class FuseNavigationComponent implements OnInit {
                     this.navigation = <any[]>await this.getSideMenus();
                     // Load the navigation
                     // this.navigation = this._fuseNavigationService.getCurrentNavigation();
-                    console.log('check1', this.navigation);
                     // Mark for check
                     this._changeDetectorRef.markForCheck();
                 }
@@ -82,42 +81,38 @@ export class FuseNavigationComponent implements OnInit {
     }
 
     getSideMenus(): any {
-        return new Promise((resolve, reject) => {
-            const userRoles = [
-                { name: 'Admin', pages: ['Dashboards', 'User Management', 'Role Management', 'System Activities', 'Configuration'] },
-                { name: 'Manager', pages: ['Dashboards', 'Role Management', 'System Activities']},
-                { name: 'Tech Support', pages: ['Dashboards', 'User Management', 'Role Management', 'System Activities']},
-                { name: 'Candidate Consultant', pages: ['Dashboards']},
-                { name: 'Client Consultant', pages: ['Dashboards']},
-                { name: 'Client', pages: ['Dashboards']},
-                { name: 'Candidate View', pages: ['Dashboards']},
-                { name: 'Client View', pages: ['Dashboards']},
-                { name: 'Customer', pages: ['Dashboards']}
-            ]
-            this.navigation = [];
-            this.backupNavigation = [];
-            this.backupNavigation = this._fuseSidebarService.navigation;
-            const userRole = this.airmsService.getUserRole();
-            console.log('User Role is ' + userRole);
-            const filterUserRole = userRoles.filter(role => role['name'] === userRole);
-            let filteredChild = [];
-            if (filterUserRole.length > 0) {
-                if (this.backupNavigation[0]['children'] !== undefined) {
-                    const pages = filterUserRole[0]['pages'];
-                    const children = this.backupNavigation[0]['children']
-                    loop1: for (let i = 0; i < pages.length; i++) {
-                        for (let j = 0; j < children.length; j++) {
-                            if (pages[i] === children[j]['title']) {
-                                filteredChild.push(children[j]);
-                                continue loop1;
-                            }
-
+        const userRoles = [
+            { name: 'Admin', pages: ['Dashboards', 'User Management', 'Role Management', 'System Activities', 'Configuration'] },
+            { name: 'Manager', pages: ['Dashboards', 'Role Management', 'System Activities']},
+            { name: 'Tech Support', pages: ['Dashboards', 'User Management', 'Role Management', 'System Activities']},
+            { name: 'Candidate Consultant', pages: ['Dashboards']},
+            { name: 'Client Consultant', pages: ['Dashboards']},
+            { name: 'Client', pages: ['Dashboards']},
+            { name: 'Candidate View', pages: ['Dashboards']},
+            { name: 'Client View', pages: ['Dashboards']},
+            { name: 'Customer', pages: ['Dashboards']}
+        ]
+        this.navigation = [];
+        const backupNavigation = { navValues: navigation[0]['children'] };
+        const userRole = this.airmsService.getUserRole();
+        const filterUserRole = userRoles.filter(role => role['name'] === userRole);
+        let filteredChild = [];
+        if (filterUserRole.length > 0) {
+            if (backupNavigation['navValues'] !== undefined) {
+                const pages = filterUserRole[0]['pages'];
+                const children = backupNavigation['navValues'];
+                loop1: for (let i = 0; i < pages.length; i++) {
+                    for (let j = 0; j < children.length; j++) {
+                        if (pages[i] === children[j]['title']) {
+                            filteredChild.push(children[j]);
+                            continue loop1;
                         }
+
                     }
                 }
             }
-            this.backupNavigation[0]['children'] = filteredChild;
-            resolve(this.backupNavigation);
-        });
+        }
+        backupNavigation['navValues'] = filteredChild;
+        return backupNavigation['navValues'];
     }
 }

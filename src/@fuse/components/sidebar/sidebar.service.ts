@@ -10,58 +10,6 @@ import { FuseSidebarComponent } from './sidebar.component';
 export class FuseSidebarService
 {
 
-    navigation: FuseNavigation[] = [
-        {
-            id: 'applications',
-            title: '',
-            type: 'group',
-            icon: 'apps',
-            children: [
-                {
-                    id: 'dashboards',
-                    title: 'Dashboards',
-                    translate: 'NAV.DASHBOARDS',
-                    type: 'collapsable',
-                    icon: 'dashboard',
-                    url: '/apps/dashboards/analytics'
-                }, {
-                    id: 'products',
-                    title: 'User Management',
-                    icon: 'people',
-                    type: 'item',
-                    url: '/apps/e-commerce/products',
-                    exactMatch: true
-                }, {
-                    id: 'product',
-                    title: 'Role Management',
-                    icon: 'account_circle',
-                    type: 'item',
-                    url: '/apps/contacts',
-                    exactMatch: true
-                },
-                {
-                    id: 'chat',
-                    title: 'System Activities',
-               //     translate: 'NAV.CHAT',
-                    type: 'item',
-                    icon: 'desktop_mac',
-                    url: '/apps/chat',
-
-                },
-                {
-                    id: 'configuration',
-                    title: 'Configuration',
-                //    translate: 'NAV.CONFIGURATION',
-                    type: 'item',
-                    icon: 'desktop_mac',
-                    url: '/apps/configuration',
-
-                },
-            ]
-        }
-
-    ]
-
     
     // Private
     private _registry: { [key: string]: FuseSidebarComponent } = {};
