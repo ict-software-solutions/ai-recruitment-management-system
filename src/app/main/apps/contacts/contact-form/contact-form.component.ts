@@ -19,7 +19,7 @@ import Swal from "sweetalert2";
   encapsulation: ViewEncapsulation.None,
 })
 export class ContactsContactFormDialogComponent {
-  
+
   form: FormGroup;
   rolesDetails: any;
   selected1 = 'active';
@@ -51,6 +51,14 @@ export class ContactsContactFormDialogComponent {
     {
       title: "Role Management",
       icon: "edit",
+    },
+    {
+      title: "System Activities",
+      icon: "desktop_mac",
+    },
+    {
+      title: "Configuration",
+      icon: "settings",
     },
   ];
   todo = [];

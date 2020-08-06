@@ -19,8 +19,8 @@
           <input #filter placeholder="Search" />
         </div>
       </div>
-
-      <button mat-raised-button>
+   
+      <button mat-raised-button  (click)="openDialog({},'resetall')" class="reset-button">
         Reset All
       </button>
     </div>
@@ -65,6 +65,4 @@
       </mat-paginator>
     </div>
   </div>
-
-
 </div>

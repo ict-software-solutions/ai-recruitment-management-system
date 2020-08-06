@@ -8,7 +8,7 @@
     }
 
     .content {
-        background-color: white;
+        // background-color: white;
         display: flex;
         flex: 1 1 auto;
         padding: 32px;
@@ -123,3 +123,10 @@ color:blue;
       }
     }
   }
+  #dashboard-analytics .content {
+    /* background-color: white; */
+    display: flex;
+    flex: 1 1 auto;
+    padding: 32px;
+    min-width: 0;
+}

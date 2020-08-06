@@ -414,12 +414,12 @@
                   </div>
                 </section>
               </div> -->
-              <div fxFlex="25%" class="pr-4" appearance="outline" style="margin-top: 17px;">
+              <div fxFlex="33%" class="pr-4" appearance="outline" style="margin-top: 17px;">
                 <mat-checkbox (change)="changePassword($event.checked)" (click)="onValueChange()" formControlName="check"
                   >Change Password</mat-checkbox
                 >
               </div>
-              <mat-form-field appearance="outline" fxFlex="23%" class="pr-4" *ngIf="showPasswordsection">
+              <mat-form-field appearance="outline" fxFlex="34%" class="pr-4" *ngIf="showPasswordsection">
                 <mat-label>Current Password</mat-label>
                 <input matInput type="password" [type]="hide ? 'password' : 'text'" formControlName="password" required />
                 <mat-icon matSuffix class="secondary-text1" (click)="hide = !hide"> {{ hide ? "visibility_off" : "visibility" }}</mat-icon>
@@ -428,7 +428,7 @@
                 </mat-error> -->
               </mat-form-field>
 
-              <mat-form-field appearance="outline" fxFlex="30%" *ngIf="showPasswordsection">
+              <mat-form-field appearance="outline" fxFlex="33%" *ngIf="showPasswordsection">
                 <mat-label>New Password</mat-label>
                 <input
                   matInput
