@@ -11,6 +11,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import { BehaviorSubject, fromEvent, merge, Observable} from "rxjs";
+import { LOGGED_IN_USER_INFO } from 'app/util/constants';
+import { AirmsService } from 'app/service/airms.service';
 
 // import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
@@ -60,20 +62,24 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     // Private
     private _unsubscribeAll: Subject<any>;
+    userInfo: any;
     constructor(
         private _chatService: ChatService,
         public dialog: MatDialog,
         public _matDialog: MatDialog,
         private _fuseSidebarService: FuseSidebarService,
+        private airmsService: AirmsService
         // private _matPaginator: MatPaginator
     ) {
         this._unsubscribeAll = new Subject();
+        this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
     }
     ngOnInit(): void {
         this.dataSource.sort=this.sort;
     }
     toggleSidebar(name): void
     {
+        console.log('name', name);
         this._fuseSidebarService.getSidebar(name).toggleOpen();
     }
 

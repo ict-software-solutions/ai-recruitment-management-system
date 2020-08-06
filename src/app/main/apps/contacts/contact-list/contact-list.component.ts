@@ -139,8 +139,15 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
             if (result) {
                 this.authService.deleteRole(roleId).subscribe((res) => {
                     this.deleteinfo = res;
+                    if (this.deleteinfo.message === 'Role assigned to user') {
+                        Swal.fire({
+                            title: "Role is assigned to User",
+                            icon: "warning",
+                            confirmButtonText: "Ok",
+                          });
+                    }
+                    this.getAllRoles();
                 });
-                this.getAllRoles();
             }
             this.confirmDialogRef = null;
         });

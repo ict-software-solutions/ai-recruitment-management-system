@@ -59,6 +59,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private router: Router,
         private userService: UserService
     ) {
+        this.WAITING_TIME = 1800;
+        this.TIME_OUT = 300;
         this.userStatusOptions = [
             {
                 title: 'Online',
@@ -136,6 +138,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     reset() {
+        this.WAITING_TIME = 1800;
+            this.TIME_OUT = 300;
         this.idle.setIdle(this.WAITING_TIME);
         this.idle.setTimeout(this.TIME_OUT);
         this.idle.watch();
@@ -151,9 +155,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT5Z6V4WR3CdGzUrLsipzkE4X8uyJR9_RFbhpgGA0tWAezR2_O9&usqp=CAU',
             imageWidth: 50,
             imageHeight: 100,
-            confirmButtonText: 'Extend',
-            cancelButtonText: 'No',
-        });
+            showCancelButton: true,
+            cancelButtonText: 'Cancel',
+            confirmButtonText: 'Extend', 
+        })
+        .then((result) => {
+            if (result.dismiss === Swal.DismissReason.cancel) {
+                this.logoutAIRMS();
+            }
+            this.WAITING_TIME = 1800;
+            this.TIME_OUT = 300;
+          });
     }
     ngOnInit(): void {
         this.updatedUserInfo();

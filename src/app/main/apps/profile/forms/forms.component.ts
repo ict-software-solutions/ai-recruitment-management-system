@@ -97,7 +97,7 @@ export class FormsComponent implements OnInit, OnDestroy {
       middleName: [""],
       lastName: ["", Validators.required],
       emailAddress: ["", [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
-      mobileNumber: ["", [Validators.required, Validators.minLength(10), Validators.maxLength(10),Validators.pattern(MOBILENUMBER_PATTERN)]],
+      mobileNumber: ["", [Validators.required, Validators.minLength(10), Validators.maxLength(14),Validators.pattern(MOBILENUMBER_PATTERN)]],
       companyname: [""],
       position: [""],
       address: [""],

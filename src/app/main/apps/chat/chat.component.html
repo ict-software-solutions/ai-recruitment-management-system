@@ -84,7 +84,7 @@
 
        
         </mat-tab>
-        <mat-tab label="Audit Log">
+        <mat-tab label="Audit Log" *ngIf="userInfo.roleName === 'Admin' || userInfo.roleName === 'Manager'">
           <mat-table [dataSource]="dataSource"class="log-table" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
 
             <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
@@ -126,7 +126,7 @@
         </ul>
       </div>
         </mat-tab>
-        <mat-tab label="Client Machine Log">
+        <mat-tab label="Client Machine Log" *ngIf="userInfo.roleName === 'Tech Support'">
           <mat-table [dataSource]="dataSource"class="log-table" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
             <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
@@ -183,13 +183,13 @@
 
 
  
-  <!-- <fuse-sidebar class="sidebar" name="project-dashboard-right-sidebar-1" position="right">
+  <fuse-sidebar class="sidebar" name="project-dashboard-right-sidebar-1" position="right">
     <div class="content">
       <div style="padding: 18px;">
         <div class="header1" style="display: inline;">
           <div class="title1">Filter By</div>
           <button mat-icon-button class="sidebar-toggle"
-            (click)="toggleSidebarClosed()">
+            (click)="toggleSidebarClosed('project-dashboard-right-sidebar-1')">
             <mat-icon class="secondary-text">arrow_forward</mat-icon>
           </button>
         </div>
@@ -230,5 +230,5 @@
         <div></div>
       </div>
     </div>
-  </fuse-sidebar> -->
+  </fuse-sidebar>
 </div>
