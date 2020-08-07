@@ -170,28 +170,57 @@ form {
     font-size: 19px;
   }
 }
-
+.space {
+  margin-right: 8px;
+}
+.space {
+  margin-left: 8px;
+}
+.rolename {
+  margin-right: 8px;
+}
+.status {
+  margin-left: 8px;
+}
 @media only screen and (max-width: 480px) {
-  .add-all-btn {
-    // float: right;
-    top: -26px;
-    text-align: center;
+  .space {
+    margin-right: 0px;
   }
-  mat-icon {
-    font-size: 10px;
+  .space {
+    margin-left: 0px;
+  }
+  .status {
+    margin-left: 0px;
+  }
+  .rolename {
+    margin-right: 0px;
+  }
+  .button_align {
+    margin-top: 20px;
+  }
+  .add-all-btn {
+    float: right;
+    top: -21px;
+    right: 20px;
+
+    mat-icon {
+      font-size: 19px;
+    }
   }
   .example-card {
-    height: 73px;
+    height: 42px;
     padding: 12px 16px !important;
-    margin: 0px 30px 15px 30px;
-    margin-top: 18px !important;
+    margin: 30px 30px 15px 30px;
     cursor: move;
   }
-
   .card-title {
-    /* padding-left: 51px; */
+    padding-left: 20px;
     margin: 0px 4px;
-    font-size: 13px;
-    margin-top: -92px;
+    font-size: 10px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .button_align {
+    margin-top: 20px;
   }
 }
