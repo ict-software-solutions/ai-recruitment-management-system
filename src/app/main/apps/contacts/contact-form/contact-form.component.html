@@ -69,10 +69,10 @@
                 <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[doneList]"
                   class="example-list" (cdkDropListDropped)="drop($event)">
                   <h6 class="box-title">Unmapped Screens</h6>
-                  <button mat-button color="primary" class="add-all-btn" (click)="addScreen()">
+                  <button mat-button color="primary" class="add-all-btn" (click)="addAllScreenMapping()">
                     <mat-icon class="mr-6">arrow_forward</mat-icon>Add All
                   </button>
-                  <mat-card class="example-card" *ngFor="let item of todo" cdkDrag>
+                  <mat-card class="example-card" *ngFor="let item of todo" cdkDrag >
                     <h6 class="card-title">
                       <mat-icon class="mr-6 fs-small">{{ item.icon }}</mat-icon>{{ item.title }}
                     </h6>
@@ -87,10 +87,10 @@
                 <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]"
                   class="example-list" (cdkDropListDropped)="drop($event)">
                   <h6 class="box-title">Mapped Screens</h6>
-                  <button mat-button color="primary" class="add-all-btn" (click)="removeScreen()">
+                  <button mat-button color="primary" class="add-all-btn" (click)="removeAllScreenMapping()">
                     <mat-icon class="mr-6">arrow_backward</mat-icon>Remove All
                   </button>
-                  <mat-card class="example-card" *ngFor="let item of done" cdkDrag>
+                  <mat-card class="example-card" *ngFor="let item of done" cdkDrag >
                     <h6 class="card-title">
                       <mat-icon class="mr-6 fs-small">{{ item.icon }}</mat-icon>{{ item.title }}
                     </h6>

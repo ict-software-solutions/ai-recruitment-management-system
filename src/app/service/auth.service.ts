@@ -10,16 +10,14 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient) { }
 
-  signup(value) {
-    const param = {
-      "userType": value.userType,
-      "firstName": value.firstName,
-      "userName": value.userName,
-      "lastName": value.lastName,
-      "emailAddress": value.emailAddress,
-      "password": value.password
+  signup(value, userId) {
+    if (value.userId === 0) {
+      return this.httpClient.post(apiURL.SIGNUP_URL, value)
     }
-    return this.httpClient.post(apiURL.SIGNUP_URL, param)
+    else {
+      let url = apiURL.USER + "/" + value.userId
+      return this.httpClient.put(url, value)
+    }  
   }
 
   login(param) {

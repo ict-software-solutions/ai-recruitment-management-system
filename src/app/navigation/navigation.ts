@@ -8,8 +8,8 @@ export const navigation: FuseNavigation[] = [
     icon: "apps",
     children: [
       {
-        id: "dashboards",
-        title: "Dashboards",
+        id: "dashboard",
+        title: "Dashboard",
         translate: "NAV.DASHBOARDS",
         type: "collapsable",
         icon: "dashboard",

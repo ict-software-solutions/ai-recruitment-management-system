@@ -11,7 +11,7 @@ import { BehaviorSubject, fromEvent, merge, Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/internal/operators";
 import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
 import { AuthService } from "app/service/auth.service";
-import { GET_ALL_USER, SIGNUP } from "app/util/constants";
+import { GET_ALL_USER, SIGNUP, LOG_LEVELS, LOG_MESSAGES } from "app/util/constants";
 import { AirmsService } from "app/service/airms.service";
 import { Subscription } from "rxjs";
 import { UserService } from "app/service/user.service";
@@ -25,6 +25,7 @@ import { Product } from "../addusers/addusers.model";
 import { userDetails } from "app/models/user-details";
 import { LOGGED_IN_USER_INFO } from "app/util/constants";
 import { ActivatedRoute } from "@angular/router";
+import { LogService } from "app/service/shared/log.service";
 
 @Component({
   selector: "e-commerce-products",
@@ -39,11 +40,6 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
   @ViewChild("filter", { static: true }) filter: ElementRef;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   dataSource = new MatTableDataSource<any>();
-  dataSource1 = new MatTableDataSource<any>();
-  // dataSource : any| FilesDataSource | null ;
-  // @ViewChild("sort") sort: MatSort;
-  // @ViewChild("paginator") paginator: MatPaginator;
-  // userDetailSubscription: Subscription;
   private unsubscribeAll: Subject<any>;
   userDetailSubscription: Subscription;
   $: any;
@@ -67,16 +63,14 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
-    // public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService,
     private airmsService: AirmsService,
     private userManagementService: UserManagementService,
-    public matDialog: MatDialog
+    public matDialog: MatDialog,
+    public logService: LogService
   ) {
-    this.unsubscribeAll = new Subject();
-    this.user1 = airmsService.getSessionStorage(SIGNUP);
     this.unsubscribeAll = new Subject();
   }
 
@@ -84,24 +78,13 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
     this.userInfo = this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
     this.user = this.airmsService.getSessionStorage(SIGNUP);
     this.userName = this.user.userName;
-    //We want to use this code for mat sort and filter  (important)
-
-    /*this.dataSource = new FilesDataSource(this.userManagementService, this.paginator, this.sort);
-        fromEvent(this.filter.nativeElement, 'keyup').pipe(
-            takeUntil(this.unsubscribeAll),
-            debounceTime(150),
-            distinctUntilChanged()
-        ).subscribe(() => {
-            if (!this.dataSource) { return; }
-            this.dataSource.filter = this.filter.nativeElement.value;
-        });*/
     this.getAllUsers();
-    this.getAllInfo();
   }
 
   getAllUsers() {
-    this.authService.getAllUsers(this.user1).subscribe(
+    this.authService.getAllUsers(this.user).subscribe(
       (res: any) => {
+        this.logUserActivity("User Management Page", LOG_MESSAGES.SUCCESS);
         res.forEach((user) => {
           if (user["profileImage"] !== null && user["profileImage"] !== "") {
             user["profileImage"] = atob(user["profileImage"]);
@@ -112,47 +95,56 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
 
         this.dataSource.data = this.details;
       },
-      (error) => (this.isLoading = false)
+      (error) => {this.isLoading = false;
+        this.logUserActivity("User Management Page", LOG_MESSAGES.FAILURE);
+        this.logService.logError(LOG_LEVELS.ERROR, "User Management page", "On Fetching Users", JSON.stringify(error));
+      }
     );
   }
 
-  onSelect(selectedItem: any) {
-    console.log(
-      "selectedItemId",
-      selectedItem.userId,
-      selectedItem.firstName,
-      selectedItem.lastName,
-      selectedItem.userType,
-      selectedItem.roles.roleName
-    );
-  }
+  // onSelect(selectedItem: any) {
+  //   console.log(
+  //     "selectedItemId",
+  //     selectedItem.userId,
+  //     selectedItem.firstName,
+  //     selectedItem.lastName,
+  //     selectedItem.userType,
+  //     selectedItem.roles.roleName
+  //   );
+  // }
 
-  getAllInfo() {
-    this.authService.getAllInfo(this.user1).subscribe((res) => {
-      this.userData = res;
-      this.dataSource1.data = this.userData;
-    });
-  }
+  // getAllInfo() {
+  //   this.authService.getAllInfo(this.user1).subscribe((res) => {
+  //     this.userData = res;
+  //     this.dataSource1.data = this.userData;
+  //   });
+  // }
 
   onDelete(userId): void {
+    this.logUserActivity("Delete User", LOG_MESSAGES.CLICK);
     this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
       disableClose: false,
     });
     this.confirmDialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?";
     this.confirmDialogRef.afterClosed().subscribe((result) => {
-
       if (result) {
-        this.authService.deleteUser(userId).subscribe((res) => {
-          this.deleteinfo = res;
-        });
+        this.authService.deleteUser(userId).subscribe(
+          (res) => {
+            this.deleteinfo = res;
+            this.logUserActivity("Delete User", LOG_MESSAGES.SUCCESS);
+          },
+          (error) => {
+            this.logUserActivity("Delete User", LOG_MESSAGES.FAILURE);
+            this.logService.logError(LOG_LEVELS.ERROR, "User Management page", "On Try delete User", JSON.stringify(error));
+          }
+        );
         this.getAllUsers();
       }
-
       this.confirmDialogRef = null;
     });
   }
 
-  onTap(userId, userType) {
+  editUser(userId, userType) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
         userId: userId,
@@ -161,6 +153,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
       },
       skipLocationChange: true,
     };
+    this.logUserActivity("Edit User Page", LOG_MESSAGES.CLICK);
     this.router.navigate(["/apps/profile/forms"], navigationExtras);
   }
   addUser() {
@@ -170,6 +163,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
       },
       skipLocationChange: true,
     };
+    this.logUserActivity("My Profile Page", LOG_MESSAGES.CLICK);
     this.router.navigate(["/apps/profile/forms"], navigationExtras);
   }
   addRole() {
@@ -179,7 +173,11 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
         viewMode: false,
       },
     };
+    this.logUserActivity("Add User Page", LOG_MESSAGES.CLICK);
     this.router.navigate(["/apps/profile/forms"], navigationExtras);
+  }
+  logUserActivity(from, value) {
+    this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
   }
   connect(): Observable<any> {
     return this.authService.getAllUsers(Object);
@@ -191,8 +189,6 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    // this.dataSourceGifts.sort = this.sortGifts;
-    // this.dataSourceGifts.paginator = this.paginatorGifts;
   }
 
   ngOnDestroy() {
@@ -204,7 +200,6 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
     this.sort == null;
     this.filter = null;
     this.confirmDialogRef = null;
-    // this.dialog = null;
     this.userManagementService = null;
     this.matDialog = null;
   }
@@ -298,5 +293,5 @@ export class FilesDataSource extends DataSource<any> {
       return (valueA < valueB ? -1 : 1) * (this._matSort.direction === "asc" ? 1 : -1);
     });
   }
-  disconnect(): void { }
+  disconnect(): void {}
 }

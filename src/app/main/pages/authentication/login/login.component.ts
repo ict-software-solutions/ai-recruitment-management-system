@@ -122,6 +122,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               lastName: userDetails["lastName"],
               roleId: userDetails["roles"]["roleId"],
               roleName: userDetails["roles"]["roleName"],
+              screenMapping: userDetails['roles']['screenMapping'],
               lastLogin: loginInfo["lastLogin"]
             };
             this.airmsService.setSessionStorage(LOGGED_IN_USER_INFO, user_info);

@@ -10,6 +10,9 @@ import { AuthService } from "app/service/auth.service";
 import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
 import { NavigationExtras, Router } from '@angular/router';
 import Swal from "sweetalert2";
+import { Screens, Status } from 'app/util/configuration';
+import { AirmsService } from 'app/service/airms.service';
+import { LOGGED_IN_USER_INFO } from 'app/util/constants';
 
 
 @Component({
@@ -19,7 +22,7 @@ import Swal from "sweetalert2";
   encapsulation: ViewEncapsulation.None,
 })
 export class ContactsContactFormDialogComponent {
-
+  
   form: FormGroup;
   rolesDetails: any;
   selected1 = 'active';
@@ -35,40 +38,10 @@ export class ContactsContactFormDialogComponent {
     { value: "InActive" },
     { value: "Candidate" }
   ];
-  totScreens = [
-    {
-      title: "Dashboard",
-      icon: "dashboard",
-    },
-    {
-      title: "Profile",
-      icon: "edit",
-    },
-    {
-      title: "User Management",
-      icon: "person",
-    },
-    {
-      title: "Role Management",
-      icon: "edit",
-    },
-    {
-      title: "System Activities",
-      icon: "desktop_mac",
-    },
-    {
-      title: "Configuration",
-      icon: "settings",
-    },
-  ];
+  mapScreens = Screens;
   todo = [];
   done = [];
-
-  screens = ["dashboard", "Calander", "User Management", "Edit Profile"];
-  status = [
-    { value: "Activated" },
-    { value: "Locked" },
-  ]
+  status = Status;
   items = [];
   selectedItems: Item[];
   action: string;
@@ -89,25 +62,16 @@ export class ContactsContactFormDialogComponent {
   toggle5 = true;
   active: boolean;
   newRole = true;
-
+  userInfo: any;
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private authService: AuthService,
     private router: Router,
+    private airmsService: AirmsService
   ) {
-    this.todo = this.totScreens;
-    const _data = this.route.snapshot.params;
-    this.action = _data.action;
-    if (this.action === "edit") {
-      this.dialogTitle = "Edit Role";
-      this.contact = _data.contact;
-
-    } else {
-      this.dialogTitle = "New Role";
-      this.contact = new Contact({});
-      this.newRole = false;
-    }
+    this.todo = this.mapScreens;
+    this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -123,7 +87,9 @@ export class ContactsContactFormDialogComponent {
       roleName: [""],
       active: [],
       roleDescription: [""],
-      screen: [""]
+      screen: [""],
+      createdBy: [""],
+      modifiedBy: [""]
     });
     this.route.queryParams.subscribe((params) => {
       if (params.roleId != undefined) {
@@ -139,17 +105,49 @@ export class ContactsContactFormDialogComponent {
     this.authService.getAllRolesInfo(roleId).subscribe((res) => {
       this.rolesDetails = res;
       this.contactForm.patchValue(res);
+      if (this.rolesDetails.screenMapping.length > 0) {
+        console.log('screens value', this.rolesDetails.screenMapping);
+        let screenMap = this.rolesDetails.screenMapping;
+       console.log('screenMap', screenMap, this.mapScreens);
+       
+       var filterResDone = this.mapScreens.filter(function (el) {
+          return screenMap.indexOf(el.title) < 0; 
+        });
+        var filterRes = this.mapScreens.filter(function (el) {
+          return screenMap.indexOf(el.title) >= 0; 
+        });
+       console.log('filteredArray', filterRes, 'filterResDone', filterResDone);
+        this.todo = filterResDone;
+        this.done = filterRes;
+      } else {
+        this.todo = Screens;
+      }
     });
   }
   updateRole(value) {
+    console.log('value', value, this.done);
+    let items = [];
+    if (this.done.length > 0) {
+      for (let m = 0; m < this.done.length; m++) {
+        items.push(this.done[m].title);
+      }
+    }
+    console.log('items', items);
     this.errorMessage = '';
     this.message = '';
     let updateObject = {
       roleName: value.roleName,
       roleDescription: value.roleDescription,
       active: value.active,
-      roleId: this.roleId
+      roleId: this.roleId,
+      screenMapping: items
     };
+    if (this.roleId === 0) {
+      updateObject['createdBy'] = this.userInfo.firstName;
+    } else {
+      updateObject['modifiedBy'] = this.userInfo.firstName;
+    }
+    console.log('updateObj', updateObject);
     this.authService.updateRolesInfo(updateObject).subscribe(
       (res) => {
         Swal.fire({
@@ -180,65 +178,17 @@ export class ContactsContactFormDialogComponent {
   canceledit() {
     this.router.navigate(["/apps/contacts"]);
   }
-  select(value: any) {
-    this.items.push(value);
-  }
-
-  unselect(item: any) {
-    this.screens.push(item);
-    item.selected = true;
-    if (this.selectedItems.length === this.screens.length) {
-      this.compareResult();
-    }
-  }
-  addScreen() {
+  addAllScreenMapping() {
     this.todo = [];
     this.done = [];
-    this.done = this.totScreens;
+    this.done = Screens;
   }
-  removeScreen() {
+  removeAllScreenMapping() {
     this.todo = [];
     this.done = [];
-    this.todo = this.totScreens;
+    this.todo = Screens;
   }
 
-  shuffleArray(arr) {
-    for (let c = arr.length - 1; c > 0; c--) {
-      let b = Math.floor(Math.random() * (c + 1));
-      let a = arr[c];
-      arr[c] = arr[b];
-      arr[b] = a;
-    }
-    return arr;
-  }
-  compareResult() {
-    if (this.selectedItems.map((x) => x.name).toString() === this.screens.toString()) {
-      alert("They are in the same order");
-    } else {
-      alert("They have different order");
-    }
-  }
-
-  selectdashboard() {
-    this.selectdash = !this.selectdash;
-    this.toggle1 = !this.toggle1;
-  }
-  selectcalander() {
-    this.selectcal = !this.selectcal;
-    this.toggle2 = !this.toggle2;
-  }
-  selectProfile() {
-    this.selectpro = !this.selectpro;
-    this.toggle3 = !this.toggle3;
-  }
-  userManagement() {
-    this.selectuser = !this.selectuser;
-    this.toggle4 = !this.toggle4;
-  }
-  rolemanagement() {
-    this.selectrole = !this.selectrole;
-    this.toggle5 = !this.toggle5;
-  }
 }
 
 interface Item {

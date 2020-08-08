@@ -6,7 +6,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { takeUntil } from "rxjs/operators";
 import { Subscription } from "rxjs";
 import { userDetails } from "app/models/user-details";
-import { LOGGED_IN_USER_INFO, SIGNUP, EMAIL_PATTERN, IP_ADDRESS, USERNAME_PATTERN, MOBILENUMBER_PATTERN } from "app/util/constants";
+import { LOGGED_IN_USER_INFO, SIGNUP, EMAIL_PATTERN, IP_ADDRESS, USERNAME_PATTERN, MOBILENUMBER_PATTERN, LOG_LEVELS } from "app/util/constants";
 import { AirmsService } from "app/service/airms.service";
 import { DatePipe } from "@angular/common";
 import Swal from "sweetalert2";
@@ -16,6 +16,7 @@ import { UserService } from "app/service/user.service";
 import { userInfo } from "os";
 import { AuthService } from "app/service/auth.service";
 import { __param } from "tslib";
+import { LogService } from 'app/service/shared/log.service';
 declare var $: any;
 
 @Component({
@@ -75,7 +76,8 @@ export class FormsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private airmsService: AirmsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private logService: LogService
   ) {
     this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
     this.user = airmsService.getSessionStorage(SIGNUP);
@@ -97,7 +99,7 @@ export class FormsComponent implements OnInit, OnDestroy {
       middleName: [""],
       lastName: ["", Validators.required],
       emailAddress: ["", [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
-      mobileNumber: ["", [Validators.required, Validators.minLength(10), Validators.maxLength(14),Validators.pattern(MOBILENUMBER_PATTERN)]],
+      mobileNumber: ["", [Validators.minLength(10), Validators.maxLength(14), Validators.pattern(MOBILENUMBER_PATTERN)]],
       companyname: [""],
       position: [""],
       address: [""],
@@ -125,7 +127,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.showForAddEditUser = false;
         this.userId = 0;
         this.flagForScreen = "addUser";
-        this.form.controls['password'].setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(15)]);
+        this.form.controls["password"].setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(15)]);
       } else if (params["userId"] && params["userType"]) {
         /** Edit User */
         this.Edit();
@@ -215,7 +217,7 @@ export class FormsComponent implements OnInit, OnDestroy {
       if (this.userInfo.emailAddress !== email) {
         Swal.fire({
           title: "Are you sure?",
-          text: "You're trying to change the Email, So further details will be sent to this new mail Id",
+          text: "You're trying to change Mail Id, So further notifications will be sent to you're new Mail Id",
           icon: "warning",
           showCancelButton: true,
           confirmButtonText: "Yes",
@@ -272,15 +274,15 @@ export class FormsComponent implements OnInit, OnDestroy {
         updateObject["password"] = value.password;
       }
 
-      this.updateProfileSubscription = this.authService.updateProfileDetails(updateObject, this.user).subscribe(
+      this.updateProfileSubscription = this.authService.signup(updateObject, this.user).subscribe(
         (res) => {
           if (this.userId === Number(this.userInfo.userId)) {
-            if (this.form.get('emailAddress').dirty || this.form.get('userName').dirty || this.form.get('newPassword').dirty) {
+            if (this.form.get("emailAddress").dirty || this.form.get("userName").dirty || this.form.get("newPassword").dirty) {
               Swal.fire({
                 position: "center",
                 icon: "warning",
                 title: "You have made changes in Email or Username or Password",
-                confirmButtonText: "Ok"
+                confirmButtonText: "Ok",
               });
               this.logoutAIRMS();
             } else {
@@ -311,8 +313,8 @@ export class FormsComponent implements OnInit, OnDestroy {
             });
           }
         },
-
         (error) => {
+          this.logService.logError(LOG_LEVELS.ERROR, "Add/User page", "On updating user", JSON.stringify(error));
           if (error.error.message === "old password does not match") {
             this.errorMessage = error.error.message;
             this.oldPasswordWrong = true;
@@ -389,18 +391,18 @@ export class FormsComponent implements OnInit, OnDestroy {
   changePassword(checked) {
     this.showPasswordsection = !this.showPasswordsection;
     if (checked === true) {
-    if (this.flagForScreen == 'editUser') {
-      this.form.controls['newPassword'].setValidators([Validators.minLength(8), Validators.maxLength(15)]);
-    } else if (this.flagForScreen == 'myProfile') {
-      this.form.controls['password'].setValidators([Validators.required]);
-      this.form.controls['newPassword'].setValidators([Validators.minLength(8), Validators.maxLength(15)]);
+      if (this.flagForScreen == "editUser") {
+        this.form.controls["newPassword"].setValidators([Validators.minLength(8), Validators.maxLength(15)]);
+      } else if (this.flagForScreen == "myProfile") {
+        this.form.controls["password"].setValidators([Validators.required]);
+        this.form.controls["newPassword"].setValidators([Validators.minLength(8), Validators.maxLength(15)]);
+      }
+    } else {
+      this.form.controls["password"].clearValidators();
+      this.form.controls["password"].updateValueAndValidity();
+      this.form.controls["newPassword"].clearValidators();
+      this.form.controls["newPassword"].updateValueAndValidity();
     }
-  } else {
-    this.form.controls['password'].clearValidators();
-    this.form.controls['password'].updateValueAndValidity();
-    this.form.controls['newPassword'].clearValidators();
-    this.form.controls['newPassword'].updateValueAndValidity();
-  }
   }
   onValueChange() {
     this.confirmDialogs = true;

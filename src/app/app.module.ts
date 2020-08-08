@@ -24,7 +24,7 @@ import { TokenInterceptor } from './service/shared/token.interceptor';
 
 const appRoutes: Routes = [
     {
-        path: "",
+        path: "login",
         loadChildren: () => import("./main/pages/authentication/login/login.module").then((m) => m.LoginModule)
     }, {
         path: "apps",
@@ -35,7 +35,7 @@ const appRoutes: Routes = [
         loadChildren: () => import("./main/pages/pages.module").then((m) => m.PagesModule)
     }, {
         path: "**",
-        redirectTo: "",
+        redirectTo: "login",
     }
 ];
 

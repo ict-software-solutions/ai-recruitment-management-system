@@ -10,11 +10,13 @@ import { navigation } from 'app/navigation/navigation';
 import { AirmsService } from 'app/service/airms.service';
 import { AuthService } from 'app/service/auth.service';
 import { UserService } from 'app/service/user.service';
-import { LOGGED_IN_USER_INFO, SIGNUP } from 'app/util/constants';
+import { LOGGED_IN_USER_INFO, SIGNUP, LOG_LEVELS, LOG_MESSAGES } from 'app/util/constants';
 import * as _ from 'lodash';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { url } from 'inspector';
+import { LogService } from 'app/service/shared/log.service';
 declare var $: any;
 
 @Component({
@@ -57,7 +59,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private keepalive: Keepalive,
         private authService: AuthService,
         private router: Router,
-        private userService: UserService
+        private userService: UserService,
+        private logService: LogService
     ) {
         this.WAITING_TIME = 1800;
         this.TIME_OUT = 300;
@@ -139,7 +142,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     reset() {
         this.WAITING_TIME = 1800;
-            this.TIME_OUT = 300;
+        this.TIME_OUT = 300;
         this.idle.setIdle(this.WAITING_TIME);
         this.idle.setTimeout(this.TIME_OUT);
         this.idle.watch();
@@ -149,6 +152,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     showSessionLogoutDialog() {
+        if (!this.router.url.includes('/login')) {
         Swal.fire({
             title: '<strong>Session expiring in 5 mins</strong>',
             text: 'Do you want to continue?',
@@ -166,6 +170,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.WAITING_TIME = 1800;
             this.TIME_OUT = 300;
           });
+        }
     }
     ngOnInit(): void {
         this.updatedUserInfo();
@@ -215,6 +220,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     logoutAIRMS() {
         this.authService.logout();
         this.router.navigate(['']);
+        this.logUserActivity("Logout", LOG_MESSAGES.CLICK);
     }
 
     unsubscribe(subscription: Subscription) {
@@ -233,8 +239,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             },
             skipLocationChange: true
         };
+        this.logUserActivity("My Profile Page", LOG_MESSAGES.CLICK);
         this.router.navigate(['/apps/profile/forms'], navigationExtras);
     }
+    logUserActivity(from, value) {
+        this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
+      }
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this.unsubscribe(this.toolbarSubscription);
