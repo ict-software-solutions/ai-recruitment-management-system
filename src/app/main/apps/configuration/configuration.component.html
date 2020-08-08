@@ -1,7 +1,6 @@
 <div id="configuration" class="page-layout carded fullwidth inner-scroll">
   <div class="top-bg accent"></div>
   <div class="center">
-
     <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
       fxLayoutAlign.gt-sm="space-between center">
       <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
@@ -12,43 +11,52 @@
           Configuration
         </span>
       </div>
-
       <div class="search-wrapper mx-32 mx-md-0">
         <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
           <mat-icon>search</mat-icon>
           <input #filter placeholder="Search" />
         </div>
       </div>
-   
-      <button mat-raised-button  (click)="openDialog({},'resetall')" class="reset-button">
+      <button mat-raised-button  (click)="openDialog({},'resetall')" class="reset-button" class="resetall_button">
         Reset All
       </button>
     </div>
     <div class="content-card">
-      <mat-table [dataSource]="dataSource" class="log-table" matSort [@animateStagger]="{ value: '50' }"
-        fusePerfectScrollbar>
+      <div class="example-container">
+      <mat-table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }" 
+        fusePerfectScrollbar > 
 
         <ng-container matColumnDef="name" style="text-overflow:ellipsis;overflow: hidden;">
           <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+          <mat-cell *matCellDef="let element">
+            <span class="mobile-label">Name:</span>
+            {{ element.name }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="screenUsed" style="text-overflow: ellipsis;">
           <mat-header-cell *matHeaderCellDef>Screen Used</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.screenUsed }}</mat-cell>
+          <mat-cell *matCellDef="let element">
+            <span class="mobile-label">Screen Used:</span>
+            {{ element.screenUsed }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="function" style="text-overflow: ellipsis;">
           <mat-header-cell *matHeaderCellDef>Function</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.function }}</mat-cell>
+          <mat-cell *matCellDef="let element">
+            <span class="mobile-label">Function:</span>
+            {{ element.function }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="value" style="text-overflow: ellipsis;">
           <mat-header-cell *matHeaderCellDef>Value</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.value }}</mat-cell>
+          <mat-cell *matCellDef="let element">
+            <span class="mobile-label">Value:</span>
+            {{ element.value }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="action" style="text-overflow: ellipsis;">
           <!-- <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
               <mat-cell *matCellDef="let element">{{ element.action }}</mat-cell> -->
           <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action </mat-header-cell>
           <mat-cell *matCellDef="let element" style="justify-content: center;">
+            <span class="mobile-label">Action</span>
+
             <button mat-icon-button style="color: #42a1f5;" (click)="openDialog(element,'edit')">
               <mat-icon>edit</mat-icon>
             </button>
@@ -61,6 +69,7 @@
         <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns" class="product"></mat-row>
       </mat-table>
+      </div>
       <mat-paginator #paginator [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]">
       </mat-paginator>
     </div>

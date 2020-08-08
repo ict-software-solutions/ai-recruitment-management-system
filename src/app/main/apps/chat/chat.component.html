@@ -2,179 +2,196 @@
   <div class="top-bg accent"></div>
   <div class="center">
     <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
-    fxLayoutAlign.gt-sm="space-between center">
-    <div class="head">
-    <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center" style="    margin-top: -63px;">
-      <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
-        desktop_mac
-      </mat-icon>
-      <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">
-        System Activities
-      </span>
+      fxLayoutAlign.gt-sm="space-between center">
+      <div class="head">
+        <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center" style="    margin-top: -63px;">
+          <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
+            desktop_mac
+          </mat-icon>
+          <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">
+            System Activities
+          </span>
+        </div>
+      </div>
+      <button mat-raised-button class="sidebar-toggle mt-md-0" id="filter_button"
+        (click)="toggleSidebar('project-dashboard-right-sidebar-1')">
+        Filter By
+      </button>
     </div>
-  </div>
-    <!-- <div class="search-wrapper mx-32 mx-md-0">
-      <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
-        <mat-icon>search</mat-icon>
-        <input [formControl]="searchInput" placeholder="Search" />n
-      </div>
-    </div> -->
-    <button mat-raised-button class="sidebar-toggle mt-md-0" id="filter_button"
-    (click)="toggleSidebar('project-dashboard-right-sidebar-1')">
-    Filter By
-  </button>
-  </div>
-  <div class="content-card"id="cont_card">
-    <mat-tab-group animationDuration="0ms">
-      <mat-tab label="Field History">
-        <mat-table [dataSource]="dataSource"class="log-table" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
-  
-        <ng-container matColumnDef="createdBy" style="text-overflow:ellipsis;overflow: hidden;">
-          <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.createdBy }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="screen" style="text-overflow: ellipsis;">
-          <mat-header-cell *matHeaderCellDef>Screen</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.screen }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="field" style="text-overflow: ellipsis;">
-          <mat-header-cell *matHeaderCellDef>Field</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.field }}</mat-cell>
-        </ng-container>
+    <div class="content-card" id="cont_card">
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Field History">
+          <div class="example-container">
+            <mat-table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar
+              >
 
-        <ng-container matColumnDef="whereArise" style="text-overflow: ellipsis;">
-          <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.whereArise }}</mat-cell>
-        </ng-container>
+              <ng-container matColumnDef="createdBy" style="text-overflow:ellipsis;overflow: hidden;">
+                <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">CreatedBy</span>
+                  {{ element.createdBy }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="screen" style="text-overflow: ellipsis;">
+                <mat-header-cell *matHeaderCellDef>Screen</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">Screen</span>
+                  {{ element.screen }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="field" style="text-overflow: ellipsis;">
+                <mat-header-cell *matHeaderCellDef>Field</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">Field</span>
+                  {{ element.field }}</mat-cell>
+              </ng-container>
 
-        <ng-container matColumnDef="oldValue">
-          <mat-header-cell *matHeaderCellDef >Old Value</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.oldValue }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="newValue" style="text-overflow: ellipsis;overflow: hidden;">
-          <mat-header-cell *matHeaderCellDef>New Value</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.newValue }}</mat-cell>
-        </ng-container>
+              <ng-container matColumnDef="whereArise" style="text-overflow: ellipsis;">
+                <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">WhereArise</span>
+                  {{ element.whereArise }}</mat-cell>
+              </ng-container>
 
-        <ng-container matColumnDef="whenOccur" sFtyle="text-overflow: ellipsis;">
-          <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.whenOccur }}</mat-cell>
-        </ng-container>
-     
-    
-    <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns" class="product"></mat-row>
-</mat-table>
-<mat-paginator
-        #paginator
-        [length]="dataSource.filteredData.length"
-        [pageIndex]="0"
-        [pageSize]="5"
-        [pageSizeOptions]="[5, 10, 25, 100]"
-      >
-      </mat-paginator>
-      <div class="note">
-        <p class="note_heading">Please Note</p>
-        <ul>
-          <li>Field History for recent 7 days shown upon arrival</li>
-          <li>Users can pull data for any 91 days using Search</li>
-          <li>Troy RMS retains Audit Log for last 12 months only</li>
-        </ul>
-      </div>
+              <ng-container matColumnDef="oldValue">
+                <mat-header-cell *matHeaderCellDef>Old Value</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">Old Value</span>
+                  {{ element.oldValue }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="newValue" style="text-overflow: ellipsis;overflow: hidden;">
+                <mat-header-cell *matHeaderCellDef>New Value</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">new Value</span>
+                  {{ element.newValue }}</mat-cell>
+              </ng-container>
 
-       
+              <ng-container matColumnDef="whenOccur" sFtyle="text-overflow: ellipsis;">
+                <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">WhenOccur</span>{{ element.whenOccur }}</mat-cell>
+              </ng-container>
+
+
+              <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns" class="product"></mat-row>
+            </mat-table>
+          </div>
+          <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+            [pageSizeOptions]="[5, 10, 25, 100]">
+          </mat-paginator>
+          <div class="note">
+            <p class="note_heading">Please Note</p>
+            <ul>
+              <li>Field History for recent 7 days shown upon arrival</li>
+              <li>Users can pull data for any 91 days using Search</li>
+              <li>Troy RMS retains Audit Log for last 12 months only</li>
+            </ul>
+          </div>
+
+
         </mat-tab>
         <mat-tab label="Audit Log" *ngIf="userInfo.roleName === 'Admin' || userInfo.roleName === 'Manager'">
-          <mat-table [dataSource]="dataSource"class="log-table" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
+          <mat-table [dataSource]="dataSource" class="log-table" matSort [@animateStagger]="{ value: '50' }"
+            fusePerfectScrollbar >
 
             <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.createdBy }}</mat-cell>
+              <mat-cell *matCellDef="let element">
+                <span class="mobile-label">CreatedBy</span>
+                {{ element.createdBy }}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="whereAriseScreen" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.whereAriseScreen }}</mat-cell>
+              <mat-cell *matCellDef="let element">
+                <span class="mobile-label">WhereArise</span>
+                {{ element.whereAriseScreen }}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="whatEnsue" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>WhatEnsue</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.whatEnsue }}</mat-cell>
+              <mat-cell *matCellDef="let element">
+                <span class="mobile-label">WhatEnsue</span>
+                {{ element.whatEnsue }}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.whenOccur }}</mat-cell>
+              <mat-cell *matCellDef="let element">
+                <span class="mobile-label">WhenOccur</span>
+                {{ element.whenOccur }}</mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns_audit; sticky:true"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns_audit" class="product"></mat-row>
-</mat-table>
-<mat-paginator
-        #paginator
-        [length]="dataSource.filteredData.length"
-        [pageIndex]="0"
-        [pageSize]="5"
-        [pageSizeOptions]="[5, 10, 25, 100]"
-      >
-      </mat-paginator>
-      <div class="note">
-        <p class="note_heading">Please Note</p>
-        <ul>
-          <li>Audit Log for recent 7 days shown upon arrival</li>
-          <li>Users can pull data for any 91 days using Search</li>
-          <li>Troy RMS retains Audit Log for last 12 months only</li>
-        </ul>
-      </div>
+            <mat-row *matRowDef="let row; columns: displayedColumns_audit" class="product"></mat-row>
+          </mat-table>
+          <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+            [pageSizeOptions]="[5, 10, 25, 100]">
+          </mat-paginator>
+          <div class="note">
+            <p class="note_heading">Please Note</p>
+            <ul>
+              <li>Audit Log for recent 7 days shown upon arrival</li>
+              <li>Users can pull data for any 91 days using Search</li>
+              <li>Troy RMS retains Audit Log for last 12 months only</li>
+            </ul>
+          </div>
         </mat-tab>
         <mat-tab label="Client Machine Log" *ngIf="userInfo.roleName === 'Tech Support'">
-          <mat-table [dataSource]="dataSource"class="log-table" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
+          <mat-table [dataSource]="dataSource" class="log-table" matSort [@animateStagger]="{ value: '50' }"
+            fusePerfectScrollbar >
             <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.createdBy }}</mat-cell>
+              <mat-cell *matCellDef="let element">
+                <span class="mobile-label">CreatedBy</span>
+                {{ element.createdBy }}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="screen" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>Screen</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.screen }}</mat-cell>
+              <mat-cell *matCellDef="let element">
+                <span class="mobile-label">Screen</span>
+                {{ element.screen }}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="whereAriseFunction" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.whereAriseFunction }}</mat-cell>
+              <mat-cell *matCellDef="let element">
+                <span class="mobile-label">WhereArise</span>
+                {{ element.whereAriseFunction }}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="level" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>Level</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.level }}</mat-cell>
+              <mat-cell *matCellDef="let element">
+                <span class="mobile-label">Level</span>
+                {{ element.level }}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="whatEnsueClient" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>WhatEnsue</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.whatEnsueClient }}</mat-cell>
+              <mat-cell *matCellDef="let element">
+                <span class="mobile-label">WhatEnsue</span>
+                {{ element.whatEnsueClient }}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.whenOccur }}</mat-cell>
+              <mat-cell *matCellDef="let element">
+                <span class="mobile-label">WhenOccur</span>
+                {{ element.whenOccur }}</mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns_client; sticky:true"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns_client" class="product"></mat-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns_client" class="product"></mat-row>
 
-</mat-table>
-<mat-paginator
-        #paginator
-        [length]="dataSource.filteredData.length"
-        [pageIndex]="0"
-        [pageSize]="5"
-        [pageSizeOptions]="[5, 10, 25, 100]"
-      >
-      </mat-paginator>
-      <div class="note">
-        <p class="note_heading">Please Note</p>
-        <ul>
-          <li>Client Machine Log for recent 7 days shown upon arrival</li>
-          <li>Users can pull data for any 91 days using Search</li>
-          <li>Troy RMS retains Audit Log for last 12 months only</li>
-        </ul>
-      </div>
+          </mat-table>
+          <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+            [pageSizeOptions]="[5, 10, 25, 100]">
+          </mat-paginator>
+          <div class="note">
+            <p class="note_heading">Please Note</p>
+            <ul>
+              <li>Client Machine Log for recent 7 days shown upon arrival</li>
+              <li>Users can pull data for any 91 days using Search</li>
+              <li>Troy RMS retains Audit Log for last 12 months only</li>
+            </ul>
+          </div>
         </mat-tab>
-        </mat-tab-group>
+      </mat-tab-group>
     </div>
   </div>
 
@@ -182,7 +199,7 @@
 
 
 
- 
+
   <fuse-sidebar class="sidebar" name="project-dashboard-right-sidebar-1" position="right">
     <div class="content">
       <div style="padding: 18px;">

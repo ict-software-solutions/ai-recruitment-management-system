@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import Swal from "sweetalert2";
-
 export interface DialogData {
 }
-export interface PeriodicElement {
+export interface Element {
   name: string;
   screenUsed: string;
   function: string;
   value: string
   action: string;
 }
-const ELEMENT_DATA: PeriodicElement[] = [
+const ELEMENT_DATA: Element[] = [
   { name: 'Captcha', screenUsed: 'Login', function: 'Count', value: '2', action: '', },
   { name: 'Password Attempts', screenUsed: 'Login', function: 'Count', value: '5', action: '' }
 ];
@@ -23,7 +23,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class ConfigurationComponent implements OnInit {
   displayedColumns: string[] = ['name', 'screenUsed', 'function', 'value', 'action'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource<Element>(ELEMENT_DATA);
   showReset = false;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(
