@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   unsupportedBrowser: boolean;
   status = "";
   message = "";
+  loginClicked = false;
 
   constructor(
     private fuseConfigService: FuseConfigService,
@@ -100,6 +101,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(value) {
+    this.loginClicked = true;
     this.logUserActivityForEmail("LOGIN", value.userName, LOG_MESSAGES.CLICK);
     this.inActive = true;
     this.errorMessage = "";
@@ -135,6 +137,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         );
       },
       (error) => {
+        this.loginClicked = false;
         if (error.error.resCode === "PWD-EXPD") {
           this.passwordExpired = true;
           Swal.fire({

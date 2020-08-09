@@ -14,6 +14,7 @@ import {
   MOBILENUMBER_PATTERN,
   LOG_LEVELS,
   LOG_MESSAGES,
+  USER_TYPE,
 } from "app/util/constants";
 import { AirmsService } from "app/service/airms.service";
 import { DatePipe } from "@angular/common";
@@ -64,6 +65,7 @@ export class FormsComponent implements OnInit, OnDestroy {
   isLoaded = false;
   roleLists: any;
   flagForScreen = "";
+  usertypes = USER_TYPE;
 
   constructor(
     private userService: UserService,

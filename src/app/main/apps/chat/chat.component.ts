@@ -1,19 +1,15 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { fuseAnimations } from '@fuse/animations';
-import { ChatService } from 'app/main/apps/chat/chat.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup } from '@angular/forms';
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { BehaviorSubject, fromEvent, merge, Observable } from "rxjs";
-import { LOGGED_IN_USER_INFO } from 'app/util/constants';
+import { MatSort, MatSortable } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { fuseAnimations } from '@fuse/animations';
+import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { AirmsService } from 'app/service/airms.service';
 import { AuthService } from 'app/service/auth.service';
+import { LOGGED_IN_USER_INFO } from 'app/util/constants';
+import { Subject } from 'rxjs';
 
 // import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
@@ -51,23 +47,27 @@ export interface PeriodicElement {
     animations: fuseAnimations
 })
 export class ChatComponent implements OnInit, OnDestroy {
+
+    @ViewChild('fieldHistorySort') fieldHistorySort: MatSort;
+    @ViewChild('auditSort') auditSort: MatSort;
+    @ViewChild('clientLogSort') clientLogSort: MatSort;
+    @ViewChild('paginator1') paginator1: MatPaginator;
+    @ViewChild('paginator2') paginator2: MatPaginator;
+    @ViewChild('paginator3') paginator3: MatPaginator;
     displayedColumns_audit: string[] = ['createdBy', 'whereAriseScreen', 'whatEnsue', 'whenOccur'];
-    displayedColumns_client: string[] = ['createdBy',  'whereAriseFunction', 'whatEnsueClient', 'whenOccur'];
+    displayedColumns_client: string[] = ['createdBy', 'whereAriseFunction', 'whatEnsueClient', 'whenOccur'];
     //displayedColumns: string[] = ['createdBy',  'whereArise', 'newValue', 'whenOccur'];
     dataSource = new MatTableDataSource();
     dialogRef: any;
-    clientLog: any;
-    auditLog: any;
-    @ViewChild(MatSort) sort: MatSort;
-    // @ViewChild(MatPaginator)paginator:MatPaginator;
-    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
 
     // Private
     private _unsubscribeAll: Subject<any>;
     userInfo: any;
+    isLoading = true;
     constructor(
         public dialog: MatDialog,
+        private datePipe: DatePipe,
         public _matDialog: MatDialog,
         private _fuseSidebarService: FuseSidebarService,
         private airmsService: AirmsService,
@@ -91,39 +91,54 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     }
     getAuditLog() {
-        console.log('audit log');
-        this.authService.getAuditLogEntries().subscribe(res => {
-            console.log('audit log', res);
-            this.auditLog = res;
-            this.dataSource.data = this.auditLog;
+        this.dataSource.data = [];
+        this.authService.getAuditLogEntries().subscribe((res: any) => {
+        res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
+        this.setDataSource(res, this.paginator2, this.auditSort);
         });
     }
     getClientLog() {
-        console.log('client log');
-        this.authService.getClientLogEntries().subscribe(res => {
-            console.log('client log', res);
-            this.clientLog = res;
-            this.dataSource.data = this.clientLog;
+        this.dataSource.data = [];
+        this.authService.getClientLogEntries().subscribe((res: any) => {
+            res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
+            this.setDataSource(res, this.paginator3, this.clientLogSort);
         });
+    }
+
+    setDataSource(data, paginator: MatPaginator, sort: MatSort) {
+        data.forEach(item => {
+            item.whenOccur = this.getFullDate(item.whenOccur);
+        });
+        paginator.pageIndex = 0;
+        this.dataSource = new MatTableDataSource(data);
+        paginator.firstPage();
+        this.dataSource.paginator = paginator;
+        this.dataSource.sort = sort;
+        paginator.length = data.length;
+        this.isLoading = false;
     }
 
     getFieldHistory() {
         console.log('Field History');
-        // this.authService.getClientLogEntries().subscribe(res => {
-        //     console.log('client log', res);
-        //     this.clientLog = res;
-        //     this.dataSource.data = this.clientLog;
-        // });
+        this.authService.getClientLogEntries().subscribe(res => {
+            console.log('client log', res);
+            this.fieldHistorySort.sort(({ id: 'whenOccur', start: 'desc' }) as MatSortable);
+            this.setDataSource(res, this.paginator1, this.fieldHistorySort);
+        });
     }
     getLogEntries(event) {
-        console.log('client log', event);
+        this.isLoading = true;
         if (event === 'Client Machine Log') {
             this.getClientLog();
-        } else if (event === 'Audit Log'){
+        } else if (event === 'Audit Log') {
             this.getAuditLog();
         } else {
             this.getFieldHistory();
         }
+    }
+
+    getFullDate(date) {
+        return this.datePipe.transform(new Date(date), 'MMM dd, yyyy hh:mm:ss a')
     }
     cancel() {
     }

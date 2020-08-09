@@ -1,8 +1,7 @@
 <div id="users" class="page-layout carded fullwidth inner-scroll">
   <div class="top-bg accent"></div>
   <div class="center">
-    <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
-      fxLayoutAlign.gt-sm="space-between center">
+    <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
       <div class="head">
         <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center" style="    margin-top: -63px;">
           <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
@@ -13,16 +12,17 @@
           </span>
         </div>
       </div>
-      <button mat-raised-button class="sidebar-toggle mt-md-0" id="filter_button"
-        (click)="toggleSidebar('project-dashboard-right-sidebar-1')">
+      <button mat-raised-button class="sidebar-toggle mt-md-0" id="filter_button" (click)="toggleSidebar('project-dashboard-right-sidebar-1')">
         Filter By
       </button>
     </div>
     <div class="content-card" id="cont_card">
-      <mat-tab-group animationDuration="0ms" (selectedTabChange)="getLogEntries($event.tab.textLabel)">
-        <mat-tab label="Field History">
+      <mat-tab-group animationDuration="0ms" (selectedTabChange)="getLogEntries($event.tab.textLabel)" [hidden]="isLoading"
+      style="height: 100%;">
+        <!-- <mat-tab label="Field History">
           <!-- <div class="example-container">
-            <mat-table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
+            <mat-table [dataSource]="dataSource" #fieldHistorySort="matSort" matSort matSortActive="whenOccur"
+        matSortDirection="desc" [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
 
               <ng-container matColumnDef="createdBy" style="text-overflow:ellipsis;overflow: hidden;">
                 <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
@@ -73,11 +73,11 @@
               <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
               <mat-row *matRowDef="let row; columns: displayedColumns" class="product"></mat-row>
             </mat-table>
-          </div> -->
-          <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
-            [pageSizeOptions]="[5, 10, 25, 100]">
+          </div> ->
+          <mat-paginator #paginator1 [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+           [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading">
           </mat-paginator>
-          <div class="note">
+          <div class="note" [hidden]="isLoading">
             <p class="note_heading">Please Note</p>
             <ul>
               <li>Field History for recent 7 days shown upon arrival</li>
@@ -85,10 +85,11 @@
               <li>Troy RMS retains Audit Log for last 12 months only</li>
             </ul>
           </div>
-        </mat-tab>
+        </mat-tab> -->
         <mat-tab label="Audit Log">
-          <mat-table [dataSource]="dataSource" class="log-table" matSort [@animateStagger]="{ value: '50' }"
-            fusePerfectScrollbar >
+          <div *ngIf="isLoading" class="Loading">Loading..</div>
+          <mat-table [dataSource]="dataSource" class="log-table" #auditSort="matSort" matSort matSortDirection="desc"
+           matSortActive="whenOccur" [@animateStagger]="{ value: '50' }" fusePerfectScrollbar  [hidden]="isLoading">
 
             <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
@@ -120,10 +121,10 @@
             <mat-header-row *matHeaderRowDef="displayedColumns_audit; sticky:true"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns_audit" class="product"></mat-row>
           </mat-table>
-          <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
-            [pageSizeOptions]="[5, 10, 25, 100]">
+          <mat-paginator #paginator2 [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+           [pageSizeOptions]="[5, 10, 25, 100]"  [hidden]="isLoading" showFirstLastButtons>
           </mat-paginator>
-          <div class="note">
+          <div class="note"  [hidden]="isLoading">
             <p class="note_heading">Please Note</p>
             <ul>
               <li>Audit Log for recent 7 days shown upon arrival</li>
@@ -132,10 +133,11 @@
             </ul>
           </div>
         </mat-tab>
-        
+
         <mat-tab label="Client Machine Log">
-          <mat-table [dataSource]="dataSource" class="log-table" matSort [@animateStagger]="{ value: '50' }"
-            fusePerfectScrollbar >
+          <div *ngIf="isLoading" class="Loading">Loading..</div>
+          <mat-table [dataSource]="dataSource" class="log-table" #clientLogSort="matSort" matSort matSortDirection="desc"
+           matSortActive="whenOccur" [@animateStagger]="{ value: '50' }" fusePerfectScrollbar [hidden]="isLoading">
             <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
               <mat-cell *matCellDef="let element">
@@ -148,7 +150,7 @@
                 <span class="mobile-label">WhereArise</span>
                 {{ element.whereArise }}</mat-cell>
             </ng-container>
-            
+
             <ng-container matColumnDef="whatEnsueClient" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>WhatEnsue</mat-header-cell>
               <mat-cell *matCellDef="let element">
@@ -166,10 +168,10 @@
             <mat-row *matRowDef="let row; columns: displayedColumns_client" class="product"></mat-row>
 
           </mat-table>
-          <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
-            [pageSizeOptions]="[5, 10, 25, 100]">
+          <mat-paginator #paginator3 [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+           [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading" showFirstLastButtons>
           </mat-paginator>
-          <div class="note">
+          <div class="note" [hidden]="isLoading">
             <p class="note_heading">Please Note</p>
             <ul>
               <li>Client Machine Log for recent 7 days shown upon arrival</li>
@@ -182,18 +184,12 @@
     </div>
   </div>
 
-
-
-
-
-
   <fuse-sidebar class="sidebar" name="project-dashboard-right-sidebar-1" position="right">
     <div class="content">
       <div style="padding: 18px;">
         <div class="header1" style="display: inline;">
           <div class="title1">Filter By</div>
-          <button mat-icon-button class="sidebar-toggle"
-            (click)="toggleSidebarClosed('project-dashboard-right-sidebar-1')">
+          <button mat-icon-button class="sidebar-toggle" (click)="toggleSidebarClosed('project-dashboard-right-sidebar-1')">
             <mat-icon class="secondary-text">arrow_forward</mat-icon>
           </button>
         </div>

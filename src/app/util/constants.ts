@@ -74,3 +74,5 @@ export const LOG_LEVELS = {
 
 export const DISPLAY_COLUMNS_FOR_USERMGMT = ["image", "firstName", "lastName", "userType", "roleName", "activated", "userId"];
 export const DISPLAY_COLUMNS_FOR_ROLEMGMT = ['rolename', 'desc', 'active', 'roleId'];
+
+export const USER_TYPE = ['Candidate', 'Client', 'Employee'];

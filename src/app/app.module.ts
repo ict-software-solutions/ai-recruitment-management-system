@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import { MatGridListModule } from "@angular/material/grid-list";
@@ -42,6 +43,7 @@ const appRoutes: Routes = [
 @NgModule({
     declarations: [AppComponent],
     imports: [
+        CommonModule,
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
@@ -71,7 +73,7 @@ const appRoutes: Routes = [
             useClass: TokenInterceptor,
             multi: true
         }, LogService, LogPublishersService, Keepalive,
-            AuthGuard],
+        AuthGuard],
 
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

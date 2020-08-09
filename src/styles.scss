@@ -25,3 +25,15 @@ align-items: flex-start!important;
 //     margin-top: 0.6666666667em;
 //     top: calc(100% - 1.7916666667em);
 // }
+
+.Loading {
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
+    text-align: center;
+    margin-top: 25px;
+    height:100%;
+    color: #0066ff;
+    font-size: 20px;
+    font-weight: 700;
+}

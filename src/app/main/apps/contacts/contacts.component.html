@@ -3,18 +3,11 @@
   <!-- <div id="contacts" class="page-layout simple left-sidebar inner-sidebar inner-scroll"> -->
   <div class="center">
     <!-- HEADER -->
-    <div
-      class="header accent"
-      fxLayout="column"
-      fxLayoutAlign="center center"
-      fxLayout.gt-sm="row"
-      fxLayoutAlign.gt-sm="space-between center"
-    >
+    <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
       <!-- APP TITLE -->
       <div fxLayout="row" fxLayoutAlign="start center">
         <div class="logo" fxLayout="row" fxLayoutAlign="start center">
-          <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }"
-            >account_circle
+          <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">account_circle
           </mat-icon>
 
           <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">
@@ -30,11 +23,11 @@
         </div>
       </div>
 
-      <button mat-raised-button color="basic" class="add-product-button fuse-white mt-24 mt-md-0"(click)="addNewRole()" aria-label="add contact">Add Role</button>
+      <button mat-raised-button color="basic" class="add-product-button fuse-white mt-24 mt-md-0" (click)="addNewRole()" aria-label="add contact">Add Role</button>
     </div>
     <div class="content-card">
       <div class="content">
-        <contacts-contact-list></contacts-contact-list>
+        <contacts-contact-list style="height: 100%"></contacts-contact-list>
         <!-- / CONTENT -->
       </div>
       <!-- / CENTER -->

@@ -2,8 +2,7 @@
   <div class="top-bg accent"></div>
   <div class="center">
     <!--HEADER-->
-    <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
-      fxLayoutAlign.gt-sm="space-between center">
+    <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
       <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
         <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
           people
@@ -27,9 +26,10 @@
     <!-- / HEADER -->
 
     <div class="content-card">
+      <div *ngIf="isLoading" class="Loading">Loading..</div>
       <mat-table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
-        <ng-container matColumnDef="image" style="width: 200px;">
-          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <ng-container matColumnDef="image" style="width: 200px;" *ngIf="!isLoading">
+          <mat-header-cell *matHeaderCellDef>Profile</mat-header-cell>
           <mat-cell *matCellDef="let product">
             <div *ngIf="product.profileImage !=null &&  product.profileImage !== ''">
               <img [src]=" product.profileImage" style="border-radius: 40px;height:40px;width:40px;">
@@ -83,13 +83,12 @@
               <mat-icon>edit</mat-icon>
             </button>
             <span>
-              <button mat-icon-button color="accent" style="color: red; background-color: white;"
-                (click)="onDelete(product.userId)">
+              <button mat-icon-button color="accent" style="color: red; background-color: white;" (click)="onDelete(product.userId)">
                 <mat-icon>delete</mat-icon>
               </button></span>
           </mat-cell>
         </ng-container>
-      
+
         <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns" class="product"> </mat-row>
       </mat-table>
@@ -100,18 +99,9 @@
         <mat-spinner diameter="40"></mat-spinner>
       </div> -->
 
-      <div *ngIf="isLoading"
-      style="display: flex; justify-content: center; align-items: center; text-align: center;margin-top: 25px;">
-      <h3 style="color: #0066ff; font-size: 20px;"><b>Loading..</b></h3>
-  </div>
-   
-      <mat-paginator
-        #paginator
-        [length]="dataSource.filteredData.length"
-        [pageIndex]="0"
-        [pageSize]="5"
-        [pageSizeOptions]="[5, 10, 25, 100]"
-      >
+
+      <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+       [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading" showFirstLastButtons>
       </mat-paginator>
     </div>
   </div>

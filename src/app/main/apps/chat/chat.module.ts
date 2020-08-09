@@ -1,11 +1,12 @@
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { RouterModule, Routes } from '@angular/router';
 import { FuseSidebarModule } from '@fuse/components';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { AppMaterialModule } from 'app/app-material/app-material.module';
 import { ChatComponent } from 'app/main/apps/chat/chat.component';
 import { ChatService } from 'app/main/apps/chat/chat.service';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 const routes: Routes = [
     {
@@ -21,6 +22,7 @@ const routes: Routes = [
         ChatComponent
     ],
     imports: [
+        CommonModule,
         RouterModule.forChild(routes),
         FuseSharedModule,
         FuseSidebarModule,
@@ -29,7 +31,8 @@ const routes: Routes = [
         MatButtonToggleModule,
     ],
     providers: [
-        ChatService
+        ChatService,
+        DatePipe
     ]
 })
 export class ChatModule { }

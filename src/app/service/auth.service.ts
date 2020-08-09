@@ -8,7 +8,7 @@ import { map } from "rxjs/operators";
 export class AuthService {
   hasUserLoggedIn: boolean = false;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   signup(value, userId) {
     let url = apiURL.USER + "/" + value.userId;
@@ -91,7 +91,7 @@ export class AuthService {
     return this.httpClient.post(url, resendAddress);
   }
 
-  getAllUsers(object) {
+  getAllUsers() {
     let url = apiURL.USER;
     return this.httpClient.get(url);
   }

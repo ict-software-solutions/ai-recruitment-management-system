@@ -1,4 +1,5 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -30,6 +31,7 @@ const routes: Routes = [{
         ContactsContactFormDialogComponent,
     ],
     imports: [
+        CommonModule,
         RouterModule.forChild(routes),
         DragDropModule,
         AppMaterialModule,

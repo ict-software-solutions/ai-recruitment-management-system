@@ -1,21 +1,14 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
 import { Component, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { ActivatedRoute } from "@angular/router";
-import { Contact } from "app/main/apps/contacts/contact.model";
-import { usertype } from "app/models/user-type";
-import { AuthService } from "app/service/auth.service";
-import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
-import { NavigationExtras, Router } from "@angular/router";
-import Swal from "sweetalert2";
-import { Screens, Status } from "app/util/configuration";
-import { AirmsService } from "app/service/airms.service";
-import { LOGGED_IN_USER_INFO, LOG_LEVELS, LOG_MESSAGES } from "app/util/constants";
-import { LogService } from "app/service/shared/log.service";
-import { Subscription } from "rxjs";
+import { ActivatedRoute, Router } from "@angular/router";
 import { navigation } from 'app/navigation/navigation';
+import { AirmsService } from "app/service/airms.service";
+import { AuthService } from "app/service/auth.service";
+import { LogService } from "app/service/shared/log.service";
+import { LOGGED_IN_USER_INFO, LOG_LEVELS, LOG_MESSAGES } from "app/util/constants";
+import { Subscription } from "rxjs";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "contacts-contact-form-dialog",
@@ -23,14 +16,16 @@ import { navigation } from 'app/navigation/navigation';
   styleUrls: ["./contact-form.component.scss"],
   encapsulation: ViewEncapsulation.None,
 })
+
 export class ContactsContactFormDialogComponent {
+
   roleMgmtForm: FormGroup;
   roleDetails: any;
   roleId = 0;
   errorMessage = "";
   userInfo: any;
   todo: any; // Unmapped
-  done: any; // Mapped
+  done = { value: [] }; // Mapped
   roleSubscription: Subscription;
   updateRoleSubscription: Subscription;
   labelPosition: "before" | "after" = "after";
@@ -45,7 +40,7 @@ export class ContactsContactFormDialogComponent {
   ) {
     this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
     console.log('navigation', navigation);
-    this.todo = {value: JSON.parse(JSON.stringify(navigation[0]['children']))};
+    this.todo = { value: JSON.parse(JSON.stringify(navigation[0]['children'])) };
     console.log('navigation todo', this.todo);
   }
 
@@ -56,6 +51,7 @@ export class ContactsContactFormDialogComponent {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
   }
+
   ngOnInit() {
     this.roleMgmtForm = this.formBuilder.group({
       roleId: [""],
@@ -72,8 +68,8 @@ export class ContactsContactFormDialogComponent {
         this.getRoleInfo(Number(params.roleId));
       } else {
         this.roleId = 0;
-        this.todo = {value: JSON.parse(JSON.stringify(navigation[0]['children']))};
-        this.done = {value: []};
+        this.todo = { value: JSON.parse(JSON.stringify(navigation[0]['children'])) };
+        this.done = { value: [] };
         console.log('this.todo', this.todo, 'this.done', this.done);
       }
     });
@@ -84,6 +80,7 @@ export class ContactsContactFormDialogComponent {
     console.log("this.mapScreens", totalScreenMap);
     this.roleSubscription = this.authService.getAllRolesInfo(roleId).subscribe(
       (res) => {
+        console.log(res, this.todo, this.done);
         this.roleDetails = res;
         this.roleMgmtForm.patchValue(res);
         console.log("this.roleDetails.screenMapping", this.roleDetails.screenMapping);
@@ -99,8 +96,8 @@ export class ContactsContactFormDialogComponent {
           this.done['value'] = filterRes;
           console.log('this.toDo', this.todo, 'this.done Done', this.done);
         } else {
-          this.todo = {value: JSON.parse(JSON.stringify(navigation[0]['children']))};
-          this.done = {value: []};
+          this.todo = { value: JSON.parse(JSON.stringify(navigation[0]['children'])) };
+          this.done = { value: [] };
         }
       },
       (error) => {
@@ -113,8 +110,8 @@ export class ContactsContactFormDialogComponent {
     let items = [];
     this.errorMessage = "";
     if (this.done['value'].length > 0) {
-      for (let m = 0; m < this.done.length; m++) {
-        items.push(this.done[m].title);
+      for (let m = 0; m < this.done['value'].length; m++) {
+        items.push(this.done['value'][m].title);
       }
     }
     let updateObject = {
@@ -165,14 +162,14 @@ export class ContactsContactFormDialogComponent {
   addAllScreenMapping() {
     this.logUserActivity("Role Management - Add all screens for Mapping", LOG_MESSAGES.CLICK);
     this.todo = [];
-    this.done = [];
-    this.done = Screens;
+    this.done['value'] = [];
+    this.done['value'] = navigation[0]['children'];
   }
   removeAllScreenMapping() {
     this.logUserActivity("Role Management - Remove all screens for Mapping", LOG_MESSAGES.CLICK);
     this.todo = [];
-    this.done = [];
-    this.todo = Screens;
+    this.done['value'] = [];
+    this.todo = navigation[0]['children'];
   }
   logUserActivity(from, value) {
     this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);

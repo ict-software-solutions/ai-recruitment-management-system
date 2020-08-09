@@ -1,9 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { AuthGuard } from 'app/service/shared/auth.guard';
-import { MatButtonModule } from '@angular/material/button';
-import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 const routes = [
     {
@@ -12,7 +12,7 @@ const routes = [
         canActivate: [AuthGuard]
     },
 
-    {
+    /* {
         path: 'mail',
         loadChildren: () => import('./mail/mail.module').then(m => m.MailModule),
         canActivate: [AuthGuard]
@@ -22,7 +22,7 @@ const routes = [
         path: 'calendar',
         loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarModule),
         canActivate: [AuthGuard]
-    },
+    }, */
     {
         path: 'e-commerce',
         loadChildren: () => import('./usermanagement/usermanagement.module').then(m => m.EcommerceModule),
@@ -38,17 +38,17 @@ const routes = [
         loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule),
         canActivate: [AuthGuard]
     },
-    {
+    /* {
         path: 'scrumboard',
         loadChildren: () => import('./scrumboard/scrumboard.module').then(m => m.ScrumboardModule),
         canActivate: [AuthGuard]
-    }, {
+    }, */ {
         path: 'chat',
         loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule),
         canActivate: [AuthGuard]
     }, {
         path: 'configuration',
-        loadChildren: () => import('./configuration/configuration.module').then(m=>m.ConfigurationModule),
+        loadChildren: () => import('./configuration/configuration.module').then(m => m.ConfigurationModule),
         canActivate: [AuthGuard]
     }
 ];
@@ -56,14 +56,14 @@ const routes = [
 @NgModule({
     declarations: [
         FuseConfirmDialogComponent
-       
+
     ],
     imports: [
+        CommonModule,
         RouterModule.forChild(routes),
-        FuseSharedModule,
-        MatButtonModule
+        FuseSharedModule
     ],
-    exports:[
+    exports: [
         FuseConfirmDialogComponent
     ],
     entryComponents: [

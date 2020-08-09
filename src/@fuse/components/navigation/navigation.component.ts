@@ -3,10 +3,10 @@ import { FuseNavigationService } from "@fuse/components/navigation/navigation.se
 import { navigation } from "app/navigation/navigation";
 import { AirmsService } from "app/service/airms.service";
 import { AuthService } from "app/service/auth.service";
+import { LOGGED_IN_USER_INFO } from "app/util/constants";
 import { merge, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { FuseSidebarService } from "../sidebar/sidebar.service";
-import { LOGGED_IN_USER_INFO } from "app/util/constants";
 
 @Component({
   selector: "fuse-navigation",
@@ -56,9 +56,8 @@ export class FuseNavigationComponent implements OnInit {
 
   getSideMenus(): any {
     let pageValue = [];
-    console.log('this.userInfo.screenMapping', this.userInfo.screenMapping);
     if (this.userInfo.screenMapping !== null || this.userInfo.screenMapping.length > 0) {
-        pageValue = this.userInfo.screenMapping;
+      pageValue = this.userInfo.screenMapping;
     }
     const userRoles = [{ name: this.userInfo.roleName, pages: pageValue }];
     this.navigation = [];

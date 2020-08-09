@@ -1,4 +1,5 @@
 import { AgmCoreModule } from '@agm/core';
+import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -11,9 +12,6 @@ import { EcommerceProductService } from 'app/main/apps/usermanagement/addusers/a
 import { EcommerceProductsComponent } from 'app/main/apps/usermanagement/users/users.component';
 import { UserManagementService } from 'app/main/apps/usermanagement/users/users.service';
 import { TokenInterceptor } from 'app/service/shared/token.interceptor';
-// import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-// import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-
 
 const routes: Routes = [
     {
@@ -37,25 +35,18 @@ const routes: Routes = [
     declarations: [
         EcommerceProductsComponent,
         EcommerceProductComponent,
-        // FuseConfirmDialogComponent
-       
     ],
     imports: [
-        RouterModule.forChild(routes),
+        CommonModule,
         AppMaterialModule,
         NgxChartsModule,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyD81ecsCj4yYpcXSLFcYU97PvRsE_X8Bx8'
         }),
+        RouterModule.forChild(routes),
         FuseSharedModule,
         FuseWidgetModule
     ],
-    // exports:[
-    //     FuseConfirmDialogComponent
-    // ],
-    // entryComponents: [
-    //     FuseConfirmDialogComponent
-    // ],
     providers: [
         UserManagementService,
         EcommerceProductService
