@@ -10,7 +10,9 @@ export const apiURL = {
     'RESET_PASSWORD_URL' :  environment.url + 'user/resetPassword',
     'CHANGE_PASSWORD': environment.url + 'user/setNewPassword',
     'ROLES':environment.url + 'roles',
-    'ADDUSER_URL':environment.url + 'user/addUser'
+    'ADDUSER_URL':environment.url + 'user/addUser',
+    'CLIENT_LOG_URL': environment.url + 'clientLogs',
+    'AUDIT_LOG_URL': environment.url + 'auditLog'
 }
 
 export const TROY_LOGO = "assets/images/logos/troy.png";
@@ -69,3 +71,6 @@ export const LOG_LEVELS = {
     FATAL: 'fatal',
     LOG: 'log'
 }
+
+export const DISPLAY_COLUMNS_FOR_USERMGMT = ["image", "firstName", "lastName", "userType", "roleName", "activated", "userId"];
+export const DISPLAY_COLUMNS_FOR_ROLEMGMT = ['rolename', 'desc', 'active', 'roleId'];

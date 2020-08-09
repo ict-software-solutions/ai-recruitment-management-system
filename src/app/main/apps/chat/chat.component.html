@@ -19,11 +19,10 @@
       </button>
     </div>
     <div class="content-card" id="cont_card">
-      <mat-tab-group animationDuration="0ms">
+      <mat-tab-group animationDuration="0ms" (selectedTabChange)="getLogEntries($event.tab.textLabel)">
         <mat-tab label="Field History">
-          <div class="example-container">
-            <mat-table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar
-              >
+          <!-- <div class="example-container">
+            <mat-table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
 
               <ng-container matColumnDef="createdBy" style="text-overflow:ellipsis;overflow: hidden;">
                 <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
@@ -74,7 +73,7 @@
               <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
               <mat-row *matRowDef="let row; columns: displayedColumns" class="product"></mat-row>
             </mat-table>
-          </div>
+          </div> -->
           <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
             [pageSizeOptions]="[5, 10, 25, 100]">
           </mat-paginator>
@@ -86,10 +85,8 @@
               <li>Troy RMS retains Audit Log for last 12 months only</li>
             </ul>
           </div>
-
-
         </mat-tab>
-        <mat-tab label="Audit Log" *ngIf="userInfo.roleName === 'Admin' || userInfo.roleName === 'Manager'">
+        <mat-tab label="Audit Log">
           <mat-table [dataSource]="dataSource" class="log-table" matSort [@animateStagger]="{ value: '50' }"
             fusePerfectScrollbar >
 
@@ -104,7 +101,7 @@
               <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <span class="mobile-label">WhereArise</span>
-                {{ element.whereAriseScreen }}</mat-cell>
+                {{ element.whereArise }}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="whatEnsue" style="text-overflow: ellipsis;">
@@ -135,7 +132,8 @@
             </ul>
           </div>
         </mat-tab>
-        <mat-tab label="Client Machine Log" *ngIf="userInfo.roleName === 'Tech Support'">
+        
+        <mat-tab label="Client Machine Log">
           <mat-table [dataSource]="dataSource" class="log-table" matSort [@animateStagger]="{ value: '50' }"
             fusePerfectScrollbar >
             <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
@@ -144,29 +142,18 @@
                 <span class="mobile-label">CreatedBy</span>
                 {{ element.createdBy }}</mat-cell>
             </ng-container>
-            <ng-container matColumnDef="screen" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef>Screen</mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                <span class="mobile-label">Screen</span>
-                {{ element.screen }}</mat-cell>
-            </ng-container>
             <ng-container matColumnDef="whereAriseFunction" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <span class="mobile-label">WhereArise</span>
-                {{ element.whereAriseFunction }}</mat-cell>
+                {{ element.whereArise }}</mat-cell>
             </ng-container>
-            <ng-container matColumnDef="level" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef>Level</mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                <span class="mobile-label">Level</span>
-                {{ element.level }}</mat-cell>
-            </ng-container>
+            
             <ng-container matColumnDef="whatEnsueClient" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>WhatEnsue</mat-header-cell>
               <mat-cell *matCellDef="let element">
-                <span class="mobile-label">WhatEnsue</span>
-                {{ element.whatEnsueClient }}</mat-cell>
+                <span class="mobile-label">WhichPlace</span>
+                {{ element.whichPlace }}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">

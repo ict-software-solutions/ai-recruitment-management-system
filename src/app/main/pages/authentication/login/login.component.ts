@@ -55,17 +55,17 @@ export class LoginComponent implements OnInit, OnDestroy {
         title: "<strong>Unsupported Browser</strong>",
         text: "Please use latest version of “Firefox” or “Chrome”",
       };
-      const areyousure = this.airmsService.swalOKButton(notSupportBrowser);
-      Swal.fire(areyousure).then(() => {
-        this.unsupportedBrowser = true;
-      });
+      // const areyousure = this.airmsService.swalOKButton(notSupportBrowser);
+      // Swal.fire(areyousure).then(() => {
+      //   this.unsupportedBrowser = true;
+      // });
     }
   }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      userName: ["", Validators.required],
-      password: ["", [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
+      userName: ["adminRole", Validators.required],
+      password: ["@Test123", [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
     });
     const firstParam: string = this.route.snapshot.queryParamMap.get("status");
     if (firstParam === '"active"') {
@@ -100,14 +100,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(value) {
-    this.logUserActivity("LOGIN", LOG_MESSAGES.CLICK);
+    this.logUserActivityForEmail("LOGIN", value.userName, LOG_MESSAGES.CLICK);
     this.inActive = true;
     this.errorMessage = "";
     this.message = "";
     let loginInfo: any;
     this.loginSubscription = this.authService.login(value).subscribe(
       (res) => {
-        this.logUserActivity("LOGIN", LOG_MESSAGES.SUCCESS);
+        this.logUserActivityForEmail("LOGIN", value.userName, LOG_MESSAGES.SUCCESS);
         loginInfo = res;
         this.getUserSubscription = this.authService.getUserById(res["token"], res["userId"]).subscribe(
           (userDetails) => {
@@ -126,11 +126,11 @@ export class LoginComponent implements OnInit, OnDestroy {
               lastLogin: loginInfo["lastLogin"]
             };
             this.airmsService.setSessionStorage(LOGGED_IN_USER_INFO, user_info);
-            this.logUserActivity("Login - fetch user", LOG_MESSAGES.SUCCESS);
+            this.logUserActivityForEmail("Login - fetch user", value.userName, LOG_MESSAGES.SUCCESS);
             this.router.navigate(["../../apps/dashboards/analytics"]);
             this.loginSubscription.unsubscribe();
           }, (error) => {
-            this.logService.logError(LOG_LEVELS.ERROR, "Login page", "On Fetch User", JSON.stringify(error));
+            this.logService.logErrorForEmail(LOG_LEVELS.ERROR, value.userName, "Login page", "On Fetch User", JSON.stringify(error));
           }
         );
       },
@@ -191,8 +191,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         } else if (error.status === 400) {
           this.invalidData = false;
         }
-        this.logUserActivity("Login Page", LOG_MESSAGES.FAILURE);
-        this.logService.logError(LOG_LEVELS.ERROR, "Login page", "On Try Login", JSON.stringify(error));
+        this.logUserActivityForEmail("Login Page", value.userName, LOG_MESSAGES.FAILURE);
+        this.logService.logErrorForEmail(LOG_LEVELS.ERROR, value.userName, "Login page", "On Try Login", JSON.stringify(error));
       }
     );
   }
@@ -212,6 +212,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
   }
 
+  logUserActivityForEmail(from, emailAddress, value) {
+    console.log('emailAddress', emailAddress);
+    this.logService.logUserActivityForEmail(LOG_LEVELS.INFO, emailAddress, from, value);
+  }
   unsubscribe(subscription: Subscription) {
     if (subscription !== null && subscription !== undefined) {
       subscription.unsubscribe();

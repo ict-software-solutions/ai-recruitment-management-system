@@ -3,20 +3,26 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatRadioModule } from "@angular/material/radio";
 import { Subject } from "rxjs";
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
-import { takeUntil } from "rxjs/operators";
 import { Subscription } from "rxjs";
 import { userDetails } from "app/models/user-details";
-import { LOGGED_IN_USER_INFO, SIGNUP, EMAIL_PATTERN, IP_ADDRESS, USERNAME_PATTERN, MOBILENUMBER_PATTERN, LOG_LEVELS } from "app/util/constants";
+import {
+  LOGGED_IN_USER_INFO,
+  SIGNUP,
+  EMAIL_PATTERN,
+  IP_ADDRESS,
+  USERNAME_PATTERN,
+  MOBILENUMBER_PATTERN,
+  LOG_LEVELS,
+  LOG_MESSAGES,
+} from "app/util/constants";
 import { AirmsService } from "app/service/airms.service";
 import { DatePipe } from "@angular/common";
 import Swal from "sweetalert2";
 import { usertype, rolename } from "app/models/user-type";
 import { Router, ActivatedRoute } from "@angular/router";
 import { UserService } from "app/service/user.service";
-import { userInfo } from "os";
 import { AuthService } from "app/service/auth.service";
-import { __param } from "tslib";
-import { LogService } from 'app/service/shared/log.service';
+import { LogService } from "app/service/shared/log.service";
 declare var $: any;
 
 @Component({
@@ -27,17 +33,17 @@ declare var $: any;
 export class FormsComponent implements OnInit, OnDestroy {
   lastLogin: string;
   onFileSelected(event) {}
-  form: FormGroup;
+  userForm: FormGroup;
   dialogRef: any;
   showPassword = true;
-  s;
-  inboundClick = false;
   ResetPasswordSubscription: Subscription;
   getUserSubscription: Subscription;
+  userUpdateSubscription: Subscription;
+  getUserInfoSubscription: Subscription;
+  updateUserSubscription: Subscription;
   hide = true;
   hide1 = true;
   hide2 = true;
-  private unsubscribeAll: Subject<any>;
   enableEdit = false;
   showPasswordsection = false;
   check = false;
@@ -46,27 +52,19 @@ export class FormsComponent implements OnInit, OnDestroy {
   userIpAddress: any;
   confirmDialogs: any;
   contactProfilePic: any;
-  userProfileUpdateSubscription: Subscription;
-  getProfileInfoSubscription: Subscription;
-  updateProfileSubscription: Subscription;
   isLoading: false;
-  profileDetails: any;
+  userDetails: any;
   viewMode = true;
   userId = 0;
-  userType: "";
-  name: "";
   labelPosition: "before" | "after" = "after";
   errorMessage = "";
   oldPasswordWrong = false;
   showForMyProfile = true;
   showForAddEditUser = true;
-  status: "";
-  Id = 0;
-  resCode = "";
   isLoaded = false;
   roleLists: any;
   flagForScreen = "";
-  usertypes: usertype[] = [{ value: "Employee" }, { value: "Client" }, { value: "Candidate" }];
+
   constructor(
     private userService: UserService,
     public dialog: MatDialog,
@@ -81,19 +79,17 @@ export class FormsComponent implements OnInit, OnDestroy {
   ) {
     this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
     this.user = airmsService.getSessionStorage(SIGNUP);
-    this.userIpAddress = airmsService.getSessionStorage(IP_ADDRESS);
+    this.userIpAddress = airmsService.getIpAddressInfo();
     this.lastLogin = datePipe.transform(this.userInfo.lastLogin, "MMM dd, yyyy hh:mm:ss a");
-    this.unsubscribeAll = new Subject();
-    this.errorMessage = "";
-    this.userProfileUpdateSubscription = this.userService.userProfileUpdated$.subscribe((res) => {
+    this.userUpdateSubscription = this.userService.userProfileUpdated$.subscribe((res) => {
       if (res !== null) {
-        this.form.patchValue(res);
+        this.userForm.patchValue(res);
       }
     });
   }
 
   ngOnInit() {
-    this.form = this._formBuilder.group({
+    this.userForm = this._formBuilder.group({
       userId: ["", Validators.required],
       firstName: ["", Validators.required],
       middleName: [""],
@@ -127,19 +123,19 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.showForAddEditUser = false;
         this.userId = 0;
         this.flagForScreen = "addUser";
-        this.form.controls["password"].setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(15)]);
+        this.userForm.controls["password"].setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(15)]);
       } else if (params["userId"] && params["userType"]) {
         /** Edit User */
         this.Edit();
         this.showForMyProfile = false;
         this.showForAddEditUser = false;
         this.userId = Number(params["userId"]);
-        this.getProfileInfo(this.userId);
+        this.getUserInfo(this.userId);
         this.flagForScreen = "editUser";
       } else {
         /** My Profile */
         this.userId = Number(params["userId"]);
-        this.getProfileInfo(this.userId);
+        this.getUserInfo(this.userId);
         this.showForMyProfile = true;
         this.flagForScreen = "myProfile";
         this.enableEdit = false;
@@ -147,8 +143,8 @@ export class FormsComponent implements OnInit, OnDestroy {
       }
       this.getRoles();
     });
-    this.form.get("password").valueChanges;
-    this.form.controls["userId"].patchValue(this.userId);
+    this.userForm.get("password").valueChanges;
+    this.userForm.controls["userId"].patchValue(this.userId);
   }
 
   unsubscribe(subscription: Subscription) {
@@ -157,50 +153,65 @@ export class FormsComponent implements OnInit, OnDestroy {
     }
   }
   getRoles() {
-    this.authService.getRoleList().subscribe((res) => {
-      this.roleLists = res;
-    });
+    this.authService.getRoleList().subscribe(
+      (res) => {
+        this.logUserActivity("User Management - Fetching Roles", LOG_MESSAGES.SUCCESS);
+        this.roleLists = res;
+      },
+      (error) => {
+        this.logUserActivity("Fetch Roles", LOG_MESSAGES.FAILURE);
+        this.logService.logError(LOG_LEVELS.ERROR, "User Management - Fetching Roles", "On Fetching Roles", JSON.stringify(error));
+      }
+    );
   }
 
   Edit() {
+    this.logUserActivity("User Management - Edit", LOG_MESSAGES.CLICK);
     this.viewMode = false;
     this.enableEdit = !this.enableEdit;
   }
 
-  getProfileInfo(userId) {
-    this.getProfileInfoSubscription = this.authService.getProfileInfo(userId).subscribe((res) => {
-      this.profileDetails = res;
-      this.form.patchValue(res);
-      this.form.controls["userType"].patchValue(this.profileDetails.userType);
-      this.form.controls["roleId"].patchValue(this.profileDetails.roles.roleId);
-      if (this.profileDetails.profileImage !== null && this.profileDetails.profileImage !== "") {
-        this.profileDetails.profileImage = atob(this.profileDetails.profileImage);
-        this.contactProfilePic = this.profileDetails.profileImage;
-        setTimeout(() => {
-          $(".profile-image").remove();
-          $("#photos").append(
-            "<img src=" +
-              "data:image/jpeg;base64" +
-              this.profileDetails.profileImage +
-              ' class="profile-image avatar"  style="margin: -7px 8px -10px -7px;height:64px;width:64px;">'
-          );
-        }, 100);
-      } else {
-        setTimeout(() => {
-          $(".profile-image").remove();
-          $("#photos").append(
-            '<img src="' +
-              '../../assets/images/generic.jpg"' +
-              'class="profile-image avatar"  style="margin: -7px 8px -10px -7px; height:64px;width:64px;">'
-          );
-        }, 100);
+  getUserInfo(userId) {
+    this.getUserInfoSubscription = this.authService.getProfileInfo(userId).subscribe(
+      (res) => {
+        this.userDetails = res;
+        this.userForm.patchValue(res);
+        this.userForm.controls["userType"].patchValue(this.userDetails.userType);
+        this.userForm.controls["roleId"].patchValue(this.userDetails.roles.roleId);
+        if (this.userDetails.profileImage !== null && this.userDetails.profileImage !== "") {
+          this.userDetails.profileImage = atob(this.userDetails.profileImage);
+          this.contactProfilePic = this.userDetails.profileImage;
+          setTimeout(() => {
+            $(".profile-image").remove();
+            $("#photos").append(
+              "<img src=" +
+                "data:image/jpeg;base64" +
+                this.userDetails.profileImage +
+                ' class="profile-image avatar"  style="margin: -7px 8px -10px -7px;height:64px;width:64px;">'
+            );
+          }, 100);
+        } else {
+          setTimeout(() => {
+            $(".profile-image").remove();
+            $("#photos").append(
+              '<img src="' +
+                '../../assets/images/generic.jpg"' +
+                'class="profile-image avatar"  style="margin: -7px 8px -10px -7px; height:64px;width:64px;">'
+            );
+          }, 100);
+        }
+      },
+      (error) => {
+        this.logUserActivity("Fetch User Page", LOG_MESSAGES.FAILURE);
+        this.logService.logError(LOG_LEVELS.ERROR, "User Management - Fetching Users", "On Fetching Users", JSON.stringify(error));
       }
-    });
+    );
   }
 
   canceledit() {
+    this.logUserActivity("User Management - Cancel", LOG_MESSAGES.CLICK);
     if (this.flagForScreen === "myProfile") {
-      this.getProfileInfo(this.userId);
+      this.getUserInfo(this.userId);
       this.showForMyProfile = true;
       this.showForAddEditUser = true;
       this.viewMode = true;
@@ -215,6 +226,7 @@ export class FormsComponent implements OnInit, OnDestroy {
   emailChange(screenType, email) {
     if (screenType === "myProfile") {
       if (this.userInfo.emailAddress !== email) {
+        this.logUserActivity("User Management - Modifying Email", LOG_MESSAGES.CLICK);
         Swal.fire({
           title: "Are you sure?",
           text: "You're trying to change Mail Id, So further notifications will be sent to you're new Mail Id",
@@ -224,14 +236,19 @@ export class FormsComponent implements OnInit, OnDestroy {
           cancelButtonText: "No",
         }).then((result) => {
           if (result.dismiss === Swal.DismissReason.cancel) {
-            this.form.controls["emailAddress"].patchValue(this.userInfo.emailAddress);
+            this.userForm.controls["emailAddress"].patchValue(this.userInfo.emailAddress);
+            this.logUserActivity("User Management - Cancelling modifying email", LOG_MESSAGES.CANCEL);
+          } else {
+            this.logUserActivity("User Management - Confirming email change", LOG_MESSAGES.YES);
           }
         });
       }
     }
   }
   updateProfile(value) {
-    if (this.form.valid) {
+    this.logUserActivity("User Management - Save", LOG_MESSAGES.CLICK);
+    this.errorMessage = "";
+    if (this.userForm.valid) {
       let updateObject = {
         firstName: value.firstName,
         middleName: value.middleName,
@@ -274,10 +291,10 @@ export class FormsComponent implements OnInit, OnDestroy {
         updateObject["password"] = value.password;
       }
 
-      this.updateProfileSubscription = this.authService.signup(updateObject, this.user).subscribe(
+      this.updateUserSubscription = this.authService.signup(updateObject, this.user).subscribe(
         (res) => {
           if (this.userId === Number(this.userInfo.userId)) {
-            if (this.form.get("emailAddress").dirty || this.form.get("userName").dirty || this.form.get("newPassword").dirty) {
+            if (this.userForm.get("emailAddress").dirty || this.userForm.get("userName").dirty || this.userForm.get("newPassword").dirty) {
               Swal.fire({
                 position: "center",
                 icon: "warning",
@@ -312,9 +329,21 @@ export class FormsComponent implements OnInit, OnDestroy {
               }
             });
           }
+          if (this.flagForScreen === 'myProfile' || this.flagForScreen === 'editUser') {
+          if (this.userForm.get("emailAddress").dirty) {
+            this.logUserActivity('User Management - Edit', 'Email Modified From: '+ 
+            this.userInfo.emailAddress +' To : '+ res['emailAddress']);
+          }
+          if (this.userForm.get("userName").dirty) {
+            this.logUserActivity('User Management - Edit', 'UserName Modified');
+          } 
+          if (this.userForm.get("password").dirty) {
+            this.logUserActivity('User Management - Edit', 'Password Modified');
+          }
+        }
         },
         (error) => {
-          this.logService.logError(LOG_LEVELS.ERROR, "Add/User page", "On updating user", JSON.stringify(error));
+          this.logService.logError(LOG_LEVELS.ERROR, "User Management - Save", "On updating user", JSON.stringify(error));
           if (error.error.message === "old password does not match") {
             this.errorMessage = error.error.message;
             this.oldPasswordWrong = true;
@@ -360,16 +389,16 @@ export class FormsComponent implements OnInit, OnDestroy {
     }
   }
   checkForFormFields() {
-    for (const prop in this.form.controls) {
-      if (Object.prototype.hasOwnProperty.call(this.form.controls, prop)) {
-        if (this.form.controls[prop].pristine) {
-          this.form.controls[prop].markAsTouched();
+    for (const prop in this.userForm.controls) {
+      if (Object.prototype.hasOwnProperty.call(this.userForm.controls, prop)) {
+        if (this.userForm.controls[prop].pristine) {
+          this.userForm.controls[prop].markAsTouched();
         }
       }
     }
   }
   setPassword(value) {
-    this.form.controls["password"].patchValue(value.newPassword);
+    this.userForm.controls["password"].patchValue(value.newPassword);
   }
   updateUserInLocalStorge(res) {
     let user_info = {
@@ -391,25 +420,29 @@ export class FormsComponent implements OnInit, OnDestroy {
   changePassword(checked) {
     this.showPasswordsection = !this.showPasswordsection;
     if (checked === true) {
+      this.logUserActivity("User Management - Selecting Change Password", LOG_MESSAGES.CLICK);
       if (this.flagForScreen == "editUser") {
-        this.form.controls["newPassword"].setValidators([Validators.minLength(8), Validators.maxLength(15)]);
+        this.userForm.controls["newPassword"].setValidators([Validators.minLength(8), Validators.maxLength(15)]);
       } else if (this.flagForScreen == "myProfile") {
-        this.form.controls["password"].setValidators([Validators.required]);
-        this.form.controls["newPassword"].setValidators([Validators.minLength(8), Validators.maxLength(15)]);
+        this.userForm.controls["password"].setValidators([Validators.required]);
+        this.userForm.controls["newPassword"].setValidators([Validators.minLength(8), Validators.maxLength(15)]);
       }
     } else {
-      this.form.controls["password"].clearValidators();
-      this.form.controls["password"].updateValueAndValidity();
-      this.form.controls["newPassword"].clearValidators();
-      this.form.controls["newPassword"].updateValueAndValidity();
+      this.logUserActivity("User Management - Unselecting Change Password", LOG_MESSAGES.CLICK);
+      this.userForm.controls["password"].clearValidators();
+      this.userForm.controls["password"].updateValueAndValidity();
+      this.userForm.controls["newPassword"].clearValidators();
+      this.userForm.controls["newPassword"].updateValueAndValidity();
     }
   }
   onValueChange() {
     this.confirmDialogs = true;
   }
   uploadFile(e) {
+    this.logUserActivity("User Management - Image Upload", LOG_MESSAGES.CLICK);
     const imageDetails = e.target.files[0];
     if (imageDetails.size > 30000 || (!imageDetails.type.includes("jpg") && !imageDetails.type.includes("jpeg"))) {
+      this.logUserActivity("User Management - Image Upload", LOG_MESSAGES.FAILURE);
       Swal.fire({
         title: "<strong>Invalid Image Found</strong>",
         text: "Please upload a profile picture, jpg or jpeg, with size less than 30KB.",
@@ -418,6 +451,7 @@ export class FormsComponent implements OnInit, OnDestroy {
       });
       return;
     } else {
+      this.logUserActivity("User Management - Image Upload", LOG_MESSAGES.SUCCESS);
       const that = this;
       this.confirmDialogs = true;
       const reader = new FileReader();
@@ -432,25 +466,37 @@ export class FormsComponent implements OnInit, OnDestroy {
         );
       };
       reader.readAsDataURL(imageDetails);
-      this.form.markAsDirty();
+      this.userForm.markAsDirty();
     }
   }
   getClipboardContent() {
     return window.navigator["clipboard"].readText();
   }
 
+  logUserActivity(from, value) {
+    this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
+  }
+
   logoutAIRMS() {
+    this.logUserActivity("Logout ", LOG_MESSAGES.CLICK);
     this.authService.logout();
     this.router.navigate([""]);
   }
   ngOnDestroy(): void {
     this.unsubscribe(this.getUserSubscription);
-    this.unsubscribe(this.updateProfileSubscription);
-    this.unsubscribeAll.next();
-    this.unsubscribeAll.complete();
+    this.unsubscribe(this.updateUserSubscription);
+    this.unsubscribe(this.getUserInfoSubscription);
     this.contactProfilePic = null;
     this.showForMyProfile = null;
     this.viewMode = null;
+    this.errorMessage = null;
+    this.oldPasswordWrong = null;
+    this.showForMyProfile = null;
+    this.showForAddEditUser = null;
+    this.isLoaded = null;
+    this.roleLists = null;
+    this.flagForScreen = null;
+    this.userDetails = null;
   }
 }
 

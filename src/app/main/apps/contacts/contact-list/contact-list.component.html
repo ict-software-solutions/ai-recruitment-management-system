@@ -21,7 +21,7 @@
     <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
     <mat-cell *matCellDef="let contact" style="color: #006699; justify-content: end center;">
       <!-- <p class="text-truncate font-weight-600">{{contact.active }}</p> -->
-      <p class="text-truncate font-weight-600" *ngIf="contact.active === true">Activate</p>
+      <p class="text-truncate font-weight-600" *ngIf="contact.active === true">Active</p>
       <p class="text-truncate font-weight-600" *ngIf="contact.active === false">Inactive</p>
     </mat-cell>
   </ng-container>
@@ -36,12 +36,12 @@
   <ng-container matColumnDef="roleId">
     <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action </mat-header-cell>
     <mat-cell *matCellDef="let product" style="justify-content: center;">
-      <button mat-icon-button style="color: #42a1f5;" (click)="editContact(product.roleId)">
+      <button mat-icon-button style="color: #42a1f5;" (click)="editRole(product.roleId)">
         <mat-icon>edit</mat-icon>
       </button>
       <span>
         <button mat-icon-button color="accent" style="color: red; background-color: white;"
-          (click)="onDelete(product.roleId)">
+          (click)="deleteRole(product.roleId)">
           <mat-icon>delete</mat-icon>
         </button></span>
     </mat-cell>

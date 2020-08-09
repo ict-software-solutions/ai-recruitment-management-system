@@ -17,14 +17,13 @@ export class AnalyticsDashboardComponent implements OnInit {
     defaultElevation = 2;
     raisedElevation = 8;
     name = 'Angular';
-    userInfo: any;
+    roleName: any;
     constructor(
         private _analyticsDashboardService: AnalyticsDashboardService,
         private airmsService: AirmsService
     ) {
         // Register the custom chart.js plugin
-        this.userInfo = this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
-        console.log('this.user', this.userInfo.roleName);
+        this.roleName = this.airmsService.getUserRole();
         this._registerCustomChartJSPlugin();
         
     }

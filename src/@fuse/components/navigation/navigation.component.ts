@@ -57,12 +57,8 @@ export class FuseNavigationComponent implements OnInit {
   getSideMenus(): any {
     let pageValue = [];
     console.log('this.userInfo.screenMapping', this.userInfo.screenMapping);
-    if (this.userInfo.screenMapping !== null) {
-      if (this.userInfo.screenMapping.length > 0) {
+    if (this.userInfo.screenMapping !== null || this.userInfo.screenMapping.length > 0) {
         pageValue = this.userInfo.screenMapping;
-      } else {
-        pageValue = [];
-      }
     }
     const userRoles = [{ name: this.userInfo.roleName, pages: pageValue }];
     this.navigation = [];

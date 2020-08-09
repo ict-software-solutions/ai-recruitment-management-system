@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   errorMessage = "";
   activationLink = false;
   signupSubscription: Subscription;
+  resendMailSubscription: Subscription;
   hide = true;
 
   constructor(
@@ -56,13 +57,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       emailAddress: ["", [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
       userName: ["", [Validators.minLength(6), Validators.maxLength(30), Validators.pattern(USERNAME_PATTERN)]],
       password: ["", [Validators.minLength(8), Validators.maxLength(15)]],
-      // passwordConfirm: ['', [Validators.required, confirmPasswordValidator]],
-      check: ["", Validators.required],
+      check: ["", Validators.required]
     });
   }
 
   register(value) {
-    this.logUserActivity("CREATE AN ACCOUNT", LOG_MESSAGES.CLICK);
+    this.logUserActivityForEmail("CREATE AN ACCOUNT", value.emailAddress, LOG_MESSAGES.CLICK);
     this.alreadyExist = false;
     this.activationLink = false;
 
@@ -79,7 +79,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           showConfirmButton: true,
         });
 
-        this.logUserActivity("CREATE AN ACCOUNT", LOG_MESSAGES.SUCCESS);
+        this.logUserActivityForEmail("CREATE AN ACCOUNT", value.emailAddress, LOG_MESSAGES.SUCCESS);
       },
       (error) => {
         if (error.error.message === "email already exists") {
@@ -88,14 +88,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.errorMessage = "User name already exists";
         }
         this.alreadyExist = true;
-        this.logService.logError(LOG_LEVELS.ERROR, "Register_Page", "on Register user", JSON.stringify(error));
-        this.logUserActivity("CREATE AN ACCOUNT", LOG_MESSAGES.FAILURE);
+        this.logService.logErrorForEmail(LOG_LEVELS.ERROR, value.emailAddress, "Register_Page", "on Register user", JSON.stringify(error));
+        this.logUserActivityForEmail("CREATE AN ACCOUNT", value.emailAddress, LOG_MESSAGES.FAILURE);
       }
     );
   }
   resend() {
     this.errorMessage = "";
-    this.authService.resendActivationMail(this.registerForm.value.userName).subscribe((res: any) => {
+    this.resendMailSubscription =this.authService.resendActivationMail(this.registerForm.value.userName).subscribe((res: any) => {
       if (res.message === "activation link send successfully") {
         Swal.fire({
           text: "Activation link send your email successfully",
@@ -113,6 +113,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   logUserActivity(from, value) {
     this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
   }
+  logUserActivityForEmail(from, emailAddress, value) {
+    this.logService.logUserActivityForEmail(LOG_LEVELS.INFO, emailAddress, from, value);
+  }
 
   unsubscribe(subscription: Subscription) {
     if (subscription !== null && subscription !== undefined) {
@@ -122,6 +125,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.unsubscribe(this.signupSubscription);
+    this.unsubscribe(this.resendMailSubscription);
     this.unsubscribeAll.next();
     this.unsubscribeAll.complete();
     this.registerForm = null;

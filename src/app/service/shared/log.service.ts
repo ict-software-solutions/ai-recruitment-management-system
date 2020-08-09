@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { LogLevel } from './log-level.enum';
 import { LogPublisher } from './log-publishers';
 import { LogPublishersService } from './log-publishers.service';
+import { AirmsService } from '../airms.service';
 // import { NGaugeService } from './ngauge.service';
 
 @Injectable()
@@ -10,10 +11,13 @@ export class LogService {
   level: LogLevel = LogLevel.All;
   logWithDate = true;
   publishers: LogPublisher[];
-
-
-  constructor(private publishersService: LogPublishersService) {
+  userName: String;
+  userEmail: String;
+  constructor(private publishersService: LogPublishersService, private airmsService: AirmsService) {
     this.publishers = this.publishersService.publishers;
+    this.userName = this.airmsService.getUserName();
+    console.log('this.userName', this.userName);
+    //this.userEmail = this.airmsService.getUserEmail();
   }
 
   debug(msg: any, ...optionalParams: any[]) {
@@ -63,7 +67,20 @@ export class LogService {
 //dinesh updated
   logUserActivity(logLevel, whereArise, whatEnsue) {
     const params = { 
-      createdBy: 0,
+      createdBy: this.userName,
+      whereArise,
+      whatEnsue,
+      whenOccur: new Date(),
+      logActivity: true,
+      logErr: false
+    }
+    this[logLevel](params);
+  }
+// Email
+  logUserActivityForEmail(logLevel, mail, whereArise, whatEnsue) {
+    console.log('mail', mail);
+    const params = { 
+      createdBy: mail,
       whereArise,
       whatEnsue,
       whenOccur: new Date(),
@@ -75,7 +92,20 @@ export class LogService {
 
   logError(logLevel, screen, whereArise, message) {
     const params = {
-      createdBy: 0, // UserId
+      createdBy: this.userName, // UserId
+      screen,
+      whereArise,
+      message: JSON.stringify(message),
+      whenOccur: new Date(), // Should assigned from Server
+      logActivity: false,
+      logErr: true
+    }
+    this[logLevel](params);
+  }
+
+  logErrorForEmail(logLevel, mail, screen, whereArise, message) {
+    const params = {
+      createdBy: mail, // UserId
       screen,
       whereArise,
       message: JSON.stringify(message),

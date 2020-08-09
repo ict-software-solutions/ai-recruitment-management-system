@@ -14,6 +14,7 @@ export class UserService {
   publishUserDetail(data) {
     this.userProfileUpdateSub.next(data);
   }
+
 }
 export class UserDetailService {
   constructor(private httpClient: HttpClient) { }

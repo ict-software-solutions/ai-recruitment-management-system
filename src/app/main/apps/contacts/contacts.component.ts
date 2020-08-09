@@ -9,6 +9,8 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import { NavigationExtras, Router } from '@angular/router';
+import { LOG_MESSAGES, LOG_LEVELS } from 'app/util/constants';
+import { LogService } from 'app/service/shared/log.service';
 
 @Component({
     selector: 'contacts',
@@ -18,26 +20,7 @@ import { NavigationExtras, Router } from '@angular/router';
     animations: fuseAnimations
 })
 export class ContactsComponent implements OnInit, OnDestroy {
-    todo = [
-        'Get to work',
-        'Pick up groceries',
-        'Go home',
-        'Fall asleep'
-    ];
-
-    done = [
-        'Get up',
-        'Brush teeth',
-        'Take a shower',
-        'Check e-mail',
-        'Walk dog'
-    ];
-    dialogRef: any;
-    hasSelectedContacts: boolean;
     searchInput: FormControl;
-
-    // Private
-    private _unsubscribeAll: Subject<any>;
 
     /**
      * Constructor
@@ -47,16 +30,16 @@ export class ContactsComponent implements OnInit, OnDestroy {
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: ContactsService,
         private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog,
         private router: Router,
+        private logService: LogService
     ) {
         // Set the defaults
         this.searchInput = new FormControl('');
 
         // Set the private defaults
-        this._unsubscribeAll = new Subject();
+        this.logUserActivity("Role Management", LOG_MESSAGES.CLICK);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -67,45 +50,43 @@ export class ContactsComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        this._contactsService.onSelectedContactsChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedContacts => {
-                this.hasSelectedContacts = selectedContacts.length > 0;
-            });
+        // this._contactsService.onSelectedContactsChanged
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe(selectedContacts => {
+        //         this.hasSelectedContacts = selectedContacts.length > 0;
+        //     });
 
-        this.searchInput.valueChanges
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(300),
-                distinctUntilChanged()
-            )
-            .subscribe(searchText => {
-                this._contactsService.onSearchTextChanged.next(searchText);
-            });
+        // this.searchInput.valueChanges
+        //     .pipe(
+        //         takeUntil(this._unsubscribeAll),
+        //         debounceTime(300),
+        //         distinctUntilChanged()
+        //     )
+        //     .subscribe(searchText => {
+        //         this._contactsService.onSearchTextChanged.next(searchText);
+        //     });
     }
 
     /**
      * On destroy
      */
     ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next();
-        this._unsubscribeAll.complete();
     }
 
 
-    newContact() {
+    addNewRole() {
+        this.logUserActivity("Role Management - Add new role", LOG_MESSAGES.CLICK);
 
         let navigationExtras: NavigationExtras = {
-            queryParams: {
-                // contact: contact,
-                // action: 'edit',
-            },
+            queryParams: {},
             skipLocationChange: true
         };
         this.router.navigate(['apps/contacts/addRole'], navigationExtras);
-
     }
+
+    logUserActivity(from, value) {
+        this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
+      }
     /**
      * Toggle the sidebar
      *
@@ -113,15 +94,5 @@ export class ContactsComponent implements OnInit, OnDestroy {
      */
     toggleSidebar(name): void {
         this._fuseSidebarService.getSidebar(name).toggleOpen();
-    }
-    drop(event: CdkDragDrop<string[]>) {
-        if (event.previousContainer === event.container) {
-            moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-        } else {
-            transferArrayItem(event.previousContainer.data,
-                event.container.data,
-                event.previousIndex,
-                event.currentIndex);
-        }
     }
 }
