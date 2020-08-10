@@ -55,6 +55,14 @@
 .note_heading {
   color: #039be5;
 }
+.mat-tab-label .mat-tab-label-content {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  margin-top: 10px;
+  color: #039be5;
+}
 
 #cont_card {
   margin-top: -60px;
@@ -91,7 +99,10 @@
 }
 .mat-tab-labels {
   display: flex;
-  height: 57px;
+  height: 59px;
+}
+.mat-header-row {
+  height: 63px;
 }
 .mat-tab-label .mat-tab-label-content {
   display: inline-flex;
@@ -100,9 +111,9 @@
   white-space: nowrap;
   margin-top: 21px;
 }
-.mat-header-row {
-  height: 54px !important;
-}
+// .mat-header-row {
+//   height: 54px !important;
+// }
 @media only screen and (max-width: 480px) {
   #cont_card {
     margin-top: -3px;

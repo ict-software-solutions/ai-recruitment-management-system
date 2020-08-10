@@ -19,7 +19,7 @@
     <div class="content-card" id="cont_card">
       <mat-tab-group animationDuration="0ms" (selectedTabChange)="getLogEntries($event.tab.textLabel)" [hidden]="isLoading"
       style="height: 100%;">
-        <!-- <mat-tab label="Field History">
+        <!-- <mat-tab label="Field History" class="note_heading">
           <!-<div class="example-container">
             <mat-table [dataSource]="dataSource" #fieldHistorySort="matSort" matSort matSortActive="whenOccur"
         matSortDirection="desc" [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
@@ -87,7 +87,7 @@
             </ul>
           </div>
         </mat-tab> -->
-        <mat-tab label="Audit Log">
+        <mat-tab label="Audit Log" class="note_heading">
           <div *ngIf="isLoading" class="Loading">Loading..</div>
           <div class="example-container4">
           <mat-table [dataSource]="dataSource" class="log-table" #auditSort="matSort" matSort matSortDirection="desc"
@@ -137,7 +137,7 @@
           </div>
         </mat-tab>
 
-        <mat-tab label="Client Machine Log">
+        <mat-tab label="Client Machine Log" class="note_heading">
           <div *ngIf="isLoading" class="Loading">Loading..</div>
           <div class="example-container4">
           <mat-table [dataSource]="dataSource" class="log-table" #clientLogSort="matSort" matSort matSortDirection="desc"

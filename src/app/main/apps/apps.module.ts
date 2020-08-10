@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-//import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { AuthGuard } from 'app/service/shared/auth.guard';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes = [
     {
@@ -55,19 +56,20 @@ const routes = [
 
 @NgModule({
     declarations: [
-        //FuseConfirmDialogComponent
+        FuseConfirmDialogComponent
 
     ],
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
-        FuseSharedModule
+        FuseSharedModule,
+        MatButtonModule
     ],
-    // exports: [
-    //     FuseConfirmDialogComponent
-    // ],
-    // entryComponents: [
-    //     FuseConfirmDialogComponent
-    // ],
+    exports: [
+        FuseConfirmDialogComponent
+    ],
+    entryComponents: [
+        FuseConfirmDialogComponent
+    ],
 })
 export class AppsModule { }

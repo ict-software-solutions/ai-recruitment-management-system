@@ -50,6 +50,15 @@ e-commerce-products {
     }
   }
 }
+.ps__thumb-y {
+  background-color: #aaa;
+  border-radius: 6px;
+  transition: background-color 0.2s linear, width 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s linear, width 0.2s ease-in-out;
+  width: 6px;
+  right: 2px;
+  position: absolute;
+}
 .example-container6 {
   display: flex;
   flex-direction: column;
@@ -67,7 +76,7 @@ e-commerce-products {
   display: none;
 }
 .mat-header-row {
-  min-height: 63px;
+  height: 63px;
 }
   // .mat-column-activated {
   //   // flex: 0 1 160px;
