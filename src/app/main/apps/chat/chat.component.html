@@ -211,10 +211,17 @@
             </mat-form-field>
             <p style="text-align: center; margin-top: -5px; color: #0066ff;">or</p>
             <mat-form-field appearance="outline">
-              <mat-label>User Type</mat-label>
+              <mat-label>User Role</mat-label>
               <mat-select>
+                <mat-option value="admin">Admin</mat-option>
+                <mat-option value="manager">Manager</mat-option>
+                <mat-option value="candidateConsultant">Candidate Consultant</mat-option>
+                <mat-option value="candidateView">Candidate View</mat-option>
+                <mat-option value="clientConsultant">Client Consultant</mat-option>
+                <mat-option value="clientView">Client View</mat-option>
                 <mat-option value="client">Client</mat-option>
-                <mat-option value="candidate">Candidate</mat-option>
+                <mat-option value="customer">Customer</mat-option>
+                <mat-option value="techsupport">Tech Support</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline">
