@@ -25,7 +25,7 @@
       <!-- <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" (click)="addRole()">
         <span>Add User</span>
       </button> -->
-      <button mat-raised-button (click)="openDialog({}, 'resetall')" class="resetall_button fuse-white mt-24 mt-md-0">
+      <button mat-raised-button (click)="openDialog({}, 'resetall')" class="resetall_button fuse-white mt-24 mt-md-0" *ngIf="roleName === 'Admin'">
         Reset All
       </button>
     </div>
@@ -67,11 +67,11 @@
             <mat-cell *matCellDef="let element" style="justify-content: center;">
               <span class="mobile-label">Action</span>
 
-              <button mat-icon-button style="color: #42a1f5;" (click)="openDialog(element, 'edit')">
+              <button mat-icon-button style="color: #42a1f5;" (click)="openDialog(element, 'edit')" matTooltip="Edit">
                 <mat-icon>edit</mat-icon>
               </button>
 
-              <button mat-icon-button style="color: #42a1f5;" (click)="openDialog(element, 'renew')">
+              <button mat-icon-button style="color: #42a1f5;" (click)="openDialog(element, 'renew')" matTooltip="Renew">
                 <mat-icon>autorenew</mat-icon>
               </button>
             </mat-cell>

@@ -152,7 +152,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     showSessionLogoutDialog() {
-        if (!this.router.url.includes('/login')) {
+        if (!this.router.url.includes('/login') || !this.router.url.includes('/pages/auth/register')) {
         Swal.fire({
             title: '<strong>Session expiring in 5 mins</strong>',
             text: 'Do you want to continue?',

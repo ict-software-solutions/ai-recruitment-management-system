@@ -44,9 +44,6 @@ export class AirmsService {
     }
   }
 
-  getUserEmail() {
-    // Email
-  }
 
   public getBrowserName() {
     const agent = window.navigator.userAgent;

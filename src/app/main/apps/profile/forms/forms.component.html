@@ -94,7 +94,7 @@
               </mat-form-field>
               <mat-form-field appearance="outline" fxFlex="34%">
                 <mat-label>Email
-                  <span style="color: green;" *ngIf="userDetails.activated === true">
+                  <span style="color: green;" *ngIf="userDetails['activated'] === true">
                     <mat-icon>check_circle</mat-icon>
                   </span>
                 </mat-label>
@@ -211,8 +211,8 @@
               <mat-form-field appearance="outline" fxFlex="33%" style="width: 232px;">
                 <mat-label>User Type</mat-label>
                 <mat-select [disabled]="viewMode" formControlName="userType">
-                  <mat-option *ngFor="let usertype of usertypes" [value]="usertype.value">
-                    {{ usertype.value }}
+                  <mat-option *ngFor="let usertype of usertypes" [value]="usertype">
+                    {{ usertype }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>

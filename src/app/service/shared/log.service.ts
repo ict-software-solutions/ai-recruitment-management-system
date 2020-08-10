@@ -11,13 +11,8 @@ export class LogService {
   level: LogLevel = LogLevel.All;
   logWithDate = true;
   publishers: LogPublisher[];
-  userName: String;
-  userEmail: String;
   constructor(private publishersService: LogPublishersService, private airmsService: AirmsService) {
     this.publishers = this.publishersService.publishers;
-    this.userName = this.airmsService.getUserName();
-    console.log('this.userName', this.userName);
-    //this.userEmail = this.airmsService.getUserEmail();
   }
 
   debug(msg: any, ...optionalParams: any[]) {
@@ -66,8 +61,9 @@ export class LogService {
   }
 //dinesh updated
   logUserActivity(logLevel, whereArise, whatEnsue) {
+    console.log('this.airmservicee.getUserName', this.airmsService.getUserName());
     const params = { 
-      createdBy: this.userName,
+      createdBy: this.airmsService.getUserName(),
       whereArise,
       whatEnsue,
       whenOccur: new Date(),
@@ -92,7 +88,7 @@ export class LogService {
 
   logError(logLevel, screen, whereArise, message) {
     const params = {
-      createdBy: this.userName, // UserId
+      createdBy: this.airmsService.getUserName(), 
       screen,
       whereArise,
       message: JSON.stringify(message),

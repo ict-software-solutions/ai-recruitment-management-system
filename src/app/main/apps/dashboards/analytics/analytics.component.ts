@@ -2,7 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/analytics.service';
 import { AirmsService } from 'app/service/airms.service';
-import { LOGGED_IN_USER_INFO } from 'app/util/constants';
+import { LOGGED_IN_USER_INFO, LOG_MESSAGES, LOG_LEVELS } from 'app/util/constants';
+import { LogService } from 'app/service/shared/log.service';
 @Component({
     selector: 'analytics-dashboard',
     templateUrl: './analytics.component.html',
@@ -20,13 +21,17 @@ export class AnalyticsDashboardComponent implements OnInit {
     roleName: any;
     constructor(
         private _analyticsDashboardService: AnalyticsDashboardService,
-        private airmsService: AirmsService
+        private airmsService: AirmsService,
+        private logService: LogService
     ) {
         // Register the custom chart.js plugin
         this.roleName = this.airmsService.getUserRole();
         this._registerCustomChartJSPlugin();
-        
+        this.logUserActivity("Dashboard", LOG_MESSAGES.CLICK);
     }
+    logUserActivity(from, value) {
+        this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
+      }
 
     ngOnInit(): void {
         // Get the widgets from the service

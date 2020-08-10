@@ -8,8 +8,9 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { AirmsService } from 'app/service/airms.service';
 import { AuthService } from 'app/service/auth.service';
-import { LOGGED_IN_USER_INFO } from 'app/util/constants';
+import { LOGGED_IN_USER_INFO, LOG_LEVELS, LOG_MESSAGES } from 'app/util/constants';
 import { Subject } from 'rxjs';
+import { LogService } from 'app/service/shared/log.service';
 
 // import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
@@ -60,10 +61,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     dataSource = new MatTableDataSource();
     dialogRef: any;
 
-
-    // Private
-    private _unsubscribeAll: Subject<any>;
-    userInfo: any;
     isLoading = true;
     constructor(
         public dialog: MatDialog,
@@ -71,18 +68,16 @@ export class ChatComponent implements OnInit, OnDestroy {
         public _matDialog: MatDialog,
         private _fuseSidebarService: FuseSidebarService,
         private airmsService: AirmsService,
-        private authService: AuthService
+        private authService: AuthService,
+        private logService: LogService
         // private _matPaginator: MatPaginator
     ) {
-        this._unsubscribeAll = new Subject();
-        this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+        this.logUserActivity("System Activities", LOG_MESSAGES.CLICK);
     }
     ngOnInit(): void {
         this.getLogEntries('Audit Log');
-        //this.dataSource.sort = this.sort;
     }
     toggleSidebar(name): void {
-        console.log('name', name);
         this._fuseSidebarService.getSidebar(name).toggleOpen();
     }
 
@@ -91,17 +86,35 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     }
     getAuditLog() {
+        this.logUserActivity("System Activities - Audit Log", LOG_MESSAGES.CLICK);
         this.dataSource.data = [];
         this.authService.getAuditLogEntries().subscribe((res: any) => {
         res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
         this.setDataSource(res, this.paginator2, this.auditSort);
+        }, error => {
+        this.logService.logError(LOG_LEVELS.ERROR, "System Activities", "On fetching Audit Log", JSON.stringify(error));
         });
     }
     getClientLog() {
+        this.logUserActivity("System Activities - Client Machine Log", LOG_MESSAGES.CLICK);
         this.dataSource.data = [];
         this.authService.getClientLogEntries().subscribe((res: any) => {
             res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
             this.setDataSource(res, this.paginator3, this.clientLogSort);
+        }, error => {
+        this.logService.logError(LOG_LEVELS.ERROR, "System Activities", "On fetching Client Machine Log", JSON.stringify(error));
+        });
+    }
+
+    
+    getFieldHistory() {
+        this.logUserActivity("System Activities - Field History", LOG_MESSAGES.CLICK);
+        this.authService.getClientLogEntries().subscribe(res => {
+            console.log('client log', res);
+            this.fieldHistorySort.sort(({ id: 'whenOccur', start: 'desc' }) as MatSortable);
+            this.setDataSource(res, this.paginator1, this.fieldHistorySort);
+        }, error => {
+        this.logService.logError(LOG_LEVELS.ERROR, "System Activities", "On fetching Field History", JSON.stringify(error));
         });
     }
 
@@ -118,14 +131,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.isLoading = false;
     }
 
-    getFieldHistory() {
-        console.log('Field History');
-        this.authService.getClientLogEntries().subscribe(res => {
-            console.log('client log', res);
-            this.fieldHistorySort.sort(({ id: 'whenOccur', start: 'desc' }) as MatSortable);
-            this.setDataSource(res, this.paginator1, this.fieldHistorySort);
-        });
-    }
     getLogEntries(event) {
         this.isLoading = true;
         if (event === 'Client Machine Log') {
@@ -142,10 +147,13 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
     cancel() {
     }
+    logUserActivity(from, value) {
+        this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
+      }
 
     ngOnDestroy(): void {
-        this._unsubscribeAll.next();
-        this._unsubscribeAll.complete();
+        this.authService = null;
+        this.logService = null;
     }
 }
 

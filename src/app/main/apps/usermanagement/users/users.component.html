@@ -20,7 +20,7 @@
         </div>
       </div>
 
-      <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" (click)="addRole()">
+      <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" (click)="addRole()" *ngIf="roleName === 'Admin'">
         <span>Add User</span>
       </button>
     </div>
@@ -88,17 +88,17 @@
             </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="userId">
+          <ng-container matColumnDef="userId" *ngIf="roleName === 'Admin'">
             <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action </mat-header-cell>
             <mat-cell *matCellDef="let product" style="justify-content: center;">
               <span class="mobile-label">Action</span>
 
-              <button mat-icon-button style="color: #42a1f5;" (click)="editUser(product.userId, product.userType)">
+              <button mat-icon-button style="color: #42a1f5;" (click)="editUser(product.userId, product.userType)" matTooltip= "Edit">
                 <mat-icon>edit</mat-icon>
               </button>
               <span>
                 <button mat-icon-button color="accent" style="color: red; background-color: white;"
-                  (click)="onDelete(product.userId)">
+                  (click)="onDelete(product.userId)" matTooltip="Delete">
                   <mat-icon>delete</mat-icon>
                 </button></span>
             </mat-cell>

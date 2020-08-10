@@ -62,7 +62,7 @@
           <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="3%">
             <div class="space" fxFlex="100%" fxFlex.gt-md="50%">
               <div class="example-container1">
-                <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo['value']"
+                <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="unMappedScreens['value']"
                   [cdkDropListConnectedTo]="[doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
                   <h6 class="box-title">Unmapped Screens</h6>
                   <button mat-button color="primary" class="add-all-btn" (click)="addAllScreenMapping()">
@@ -80,7 +80,7 @@
               <div class="example-container1">
                 <!-- <h2>Done</h2> -->
 
-                <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done['value']"
+                <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="mappedScreens['value']"
                   [cdkDropListConnectedTo]="[todoList]" class="example-list" (cdkDropListDropped)="drop($event)">
                   <h6 class="box-title">Mapped Screens</h6>
                   <button mat-button color="primary" class="add-all-btn" (click)="removeAllScreenMapping()">

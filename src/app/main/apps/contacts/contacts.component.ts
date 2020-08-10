@@ -11,6 +11,7 @@ import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/conta
 import { NavigationExtras, Router } from '@angular/router';
 import { LOG_MESSAGES, LOG_LEVELS } from 'app/util/constants';
 import { LogService } from 'app/service/shared/log.service';
+import { AirmsService } from 'app/service/airms.service';
 
 @Component({
     selector: 'contacts',
@@ -21,7 +22,7 @@ import { LogService } from 'app/service/shared/log.service';
 })
 export class ContactsComponent implements OnInit, OnDestroy {
     searchInput: FormControl;
-
+    roleName: string;
     /**
      * Constructor
      *
@@ -33,11 +34,12 @@ export class ContactsComponent implements OnInit, OnDestroy {
         private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog,
         private router: Router,
-        private logService: LogService
+        private logService: LogService,
+        private airmsService: AirmsService
     ) {
         // Set the defaults
         this.searchInput = new FormControl('');
-
+        this.roleName = airmsService.getUserRole();
         // Set the private defaults
         this.logUserActivity("Role Management", LOG_MESSAGES.CLICK);
     }
@@ -75,7 +77,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
 
 
     addNewRole() {
-        this.logUserActivity("Role Management - Add new role", LOG_MESSAGES.CLICK);
+        this.logUserActivity("Role Management - Add", LOG_MESSAGES.CLICK);
 
         let navigationExtras: NavigationExtras = {
             queryParams: {},

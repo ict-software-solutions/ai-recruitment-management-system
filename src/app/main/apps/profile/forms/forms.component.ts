@@ -126,6 +126,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.userId = 0;
         this.flagForScreen = "addUser";
         this.userForm.controls["password"].setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(15)]);
+        this.logUserActivity("User Management - Add", LOG_MESSAGES.CLICK);
       } else if (params["userId"] && params["userType"]) {
         /** Edit User */
         this.Edit();
@@ -134,6 +135,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.userId = Number(params["userId"]);
         this.getUserInfo(this.userId);
         this.flagForScreen = "editUser";
+        this.logUserActivity("User Management - Edit", LOG_MESSAGES.CLICK);
       } else {
         /** My Profile */
         this.userId = Number(params["userId"]);
@@ -142,6 +144,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.flagForScreen = "myProfile";
         this.enableEdit = false;
         this.viewMode = true;
+        this.logUserActivity("User Management - My Profile", LOG_MESSAGES.CLICK);
       }
       this.getRoles();
     });
@@ -161,14 +164,13 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.roleLists = res;
       },
       (error) => {
-        this.logUserActivity("Fetch Roles", LOG_MESSAGES.FAILURE);
         this.logService.logError(LOG_LEVELS.ERROR, "User Management - Fetching Roles", "On Fetching Roles", JSON.stringify(error));
       }
     );
   }
 
   Edit() {
-    this.logUserActivity("User Management - Edit", LOG_MESSAGES.CLICK);
+    this.logUserActivity("User Management - Edit My Profile", LOG_MESSAGES.CLICK);
     this.viewMode = false;
     this.enableEdit = !this.enableEdit;
   }
@@ -204,7 +206,6 @@ export class FormsComponent implements OnInit, OnDestroy {
         }
       },
       (error) => {
-        this.logUserActivity("Fetch User Page", LOG_MESSAGES.FAILURE);
         this.logService.logError(LOG_LEVELS.ERROR, "User Management - Fetching Users", "On Fetching Users", JSON.stringify(error));
       }
     );

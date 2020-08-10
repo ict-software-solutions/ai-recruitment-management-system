@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   reCaptcha = false;
   unsupportedBrowser: boolean;
   status = "";
-  message = "";
   loginClicked = false;
 
   constructor(
@@ -46,7 +45,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private airmsService: AirmsService,
     private route: ActivatedRoute,
-    // private userService:UserService,
     private logService: LogService
   ) {
     this.fuseConfigService.config = LAYOUT_STRUCTURE;
@@ -65,8 +63,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      userName: ["adminRole", Validators.required],
-      password: ["@Test123", [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
+      userName: ["", Validators.required],
+      password: ["", [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
     });
     const firstParam: string = this.route.snapshot.queryParamMap.get("status");
     if (firstParam === '"active"') {
@@ -105,7 +103,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.logUserActivityForEmail("LOGIN", value.userName, LOG_MESSAGES.CLICK);
     this.inActive = true;
     this.errorMessage = "";
-    this.message = "";
     let loginInfo: any;
     this.loginSubscription = this.authService.login(value).subscribe(
       (res) => {
@@ -211,9 +208,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     });
   }
-  logUserActivity(from, value) {
-    this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
-  }
 
   logUserActivityForEmail(from, emailAddress, value) {
     console.log('emailAddress', emailAddress);
@@ -240,7 +234,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.showResetContent = null;
     this.inActive = null;
     this.errorMessage = null;
-    this.message = null;
     this.reCaptcha = null;
     this.passwordExpired = null;
   }

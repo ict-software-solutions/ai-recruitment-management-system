@@ -38,11 +38,11 @@
     </mat-cell>
   </ng-container> -->
 
-    <ng-container matColumnDef="roleId">
+    <ng-container matColumnDef="roleId" *ngIf="roleName === 'Admin'">
       <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action </mat-header-cell>
       <mat-cell *matCellDef="let product" style="justify-content: center;">
         <span class="mobile-label">Action</span>
-        <button mat-icon-button style="color: #42a1f5;" (click)="editContact(product.roleId)">
+        <button mat-icon-button style="color: #42a1f5;" (click)="editRole(product.roleId)">
           <mat-icon>edit</mat-icon>
         </button>
         <span>

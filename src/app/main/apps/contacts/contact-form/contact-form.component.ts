@@ -24,9 +24,9 @@ export class ContactsContactFormDialogComponent {
   roleDetails: any;
   roleId = 0;
   errorMessage = "";
-  userInfo: any;
-  todo: any; // Unmapped
-  done = { value: [] }; // Mapped
+  userName: any;
+  unMappedScreens: any; // Unmapped
+  mappedScreens = { value: [] }; // Mapped
   roleSubscription: Subscription;
   updateRoleSubscription: Subscription;
   labelPosition: "before" | "after" = "after";
@@ -39,10 +39,10 @@ export class ContactsContactFormDialogComponent {
     private airmsService: AirmsService,
     private logService: LogService
   ) {
-    this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+    this.userName = airmsService.getUserName();
     console.log('navigation', navigation);
-    this.todo = { value: JSON.parse(JSON.stringify(navigation[0]['children'])) };
-    console.log('navigation todo', this.todo);
+    this.unMappedScreens = { value: JSON.parse(JSON.stringify(navigation[0]['children'])) };
+    console.log('navigation todo', this.unMappedScreens);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -69,19 +69,19 @@ export class ContactsContactFormDialogComponent {
         this.getRoleInfo(Number(params.roleId));
       } else {
         this.roleId = 0;
-        this.todo = { value: JSON.parse(JSON.stringify(navigation[0]['children'])) };
-        this.done = { value: [] };
-        console.log('this.todo', this.todo, 'this.done', this.done);
+        this.unMappedScreens = { value: JSON.parse(JSON.stringify(navigation[0]['children'])) };
+        this.mappedScreens = { value: [] };
+        console.log('this.todo', this.unMappedScreens, 'this.done', this.mappedScreens);
       }
     });
   }
   getRoleInfo(roleId) {
     let screenMap = { newValue: [] };
-    let totalScreenMap = { data: this.todo['value'] };
+    let totalScreenMap = { data: this.unMappedScreens['value'] };
     console.log("this.mapScreens", totalScreenMap);
     this.roleSubscription = this.authService.getAllRolesInfo(roleId).subscribe(
       (res) => {
-        console.log(res, this.todo, this.done);
+        console.log(res, this.unMappedScreens, this.mappedScreens);
         this.roleDetails = res;
         this.roleMgmtForm.patchValue(res);
         console.log("this.roleDetails.screenMapping", this.roleDetails.screenMapping);
@@ -93,12 +93,12 @@ export class ContactsContactFormDialogComponent {
           var filterRes = totalScreenMap["data"].filter(function (el) {
             return screenMap["newValue"].indexOf(el.title) >= 0;
           });
-          this.todo['value'] = filterResDone;
-          this.done['value'] = filterRes;
-          console.log('this.toDo', this.todo, 'this.done Done', this.done);
+          this.unMappedScreens['value'] = filterResDone;
+          this.mappedScreens['value'] = filterRes;
+          console.log('this.toDo', this.unMappedScreens, 'this.done Done', this.mappedScreens);
         } else {
-          this.todo = { value: JSON.parse(JSON.stringify(navigation[0]['children'])) };
-          this.done = { value: [] };
+          this.unMappedScreens = { value: JSON.parse(JSON.stringify(navigation[0]['children'])) };
+          this.mappedScreens = { value: [] };
         }
       },
       (error) => {
@@ -110,9 +110,9 @@ export class ContactsContactFormDialogComponent {
     this.logUserActivity("Role Management - Save", LOG_MESSAGES.CLICK);
     let items = [];
     this.errorMessage = "";
-    if (this.done['value'].length > 0) {
-      for (let m = 0; m < this.done['value'].length; m++) {
-        items.push(this.done['value'][m].title);
+    if (this.mappedScreens['value'].length > 0) {
+      for (let m = 0; m < this.mappedScreens['value'].length; m++) {
+        items.push(this.mappedScreens['value'][m].title);
       }
     }
     let updateObject = {
@@ -123,9 +123,9 @@ export class ContactsContactFormDialogComponent {
       screenMapping: items,
     };
     if (this.roleId === 0) {
-      updateObject["createdBy"] = this.userInfo.firstName;
+      updateObject["createdBy"] = this.userName;
     } else {
-      updateObject["modifiedBy"] = this.userInfo.firstName;
+      updateObject["modifiedBy"] = this.userName;
     }
     console.log("updateObj", updateObject);
     this.updateRoleSubscription = this.authService.updateRolesInfo(updateObject).subscribe(
@@ -162,15 +162,15 @@ export class ContactsContactFormDialogComponent {
   }
   addAllScreenMapping() {
     this.logUserActivity("Role Management - Add all screens for Mapping", LOG_MESSAGES.CLICK);
-    this.todo = [];
-    this.done['value'] = [];
-    this.done['value'] = navigation[0]['children'];
+    this.unMappedScreens['value'] = [];
+    this.mappedScreens['value'] = [];
+    this.mappedScreens['value'] = navigation[0]['children'];
   }
   removeAllScreenMapping() {
     this.logUserActivity("Role Management - Remove all screens for Mapping", LOG_MESSAGES.CLICK);
-    this.todo = [];
-    this.done['value'] = [];
-    this.todo = navigation[0]['children'];
+    this.unMappedScreens['value'] = [];
+    this.mappedScreens['value'] = [];
+    this.unMappedScreens['value'] = navigation[0]['children'];
   }
   logUserActivity(from, value) {
     this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
@@ -193,8 +193,8 @@ export class ContactsContactFormDialogComponent {
     this.logService = null;
     this.errorMessage = null;
     this.roleDetails = null;
-    this.todo = null;
-    this.done = null;
+    this.unMappedScreens = null;
+    this.mappedScreens = null;
   }
 }
 

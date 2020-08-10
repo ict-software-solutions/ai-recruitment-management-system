@@ -3,6 +3,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from "sweetalert2";
+import { AirmsService } from 'app/service/airms.service';
+import { LOG_MESSAGES, LOG_LEVELS } from 'app/util/constants';
+import { LogService } from 'app/service/shared/log.service';
 export interface DialogData {
 }
 export interface Element {
@@ -25,10 +28,14 @@ export class ConfigurationComponent implements OnInit {
   displayedColumns: string[] = ['name', 'screenUsed', 'function', 'value', 'action'];
   dataSource = new MatTableDataSource<Element>(ELEMENT_DATA);
   showReset = false;
+  roleName: string;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog, private airmsService: AirmsService, private logService: LogService
+  ) { 
+    this.roleName = airmsService.getUserRole();
+    this.logUserActivity("Configuration", LOG_MESSAGES.CLICK);
+  }
   openDialog(element, type): void {
     console.log("element", element)
     if (element === undefined) {
@@ -45,6 +52,10 @@ export class ConfigurationComponent implements OnInit {
   }
   ngOnInit(): void {
   }
+  logUserActivity(from, value) {
+    this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
+  }
+
 }
 @Component({
   selector: 'dialog-overview-example-dialog',

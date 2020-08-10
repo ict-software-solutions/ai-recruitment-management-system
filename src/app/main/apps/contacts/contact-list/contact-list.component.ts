@@ -11,6 +11,7 @@ import { LogService } from "app/service/shared/log.service";
 import { DISPLAY_COLUMNS_FOR_ROLEMGMT, LOG_LEVELS, LOG_MESSAGES } from "app/util/constants";
 import { Subscription } from "rxjs";
 import Swal from "sweetalert2";
+import { AirmsService } from 'app/service/airms.service';
 
 @Component({
   selector: "contacts-contact-list",
@@ -24,18 +25,24 @@ export class ContactsContactListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-  displayedColumns = DISPLAY_COLUMNS_FOR_ROLEMGMT;
+  displayedColumns = ['rolename', 'desc', 'active', 'roleId'];
   dataSource = new MatTableDataSource<any>();
   isLoading = true;
   deleteRoleList: any;
   roleListSubscription: Subscription;
   deleteRoleListSubscription: Subscription;
-
+  roleName: string;
   constructor(
     private router: Router,
     private authService: AuthService,
     public matDialog: MatDialog,
-    private logService: LogService) { }
+    private logService: LogService,
+    private airmsService: AirmsService) {
+      this.roleName = airmsService.getUserRole();
+      if (this.roleName !== 'Admin') {
+        this.displayedColumns = ['rolename', 'desc', 'active'];
+      }
+     }
 
   ngOnInit() {
     this.getAllRoles();

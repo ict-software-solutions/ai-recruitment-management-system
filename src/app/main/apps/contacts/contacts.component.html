@@ -27,7 +27,7 @@
       </div>
 
       <button mat-raised-button color="basic" class="add-product-button fuse-white mt-24 mt-md-0" (click)="addNewRole()"
-        aria-label="add contact">
+        aria-label="add contact" *ngIf="roleName === 'Admin'">
         Add Role
       </button>
     </div>

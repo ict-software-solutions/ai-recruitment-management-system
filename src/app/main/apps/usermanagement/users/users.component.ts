@@ -12,6 +12,7 @@ import { AuthService } from "app/service/auth.service";
 import { LogService } from "app/service/shared/log.service";
 import { DISPLAY_COLUMNS_FOR_USERMGMT, LOG_LEVELS, LOG_MESSAGES } from "app/util/constants";
 import { Subscription } from "rxjs";
+import { AirmsService } from 'app/service/airms.service';
 
 @Component({
   selector: "e-commerce-products",
@@ -32,7 +33,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
   isLoading = true;
   color: ThemePalette = "primary";
   mode: ProgressSpinnerMode = "determinate";
-
+  roleName: String;
   userDetailSubscription: Subscription;
   deleteUserSubscription: Subscription;
 
@@ -40,11 +41,18 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
     private router: Router,
     private authService: AuthService,
     public matDialog: MatDialog,
-    public logService: LogService
-  ) { this.logUserActivity("User Management", LOG_MESSAGES.CLICK); }
+    public logService: LogService,
+    private airmsService: AirmsService
+  ) { this.logUserActivity("User Management", LOG_MESSAGES.CLICK); 
+    this.roleName = airmsService.getUserRole();
+    if (this.roleName !== 'Admin') {
+      this.displayedColumns = ["image", "firstName", "lastName", "userType", "roleName", "activated"];
+    }
+}
 
   ngOnInit(): void {
     this.getAllUsers();
+    
   }
 
   ngAfterViewInit() {
@@ -97,7 +105,6 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
       },
       skipLocationChange: true,
     };
-    this.logUserActivity("User Management - Edit", LOG_MESSAGES.CLICK);
     this.router.navigate(["/apps/profile/forms"], navigationExtras);
   }
 
@@ -108,7 +115,6 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
         viewMode: false,
       },
     };
-    this.logUserActivity("User Management - Add", LOG_MESSAGES.CLICK);
     this.router.navigate(["/apps/profile/forms"], navigationExtras);
   }
 
@@ -117,6 +123,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
   }
 
   searchFromTable(filterValue) {
+    this.logUserActivity("User Management - Search", LOG_MESSAGES.CLICK);
     filterValue = filterValue.trim().toLowerCase();
     this.dataSource.filter = filterValue;
   }
