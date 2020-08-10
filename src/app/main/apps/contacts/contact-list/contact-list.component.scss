@@ -21,14 +21,16 @@
 .example-container7 {
   display: flex;
   flex-direction: column;
-  max-height: 500px;
+  // max-height: 500px;
+  height: 350px;
   min-width: 300px;
+  overflow: auto;
 }
 
-.mat-table {
-  overflow: auto;
-  max-height: 500px;
-}
+// .mat-table {
+//   overflow: auto;
+//   max-height: 400px;
+// }
 
 .mobile-label {
   display: none;
