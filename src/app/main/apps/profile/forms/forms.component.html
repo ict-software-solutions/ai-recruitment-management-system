@@ -94,8 +94,11 @@
               </mat-form-field>
               <mat-form-field appearance="outline" fxFlex="34%">
                 <mat-label>Email
-                  <span style="color: green;" *ngIf="userDetails['activated'] === true">
+                  <span style="color: green;" *ngIf="userDetails?.activated === true">
                     <mat-icon>check_circle</mat-icon>
+                  </span>
+                 <span style="color: red;" *ngIf="userDetails?.activated === false">
+                    <mat-icon>error_outline</mat-icon>
                   </span>
                 </mat-label>
                 <input matInput type="email" formControlName="emailAddress" [readonly]="viewMode"
@@ -278,12 +281,12 @@
             </div>
 
             <div fxLayout="row" fxLayoutAlign="start center" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
-              style="margin-top: 12px;" *ngIf="showForMyProfile === false && userId != 0">
-              <div fxFlex="33%" appearance="outline">
+              style="margin-top: 12px;" >
+              <div fxFlex="33%" appearance="outline" *ngIf="userDetails?.locked === true">
                 <section class="tp-section">
                   <label class="example-margin">Account Status:</label>&nbsp;
-                  <input type="radio" value="activated" [checked]="true" name="status" /> Activated &nbsp;
-                  <input type="radio" value="locked" name="status" /> Locked
+                  <input type="radio" value="activated" [checked]="false"  name="status" /> Activated &nbsp;
+                  <input type="radio" value="locked" [checked]="true" name="status" /> Locked
                 </section>
               </div>
               <div fxFlex="34%" class="px-8" appearance="outline">
