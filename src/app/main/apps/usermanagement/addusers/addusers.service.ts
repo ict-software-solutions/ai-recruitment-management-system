@@ -10,26 +10,13 @@ export class EcommerceProductService implements Resolve<any>
     product: any;
     onProductChanged: BehaviorSubject<any>;
 
-    /**
-     * Constructor
-     *
-     * @param {HttpClient} _httpClient
-     */
     constructor(
         private _httpClient: HttpClient
     )
     {
-        // Set the defaults
         this.onProductChanged = new BehaviorSubject({});
     }
 
-    /**
-     * Resolver
-     *
-     * @param {ActivatedRouteSnapshot} route
-     * @param {RouterStateSnapshot} state
-     * @returns {Observable<any> | Promise<any> | any}
-     */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
     {
         this.routeParams = route.params;
@@ -47,11 +34,6 @@ export class EcommerceProductService implements Resolve<any>
         });
     }
 
-    /**
-     * Get product
-     *
-     * @returns {Promise<any>}
-     */
     getProduct(): Promise<any>
     {
         return new Promise((resolve, reject) => {
@@ -72,12 +54,6 @@ export class EcommerceProductService implements Resolve<any>
         });
     }
 
-    /**
-     * Save product
-     *
-     * @param product
-     * @returns {Promise<any>}
-     */
     saveProduct(product): Promise<any>
     {
         return new Promise((resolve, reject) => {
@@ -88,12 +64,6 @@ export class EcommerceProductService implements Resolve<any>
         });
     }
 
-    /**
-     * Add product
-     *
-     * @param product
-     * @returns {Promise<any>}
-     */
     addProduct(product): Promise<any>
     {
         return new Promise((resolve, reject) => {

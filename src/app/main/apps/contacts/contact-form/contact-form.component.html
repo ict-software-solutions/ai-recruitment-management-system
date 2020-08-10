@@ -1,150 +1,104 @@
-<div class="dialog-content-wrapper">
-  <mat-toolbar matDialogTitle class="mat-accent m-0" style="height: 64px;">
-      <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
-          <span class="title dialog-title">{{dialogTitle}}</span>
-          <div class="icon"align="right">
-              <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
-               
-                  <button mat-mini-fab color="light"(click)="matDialogRef.close()" style="margin-left:10px;margin-top: 10px;"><mat-icon>close</mat-icon></button>
-                  
-                     
-              </div>
-          </div>
-         
-      </mat-toolbar-row>
-
-      <mat-toolbar-row class="toolbar-bottom py-16" fxLayout="column" fxLayoutAlign="center center">
-          <!-- <img [src]="contact.avatar" class="avatar contact-avatar huge m-0"
-               [alt]="contact.name"/>
-          <div class="contact-name mt-8">{{contact.name}} {{contact.lastName}}</div> -->
-      </mat-toolbar-row>
-  </mat-toolbar>
-
-  <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
-    <div class="container">
-    <div fxFlex="50" style="height:380px;">
-<mat-card style="height: 360px;">
- <form [formGroup]="contactForm">
-    <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
-              <mat-form-field appearance="outline" fxFlex="100">
-                  <mat-label>Role Name</mat-label>
-                  <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                  <input formControlName="vacancies" matInput>
-              </mat-form-field>
+<div id="contacts" class="page-layout carded fullwidth inner-scroll">
+  <div class="top-bg accent"></div>
+  <div class="center">
+    <div class="header accent ml-24 mr-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+      fxLayoutAlign.gt-sm="space-between center">
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
+            account_circle
+          </mat-icon>
+          <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }"
+            *ngIf="roleId === 0">
+            Add Role
+          </span>
+          <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }"
+            *ngIf="roleId !== 0">
+            Edit Role
+          </span>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" class="button_align">
+        <button mat-raised-button color="basic" class="save-button" [disabled]="roleMgmtForm.invalid" aria-label="SAVE"
+          style="margin-right: 10px;" (click)="updateRole(roleMgmtForm.value)" *ngIf="roleId !== 0">
+          Save
+        </button>
+        <button mat-raised-button color="basic" class="mr-8 save-button" aria-label="Cancel" (click)="cancelEdit()">
+          Cancel
+        </button>
+        <button mat-raised-button color="basic" class="save-button" [disabled]="roleMgmtForm.invalid" aria-label="SAVE"
+          style="margin-right: 10px;" (click)="updateRole(roleMgmtForm.value)" *ngIf="roleId === 0">
+          Add
+        </button>
+      </div>
     </div>
-              <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
-            <mat-form-field appearance="outline" fxFlex="100">
+    <div class="content-card ml-24 mr-24">
+      <div class="content">
+        <form class="mat-elevation-z4 p-24" name="form" [formGroup]="roleMgmtForm">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%">
+            <mat-form-field appearance="outline" fxFlex="50%" class="rolename">
+              <mat-label>Role Name</mat-label>
+              <input matInput type="text" formControlName="roleName" type="text" />
+              <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50%" class="status" style="width: 230px;">
               <mat-label>Status</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let status of status" [value]="status.value">
-                  {{status.viewValue}}
-                </mat-option>
+              <mat-select formControlName="active">
+                <mat-option [value]="true">Active</mat-option>
+                <mat-option [value]="false">Inactive</mat-option>
               </mat-select>
             </mat-form-field>
-              </div>
-          
-          
-          <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
-              <mat-form-field appearance="outline" fxFlex ="100" style="    height: 100px;">
-                  <mat-label>Description</mat-label>
-                  <textarea name="notes" formControlName="notes" matInput type="text" max-rows="5" value="  Has access to only interview schedule change screen interview schedule change screen">
-                  
-                  </textarea>
-              </mat-form-field>
           </div>
 
-      </form>
-    </mat-card>
-    </div>
-
-        <div fxFlex="50" style="height:380px; margin-left:10px;">
-         <mat-card style="height: 360px;background-color: aliceblue;border:1px solid aliceblue;">  
-        
-                <div style="text-align: center;    text-align: center;
-                margin-bottom: 9px;
-                margin-top: -9px;
-                font-weight: bold;">Role Mapping</div>
-                
-            <mat-grid-list cols="2" rowHeight="2:.80"  [gutterSize]="'30px'" style="margin-left: 12px;
-            margin-right: 12px;">
-
-           
-                <mat-grid-tile>
-                    <div >
-                        <button mat-raised-button  (click)="selectdashboard()"   [ngClass]="{'white' : toggle1, 'blue': !toggle1}" class="tile_button">Dashboard<div class="tik" style="display: inline;" *ngIf="selectdash"><mat-icon class="tile_icon" style="font-size: small;">check_circle</mat-icon></div><span><br><mat-icon style="margin-bottom: 19px;">dashboard</mat-icon></span>
-                         
-                        </button>
-                    </div>
-                </mat-grid-tile>
-                <!-- <mat-grid-tile>
-                    <div >
-                        <button mat-raised-button  (click)="selectcalander()"  [ngClass]="{'white' : toggle2, 'blue': !toggle2}" class="tile_button">Calendar<span class="tik" *ngIf="selectcal "><mat-icon class="tile_icon"style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon  style="margin-bottom: 19px;">today</mat-icon></span></button>
-                    </div>
-                </mat-grid-tile> -->
-               <mat-grid-tile>
-                    <div >
-                        <button mat-raised-button  (click)="selectProfile()"  [ngClass]="{'white' : toggle3, 'blue': !toggle3}" class="tile_button">Edit Profile<span class="tik" *ngIf="selectpro"><mat-icon class="tile_icon" style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon style="margin-bottom: 19px;">edit</mat-icon></span></button>
-                    </div>
-                </mat-grid-tile>
-               <mat-grid-tile>
-                    <div >
-                        <button mat-raised-button (click)="userManagement()"  [ngClass]="{'white' : toggle4, 'blue': !toggle4}" class="tile_button">User Management<span class="tik" *ngIf="selectuser"><mat-icon class="tile_icon" style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon style="margin-bottom: 19px;">account_circle</mat-icon></span></button>
-                    </div>
-                </mat-grid-tile>
-              
-            <mat-grid-tile>  <div >
-                    <button mat-raised-button   (click)="rolemanagement()" [ngClass]="{'white' : toggle5, 'blue': !toggle5}">Role Management<span class="tik" *ngIf="selectrole"><mat-icon class="tile_icon" style="font-size: small;">check_circle</mat-icon></span><span><br><mat-icon>check_circle</mat-icon></span></button>
-                </div></mat-grid-tile>
-               
-<!-- 
-                    <mat-grid-tile>  <div >
-                    <button mat-raised-button color="basic">Add<span><br><mat-icon>add_cicle</mat-icon></span></button>
-                </div></mat-grid-tile>  -->
-                <!-- <mat-grid-tile>5</mat-grid-tile>
-                <mat-grid-tile>6</mat-grid-tile> -->
-              </mat-grid-list>
-              <div style="float:right;margin-bottom: 10px;    margin-top: 140px;
-              margin-right: 20px;">
-                <a class="link" style="cursor: pointer;">Select all</a></div>
-            </mat-card>
-        
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%">
+            <mat-form-field appearance="outline" fxFlex="100%" style="width: 232px;">
+              <mat-label>Description</mat-label>
+              <textarea name="notes" formControlName="roleDescription" matInput type="text" max-rows="2"
+                style="height: 28px;"> </textarea>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="3%">
+            <div class="space" fxFlex="100%" fxFlex.gt-md="50%">
+              <div class="example-container1">
+                <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="unMappedScreens['value']"
+                  [cdkDropListConnectedTo]="[doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
+                  <h6 class="box-title">Unmapped Screens</h6>
+                  <button mat-button color="primary" class="add-all-btn" (click)="addAllScreenMapping()">
+                    <mat-icon class="mr-6">arrow_forward</mat-icon>Add All
+                  </button>
+                  <mat-card class="example-card" *ngFor="let item of unMappedScreens['value']" cdkDrag>
+                    <h6 class="card-title">
+                      <mat-icon class="mr-6 fs-small">{{ item.icon }}</mat-icon>{{ item.title }}
+                    </h6>
+                  </mat-card>
+                </div>
+              </div>
             </div>
-</div>
-    
-      
-     
-  </div>
+            <div class="space1" fxFlex="100%" fxFlex.gt-md="50%">
+              <div class="example-container1">
+                <!-- <h2>Done</h2> -->
 
-  <div mat-dialog-actions class="m-0 p-12" fxLayout="row" fxLayoutAlign="end center" >
-
-      <button *ngIf="action === 'edit'"
-      mat-raised-button color="accent"
-              class="mr-8"
-              (click)="matDialogRef.close(['delete',contactForm])"
-              aria-label="Delete"
-              matTooltip="Delete">
-          Cancel
-      </button>
-
-      <button *ngIf="action !== 'edit'"
-              mat-raised-button color="accent"
-              class="save-button"
-              (click)="matDialogRef.close(contactForm)"
-              [disabled]="contactForm.invalid"
-              aria-label="SAVE"
-              style="    margin-right: 10px;">
-          Add
-      </button>
-
-      <button *ngIf="action === 'edit'"
-      mat-raised-button color="accent"
-              class="save-button"
-              (click)="matDialogRef.close(['save',contactForm])"
-              [disabled]="contactForm.invalid"
-              aria-label="SAVE"
-              style="margin-right: 10px;">
-          Save
-      </button>
-
+                <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="mappedScreens['value']"
+                  [cdkDropListConnectedTo]="[todoList]" class="example-list" (cdkDropListDropped)="drop($event)">
+                  <h6 class="box-title">Mapped Screens</h6>
+                  <button mat-button color="primary" class="add-all-btn" (click)="removeAllScreenMapping()">
+                    <mat-icon class="mr-6">arrow_backward</mat-icon>Remove All
+                  </button>
+                  <mat-card class="example-card" *ngFor="let item of mappedScreens['value']" cdkDrag>
+                    <h6 class="card-title">
+                      <mat-icon class="mr-6 fs-small">{{ item.icon }}</mat-icon>{{ item.title }}
+                    </h6>
+                  </mat-card>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- / CENTER -->
+    </div>
+    <!-- / CONTENT-->
   </div>
 </div>

@@ -1,83 +1,76 @@
-<mat-table #table [dataSource]="dataSource" [@animateStagger]="{ value: '50' }">
-  <!-- Checkbox Column -->
-  <ng-container matColumnDef="checkbox">
-    <mat-header-cell *matHeaderCellDef></mat-header-cell>
-    <mat-cell *matCellDef="let contact">
-      <mat-checkbox [(ngModel)]="checkboxes[contact.id]" (ngModelChange)="onSelectedChange(contact.id)" (click)="$event.stopPropagation()">
-      </mat-checkbox>
-    </mat-cell>
-  </ng-container>
+<!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"> -->
+<div class="example-container7">
+  <mat-table [dataSource]="dataSource" class="log-table" matSort [@animateStagger]="{ value: '50' }"
+    fusePerfectScrollbar>
+    <!-- Name Column -->
+    <ng-container matColumnDef="rolename">
+      <mat-header-cell *matHeaderCellDef> Role Name</mat-header-cell>
+      <mat-cell *matCellDef="let contact">
+        <span class="mobile-label">Role Name</span>
+        <p class="text-truncate font-weight-600">{{ contact.roleName }}</p>
+      </mat-cell>
+    </ng-container>
+    <!--Description-->
+    <ng-container matColumnDef="desc">
+      <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+      <mat-cell *matCellDef="let contact">
+        <span class="mobile-label">Description</span>
+        <p class="text-truncate font-weight-600">{{ contact.roleDescription }}</p>
+      </mat-cell>
+    </ng-container>
+    <!-- Email Column -->
 
-  <!-- Avatar Column -->
-  <!-- <ng-container matColumnDef="avatar">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let contact">
-            <img class="avatar" *ngIf="contact.avatar" [alt]="contact.name"
-                 [src]="contact.avatar"/>
-        </mat-cell>
-    </ng-container> -->
-
-  <!-- Name Column -->
-  <ng-container matColumnDef="rolename">
-    <mat-header-cell *matHeaderCellDef> Role Name</mat-header-cell>
-    <mat-cell *matCellDef="let contact">
-      <p class="text-truncate font-weight-600">{{ contact.rolename }}</p>
-    </mat-cell>
-  </ng-container>
-  <!--Description-->
-  <ng-container matColumnDef="desc">
-    <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
-    <mat-cell *matCellDef="let contact">
-      <p class="text-truncate font-weight-600">{{ contact.desc }}</p>
-    </mat-cell>
-  </ng-container>
-  <!-- Email Column -->
-  <!-- <ng-container matColumnDef="email">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Email</mat-header-cell>
-        <mat-cell *matCellDef="let contact" fxHide fxShow.gt-sm>
-            <p class="email text-truncate">
-                {{contact.email}}
-            </p>
-        </mat-cell>
-    </ng-container> -->
-  <!--status-->
-  <ng-container matColumnDef="status">
-    <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
-    <mat-cell *matCellDef="let contact" style="color: #006699;justify-content: end center;">
-      <p class="text-truncate font-weight-600">{{ contact.status }}</p>
-    </mat-cell>
-  </ng-container>
-  <!-- Phone Column -->
-  <ng-container matColumnDef="phone">
+    <!--status-->
+    <ng-container matColumnDef="active">
+      <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+      <mat-cell *matCellDef="let contact" style="color: #006699; justify-content: end center;">
+        <span class="mobile-label">Status</span>
+        <!-- <p class="text-truncate font-weight-600">{{contact.active }}</p> -->
+        <p class="text-truncate font-weight-600" *ngIf="contact.active === true">Activate</p>
+        <p class="text-truncate font-weight-600" *ngIf="contact.active === false">Inactive</p>
+      </mat-cell>
+    </ng-container>
+    <!-- Phone Column -->
+    <!-- <ng-container matColumnDef="phone">
     <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Phone</mat-header-cell>
-    <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md >
-      <p class="phone text-truncate">
-        {{ contact.phone }}
-      </p>
+    <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md>
+      <p class="phone text-truncate"></p>
     </mat-cell>
-  </ng-container>
+  </ng-container> -->
 
-  <ng-container matColumnDef="buttons">
-    <mat-header-cell *matHeaderCellDef mat-sort-header style="justify-content: center;padding-right: 52px;">Action
-    </mat-header-cell>
-    <mat-cell *matCellDef="let contact" style="justify-content:start;">
-             <button mat-icon-button  (click)="editContact(contact)"  style="color:#42a1f5;">
-            <mat-icon>edit</mat-icon>
-        </button><span>
-            <button mat-icon-button color="accent" style=" color:red;background-color: white;"
-            (click)="deleteContact(contact)">
-                <mat-icon>delete</mat-icon>
-            </button></span>
-    </mat-cell>
-</ng-container>
+    <ng-container matColumnDef="roleId" *ngIf="roleName === 'Admin'">
+      <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action </mat-header-cell>
+      <mat-cell *matCellDef="let product" style="justify-content: center;">
+        <span class="mobile-label">Action</span>
+        <button mat-icon-button style="color: #42a1f5;" (click)="editRole(product.roleId)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <span>
+          <button mat-icon-button color="accent" style="color: red; background-color: white;"
+            (click)="deleteRole(product.roleId)">
+            <mat-icon>delete</mat-icon>
+          </button></span>
+      </mat-cell>
+    </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row
-    *matRowDef="let contact; columns: displayedColumns"
-    class="contact"
-    [ngClass]="{ 'accent-50': checkboxes[contact.id] }"
-    [@animate]="{ value: '*', params: { y: '100%' } }"
-  >
-    <!-- (click)="editContact(contact)"-->
-  </mat-row>
-</mat-table>
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+    <mat-row *matRowDef="let contact; columns: displayedColumns" class="contact"> </mat-row>
+  </mat-table>
+</div>
+<!-- </div> -->
+<div *ngIf="isLoading"
+  style="display: flex; justify-content: center; align-items: center; text-align: center; margin-top: 100px;">
+  <h3 style="color: #0066ff; font-size: 20px;"><b>Loading..</b></h3>
+</div>
+
+<!-- <mat-paginator
+#paginator
+[length]="dataSource.filteredData.length"
+[pageIndex]="0"
+[pageSize]="5"
+[pageSizeOptions]="[5, 10, 25, 100]"
+>
+</mat-paginator> -->
+<mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+</mat-paginator>

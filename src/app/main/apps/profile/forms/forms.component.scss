@@ -1,21 +1,134 @@
-
-
-.ex-1
-{
-    overflow:scroll;
+.ex-1 {
+  overflow: scroll;
+}
+.mat-form-field {
+  height: 76px;
+}
+.photos img {
+  width: 64px;
+  height: 64px;
+}
+.title {
+  display: inline;
+}
+.secondary-text1 {
+  cursor: context-menu;
+}
+.avatar {
+  width: 64px;
+  height: 64px;
+  line-height: 40px;
+  margin: 0 8px 0 0;
+  border-radius: 50%;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
 }
 
-.mat-form-field{
-    height: 76px;
+.profile_header {
+  height: 80px;
+  font-size: bold;
+  font-size: 17px;
+  padding: 16px;
+  background-color: #039be5;
+  color: white;
 }
-.profile-image{
-width: 64px;
-height: 64px;
+.info {
+  margin-top: -78px;
+  margin-left: 85px;
 }
-.title{
-    display: inline;
+.buttons {
+  float: right;
+  margin-top: -60px;
+  display: flex;
+}
+.edit_buttons {
+  margin-right: 17px;
+}
+.submit-button-save {
+  margin-right: 10px;
+  width: 100px;
+  padding: 5px;
+}
+.submit-button-cancel {
+  margin-right: 10px;
+  width: 100px;
+  padding: 5px;
+}
+.submit-button-add {
+  margin-right: 10px;
+  width: 100px;
+  padding: 5px;
+}
+.submit-button-update {
+  margin-right: 10px;
+  width: 100px;
+  padding: 5px;
+}
+.image_upload {
+  margin-left: -14px;
+  margin-top: -31px;
+  opacity: 0;
+  cursor: pointer;
+  height: 46px;
+}
+.camera_button {
+  margin-left: 32px;
+  margin-top: -27px;
+}
+.next_row {
+  margin-top: 25px;
 }
 
-.secondary-text1{
-    cursor: context-menu;
- }
+@media only screen and (max-width: 480px) {
+  .profile_header {
+    height: 150px;
+    font-size: bold;
+    font-size: 17px;
+    padding: 16px;
+    color: white;
+  }
+
+  .info {
+    color: white;
+    margin-top: -84px;
+  }
+  .buttons {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .submit-button-save {
+    width: 50%;
+  }
+  .submit-button-cancel {
+    width: 50%;
+  }
+  .submit-button-update {
+    width: 50%;
+  }
+  .submit-button-add {
+    width: 50%;
+  }
+  .edit_button {
+    margin-right: 17px;
+    float: right;
+  }
+  .next_row {
+    margin-top: 0px;
+  }
+}
+@media only screen and (max-width: 730px) {
+  .submit-button-save {
+    width: 140px;
+  }
+  .submit-button-cancel {
+    width: 140px;
+  }
+  .submit-button-update {
+    width: 140px;
+  }
+  .submit-button-add {
+    width: 140px;
+  }
+}

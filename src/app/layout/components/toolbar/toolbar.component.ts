@@ -1,23 +1,24 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
 import { TranslateService } from '@ngx-translate/core';
-import { userDetails } from 'app/models/user-details';
+import { userDetails, usersList } from 'app/models/user-details';
 import { navigation } from 'app/navigation/navigation';
 import { AirmsService } from 'app/service/airms.service';
 import { AuthService } from 'app/service/auth.service';
-import { LOGGED_IN_USER_INFO } from 'app/util/constants';
+import { UserService } from 'app/service/user.service';
+import { LOGGED_IN_USER_INFO, SIGNUP, LOG_LEVELS, LOG_MESSAGES } from 'app/util/constants';
 import * as _ from 'lodash';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import { isThisHour } from 'date-fns';
-// import {MatDialog} from '@angular/material/dialog';
-// import { ResetPasswordModule } from 'app/main/pages/authentication/reset-password/reset-password.module';
-// import { ResetPasswordComponent } from 'app/main/pages/authentication/reset-password/reset-password.component';
+import { url } from 'inspector';
+import { LogService } from 'app/service/shared/log.service';
+declare var $: any;
+
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -40,18 +41,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     TIME_OUT = 300;
     alertMessages = [];
     userInfo: userDetails;
-    
-    // Private
+    user: userDetails;
+    user1: usersList;
+    userData:any;
+    userId:String;
+    updateUserInfoSubscription: Subscription;
+
     private _unsubscribeAll: Subject<any>;
     toolbarSubscription: Subscription;
 
-    /**
-     * Constructor
-     *
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseSidebarService} _fuseSidebarService
-     * @param {TranslateService} _translateService
-     */
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -60,11 +58,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private _translateService: TranslateService,
         private keepalive: Keepalive,
         private authService: AuthService,
-        private router: Router
-        // public dialog: MatDialog
+        private router: Router,
+        private userService: UserService,
+        private logService: LogService
     ) {
-        this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
-        // Set the defaults
+        this.WAITING_TIME = 1800;
+        this.TIME_OUT = 300;
         this.userStatusOptions = [
             {
                 title: 'Online',
@@ -108,14 +107,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         this.navigation = navigation;
 
-        // Set the private defaults
+        
         this._unsubscribeAll = new Subject();
         idle.setIdle(this.WAITING_TIME);
         // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
         idle.setTimeout(this.TIME_OUT);
         // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
         idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
-
         idle.onIdleEnd.subscribe(() => {
             this.reset();
             this.idleState = 'No longer idle.';
@@ -123,10 +121,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         idle.onTimeout.subscribe(() => {
             this.idleState = 'Timed out!';
             this.timedOut = true;
-            //   Swal.close();
-
-            //   this.authService.logout();
-            //   this.logUserActivity('Session Expired', 'Auto Sign Out');
         });
         idle.onIdleStart.subscribe(() => {
             this.idleState = 'You\'ve gone idle!';
@@ -143,10 +137,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.lastPing = new Date();
         });
         this.reset();
-
+        
     }
 
     reset() {
+        this.WAITING_TIME = 1800;
+        this.TIME_OUT = 300;
         this.idle.setIdle(this.WAITING_TIME);
         this.idle.setTimeout(this.TIME_OUT);
         this.idle.watch();
@@ -156,17 +152,28 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     showSessionLogoutDialog() {
+        if (!this.router.url.includes('/login') || !this.router.url.includes('/pages/auth/register')) {
         Swal.fire({
             title: '<strong>Session expiring in 5 mins</strong>',
             text: 'Do you want to continue?',
             imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT5Z6V4WR3CdGzUrLsipzkE4X8uyJR9_RFbhpgGA0tWAezR2_O9&usqp=CAU',
             imageWidth: 50,
             imageHeight: 100,
-            confirmButtonText: 'Extend',
-            cancelButtonText: 'No',
-        });
+            showCancelButton: true,
+            cancelButtonText: 'Cancel',
+            confirmButtonText: 'Extend', 
+        })
+        .then((result) => {
+            if (result.dismiss === Swal.DismissReason.cancel) {
+                this.logoutAIRMS();
+            }
+            this.WAITING_TIME = 1800;
+            this.TIME_OUT = 300;
+          });
+        }
     }
     ngOnInit(): void {
+        this.updatedUserInfo();
         // Subscribe to the config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
@@ -175,14 +182,45 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.rightNavbar = settings.layout.navbar.position === 'right';
                 this.hiddenNavbar = settings.layout.navbar.hidden === true;
             });
-
         // Set the selected language from default languages
         this.selectedLanguage = _.find(this.languages, { id: this._translateService.currentLang });
     }
-
+    updatedUserInfo() {
+        this.updateUserInfoSubscription = this.userService.userProfileUpdateSub.subscribe(res=>{
+            if (res!== null) {
+                this.getUserInfo();
+            } else {
+                this.getUserInfo();
+            }
+        });
+    }
+    getUserInfo() {
+        this.userInfo = this.airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
+        if (this.userInfo !== null) {
+            this.user = this.airmsService.getSessionStorage(SIGNUP);
+            this.userId = this.userInfo.userId;
+            if (this.userInfo.profileImage !== null && this.userInfo.profileImage !== '') {
+                this.userInfo.profileImage = atob(this.userInfo.profileImage);
+                setTimeout(() => {
+                    $(".img-thumbnail2").remove();
+                    $('#profilePic').append('<img src=' + 'data:image/jpeg;base64' +
+                        this.userInfo.profileImage +
+                        ' class="img-thumbnail2 img-rounded"style="margin: -7px 8px -10px -7px;height:53px;width:53px;border-radius:33px">');
+                }, 100);
+            } else {
+                setTimeout(() => {
+                    $(".img-thumbnail2").remove();
+                    $('#profilePic').append('<img src="' +
+                        '../../assets/images/generic.jpg"' +
+                        'class="img-thumbnail2 img-rounded" style="margin: -7px 8px -10px -7px;height:53px;width:53px;border-radius:33px;">');
+                }, 100);
+            }
+        }
+    }
     logoutAIRMS() {
         this.authService.logout();
         this.router.navigate(['']);
+        this.logUserActivity("Logout", LOG_MESSAGES.CLICK);
     }
 
     unsubscribe(subscription: Subscription) {
@@ -190,13 +228,30 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             subscription.unsubscribe();
         }
     }
-
+    clickProfile(userId){
+    }
+    getAllInfo(){
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                // "userName": "Nic",
+                userId:this.userId,
+                viewMode:true
+            },
+            skipLocationChange: true
+        };
+        this.logUserActivity("My Profile Page", LOG_MESSAGES.CLICK);
+        this.router.navigate(['/apps/profile/forms'], navigationExtras);
+    }
+    logUserActivity(from, value) {
+        this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
+      }
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this.unsubscribe(this.toolbarSubscription);
+        this.unsubscribe(this.updateUserInfoSubscription);
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
-        this.router = null;
+        
         this.authService = null;
         this.navigation=null;
         this.languages=null;
@@ -221,47 +276,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this._translateService=null;
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Toggle sidebar open
-     *
-     * @param key
-     */
     toggleSidebarOpen(key): void {
+        console.log('key', key);
         this._fuseSidebarService.getSidebar(key).toggleOpen();
     }
 
-    /**
-     * Search
-     *
-     * @param value
-     */
     search(value): void {
         // Do your search here...
         console.log(value);
     }
-
-    /**
-     * Set the language
-     *
-     * @param lang
-     */
     setLanguage(lang): void {
-        // Set the selected language for the toolbar
         this.selectedLanguage = lang;
-
-        // Use the selected language for translations
         this._translateService.use(lang.id);
     }
-    // openDialog() {
-    //     const dialogRef = this.dialog.open(ResetPasswordComponent);
-
-    //     dialogRef.afterClosed().subscribe(result => {
-    //       console.log(`Dialog result: ${result}`);
-    //     });
-    //   }
 }
 export class ResetPasswordComponent { }

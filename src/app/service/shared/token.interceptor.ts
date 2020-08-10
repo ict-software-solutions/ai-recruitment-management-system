@@ -10,7 +10,7 @@ export class TokenInterceptor implements HttpInterceptor {
     const user = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER));
     if (user != null) {
       const authReq = req.clone({
-        headers: req.headers.set('Authorization', user.token)
+        headers: req.headers.set('Authorization', 'Bearer ' + user.token)
       });
       return next.handle(authReq);
     }

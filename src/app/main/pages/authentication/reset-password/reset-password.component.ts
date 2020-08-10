@@ -52,7 +52,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
       // passwordConfirm: ['', [Validators.required, confirmPasswordValidator]]
     });
     this.route.queryParams.subscribe((params) => {
-      console.log(params);
       if (params.userName) {
         this.resetPasswordForm.addControl("password", new FormControl("", Validators.required));
         this.userName = params.userName;
@@ -74,7 +73,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     });
   }
   resetPassword(value) {
-    console.log(value);
     this.passwordChanged = false;
     this.logUserActivity("RESET YOUR PASSWORD", LOG_MESSAGES.CLICK);
 
@@ -111,7 +109,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   reset(param) {
     this.authservice.resetPassword(param).subscribe(
       (res: any) => {
-        console.log("response", res.message);
         if (res.message === "your password has been changed") {
           this.passwordResetDone();
         }
@@ -124,7 +121,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
             icon: "warning",
             confirmButtonText: "OK",
           });
-          console.log(this.errorMessage);
           this.errorMessage = "Current password does not match";
         }
         this.oldpassword = true;

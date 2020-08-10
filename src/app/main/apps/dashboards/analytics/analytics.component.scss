@@ -8,7 +8,7 @@
     }
 
     .content {
-        background-color: white;
+        // background-color: white;
         display: flex;
         flex: 1 1 auto;
         padding: 32px;
@@ -60,7 +60,7 @@
 mat-grid-tile {
     background:none;
   }
-  .example-card {
+  .example-card1 {
     // width: 200px;
     height:223px;
     background-image: linear-gradient(to top left,#0790f2,#0af7ff)!important;
@@ -123,3 +123,10 @@ color:blue;
       }
     }
   }
+  #dashboard-analytics .content {
+    /* background-color: white; */
+    display: flex;
+    flex: 1 1 auto;
+    padding: 32px;
+    min-width: 0;
+}

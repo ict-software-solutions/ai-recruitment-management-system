@@ -1,164 +1,137 @@
-import { DataSource } from '@angular/cdk/collections';
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { fuseAnimations } from '@fuse/animations';
-import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
-import { ContactsService } from 'app/main/apps/contacts/contacts.service';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from "@angular/core";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { NavigationExtras, Router } from "@angular/router";
+import { fuseAnimations } from "@fuse/animations";
+import { FuseConfirmDialogComponent } from "@fuse/components/confirm-dialog/confirm-dialog.component";
+import { AuthService } from "app/service/auth.service";
+import { LogService } from "app/service/shared/log.service";
+import { DISPLAY_COLUMNS_FOR_ROLEMGMT, LOG_LEVELS, LOG_MESSAGES } from "app/util/constants";
+import { Subscription } from "rxjs";
+import Swal from "sweetalert2";
+import { AirmsService } from 'app/service/airms.service';
 
 @Component({
-    selector: 'contacts-contact-list',
-    templateUrl: './contact-list.component.html',
-    styleUrls: ['./contact-list.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    animations: fuseAnimations
+  selector: "contacts-contact-list",
+  templateUrl: "./contact-list.component.html",
+  styleUrls: ["./contact-list.component.scss"],
+  encapsulation: ViewEncapsulation.None,
+  animations: fuseAnimations,
 })
-
 export class ContactsContactListComponent implements OnInit, OnDestroy {
-    @ViewChild('dialogContent') dialogContent: TemplateRef<any>;
-    contacts: any;
-    user: any;
-    dataSource: FilesDataSource | null;
-    displayedColumns = ['checkbox', 'rolename', 'desc', 'status', 'buttons'];
-    selectedContacts: any[];
-    checkboxes: {};
-    dialogRef: any;
-    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-    private _unsubscribeAll: Subject<any>;
+  @ViewChild("dialogContent") dialogContent: TemplateRef<any>;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+  displayedColumns = ['rolename', 'desc', 'active', 'roleId'];
+  dataSource = new MatTableDataSource<any>();
+  isLoading = true;
+  deleteRoleList: any;
+  roleListSubscription: Subscription;
+  deleteRoleListSubscription: Subscription;
+  roleName: string;
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    public matDialog: MatDialog,
+    private logService: LogService,
+    private airmsService: AirmsService) {
+      this.roleName = airmsService.getUserRole();
+      if (this.roleName !== 'Admin') {
+        this.displayedColumns = ['rolename', 'desc', 'active'];
+      }
+     }
 
-    constructor(
-        private _contactsService: ContactsService,
-        public _matDialog: MatDialog) {
-        this._unsubscribeAll = new Subject();
-    }
+  ngOnInit() {
+    this.getAllRoles();
+  }
 
-    ngOnInit(): void {
-        this.dataSource = new FilesDataSource(this._contactsService);
-        this._contactsService.onContactsChanged.pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(contacts => {
-                this.contacts = contacts;
-                this.checkboxes = {};
-                contacts.map(contact => {
-                    this.checkboxes[contact.id] = false;
-                });
-            });
-        this._contactsService.onSelectedContactsChanged.pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(selectedContacts => {
-                for (const id in this.checkboxes) {
-                    if (!this.checkboxes.hasOwnProperty(id)) {
-                        continue;
-                    }
-                    this.checkboxes[id] = selectedContacts.includes(id);
-                }
-                this.selectedContacts = selectedContacts;
-            });
-        this._contactsService.onUserDataChanged.pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(user => {
-                this.user = user;
-            });
-        this._contactsService.onFilterChanged.pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(() => {
-                this._contactsService.deselectContacts();
-            });
-    }
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
 
-    ngOnDestroy(): void {
-        this._unsubscribeAll.next();
-        this._unsubscribeAll.complete();
-        this.dialogContent = null;
-        this.contacts = null;
-        this.user = null;
-        this.dataSource = null;
-        this.displayedColumns = null;
-        this.selectedContacts = null;
-        this.checkboxes = null;
-        this.dialogRef = null;
-        this.confirmDialogRef = null;
-        this._contactsService = null;
-        this._matDialog = null;
-    }
+  getAllRoles() {
+    this.roleListSubscription = this.authService.getAllRoles().subscribe(
+      (res: any) => {
+        this.dataSource.data = res;
+        this.isLoading = false;
+      },
+      (error) => {
+        this.isLoading = false;
+        this.logService.logError(LOG_LEVELS.ERROR, "Role Management - List", "On Fetching roles", JSON.stringify(error));
+      }
+    );
+  }
 
-    editContact(contact): void {
-        this.dialogRef = this._matDialog.open(ContactsContactFormDialogComponent, {
-            panelClass: 'contact-form-dialog',
-            width: '900px',
-            data: {
-                contact: contact,
-                action: 'edit',
+  /* connect(): Observable<any> {
+    return this.authService.getAllRoles();
+  } */
+
+  deleteRole(roleId): void {
+    this.logUserActivity("Role Management - Delete", LOG_MESSAGES.CLICK);
+    this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
+      disableClose: false,
+    });
+    this.confirmDialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?";
+    this.confirmDialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteRoleListSubscription = this.authService.deleteRole(roleId).
+          subscribe((res) => {
+            this.deleteRoleList = res;
+            if (this.deleteRoleList.message === "Role assigned to user") {
+              Swal.fire({
+                title: "Role is assigned to User",
+                icon: "warning",
+                confirmButtonText: "Ok",
+              });
             }
-        });
-
-        this.dialogRef.afterClosed().subscribe(response => {
-            if (!response) {
-                return;
+            this.getAllRoles();
+          }, (error) => {
+              this.logService.logError(LOG_LEVELS.ERROR, "Role Management - Delete", "On deleting role", JSON.stringify(error));
             }
-            const actionType: string = response[0];
-            const formData: FormGroup = response[1];
-            switch (actionType) {
-                case 'save':
-                    this._contactsService.updateContact(formData.getRawValue());
-                    break;
-                case 'delete':
-                    this.deleteContact(contact);
-                    break;
-            }
-        });
-    }
+          );
+      }
+      this.confirmDialogRef = null;
+    });
+  }
 
-    deleteContact(contact): void {
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: false
-        });
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this._contactsService.deleteContact(contact);
-            }
-            this.confirmDialogRef = null;
-        });
-    }
+  editRole(roleId): void {
+    this.logUserActivity("Role Management - Edit", LOG_MESSAGES.CLICK);
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        roleId: roleId,
+        action: "edit",
+      },
+      skipLocationChange: true,
+    };
+    this.router.navigate(["apps/contacts/addRole"], navigationExtras);
+  }
 
-    onSelectedChange(contactId): void {
-        this._contactsService.toggleSelectedContact(contactId);
-    }
+  logUserActivity(from, value) {
+    this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
+  }
 
-    toggleStar(contactId): void {
-        if (this.user.starred.includes(contactId)) {
-            this.user.starred.splice(this.user.starred.indexOf(contactId), 1);
-        } else {
-            this.user.starred.push(contactId);
-        }
-        this._contactsService.updateUserData(this.user);
+  unsubscribe(subscription: Subscription) {
+    if (subscription !== null && subscription !== undefined) {
+      subscription.unsubscribe();
     }
-}
+  }
 
-export class FilesDataSource extends DataSource<any>
-{
-    /**
-     * Constructor
-     *
-     * @param {ContactsService} _contactsService
-     */
-    constructor(
-        private _contactsService: ContactsService
-    ) {
-        super();
-    }
-
-    /**
-     * Connect function called by the table to retrieve one stream containing the data to render.
-     * @returns {Observable<any[]>}
-     */
-    connect(): Observable<any[]> {
-        return this._contactsService.onContactsChanged;
-    }
-
-    /**
-     * Disconnect
-     */
-    disconnect(): void {
-    }
+  ngOnDestroy(): void {
+    this.unsubscribe(this.roleListSubscription);
+    this.unsubscribe(this.deleteRoleListSubscription);
+    this.dialogContent = null;
+    this.paginator = null;
+    this.dataSource = null;
+    this.displayedColumns = null;
+    this.confirmDialogRef = null;
+    this.router = null;
+    this.logService = null;
+    this.authService = null;
+    this.deleteRoleList = null;
+    this.isLoading = null;
+  }
 }

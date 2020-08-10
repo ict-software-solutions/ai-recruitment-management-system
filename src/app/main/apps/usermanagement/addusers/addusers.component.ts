@@ -4,19 +4,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseUtils } from '@fuse/utils';
-import { Product } from 'app/main/apps/usermanagement/product/product.model';
-import { EcommerceProductService } from 'app/main/apps/usermanagement/product/product.service';
+import { Product } from 'app/main/apps/usermanagement/addusers/addusers.model';
+import { EcommerceProductService } from 'app/main/apps/usermanagement/addusers/addusers.service';
 import { usertype } from 'app/models/user-type';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    selector: 'e-commerce-product',
-    templateUrl: './product.component.html',
-    styleUrls: ['./product.component.scss'],
+    selector: 'usermanagement-adduser',
+    templateUrl: './addusers.component.html',
+    styleUrls: ['./addusers.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
-
 })
 export class EcommerceProductComponent implements OnInit, OnDestroy {
     product: Product;
@@ -32,11 +31,11 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
     shown: boolean;
 
     usertype: usertype[] = [
-        { value: 'employee-0', viewValue: 'Employee' },
-        { value: 'client-1', viewValue: 'Client' },
-        { value: 'candidate-2', viewValue: 'Candidate' }
+        { value: 'Employee' },
+        { value: 'Client' },
+        { value: 'Candidate' }
     ];
-    userrole = ['Admin', 'Manager', 'Candidate Consultant', 'Client Consultant', 'Candidate View', 'client', 'customer'];
+    roleName = ['Admin', 'Manager', 'Candidate Consultant', 'Client Consultant', 'Candidate View', 'client', 'customer'];
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -84,7 +83,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
         this.disabled = null;
         this.shown = null;
         this.usertype = null;
-        this.userrole = null;
+        this.roleName = null;
         this.ecommerceProductService = null;
         this.formBuilder = null;
         this.location = null;
@@ -99,13 +98,13 @@ export class EcommerceProductComponent implements OnInit, OnDestroy {
             email: ['', Validators.required],
             mobile: ['', Validators.required],
             dob: ['', Validators.required],
-            validFrom:['',Validators.required],
-            validTo:['',Validators.required],
-            passwordSince:['',Validators.required],
-            passwordExpiryDate:['',Validators.required],
+            validFrom: ['', Validators.required],
+            validTo: ['', Validators.required],
+            passwordSince: ['', Validators.required],
+            passwordExpiryDate: ['', Validators.required],
             password: ['', Validators.required],
             passwordNew: ['', [Validators.minLength(8), Validators.maxLength(15)]],
-            check: [''],
+            check1: [''],
         });
     }
 

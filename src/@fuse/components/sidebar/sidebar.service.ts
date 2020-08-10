@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
+import { FuseNavigation } from '@fuse/types';
 
 import { FuseSidebarComponent } from './sidebar.component';
 
 @Injectable({
     providedIn: 'root'
 })
+    
 export class FuseSidebarService
 {
+
+    
     // Private
     private _registry: { [key: string]: FuseSidebarComponent } = {};
 

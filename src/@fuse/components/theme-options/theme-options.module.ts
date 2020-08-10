@@ -11,24 +11,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
 import { FuseDirectivesModule } from '@fuse/directives/directives';
 import { FuseMaterialColorPickerModule } from '@fuse/components/material-color-picker/material-color-picker.module';
 import { FuseSidebarModule } from '@fuse/components/sidebar/sidebar.module';
-
+import { MatInputModule } from '@angular/material/input';
 import { FuseThemeOptionsComponent } from '@fuse/components/theme-options/theme-options.component';
-
 @NgModule({
     declarations: [
         FuseThemeOptionsComponent
     ],
-    imports     : [
+    imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-
         FlexLayoutModule,
-
         MatButtonModule,
         MatCheckboxModule,
         MatDividerModule,
@@ -38,15 +34,14 @@ import { FuseThemeOptionsComponent } from '@fuse/components/theme-options/theme-
         MatRadioModule,
         MatSelectModule,
         MatSlideToggleModule,
-
         FuseDirectivesModule,
         FuseMaterialColorPickerModule,
-        FuseSidebarModule
+        FuseSidebarModule,
+        MatInputModule
     ],
-    exports     : [
+    exports: [
         FuseThemeOptionsComponent
     ]
 })
-export class FuseThemeOptionsModule
-{
+export class FuseThemeOptionsModule {
 }

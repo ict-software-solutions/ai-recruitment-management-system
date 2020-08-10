@@ -1,5 +1,8 @@
 
 export interface usertype {
         value: string;
-        viewValue: string;
 }
+export interface rolename {
+        value: string;
+}
+
