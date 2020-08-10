@@ -12,6 +12,7 @@ import { ContactsComponent } from 'app/main/apps/contacts/contacts.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { ContactsSelectedBarComponent } from 'app/main/apps/contacts/selected-bar/selected-bar.component';
 import { TokenInterceptor } from 'app/service/shared/token.interceptor';
+// import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 const routes: Routes = [{
     path: 'addRole',
@@ -28,7 +29,7 @@ const routes: Routes = [{
         ContactsComponent,
         ContactsContactListComponent,
         ContactsSelectedBarComponent,
-        ContactsContactFormDialogComponent,
+        ContactsContactFormDialogComponent
     ],
     imports: [
         CommonModule,

@@ -12,6 +12,7 @@ import { EcommerceProductService } from 'app/main/apps/usermanagement/addusers/a
 import { EcommerceProductsComponent } from 'app/main/apps/usermanagement/users/users.component';
 import { UserManagementService } from 'app/main/apps/usermanagement/users/users.service';
 import { TokenInterceptor } from 'app/service/shared/token.interceptor';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 const routes: Routes = [
     {
@@ -35,6 +36,7 @@ const routes: Routes = [
     declarations: [
         EcommerceProductsComponent,
         EcommerceProductComponent,
+        FuseConfirmDialogComponent
     ],
     imports: [
         CommonModule,
@@ -50,7 +52,9 @@ const routes: Routes = [
     providers: [
         UserManagementService,
         EcommerceProductService
-    ]
+    ],
+    exports: [FuseConfirmDialogComponent],
+    entryComponents: [FuseConfirmDialogComponent]
 })
 export class EcommerceModule {
     static forRoot(): ModuleWithProviders {

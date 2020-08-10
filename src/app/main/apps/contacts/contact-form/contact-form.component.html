@@ -68,7 +68,7 @@
                   <button mat-button color="primary" class="add-all-btn" (click)="addAllScreenMapping()">
                     <mat-icon class="mr-6">arrow_forward</mat-icon>Add All
                   </button>
-                  <mat-card class="example-card" *ngFor="let item of todo['value']" cdkDrag>
+                  <mat-card class="example-card" *ngFor="let item of unMappedScreens['value']" cdkDrag>
                     <h6 class="card-title">
                       <mat-icon class="mr-6 fs-small">{{ item.icon }}</mat-icon>{{ item.title }}
                     </h6>
@@ -86,7 +86,7 @@
                   <button mat-button color="primary" class="add-all-btn" (click)="removeAllScreenMapping()">
                     <mat-icon class="mr-6">arrow_backward</mat-icon>Remove All
                   </button>
-                  <mat-card class="example-card" *ngFor="let item of done['value']" cdkDrag>
+                  <mat-card class="example-card" *ngFor="let item of mappedScreens['value']" cdkDrag>
                     <h6 class="card-title">
                       <mat-icon class="mr-6 fs-small">{{ item.icon }}</mat-icon>{{ item.title }}
                     </h6>

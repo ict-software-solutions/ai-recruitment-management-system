@@ -7,6 +7,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { NavigationExtras, Router } from "@angular/router";
 import { fuseAnimations } from "@fuse/animations";
+import { FuseUtils } from "@fuse/utils";
 import { FuseConfirmDialogComponent } from "@fuse/components/confirm-dialog/confirm-dialog.component";
 import { AuthService } from "app/service/auth.service";
 import { LogService } from "app/service/shared/log.service";
@@ -16,6 +17,7 @@ import { AirmsService } from 'app/service/airms.service';
 
 @Component({
   selector: "e-commerce-products",
+
   templateUrl: "./users.component.html",
   styleUrls: ["./users.component.scss"],
   animations: fuseAnimations,
