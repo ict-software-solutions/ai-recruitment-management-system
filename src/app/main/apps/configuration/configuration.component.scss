@@ -44,7 +44,7 @@
   }
 }
 
-.example-container {
+.example-container2 {
   display: flex;
   flex-direction: column;
   max-height: 500px;
@@ -59,23 +59,27 @@
 .mobile-label {
   display: none;
 }
-
+.table-log {
+  height: 500px;
+}
 @media (max-width: 600px) {
   .mobile-label {
     width: 122px;
     display: inline-block;
     font-weight: bold;
   }
-
   .mat-header-row {
     display: none;
   }
-
   .mat-row {
+    // #row1{
     flex-direction: column;
     align-items: start;
     padding: 8px 24px;
+    height: 262px !important;
+    // height: 252px;
   }
+
   mat-cell:first-of-type,
   mat-header-cell:first-of-type,
   mat-footer-cell:first-of-type {

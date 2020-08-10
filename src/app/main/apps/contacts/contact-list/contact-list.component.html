@@ -1,12 +1,12 @@
-<div *ngIf="isLoading" class="Loading">Loading..</div>
-<div class="content-card" [hidden]="isLoading">
-  <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-  </div> -->
-  <mat-table #table [dataSource]="dataSource" class="log-table" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
+<!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"> -->
+<div class="example-container7">
+  <mat-table [dataSource]="dataSource" class="log-table" matSort [@animateStagger]="{ value: '50' }"
+    fusePerfectScrollbar>
     <!-- Name Column -->
     <ng-container matColumnDef="rolename">
       <mat-header-cell *matHeaderCellDef> Role Name</mat-header-cell>
       <mat-cell *matCellDef="let contact">
+        <span class="mobile-label">Role Name</span>
         <p class="text-truncate font-weight-600">{{ contact.roleName }}</p>
       </mat-cell>
     </ng-container>
@@ -14,6 +14,7 @@
     <ng-container matColumnDef="desc">
       <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
       <mat-cell *matCellDef="let contact">
+        <span class="mobile-label">Description</span>
         <p class="text-truncate font-weight-600">{{ contact.roleDescription }}</p>
       </mat-cell>
     </ng-container>
@@ -23,38 +24,53 @@
     <ng-container matColumnDef="active">
       <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
       <mat-cell *matCellDef="let contact" style="color: #006699; justify-content: end center;">
+        <span class="mobile-label">Status</span>
         <!-- <p class="text-truncate font-weight-600">{{contact.active }}</p> -->
-        <p class="text-truncate font-weight-600" *ngIf="contact.active === true">Active</p>
+        <p class="text-truncate font-weight-600" *ngIf="contact.active === true">Activate</p>
         <p class="text-truncate font-weight-600" *ngIf="contact.active === false">Inactive</p>
       </mat-cell>
     </ng-container>
     <!-- Phone Column -->
-    <ng-container matColumnDef="phone">
-      <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Phone</mat-header-cell>
-      <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md>
-        <p class="phone text-truncate"></p>
-      </mat-cell>
-    </ng-container>
+    <!-- <ng-container matColumnDef="phone">
+    <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Phone</mat-header-cell>
+    <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md>
+      <p class="phone text-truncate"></p>
+    </mat-cell>
+  </ng-container> -->
 
     <ng-container matColumnDef="roleId">
       <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action </mat-header-cell>
       <mat-cell *matCellDef="let product" style="justify-content: center;">
-        <button mat-icon-button style="color: #42a1f5;" (click)="editRole(product.roleId)">
+        <span class="mobile-label">Action</span>
+        <button mat-icon-button style="color: #42a1f5;" (click)="editContact(product.roleId)">
           <mat-icon>edit</mat-icon>
         </button>
         <span>
-          <button mat-icon-button color="accent" style="color: red; background-color: white;" (click)="deleteRole(product.roleId)">
+          <button mat-icon-button color="accent" style="color: red; background-color: white;"
+            (click)="onDelete(product.roleId)">
             <mat-icon>delete</mat-icon>
           </button></span>
       </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-    <mat-row *matRowDef="let contact; columns: displayedColumns" class="contact">
-    </mat-row>
+    <mat-row *matRowDef="let contact; columns: displayedColumns" class="contact"> </mat-row>
   </mat-table>
-
-  <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
-   [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
-  </mat-paginator>
 </div>
+<!-- </div> -->
+<div *ngIf="isLoading"
+  style="display: flex; justify-content: center; align-items: center; text-align: center; margin-top: 100px;">
+  <h3 style="color: #0066ff; font-size: 20px;"><b>Loading..</b></h3>
+</div>
+
+<!-- <mat-paginator
+#paginator
+[length]="dataSource.filteredData.length"
+[pageIndex]="0"
+[pageSize]="5"
+[pageSizeOptions]="[5, 10, 25, 100]"
+>
+</mat-paginator> -->
+<mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+</mat-paginator>

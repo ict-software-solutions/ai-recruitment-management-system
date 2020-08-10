@@ -24,8 +24,7 @@
           style="margin-right: 10px;" (click)="updateRole(roleMgmtForm.value)" *ngIf="roleId !== 0">
           Save
         </button>
-        <button mat-raised-button color="basic" class="mr-8 save-button" aria-label="Cancel"
-          (click)="cancelEdit()">
+        <button mat-raised-button color="basic" class="mr-8 save-button" aria-label="Cancel" (click)="cancelEdit()">
           Cancel
         </button>
         <button mat-raised-button color="basic" class="save-button" [disabled]="roleMgmtForm.invalid" aria-label="SAVE"
@@ -62,14 +61,14 @@
           </div>
           <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="3%">
             <div class="space" fxFlex="100%" fxFlex.gt-md="50%">
-              <div class="example-container">
-                <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo['value']" [cdkDropListConnectedTo]="[doneList]"
-                  class="example-list" (cdkDropListDropped)="drop($event)">
+              <div class="example-container1">
+                <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo['value']"
+                  [cdkDropListConnectedTo]="[doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
                   <h6 class="box-title">Unmapped Screens</h6>
                   <button mat-button color="primary" class="add-all-btn" (click)="addAllScreenMapping()">
                     <mat-icon class="mr-6">arrow_forward</mat-icon>Add All
                   </button>
-                  <mat-card class="example-card" *ngFor="let item of todo['value']" cdkDrag >
+                  <mat-card class="example-card" *ngFor="let item of todo['value']" cdkDrag>
                     <h6 class="card-title">
                       <mat-icon class="mr-6 fs-small">{{ item.icon }}</mat-icon>{{ item.title }}
                     </h6>
@@ -78,15 +77,16 @@
               </div>
             </div>
             <div class="space1" fxFlex="100%" fxFlex.gt-md="50%">
-              <div class="example-container">
+              <div class="example-container1">
+                <!-- <h2>Done</h2> -->
 
-                <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done['value']" [cdkDropListConnectedTo]="[todoList]"
-                  class="example-list" (cdkDropListDropped)="drop($event)">
+                <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done['value']"
+                  [cdkDropListConnectedTo]="[todoList]" class="example-list" (cdkDropListDropped)="drop($event)">
                   <h6 class="box-title">Mapped Screens</h6>
                   <button mat-button color="primary" class="add-all-btn" (click)="removeAllScreenMapping()">
                     <mat-icon class="mr-6">arrow_backward</mat-icon>Remove All
                   </button>
-                  <mat-card class="example-card" *ngFor="let item of done['value']" cdkDrag >
+                  <mat-card class="example-card" *ngFor="let item of done['value']" cdkDrag>
                     <h6 class="card-title">
                       <mat-icon class="mr-6 fs-small">{{ item.icon }}</mat-icon>{{ item.title }}
                     </h6>

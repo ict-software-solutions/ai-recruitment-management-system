@@ -66,7 +66,9 @@
 .head {
   margin-top: 27px;
 }
-.example-container {
+.example-container3,
+.example-container4,
+.example-container5 {
   display: flex;
   flex-direction: column;
   max-height: 500px;
@@ -75,11 +77,25 @@
 
 .mat-table {
   overflow: auto;
-  max-height: 500px;
+  max-height: 300px;
 }
 
 .mobile-label {
   display: none;
+}
+.mat-tab-labels {
+  display: flex;
+  height: 67px;
+}
+.mat-tab-label .mat-tab-label-content {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  margin-top: 21px;
+}
+.mat-header-row {
+  height: 55px !important;
 }
 @media only screen and (max-width: 480px) {
   #cont_card {
@@ -97,7 +113,7 @@
 
 @media (max-width: 600px) {
   .mobile-label {
-    width: 122px;
+    width: 96px;
     display: inline-block;
     font-weight: bold;
   }
@@ -105,11 +121,21 @@
   .mat-header-row {
     display: none;
   }
-
-  .mat-row {
-    flex-direction: column;
-    align-items: start;
-    padding: 8px 24px;
+  .example-container3 {
+    .mat-row {
+      flex-direction: column;
+      align-items: start;
+      padding: 8px 24px;
+      height: 364px !important;
+    }
+  }
+  .example-container4 {
+    .mat-row {
+      flex-direction: column;
+      align-items: start;
+      padding: 8px 24px;
+      height: 206px !important;
+    }
   }
 
   mat-cell:first-of-type,
@@ -120,5 +146,15 @@
   .note {
     margin-top: -16px;
     margin-left: 25px;
+  }
+  .long_text {
+    width: 200px !important;
+  }
+  .text-truncate {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 166px;
   }
 }

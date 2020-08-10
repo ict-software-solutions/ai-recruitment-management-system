@@ -20,7 +20,7 @@
       <mat-tab-group animationDuration="0ms" (selectedTabChange)="getLogEntries($event.tab.textLabel)" [hidden]="isLoading"
       style="height: 100%;">
         <!-- <mat-tab label="Field History">
-          <!-- <div class="example-container">
+          <!-<div class="example-container">
             <mat-table [dataSource]="dataSource" #fieldHistorySort="matSort" matSort matSortActive="whenOccur"
         matSortDirection="desc" [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
 
@@ -28,50 +28,51 @@
                 <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
                 <mat-cell *matCellDef="let element">
                   <span class="mobile-label">CreatedBy</span>
-                  {{ element.createdBy }}</mat-cell>
+                 <p class="text-truncate"> {{ element.createdBy }}</p></mat-cell>
               </ng-container>
               <ng-container matColumnDef="screen" style="text-overflow: ellipsis;">
                 <mat-header-cell *matHeaderCellDef>Screen</mat-header-cell>
                 <mat-cell *matCellDef="let element">
                   <span class="mobile-label">Screen</span>
-                  {{ element.screen }}</mat-cell>
+                 <p> {{ element.screen }}</p></mat-cell>
               </ng-container>
               <ng-container matColumnDef="field" style="text-overflow: ellipsis;">
                 <mat-header-cell *matHeaderCellDef>Field</mat-header-cell>
                 <mat-cell *matCellDef="let element">
                   <span class="mobile-label">Field</span>
-                  {{ element.field }}</mat-cell>
+                <p>{{ element.field }}</p></mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="whereArise" style="text-overflow: ellipsis;">
                 <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
                 <mat-cell *matCellDef="let element">
                   <span class="mobile-label">WhereArise</span>
-                  {{ element.whereArise }}</mat-cell>
+               <p>   {{ element.whereArise }}</p></mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="oldValue">
                 <mat-header-cell *matHeaderCellDef>Old Value</mat-header-cell>
                 <mat-cell *matCellDef="let element">
                   <span class="mobile-label">Old Value</span>
-                  {{ element.oldValue }}</mat-cell>
+                <p>  {{ element.oldValue }}</p></mat-cell>
               </ng-container>
               <ng-container matColumnDef="newValue" style="text-overflow: ellipsis;overflow: hidden;">
                 <mat-header-cell *matHeaderCellDef>New Value</mat-header-cell>
                 <mat-cell *matCellDef="let element">
                   <span class="mobile-label">new Value</span>
-                  {{ element.newValue }}</mat-cell>
+               <p>   {{ element.newValue }}</p></mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="whenOccur" sFtyle="text-overflow: ellipsis;">
                 <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                  <span class="mobile-label">WhenOccur</span>{{ element.whenOccur }}</mat-cell>
+                  <span class="mobile-label" >WhenOccur</span>
+                <p class="text-truncate">  {{ element.whenOccur }}</p></mat-cell>
               </ng-container>
 
 
               <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: displayedColumns" class="product"></mat-row>
+              <mat-row  *matRowDef="let row; columns: displayedColumns" class="product"></mat-row>
             </mat-table>
           </div> ->
           <mat-paginator #paginator1 [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
@@ -88,6 +89,7 @@
         </mat-tab> -->
         <mat-tab label="Audit Log">
           <div *ngIf="isLoading" class="Loading">Loading..</div>
+          <div class="example-container4">
           <mat-table [dataSource]="dataSource" class="log-table" #auditSort="matSort" matSort matSortDirection="desc"
            matSortActive="whenOccur" [@animateStagger]="{ value: '50' }" fusePerfectScrollbar  [hidden]="isLoading">
 
@@ -95,7 +97,7 @@
               <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <span class="mobile-label">CreatedBy</span>
-                {{ element.createdBy }}</mat-cell>
+              <p class="text-truncate">  {{ element.createdBy }}</p></mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="whereAriseScreen" style="text-overflow: ellipsis;">
@@ -109,18 +111,19 @@
               <mat-header-cell *matHeaderCellDef>WhatEnsue</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <span class="mobile-label">WhatEnsue</span>
-                {{ element.whatEnsue }}</mat-cell>
+               <p> {{ element.whatEnsue }}</p></mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <span class="mobile-label">WhenOccur</span>
-                {{ element.whenOccur }}</mat-cell>
+              <p class="text-truncate"> {{ element.whenOccur }}</p></mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns_audit; sticky:true"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns_audit" class="product"></mat-row>
           </mat-table>
+          </div>
           <mat-paginator #paginator2 [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
            [pageSizeOptions]="[5, 10, 25, 100]"  [hidden]="isLoading" showFirstLastButtons>
           </mat-paginator>
@@ -136,13 +139,14 @@
 
         <mat-tab label="Client Machine Log">
           <div *ngIf="isLoading" class="Loading">Loading..</div>
+          <div class="example-container4">
           <mat-table [dataSource]="dataSource" class="log-table" #clientLogSort="matSort" matSort matSortDirection="desc"
            matSortActive="whenOccur" [@animateStagger]="{ value: '50' }" fusePerfectScrollbar [hidden]="isLoading">
             <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <span class="mobile-label">CreatedBy</span>
-                {{ element.createdBy }}</mat-cell>
+               <p class="text-truncate"> {{ element.createdBy }}</p></mat-cell>
             </ng-container>
             <ng-container matColumnDef="whereAriseFunction" style="text-overflow: ellipsis;">
               <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
@@ -162,12 +166,13 @@
               <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <span class="mobile-label">WhenOccur</span>
-                {{ element.whenOccur }}</mat-cell>
+              <p class="text-truncate">  {{ element.whenOccur }}</p></mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns_client; sticky:true"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns_client" class="product"></mat-row>
+            <mat-row id="field-row" *matRowDef="let row; columns: displayedColumns_client" class="product"></mat-row>
 
           </mat-table>
+          </div>
           <mat-paginator #paginator3 [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
            [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading" showFirstLastButtons>
           </mat-paginator>
@@ -229,6 +234,6 @@
         </div>
         <div></div>
       </div>
-    </div>
+    </div>s
   </fuse-sidebar>
 </div>
