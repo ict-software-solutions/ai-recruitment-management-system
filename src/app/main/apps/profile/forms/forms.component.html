@@ -289,7 +289,7 @@
                   <input type="radio" value="locked" [checked]="true" name="status" /> Locked
                 </section>
               </div>
-              <div fxFlex="34%" class="px-8" appearance="outline">
+              <div fxFlex="34%" class="px-8" appearance="outline" *ngIf="flagForScreen === 'editUser'">
                 <mat-checkbox (change)="changePassword($event.checked)" (click)="onValueChange()"
                   formControlName="check">Change Password</mat-checkbox>
               </div>
