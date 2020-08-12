@@ -1,7 +1,6 @@
 <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"> -->
 <div class="example-container7">
-  <mat-table [dataSource]="dataSource" class="log-table" matSort [@animateStagger]="{ value: '50' }"
-    fusePerfectScrollbar>
+  <mat-table [dataSource]="dataSource" class="log-table" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
     <!-- Name Column -->
     <ng-container matColumnDef="rolename">
       <mat-header-cell *matHeaderCellDef> Role Name</mat-header-cell>
@@ -30,14 +29,6 @@
         <p class="text-truncate font-weight-600" *ngIf="contact.active === false">Inactive</p>
       </mat-cell>
     </ng-container>
-    <!-- Phone Column -->
-    <!-- <ng-container matColumnDef="phone">
-    <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Phone</mat-header-cell>
-    <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md>
-      <p class="phone text-truncate"></p>
-    </mat-cell>
-  </ng-container> -->
-
     <ng-container matColumnDef="roleId" *ngIf="roleName === 'Admin'">
       <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action </mat-header-cell>
       <mat-cell *matCellDef="let product" style="justify-content: center;">
@@ -46,10 +37,10 @@
           <mat-icon>edit</mat-icon>
         </button>
         <span>
-          <button mat-icon-button color="accent" style="color: red; background-color: white;"
-            (click)="deleteRole(product.roleId)">
+          <button mat-icon-button color="accent" style="color: red; background-color: white;" (click)="deleteRole(product.roleId)">
             <mat-icon>delete</mat-icon>
-          </button></span>
+          </button></span
+        >
       </mat-cell>
     </ng-container>
 
@@ -57,20 +48,29 @@
     <mat-row *matRowDef="let contact; columns: displayedColumns" class="contact"> </mat-row>
   </mat-table>
 </div>
-<!-- </div> -->
-<div *ngIf="isLoading"
-  style="display: flex; justify-content: center; align-items: center; text-align: center; margin-top: 100px;">
-  <h3 style="color: #0066ff; font-size: 20px;"><b>Loading..</b></h3>
+
+<div *ngIf="isLoading" class="Loading">
+  <div class="spinner-wrapper">
+    <div class="spinner">
+      <div class="inner">
+        <div class="gap"></div>
+        <div class="left">
+          <div class="half-circle"></div>
+        </div>
+        <div class="right">
+          <div class="half-circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- <mat-paginator
-#paginator
-[length]="dataSource.filteredData.length"
-[pageIndex]="0"
-[pageSize]="5"
-[pageSizeOptions]="[5, 10, 25, 100]"
+<mat-paginator
+  #paginator
+  [length]="dataSource.filteredData.length"
+  [pageIndex]="0"
+  [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  showFirstLastButtons
 >
-</mat-paginator> -->
-<mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
-  [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
 </mat-paginator>

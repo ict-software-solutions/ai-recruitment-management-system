@@ -4,36 +4,92 @@
 // Import app.theme.scss
 @import "app/app.theme";
 
-
 .mat-progress-spinner svg {
-    position: absolute;
-    transform: rotate(-90deg);
-    top: 0;
-    left: 0;
-    transform-origin: center;
-    overflow: visible;
-    height: 30px!important;
-    width: 30px!important;
-    margin-top: 32px;
+  position: absolute;
+  transform: rotate(-90deg);
+  top: 0;
+  left: 0;
+  transform-origin: center;
+  overflow: visible;
+  height: 30px !important;
+  width: 30px !important;
+  margin-top: 32px;
 }
-.mat-grid-tile .mat-grid-figure
-{
-align-items: flex-start!important;
+.mat-grid-tile .mat-grid-figure {
+  align-items: flex-start !important;
 }
-// .mat-form-field-subscript-wrapper {
-//     font-size: 72%;
-//     margin-top: 0.6666666667em;
-//     top: calc(100% - 1.7916666667em);
-// }
+.spinner-wrapper {
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 100px;
+  height: 100px;
+}
 
-.Loading {
-    display: flex; 
-    justify-content: center;
-    align-items: center; 
-    text-align: center;
-    margin-top: 25px;
-    height:100%;
-    color: #0066ff;
-    font-size: 20px;
-    font-weight: 700;
+.spinner-wrapper .spinner {
+  position: absolute;
+  overflow: hidden;
+  left: 50%;
+  margin-left: -50px;
+  animation: outer-rotate 2.91667s linear infinite;
+}
+
+.spinner-wrapper .spinner .inner {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  animation: sporadic-rotate 5.25s cubic-bezier(0.35, 0, 0.25, 1) infinite;
+}
+
+.spinner-wrapper .spinner .inner .gap {
+  position: absolute;
+  left: 49px;
+  right: 49px;
+  top: 0;
+  bottom: 0;
+  border-top: 10px solid;
+  box-sizing: border-box;
+}
+
+.spinner-wrapper .spinner .inner .left,
+.spinner-wrapper .spinner .inner .right {
+  position: absolute;
+  top: 0;
+  height: 100px;
+  width: 50px;
+  overflow: hidden;
+}
+
+.spinner-wrapper .spinner .inner .left .half-circle,
+.spinner-wrapper .spinner .inner .right .half-circle {
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  box-sizing: border-box;
+  border: 10px solid #4285f4;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+}
+
+.spinner-wrapper .spinner .inner .left {
+  left: 0;
+}
+
+.spinner-wrapper .spinner .inner .left .half-circle {
+  left: 0;
+  border-right-color: transparent;
+  animation: left-wobble 1.3125s cubic-bezier(0.35, 0, 0.25, 1) infinite;
+  -webkit-animation: left-wobble 1.3125s cubic-bezier(0.35, 0, 0.25, 1) infinite;
+}
+
+.spinner-wrapper .spinner .inner .right {
+  right: 0;
+}
+
+.spinner-wrapper .spinner .inner .right .half-circle {
+  right: 0;
+  border-left-color: transparent;
+  animation: right-wobble 1.3125s cubic-bezier(0.35, 0, 0.25, 1) infinite;
+  -webkit-animation: right-wobble 1.3125s cubic-bezier(0.35, 0, 0.25, 1) infinite;
 }

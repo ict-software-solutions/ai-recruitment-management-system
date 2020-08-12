@@ -2,15 +2,18 @@
   <div class="top-bg accent"></div>
   <div class="center">
     <!--HEADER-->
-    <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
-      fxLayoutAlign.gt-sm="space-between center">
-      <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
-        <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
+    <div class="header accent header-display" fxLayoutAlign="center center" fxLayoutAlign.gt-sm="space-between center">
+      <div class="logo mb-24 mb-md-0 logo-display" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon s-32  mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
           people
         </mat-icon>
         <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">
           User Management
         </span>
+        <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-sm-show add-button"
+          (click)="addRole()" *ngIf="roleName === 'Admin'">
+          <span>Add User</span>
+        </button>
       </div>
 
       <div class="search-wrapper mx-32 mx-md-0">
@@ -20,14 +23,32 @@
         </div>
       </div>
 
-      <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" (click)="addRole()" *ngIf="roleName === 'Admin'">
+      <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0 mt-sm-0  button-lg-show"
+        (click)="addRole()" *ngIf="roleName === 'Admin'">
         <span>Add User</span>
       </button>
     </div>
+
+
+
     <!-- / HEADER -->
 
-    <div class="content-card">
-      <div *ngIf="isLoading" class="Loading">Loading..</div>
+    <div class="content-card" >
+      <div *ngIf="isLoading" class="Loading">
+        <div class="spinner-wrapper" style="margin-top:12%;">
+          <div class="spinner">
+              <div class="inner">
+                  <div class="gap"></div>
+                  <div class="left">
+                      <div class="half-circle"></div>
+                  </div>
+                  <div class="right">
+                      <div class="half-circle"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      </div>
       <div class="example-container6">
         <mat-table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
           <ng-container matColumnDef="image" style="width: 200px;" *ngIf="!isLoading">
@@ -93,7 +114,8 @@
             <mat-cell *matCellDef="let product" style="justify-content: center;">
               <span class="mobile-label">Action</span>
 
-              <button mat-icon-button style="color: #42a1f5;" (click)="editUser(product.userId, product.userType)" matTooltip= "Edit">
+              <button mat-icon-button style="color: #42a1f5;" (click)="editUser(product.userId, product.userType)"
+                matTooltip="Edit">
                 <mat-icon>edit</mat-icon>
               </button>
               <span>

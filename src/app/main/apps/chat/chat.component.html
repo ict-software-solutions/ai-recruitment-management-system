@@ -1,24 +1,28 @@
-<div id="users" class="page-layout carded fullwidth inner-scroll">
+<div id="chat" class="page-layout carded fullwidth inner-scroll">
   <div class="top-bg accent"></div>
   <div class="center">
-    <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
-      <div class="head">
-        <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center" style="    margin-top: -63px;">
-          <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
-            desktop_mac
-          </mat-icon>
-          <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">
-            System Activities
-          </span>
-        </div>
+    <div class="header accent header-display1" fxLayoutAlign="center center" fxLayoutAlign.gt-sm="space-between center">
+
+      <div class="logo mb-24 mb-md-0 logo-display1" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
+          desktop_mac
+        </mat-icon>
+        <span class="logo-text1 h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">
+          System Activities
+        </span>
       </div>
-      <button mat-raised-button class="sidebar-toggle mt-md-0" id="filter_button" (click)="toggleSidebar('project-dashboard-right-sidebar-1')">
+
+      <button mat-raised-button
+        class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0  filter-button"
+        id="filter_button" (click)="toggleSidebar('project-dashboard-right-sidebar-1')">
         Filter By
       </button>
+
+
     </div>
     <div class="content-card" id="cont_card">
-      <mat-tab-group animationDuration="0ms" (selectedTabChange)="getLogEntries($event.tab.textLabel)" [hidden]="isLoading"
-      style="height: 100%;">
+      <mat-tab-group animationDuration="0ms" (selectedTabChange)="getLogEntries($event.tab.textLabel)"
+        [hidden]="isLoading" style="height: 100%;">
         <!-- <mat-tab label="Field History" class="note_heading">
           <!-<div class="example-container">
             <mat-table [dataSource]="dataSource" #fieldHistorySort="matSort" matSort matSortActive="whenOccur"
@@ -88,46 +92,63 @@
           </div>
         </mat-tab> -->
         <mat-tab label="Audit Log" class="note_heading">
-          <div *ngIf="isLoading" class="Loading">Loading..</div>
+          <div *ngIf="isLoading" class="Loading">
+            <div class="spinner-wrapper">
+              <div class="spinner">
+                <div class="inner">
+                  <div class="gap"></div>
+                  <div class="left">
+                    <div class="half-circle"></div>
+                  </div>
+                  <div class="right">
+                    <div class="half-circle"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="example-container4">
-          <mat-table [dataSource]="dataSource" class="log-table" #auditSort="matSort" matSort matSortDirection="desc"
-           matSortActive="whenOccur" [@animateStagger]="{ value: '50' }" fusePerfectScrollbar  [hidden]="isLoading">
+            <mat-table [dataSource]="dataSource" class="log-table" #auditSort="matSort" matSort matSortDirection="desc"
+              matSortActive="whenOccur" [@animateStagger]="{ value: '50' }" fusePerfectScrollbar [hidden]="isLoading">
 
-            <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                <span class="mobile-label">CreatedBy</span>
-              <p class="text-truncate">  {{ element.createdBy }}</p></mat-cell>
-            </ng-container>
+              <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
+                <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">CreatedBy</span>
+                  <p class="text-truncate"> {{ element.createdBy }}</p>
+                </mat-cell>
+              </ng-container>
 
-            <ng-container matColumnDef="whereAriseScreen" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                <span class="mobile-label">WhereArise</span>
-                {{ element.whereArise }}</mat-cell>
-            </ng-container>
+              <ng-container matColumnDef="whereAriseScreen" style="text-overflow: ellipsis;">
+                <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">WhereArise</span>
+                  {{ element.whereArise }}</mat-cell>
+              </ng-container>
 
-            <ng-container matColumnDef="whatEnsue" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef>WhatEnsue</mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                <span class="mobile-label">WhatEnsue</span>
-               <p> {{ element.whatEnsue }}</p></mat-cell>
-            </ng-container>
+              <ng-container matColumnDef="whatEnsue" style="text-overflow: ellipsis;">
+                <mat-header-cell *matHeaderCellDef>WhatEnsue</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">WhatEnsue</span>
+                  <p> {{ element.whatEnsue }}</p>
+                </mat-cell>
+              </ng-container>
 
-            <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                <span class="mobile-label">WhenOccur</span>
-              <p class="text-truncate"> {{ element.whenOccur }}</p></mat-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns_audit; sticky:true" ></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns_audit" class="product"></mat-row>
-          </mat-table>
+              <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
+                <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">WhenOccur</span>
+                  <p class="text-truncate"> {{ element.whenOccur }}</p>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns_audit; sticky:true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns_audit" class="product"></mat-row>
+            </mat-table>
           </div>
           <mat-paginator #paginator2 [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
-           [pageSizeOptions]="[5, 10, 25, 100]"  [hidden]="isLoading" showFirstLastButtons>
+            [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading" showFirstLastButtons>
           </mat-paginator>
-          <div class="note"  [hidden]="isLoading">
+          <div class="note" [hidden]="isLoading">
             <p class="note_heading">Please Note</p>
             <ul>
               <li>Audit Log for recent 7 days shown upon arrival</li>
@@ -140,41 +161,44 @@
         <mat-tab label="Client Machine Log" class="note_heading">
           <div *ngIf="isLoading" class="Loading">Loading..</div>
           <div class="example-container4">
-          <mat-table [dataSource]="dataSource" class="log-table" #clientLogSort="matSort" matSort matSortDirection="desc"
-           matSortActive="whenOccur" [@animateStagger]="{ value: '50' }" fusePerfectScrollbar [hidden]="isLoading">
-            <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                <span class="mobile-label">CreatedBy</span>
-               <p class="text-truncate"> {{ element.createdBy }}</p></mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="whereAriseFunction" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                <span class="mobile-label">WhereArise</span>
-                {{ element.whereArise }}</mat-cell>
-            </ng-container>
+            <mat-table [dataSource]="dataSource" class="log-table" #clientLogSort="matSort" matSort
+              matSortDirection="desc" matSortActive="whenOccur" [@animateStagger]="{ value: '50' }" fusePerfectScrollbar
+              [hidden]="isLoading">
+              <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
+                <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">CreatedBy</span>
+                  <p class="text-truncate"> {{ element.createdBy }}</p>
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="whereAriseFunction" style="text-overflow: ellipsis;">
+                <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">WhereArise</span>
+                  {{ element.whereArise }}</mat-cell>
+              </ng-container>
 
-            <ng-container matColumnDef="whatEnsueClient" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef>WhatEnsue</mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                <span class="mobile-label">WhichPlace</span>
-                {{ element.whichPlace }}</mat-cell>
-            </ng-container>
+              <ng-container matColumnDef="whatEnsueClient" style="text-overflow: ellipsis;">
+                <mat-header-cell *matHeaderCellDef>WhatEnsue</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">WhichPlace</span>
+                  {{ element.whichPlace }}</mat-cell>
+              </ng-container>
 
-            <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
-              <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                <span class="mobile-label">WhenOccur</span>
-              <p class="text-truncate">  {{ element.whenOccur }}</p></mat-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns_client; sticky:true"></mat-header-row>
-            <mat-row id="field-row" *matRowDef="let row; columns: displayedColumns_client" class="product"></mat-row>
+              <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
+                <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">WhenOccur</span>
+                  <p class="text-truncate"> {{ element.whenOccur }}</p>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns_client; sticky:true"></mat-header-row>
+              <mat-row id="field-row" *matRowDef="let row; columns: displayedColumns_client" class="product"></mat-row>
 
-          </mat-table>
+            </mat-table>
           </div>
           <mat-paginator #paginator3 [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
-           [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading" showFirstLastButtons>
+            [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading" showFirstLastButtons>
           </mat-paginator>
           <div class="note" [hidden]="isLoading">
             <p class="note_heading">Please Note</p>
@@ -194,7 +218,8 @@
       <div style="padding: 18px;">
         <div class="header1" style="display: inline;">
           <div class="title1">Filter By</div>
-          <button mat-icon-button class="sidebar-toggle" (click)="toggleSidebarClosed('project-dashboard-right-sidebar-1')">
+          <button mat-icon-button class="sidebar-toggle"
+            (click)="toggleSidebarClosed('project-dashboard-right-sidebar-1')">
             <mat-icon class="secondary-text">arrow_forward</mat-icon>
           </button>
         </div>

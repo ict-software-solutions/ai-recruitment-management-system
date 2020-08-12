@@ -80,7 +80,83 @@
   margin-top: 25px;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 400px) {
+  .profile_header {
+    height: 150px;
+    font-size: bold;
+    font-size: 17px;
+    padding: 16px;
+    color: white;
+  }
+
+  .info {
+    color: white;
+    margin-top: -84px;
+  }
+  .buttons {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .submit-button-save {
+    width: 50%;
+  }
+  .submit-button-cancel {
+    width: 50%;
+  }
+  .submit-button-update {
+    width: 50%;
+  }
+  .submit-button-add {
+    width: 50%;
+  }
+  .edit_button {
+    margin-right: 17px;
+    float: right;
+  }
+  .next_row {
+    margin-top: 0px;
+  }
+}
+@media screen and (orientation: landscape) and (max-width: 959px) {
+  .profile_header {
+    height: 150px;
+    font-size: bold;
+    font-size: 17px;
+    padding: 16px;
+    color: white;
+  }
+
+  .info {
+    color: white;
+    margin-top: -84px;
+  }
+  .buttons {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .submit-button-save {
+    width: 50%;
+  }
+  .submit-button-cancel {
+    width: 50%;
+  }
+  .submit-button-update {
+    width: 50%;
+  }
+  .submit-button-add {
+    width: 50%;
+  }
+  .edit_button {
+    margin-right: 17px;
+    float: right;
+  }
+  .next_row {
+    margin-top: 0px;
+  }
+}
+@media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
   .profile_header {
     height: 150px;
     font-size: bold;

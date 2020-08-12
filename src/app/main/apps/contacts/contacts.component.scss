@@ -1,69 +1,153 @@
 @import "src/@fuse/scss/fuse";
 
-
 #contacts {
-    .top-bg {
-      @include media-breakpoint("lt-md") {
-        height: 256px;
-      }
+  .top-bg {
+    @include media-breakpoint("lt-md") {
+      height: 256px;
     }
+  }
 
-    > .center {
-      > .header {
-        
-            height: 136px !important;
-            min-height: 136px !important;
-            max-height: 136px !important;
-        
-        .search-wrapper {
+  > .center {
+    > .header {
+      height: 136px !important;
+      min-height: 136px !important;
+      max-height: 136px !important;
+
+      .search-wrapper {
+        width: 100%;
+        max-width: 480px;
+        border-radius: 28px;
+        overflow: hidden;
+        @include mat-elevation(1);
+        background-color: white;
+        color: black;
+        @include media-breakpoint("xs") {
           width: 100%;
-          max-width: 480px;
-          border-radius: 28px;
-          overflow: hidden;
-          @include mat-elevation(1);
-          background-color: white;
-          color: black;
-          @include media-breakpoint("xs") {
-            width: 100%;
-          }
+        }
 
-          .search {
+        .search {
+          width: 100%;
+          height: 48px;
+          line-height: 48px;
+          padding: 0 18px;
+
+          input {
             width: 100%;
             height: 48px;
-            line-height: 48px;
-            padding: 0 18px;
-
-            input {
-              width: 100%;
-              height: 48px;
-              min-height: 48px;
-              max-height: 48px;
-              padding: 0 16px;
-              border: none;
-              outline: none;
-            }
+            min-height: 48px;
+            max-height: 48px;
+            padding: 0 16px;
+            border: none;
+            outline: none;
           }
         }
-
-        @include media-breakpoint("lt-md") {
-          padding: 8px 0;
-          height: 192px !important;
-          min-height: 192px !important;
-          max-height: 192px !important;
-        }
       }
-    }}
-  
-   
 
-    .content {
-        overflow: hidden;
-
-        .sidebar {
-
-            &:not(.locked-open) {
-                background: white;
-            }
-        }
+      @include media-breakpoint("lt-md") {
+        padding: 8px 0;
+        height: 192px !important;
+        min-height: 192px !important;
+        max-height: 192px !important;
+      }
     }
+  }
+}
 
+.content {
+  overflow: hidden;
+
+  .sidebar {
+    &:not(.locked-open) {
+      background: white;
+    }
+  }
+}
+.button-sm-show {
+  display: none;
+}
+.button-lg-show {
+  display: block;
+}
+.header-display {
+  display: flex;
+}
+@media only screen and (max-width: 400px) {
+  .button-sm-show {
+    display: block;
+  }
+  .button-lg-show {
+    display: none;
+  }
+  .h1 {
+    font-size: 15px;
+    margin-left: -14px;
+  }
+  .add-button1 {
+    margin-left: 74px;
+    margin-bottom: 18px;
+  }
+  .logo-display {
+    margin-bottom: 10px;
+  }
+  .header-display {
+    display: block !important;
+  }
+  #contacts > .center > .header .search-wrapper {
+    width: 80%!important;
+  }
+}
+@media screen and (orientation: landscape) and (max-width: 959px) {
+  #contacts .top-bg {
+    height: 163px;
+  }
+  #contacts  > .center > .header {
+    // padding: 8px 0;
+    height: 102px !important;
+    min-height: 102px !important;
+    max-height: 192px !important;
+  }
+  #contacts  > .center > .header .search-wrapper {
+    width: 41%!important;
+  }
+  .logo-text.h1 {
+    font-size: 17px;
+    margin-left: -14px;
+  }
+  .add-button1 {
+    margin-left: 20px;
+    margin-bottom: 18px;
+  }
+  .logo-display {
+    margin-top: 24px;
+  }
+}
+@media screen and (min-width: 600px) {
+ #contacts> .center > .header .search-wrapper {
+    width: 41%;
+  }
+}
+@media only screen and (device-width : 414px) and (device-height:736px)and(orientation : portrait){
+ .button-sm-show {
+    display: block;
+  }
+  .button-lg-show {
+    display: none;
+  }
+  .h1 {
+    font-size: 15px;
+    margin-left: -14px;
+  }
+  .add-button1 {
+    margin-left: 74px;
+    margin-bottom: 18px;
+  }
+  .logo-display {
+    margin-bottom: 10px;
+  }
+  .header-display {
+    display: block !important;
+  }
+  #contacts > .center > .header .search-wrapper {
+    width: 80%!important;
+  }
+}

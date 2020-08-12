@@ -182,7 +182,8 @@ form {
 .status {
   margin-left: 8px;
 }
-@media only screen and (max-width: 480px) {
+
+@media only screen and (max-width: 400px) {
   .space {
     margin-right: 0px;
   }
@@ -219,8 +220,95 @@ form {
     font-size: 10px;
   }
 }
-@media only screen and (max-width: 768px) {
+// @media only screen and (max-width: 768px) {
+//   .button_align {
+//     margin-top: 20px;
+//   }
+// }
+@media screen and (orientation: landscape) and (max-width: 959px) {
+  #contacts .top-bg {
+    height: 163px;
+  }
+  #contacts > .center > .header {
+    // padding: 8px 0;
+    height: 102px !important;
+    min-height: 102px !important;
+    max-height: 192px !important;
+  }
+  #contacts > .center > .header .search-wrapper {
+    width: 41% !important;
+  }
+  .space {
+    margin-right: 0px;
+  }
+  .space {
+    margin-left: 0px;
+  }
+  .status {
+    margin-left: 0px;
+  }
+  .rolename {
+    margin-right: 0px;
+  }
   .button_align {
     margin-top: 20px;
+  }
+  .add-all-btn {
+    float: right;
+    top: -21px;
+    right: 20px;
+
+    mat-icon {
+      font-size: 19px;
+    }
+  }
+  .example-card {
+    height: 42px;
+    padding: 12px 16px !important;
+    margin: 30px 30px 15px 30px;
+    cursor: move;
+  }
+  .card-title {
+    padding-left: 20px;
+    margin: 0px 4px;
+    font-size: 10px;
+  }
+}
+
+@media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
+  .space {
+    margin-right: 0px;
+  }
+  .space {
+    margin-left: 0px;
+  }
+  .status {
+    margin-left: 0px;
+  }
+  .rolename {
+    margin-right: 0px;
+  }
+  .button_align {
+    margin-top: 20px;
+  }
+  .add-all-btn {
+    float: right;
+    top: -21px;
+    right: 20px;
+
+    mat-icon {
+      font-size: 19px;
+    }
+  }
+  .example-card {
+    height: 42px;
+    padding: 12px 16px !important;
+    margin: 30px 30px 15px 30px;
+    cursor: move;
+  }
+  .card-title {
+    padding-left: 20px;
+    margin: 0px 4px;
+    font-size: 10px;
   }
 }

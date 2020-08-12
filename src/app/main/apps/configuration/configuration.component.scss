@@ -61,7 +61,16 @@
 .table-log {
   height: 500px;
 }
-@media (max-width: 600px) {
+.header-display {
+  display: flex;
+}
+.button-sm-show {
+  display: none;
+}
+.button-lg-show {
+  display: block;
+}
+@media only screen and (max-width: 400px) {
   .mobile-label {
     width: 122px;
     display: inline-block;
@@ -71,12 +80,10 @@
     display: none;
   }
   .mat-row {
-    // #row1{
     flex-direction: column;
     align-items: start;
     padding: 8px 24px;
     height: 262px !important;
-    // height: 252px;
   }
 
   mat-cell:first-of-type,
@@ -84,13 +91,104 @@
   mat-footer-cell:first-of-type {
     padding-left: 0px;
   }
-  .resetall_button {
-    margin-top: 10px;
+
+  .h1 {
+    font-size: 15px;
+    margin-left: -14px;
+  }
+  .add-button2 {
+    margin-left: 95px;
+    margin-bottom: 18px;
+  }
+  .logo-display {
+    margin-bottom: 10px;
+  }
+  .header-display {
+    display: block !important;
+  }
+  .button-sm-show {
+    display: block;
+  }
+  .button-lg-show {
+    display: none;
+  }
+  #configuration > .center > .header .search-wrapper {
+    width: 80%;
+  }
+}
+@media screen and (orientation: landscape) and (max-width: 959px) {
+  #configuration .top-bg {
+    height: 163px;
+  }
+  #configuration > .center > .header {
+    height: 102px !important;
+    min-height: 102px !important;
+    max-height: 192px !important;
+  }
+  .h1 {
+    font-size: 17px;
+    margin-left: -14px;
+  }
+  .add-button2 {
+    margin-left: 20px;
+    margin-bottom: 18px;
+  }
+  .logo-display {
+    margin-top: 24px;
+  }
+  #configuration > .center > .header .search-wrapper {
+    width: 44%;
   }
 }
 
-@media only screen and (max-width: 768px) {
-  .resetall_button {
-    margin-top: 10px;
+@media screen and (min-width: 600px) {
+  #configuration > .center > .header .search-wrapper {
+    width: 41%;
+  }
+}
+@media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
+  .mobile-label {
+    width: 122px;
+    display: inline-block;
+    font-weight: bold;
+  }
+  .mat-header-row {
+    display: none;
+  }
+  .mat-row {
+    flex-direction: column;
+    align-items: start;
+    padding: 8px 24px;
+    height: 262px !important;
+  }
+
+  mat-cell:first-of-type,
+  mat-header-cell:first-of-type,
+  mat-footer-cell:first-of-type {
+    padding-left: 0px;
+  }
+
+  .h1 {
+    font-size: 15px;
+    margin-left: -14px;
+  }
+  .add-button2 {
+    margin-left: 74px;
+    margin-bottom: 18px;
+  }
+  .logo-display {
+    margin-bottom: 10px;
+  }
+  .header-display {
+    display: block !important;
+  }
+  .button-sm-show {
+    display: block;
+  }
+  .button-lg-show {
+    display: none;
+  }
+  #configuration > .center > .header .search-wrapper {
+    width: 80%;
   }
 }
