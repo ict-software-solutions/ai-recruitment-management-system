@@ -85,13 +85,7 @@ e-commerce-products {
 .header-display {
   display: flex;
 }
-// .Loading{
-//   margin-top:10%!important;
-// }
-
 @media only screen and (max-width: 400px) {
-  // @media only screen and (max-width : 400px) and (max-height:800px)and(orientation : portrait){
-
   .mobile-label {
     width: 122px;
     display: inline-block;
@@ -124,10 +118,10 @@ e-commerce-products {
     white-space: nowrap;
   }
   .button-sm-show {
-    display: block;
+    display: block !important;
   }
   .button-lg-show {
-    display: none;
+    display: none !important;
   }
   .header-display {
     display: block !important;
@@ -187,7 +181,7 @@ e-commerce-products {
   }
 }
 
-@media only screen and (device-width : 414px) and (device-height:736px)and(orientation : portrait){
+@media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
   .mobile-label {
     width: 122px;
     display: inline-block;
@@ -252,4 +246,3 @@ e-commerce-products {
     margin-bottom: 10px;
   }
 }
-

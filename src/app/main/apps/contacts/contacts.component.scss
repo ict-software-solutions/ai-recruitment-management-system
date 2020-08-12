@@ -72,11 +72,12 @@
   display: flex;
 }
 @media only screen and (max-width: 400px) {
+ 
   .button-sm-show {
-    display: block;
+    display: block !important;
   }
   .button-lg-show {
-    display: none;
+    display: none !important;
   }
   .h1 {
     font-size: 15px;

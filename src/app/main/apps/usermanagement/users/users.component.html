@@ -4,7 +4,7 @@
     <!--HEADER-->
     <div class="header accent header-display" fxLayoutAlign="center center" fxLayoutAlign.gt-sm="space-between center">
       <div class="logo mb-24 mb-md-0 logo-display" fxLayout="row" fxLayoutAlign="start center">
-        <mat-icon class="logo-icon s-32  mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
+        <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
           people
         </mat-icon>
         <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">
@@ -23,31 +23,30 @@
         </div>
       </div>
 
-      <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0 mt-sm-0  button-lg-show"
+      <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-lg-show"
         (click)="addRole()" *ngIf="roleName === 'Admin'">
         <span>Add User</span>
       </button>
     </div>
 
-
-
     <!-- / HEADER -->
 
-    <div class="content-card" >
+    <div class="content-card">
+      <!-- <div class="content"> -->
       <div *ngIf="isLoading" class="Loading">
-        <div class="spinner-wrapper" style="margin-top:12%;">
+        <div class="spinner-wrapper">
           <div class="spinner">
-              <div class="inner">
-                  <div class="gap"></div>
-                  <div class="left">
-                      <div class="half-circle"></div>
-                  </div>
-                  <div class="right">
-                      <div class="half-circle"></div>
-                  </div>
+            <div class="inner">
+              <div class="gap"></div>
+              <div class="left">
+                <div class="half-circle"></div>
               </div>
+              <div class="right">
+                <div class="half-circle"></div>
+              </div>
+            </div>
           </div>
-      </div>
+        </div>
       </div>
       <div class="example-container6">
         <mat-table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
@@ -68,11 +67,9 @@
             <mat-header-cell *matHeaderCellDef>First Name</mat-header-cell>
             <mat-cell *matCellDef="let product">
               <span class="mobile-label">First Name</span>
-
               <p class="text-truncate">{{ product.firstName }}</p>
             </mat-cell>
           </ng-container>
-
           <ng-container matColumnDef="lastName" style="width: 200px; text-overflow: ellipsis;">
             <mat-header-cell *matHeaderCellDef>Last Name</mat-header-cell>
             <mat-cell *matCellDef="let product">
@@ -135,5 +132,6 @@
         [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading" showFirstLastButtons>
       </mat-paginator>
     </div>
+    <!-- </div> -->
   </div>
 </div>
