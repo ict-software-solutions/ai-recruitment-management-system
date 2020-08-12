@@ -7,6 +7,7 @@
 
     > .center {
       > .header {
+        justify-content: space-between !important;
         .search-wrapper {
           width: 100%;
           max-width: 480px;
@@ -70,6 +71,12 @@
 #filter_button {
   margin-right: 10px;
   margin-bottom: 58px;
+  margin-left: 11px !important;
+}
+#filter_button {
+  // margin-right: 10px;
+  // margin-bottom: 58px;
+  margin-left: 11px !important;
 }
 .head {
   margin-top: 27px;
@@ -172,10 +179,10 @@
     margin-left: -14px;
   }
 
-  #filter_button {
-    float: right;
-    margin-left: 35px;
-  }
+  // #filter_button {
+  //   float: right;
+  //   margin-left: 35px;
+  // }
   .logo-display1 {
     margin-top: -19px;
   }
@@ -189,6 +196,7 @@
     height: 192px !important;
     min-height: 192px !important;
     max-height: 192px !important;
+    justify-content: space-between !important;
   }
 }
 @media screen and (orientation: landscape) and (max-width: 959px) {
@@ -200,6 +208,7 @@
     height: 102px !important;
     min-height: 102px !important;
     max-height: 192px !important;
+    justify-content: space-between !important;
   }
   .header-display1 {
     display: flex !important;
@@ -228,6 +237,11 @@
     margin-top: -46px;
     margin-left: 25px;
     font-size: 8px;
+  }
+  #filter_button {
+    // margin-right: 10px;
+    // margin-bottom: 58px;
+    margin-left: 11px !important;
   }
 }
 @media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
@@ -299,5 +313,6 @@
     height: 192px !important;
     min-height: 192px !important;
     max-height: 192px !important;
+    justify-content: space-between !important;
   }
 }

@@ -12,6 +12,7 @@
       height: 136px !important;
       min-height: 136px !important;
       max-height: 136px !important;
+      justify-content: space-between;
 
       .search-wrapper {
         width: 100%;
@@ -21,6 +22,8 @@
         @include mat-elevation(1);
         background-color: white;
         color: black;
+        margin-right: 32px;
+        margin-left: 32px;
         @include media-breakpoint("xs") {
           width: 100%;
         }
@@ -93,7 +96,9 @@
     display: block !important;
   }
   #contacts > .center > .header .search-wrapper {
-    width: 80% !important;
+    margin-right: 0px;
+    margin-left: 0px;
+    width: 100%;
   }
 }
 @media screen and (orientation: landscape) and (max-width: 959px) {
@@ -105,6 +110,7 @@
     height: 102px !important;
     min-height: 102px !important;
     max-height: 192px !important;
+    justify-content: space-between !important;
   }
   #contacts > .center > .header .search-wrapper {
     width: 41% !important;
@@ -128,17 +134,17 @@
 }
 @media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
   .button-sm-show {
-    display: block;
+    display: block !important;
   }
   .button-lg-show {
-    display: none;
+    display: none !important;
   }
   .h1 {
     font-size: 15px;
     margin-left: -14px;
   }
   .add-button1 {
-    margin-left: 74px;
+    margin-left: 124px;
     margin-bottom: 18px;
   }
   .logo-display {
@@ -148,6 +154,8 @@
     display: block !important;
   }
   #contacts > .center > .header .search-wrapper {
-    width: 80% !important;
+    width: 100% !important;
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }

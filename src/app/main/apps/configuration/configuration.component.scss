@@ -7,6 +7,7 @@
   }
   > .center {
     > .header {
+      justify-content: space-between !important;
       .search-wrapper {
         width: 100%;
         max-width: 480px;
@@ -15,6 +16,8 @@
         @include mat-elevation(1);
         background-color: white;
         color: black;
+        margin-left: 32px;
+        margin-right: 32px;
         @include media-breakpoint("xs") {
           width: 100%;
         }
@@ -97,7 +100,7 @@
     margin-left: -14px;
   }
   .add-button2 {
-    margin-left: 95px;
+    margin-left: 113px;
     margin-bottom: 18px;
   }
   .logo-display {
@@ -113,7 +116,9 @@
     display: none;
   }
   #configuration > .center > .header .search-wrapper {
-    width: 80%;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }
 @media screen and (orientation: landscape) and (max-width: 959px) {
@@ -124,6 +129,7 @@
     height: 102px !important;
     min-height: 102px !important;
     max-height: 192px !important;
+    justify-content: space-between !important;
   }
   .h1 {
     font-size: 17px;
@@ -180,7 +186,7 @@
     margin-left: -14px;
   }
   .add-button2 {
-    margin-left: 74px;
+    margin-left: 157px;
     margin-bottom: 18px;
   }
   .logo-display {
@@ -196,6 +202,8 @@
     display: none;
   }
   #configuration > .center > .header .search-wrapper {
-    width: 80%;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }

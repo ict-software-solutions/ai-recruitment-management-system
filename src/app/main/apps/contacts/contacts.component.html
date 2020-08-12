@@ -2,31 +2,40 @@
   <div class="top-bg accent"></div>
   <!-- <div id="contacts" class="page-layout simple left-sidebar inner-sidebar inner-scroll"> -->
   <div class="center">
-
     <div class="header accent header-display" fxLayoutAlign="center center" fxLayoutAlign.gt-sm="space-between center">
       <div class="logo mb-24 mb-md-0 logo-display" fxLayout="row" fxLayoutAlign="start center">
-        <mat-icon class="logo-icon s-32  mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
+        <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
           account_circle
         </mat-icon>
         <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">
           Role Management
         </span>
-        <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-sm-show add-button1"
-          (click)="addNewRole()" aria-label="add contact" *ngIf="roleName === 'Admin'">
+        <button
+          mat-raised-button
+          class="add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-sm-show add-button1"
+          (click)="addNewRole()"
+          aria-label="add contact"
+          *ngIf="roleName === 'Admin'"
+        >
           Add Role
         </button>
       </div>
       <!-- </div> -->
 
-      <div class="search-wrapper mx-32 mx-md-0">
+      <div class="search-wrapper mx-md-0">
         <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
           <mat-icon>search</mat-icon>
           <input [formControl]="searchInput" placeholder="Search" />
         </div>
       </div>
 
-      <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0 mt-sm-0  button-lg-show"
-        (click)="addNewRole()" aria-label="add contact" *ngIf="roleName === 'Admin'">
+      <button
+        mat-raised-button
+        class="add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-lg-show"
+        (click)="addNewRole()"
+        aria-label="add contact"
+        *ngIf="roleName === 'Admin'"
+      >
         Add Role
       </button>
     </div>
