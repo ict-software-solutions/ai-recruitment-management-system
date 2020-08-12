@@ -149,19 +149,24 @@ export class AuthService {
     return this.httpClient.get(url);
   }
 
-  updateConfig(value) {
+  updateConfig(value, token) {
+    const httpOptions = {
+      headers: new HttpHeaders({ Authorization: "Bearer " + token }),
+    };
     return this.httpClient.post(apiURL.UPDATE_CONFIG_URL, value);
   }
 
-  resetConfig(value) {
+  resetConfig(value, token) {
+    const httpOptions = {
+      headers: new HttpHeaders({ Authorization: "Bearer " + token }),
+    };
     return this.httpClient.post(apiURL.RESET_CONFIG_URL, value);
   }
 
-  resetAllConfig(value) {
-    
-  }
-
-  getConfigLogin(value) {
+  getConfigLogin(value, token) {
+    const httpOptions = {
+      headers: new HttpHeaders({ Authorization: "Bearer " + token }),
+    };
     let object = {
       "userName" : value.userName,
       "password" : value.password

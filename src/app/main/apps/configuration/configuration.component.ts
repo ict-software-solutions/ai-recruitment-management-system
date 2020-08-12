@@ -99,6 +99,7 @@ export class DialogOverviewExampleDialog {
   resetAllSubscription: Subscription;
   configForm: FormGroup;
   hide = true;
+  token;
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
     private authService: AuthService,
@@ -107,6 +108,7 @@ export class DialogOverviewExampleDialog {
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
     this.displayData = data;
+    this.token = this.airmsService.getToken();
   }
   ngOnInit() {
     this.configForm = this.formBuilder.group({
@@ -144,7 +146,7 @@ export class DialogOverviewExampleDialog {
     }
   }
   validateUser(value) {
-    this.submitSubscription = this.authService.getConfigLogin(value).subscribe(
+    this.submitSubscription = this.authService.getConfigLogin(value, this.token).subscribe(
       (res) => {
         if (res === true) {
           if (value.viewType === 'edit') {
@@ -191,7 +193,7 @@ export class DialogOverviewExampleDialog {
       type: value.type,
       count: value.count,
     };
-    this.updateSubscription = this.authService.updateConfig(object).subscribe((res) => {
+    this.updateSubscription = this.authService.updateConfig(object, this.token).subscribe((res) => {
       if (res) {
         this.successConfig();
       }
@@ -220,7 +222,7 @@ export class DialogOverviewExampleDialog {
         type: value.viewType,
       };
     }
-    this.resetSubscription = this.authService.resetConfig(object).subscribe((res) => {
+    this.resetSubscription = this.authService.resetConfig(object, this.token).subscribe((res) => {
       if (res) {
         this.successConfig();
       }

@@ -122,7 +122,8 @@ export class LoginComponent implements OnInit, OnDestroy {
               roleId: userDetails["roles"]["roleId"],
               roleName: userDetails["roles"]["roleName"],
               screenMapping: userDetails['roles']['screenMapping'],
-              lastLogin: loginInfo["lastLogin"]
+              lastLogin: loginInfo["lastLogin"],
+              token: loginInfo['token']
             };
             this.airmsService.setSessionStorage(LOGGED_IN_USER_INFO, user_info);
             this.logUserActivityForEmail("Login - fetch user", value.userName, LOG_MESSAGES.SUCCESS);

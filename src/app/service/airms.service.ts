@@ -22,6 +22,12 @@ export class AirmsService {
   getIpAddressInfo() {
     return this.getSessionStorage(IP_ADDRESS);
   }
+  getToken() {
+    const user = this.getUserInfo();
+    if (user !== undefined && user !== null) {
+      return user["token"];
+    }
+  }
 
   getUserRole() {
     const user = this.getUserInfo();
