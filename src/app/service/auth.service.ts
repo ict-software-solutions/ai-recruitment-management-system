@@ -144,6 +144,31 @@ export class AuthService {
     return this.httpClient.get(url);
   }
 
+  getConfig() {
+    let url = apiURL.CONFIG_URL;
+    return this.httpClient.get(url);
+  }
+
+  updateConfig(value) {
+    return this.httpClient.post(apiURL.UPDATE_CONFIG_URL, value);
+  }
+
+  resetConfig(value) {
+    return this.httpClient.post(apiURL.RESET_CONFIG_URL, value);
+  }
+
+  resetAllConfig(value) {
+    
+  }
+
+  getConfigLogin(value) {
+    let object = {
+      "userName" : value.userName,
+      "password" : value.password
+      };
+    return this.httpClient.post(apiURL.VALIDATE_USER_URL, object);
+  }
+
   logout() {
     sessionStorage.clear();
     localStorage.clear();

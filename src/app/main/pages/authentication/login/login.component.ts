@@ -210,7 +210,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   logUserActivityForEmail(from, emailAddress, value) {
-    console.log('emailAddress', emailAddress);
     this.logService.logUserActivityForEmail(LOG_LEVELS.INFO, emailAddress, from, value);
   }
   unsubscribe(subscription: Subscription) {

@@ -110,7 +110,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     getFieldHistory() {
         this.logUserActivity("System Activities - Field History", LOG_MESSAGES.CLICK);
         this.authService.getClientLogEntries().subscribe(res => {
-            console.log('client log', res);
             this.fieldHistorySort.sort(({ id: 'whenOccur', start: 'desc' }) as MatSortable);
             this.setDataSource(res, this.paginator1, this.fieldHistorySort);
         }, error => {

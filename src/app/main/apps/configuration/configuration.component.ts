@@ -1,101 +1,240 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, ViewChild, Inject } from "@angular/core";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatTableDataSource } from "@angular/material/table";
 import Swal from "sweetalert2";
-import { AirmsService } from 'app/service/airms.service';
-import { LOG_MESSAGES, LOG_LEVELS } from 'app/util/constants';
-import { LogService } from 'app/service/shared/log.service';
-export interface DialogData {
-}
+import { AirmsService } from "app/service/airms.service";
+import { LOG_MESSAGES, LOG_LEVELS } from "app/util/constants";
+import { LogService } from "app/service/shared/log.service";
+import { AuthService } from "app/service/auth.service";
+import { Subscription } from "rxjs";
+import { FormGroup, FormBuilder } from "@angular/forms";
+export interface DialogData {}
 export interface Element {
   name: string;
   screenUsed: string;
   function: string;
-  value: string
+  value: string;
   action: string;
 }
 const ELEMENT_DATA: Element[] = [
-  { name: 'Captcha', screenUsed: 'Login', function: 'Count', value: '2', action: '', },
-  { name: 'Password Attempts', screenUsed: 'Login', function: 'Count', value: '5', action: '' }
+  { name: "Captcha", screenUsed: "Login", function: "Count", value: "2", action: "" },
+  { name: "Password Attempts", screenUsed: "Login", function: "Count", value: "5", action: "" },
+  { name: "Set Timeout", screenUsed: "Login", function: "Count", value: "2", action: "" },
 ];
 @Component({
-  selector: 'app-configuration',
-  templateUrl: './configuration.component.html',
-  styleUrls: ['./configuration.component.scss']
+  selector: "app-configuration",
+  templateUrl: "./configuration.component.html",
+  styleUrls: ["./configuration.component.scss"],
 })
 export class ConfigurationComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'screenUsed', 'function', 'value', 'action'];
+  displayedColumns: string[] = ["name", "screenUsed", "function", "value", "action"];
   dataSource = new MatTableDataSource<Element>(ELEMENT_DATA);
   showReset = false;
   roleName: string;
+  isLoading = true;
+  configSubscription: Subscription;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(
-    public dialog: MatDialog, private airmsService: AirmsService, private logService: LogService
-  ) { 
+    public dialog: MatDialog,
+    private airmsService: AirmsService,
+    private logService: LogService,
+    private authService: AuthService
+  ) {
     this.roleName = airmsService.getUserRole();
     this.logUserActivity("Configuration", LOG_MESSAGES.CLICK);
+    if (this.roleName !== "Admin") {
+      this.displayedColumns = ["name", "screenUsed", "function", "value"];
+    }
+    this.getConfigInfo();
   }
+  getConfigInfo() {
+    let data = [];
+    this.configSubscription = this.authService.getConfig().subscribe(
+      (res: any) => {
+        data = [
+          { name: "Captcha", screenUsed: "Login", function: "Count", value: res.showCaptchaAfter },
+          { name: "Password Attempts", screenUsed: "Login", function: "Count", value: res.lockAccountAfter },
+          { name: "Set Timeout", screenUsed: "Login", function: "Count", value: res.sessionTimeoutMins },
+        ];
+        this.dataSource.data = data;
+        this.isLoading = false;
+      },
+      (error) => {
+        this.isLoading = false;
+        this.logService.logError(LOG_LEVELS.ERROR, "Configuration - List", "On Fetching roles", JSON.stringify(error));
+      }
+    );
+  }
+
   openDialog(element, type): void {
-    console.log("element", element)
+    this.logUserActivity("Configuration -" + type, LOG_MESSAGES.CLICK);
     if (element === undefined) {
-      element = {}
+      element = {};
     }
     element.type = type;
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      width: '300px',
+      width: "300px",
       data: element,
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe((result) => {
+      this.getConfigInfo();
     });
   }
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   logUserActivity(from, value) {
     this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
   }
-
 }
 @Component({
-  selector: 'dialog-overview-example-dialog',
-  templateUrl: 'dialog-overview-example-dialog.html',
+  selector: "dialog-overview-example-dialog",
+  templateUrl: "dialog-overview-example-dialog.html",
 })
 export class DialogOverviewExampleDialog {
   showDialogData = false;
   displayData: any;
+  updateSubscription: Subscription;
+  resetSubscription: Subscription;
+  submitSubscription: Subscription;
+  resetAllSubscription: Subscription;
+  configForm: FormGroup;
+  hide = true;
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-    console.log("data", data);
+    private authService: AuthService,
+    private airmsService: AirmsService,
+    private formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {
     this.displayData = data;
+  }
+  ngOnInit() {
+    this.configForm = this.formBuilder.group({
+      userName: [""],
+      password: [""],
+      count: [""],
+      type: [""],
+      viewType: [this.displayData.type],
+    });
   }
   cancel(): void {
     this.dialogRef.close();
+    this.configForm.reset();
   }
-  submit() {
-    if (this.displayData.type !== 'resetall') {
-      this.showDialogData = true;
-    }
-    else {
-      this.dialogRef.close();
-      Swal.fire({
-        position: "center",
-        icon: 'success',
-        title: 'Saved',
-        showConfirmButton: false,
-        timer: 1500
-      });
+  submit(value) {
+    let userName = this.airmsService.getUserName();
+    if (value.viewType === "edit") {
+      this.configForm.controls["userName"].patchValue(userName);
+      value.userName = userName;
+      this.validateUser(value);
+    } else if (value.viewType === "renew" || value.viewType === 'resetall') {
+      let name = value.userName;
+      let newValue = name.toLowerCase();
+      if (newValue !== userName) {
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "UserName is invalid",
+          showConfirmButton: true,
+        });
+      } else {
+        console.log('renew', value);
+        this.validateUser(value);
+      }
     }
   }
-  save(): void {
+  validateUser(value) {
+    this.submitSubscription = this.authService.getConfigLogin(value).subscribe(
+      (res) => {
+        if (res === true) {
+          if (value.viewType === 'edit') {
+            this.showDialogData = true;
+          } else {
+            value.viewType = "all";
+            this.resetConfig(value);
+          }
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Invalid Credentials",
+            showConfirmButton: true,
+          });
+        }
+      },
+      (error) => {
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "Invalid Credentials",
+          showConfirmButton: true,
+        });
+      }
+    );
+  }
+  save(value): void {
+    value.type =
+      this.displayData.name === "Captcha"
+        ? "showCaptcha"
+        : this.displayData.name === "Password Attempts"
+        ? "lockAccount"
+        : "sessionTimeout";
+    if (value.viewType === "edit") {
+      this.updateConfig(value);
+    } else {
+      this.resetConfig(value);
+    }
+  }
+
+  updateConfig(value) {
+    let object = {
+      type: value.type,
+      count: value.count,
+    };
+    this.updateSubscription = this.authService.updateConfig(object).subscribe((res) => {
+      if (res) {
+        this.successConfig();
+      }
+    });
+  }
+
+  successConfig() {
     this.dialogRef.close();
     Swal.fire({
       position: "center",
-      icon: 'success',
-      title: 'Your Changes has been saved',
+      icon: "success",
+      title: "Saved",
       showConfirmButton: false,
-      timer: 1500
+      timer: 1500,
+    });
+  }
+  resetConfig(value) {
+    let object = {};
+    if (value.viewType === "renew") {
+      object = {
+        type: value.type,
+        count: value.count,
+      };
+    } else {
+      object = {
+        type: value.viewType,
+      };
+    }
+    this.resetSubscription = this.authService.resetConfig(object).subscribe((res) => {
+      if (res) {
+        this.successConfig();
+      }
+    });
+  }
+
+  changedValues() {
+    this.dialogRef.close();
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Your Changes has been saved",
+      showConfirmButton: false,
+      timer: 1500,
     });
   }
 }

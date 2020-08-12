@@ -29,6 +29,12 @@ export class AirmsService {
       return user["roleName"];
     }
   }
+  getUserRoleScreenMap() {
+    const user = this.getUserInfo();
+    if(user !== undefined && user!== null) {
+      return user['screenMapping']
+    }
+  }
 
   getUserId() {
     const user = this.getUserInfo();

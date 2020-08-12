@@ -56,9 +56,7 @@
               <span class="mobile-label">Value</span>
               {{ element.value }}</mat-cell>
           </ng-container>
-          <ng-container matColumnDef="action" style="text-overflow: ellipsis;">
-            <!-- <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.action }}</mat-cell> -->
+          <ng-container matColumnDef="action" style="text-overflow: ellipsis;" *ngIf="roleName === 'Admin'">
             <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action </mat-header-cell>
             <mat-cell *matCellDef="let element" style="justify-content: center;">
               <span class="mobile-label">Action</span>

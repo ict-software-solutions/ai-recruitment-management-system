@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
 import { Component, ViewEncapsulation } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { navigation } from 'app/navigation/navigation';
 import { AirmsService } from "app/service/airms.service";
@@ -10,6 +10,7 @@ import { LOGGED_IN_USER_INFO, LOG_LEVELS, LOG_MESSAGES } from "app/util/constant
 import { Subscription } from "rxjs";
 import Swal from "sweetalert2";
 import { Screens, Status } from 'app/util/configuration';
+import { filter } from 'lodash';
 
 @Component({
   selector: "contacts-contact-form-dialog",
@@ -40,9 +41,7 @@ export class ContactsContactFormDialogComponent {
     private logService: LogService
   ) {
     this.userName = airmsService.getUserName();
-    console.log('navigation', navigation);
     this.unMappedScreens = { value: JSON.parse(JSON.stringify(navigation[0]['children'])) };
-    console.log('navigation todo', this.unMappedScreens);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -56,9 +55,9 @@ export class ContactsContactFormDialogComponent {
   ngOnInit() {
     this.roleMgmtForm = this.formBuilder.group({
       roleId: [""],
-      roleName: [""],
-      active: [],
-      roleDescription: [""],
+      roleName: ["", Validators.required],
+      active: ['', Validators.required],
+      roleDescription: ["", Validators.required],
       screen: [""],
       createdBy: [""],
       modifiedBy: [""],
@@ -71,31 +70,27 @@ export class ContactsContactFormDialogComponent {
         this.roleId = 0;
         this.unMappedScreens = { value: JSON.parse(JSON.stringify(navigation[0]['children'])) };
         this.mappedScreens = { value: [] };
-        console.log('this.todo', this.unMappedScreens, 'this.done', this.mappedScreens);
       }
     });
   }
   getRoleInfo(roleId) {
     let screenMap = { newValue: [] };
     let totalScreenMap = { data: this.unMappedScreens['value'] };
-    console.log("this.mapScreens", totalScreenMap);
+    let filterResDone = [], filterRes = [];
     this.roleSubscription = this.authService.getAllRolesInfo(roleId).subscribe(
       (res) => {
-        console.log(res, this.unMappedScreens, this.mappedScreens);
         this.roleDetails = res;
         this.roleMgmtForm.patchValue(res);
-        console.log("this.roleDetails.screenMapping", this.roleDetails.screenMapping);
         if (this.roleDetails.screenMapping.length > 0) {
           screenMap["newValue"] = this.roleDetails.screenMapping;
-          var filterResDone = totalScreenMap["data"].filter(function (el) {
-            return screenMap["newValue"].indexOf(el.title) < 0;
+          filterResDone = totalScreenMap["data"].filter( (el) => {
+            return !screenMap["newValue"].includes(el.title);
           });
-          var filterRes = totalScreenMap["data"].filter(function (el) {
-            return screenMap["newValue"].indexOf(el.title) >= 0;
+          filterRes = totalScreenMap["data"].filter( (el) => {
+            return screenMap["newValue"].includes(el.title) ;
           });
           this.unMappedScreens['value'] = filterResDone;
           this.mappedScreens['value'] = filterRes;
-          console.log('this.toDo', this.unMappedScreens, 'this.done Done', this.mappedScreens);
         } else {
           this.unMappedScreens = { value: JSON.parse(JSON.stringify(navigation[0]['children'])) };
           this.mappedScreens = { value: [] };
@@ -127,7 +122,6 @@ export class ContactsContactFormDialogComponent {
     } else {
       updateObject["modifiedBy"] = this.userName;
     }
-    console.log("updateObj", updateObject);
     this.updateRoleSubscription = this.authService.updateRolesInfo(updateObject).subscribe(
       (res) => {
         Swal.fire({

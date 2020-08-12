@@ -1,25 +1,30 @@
+<form [formGroup]="configForm">
 <mat-form-field appearance="outline" style="width: 250px;"
   *ngIf="(displayData.type=='renew'|| displayData.type =='resetall')&& !showDialogData">
   <mat-label>User Name</mat-label>
-  <input matInput placeholder="User Name" />
+  <input matInput placeholder="User Name" formControlName="userName" lowercase/>
   <mat-icon matSuffix>account_circle</mat-icon>
 </mat-form-field>
+
 <mat-form-field appearance="outline" style="width: 250px;" *ngIf="!showDialogData">
   <mat-label>Password</mat-label>
-  <input matInput placeholder="Password" />
-  <mat-icon matSuffix>lock</mat-icon>
+  <input matInput type="Password" [type]="hide ? 'password' : 'text'" formControlName="password" required maxlength="15">
+  <mat-icon matSuffix class="secondary-text1" (click)="hide = !hide" cursor="pointer">
+      {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+  <mat-error *ngIf="configForm.get('password').hasError('required')"> Password is required </mat-error>
 </mat-form-field>
 <div style="text-align: center; font-weight: bold;" *ngIf="showDialogData">
   <h2>{{displayData.name}}</h2>
   <p>The default value is {{displayData.value}}</p>
   <mat-form-field appearance="outline" style="width: 250px;">
-    <input type="number" class="form-control" matInput name="value" placeholder="Count" (change)="xxx()"
-      formControlName="value" />
+    <input type="number" class="form-control" matInput name="value" placeholder="Count" 
+      formControlName="count" />
   </mat-form-field>
 </div>
 <div mat-dialog-actions style="padding: 15px;">
   <button mat-raised-button color="basic" style="width: 100px;" (click)="cancel()">Cancel</button>
-  <button mat-raised-button class="accent" style="width: 100px;" (click)="submit()"
+  <button mat-raised-button class="accent" style="width: 100px;" (click)="submit(configForm.value)"
     *ngIf="!showDialogData">Submit</button>
-  <button mat-raised-button class="accent" style="width: 100px;" (click)="save()" *ngIf="showDialogData">Save</button>
+  <button mat-raised-button class="accent" style="width: 100px;" (click)="save(configForm.value)" *ngIf="showDialogData">Save</button>
 </div>
+</form>

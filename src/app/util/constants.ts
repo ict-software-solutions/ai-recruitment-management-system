@@ -12,7 +12,11 @@ export const apiURL = {
     'ROLES':environment.url + 'roles',
     'ADDUSER_URL':environment.url + 'user/addUser',
     'CLIENT_LOG_URL': environment.url + 'clientLogs',
-    'AUDIT_LOG_URL': environment.url + 'auditLog'
+    'AUDIT_LOG_URL': environment.url + 'auditLog',
+    'CONFIG_URL': environment.url + 'config',
+    'UPDATE_CONFIG_URL': environment.url + 'config/update',
+    'RESET_CONFIG_URL': environment.url + 'config/reset',
+    'VALIDATE_USER_URL': environment.url + 'user/validateUser'
 }
 
 export const TROY_LOGO = "assets/images/logos/troy.png";

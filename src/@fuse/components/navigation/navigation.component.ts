@@ -22,7 +22,6 @@ export class FuseNavigationComponent implements OnInit {
   navigation: any;
   private _unsubscribeAll: Subject<any>;
   backupNavigation: any[];
-  userInfo: any;
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     private authService: AuthService,
@@ -31,7 +30,6 @@ export class FuseNavigationComponent implements OnInit {
     private _fuseNavigationService: FuseNavigationService
   ) {
     this._unsubscribeAll = new Subject();
-    this.userInfo = airmsService.getSessionStorage(LOGGED_IN_USER_INFO);
   }
   ngOnInit(): void {
     this.navigation = this.navigation || this._fuseNavigationService.getCurrentNavigation();
@@ -56,10 +54,12 @@ export class FuseNavigationComponent implements OnInit {
 
   getSideMenus(): any {
     let pageValue = [];
-    if (this.userInfo.screenMapping !== null || this.userInfo.screenMapping.length > 0) {
-      pageValue = this.userInfo.screenMapping;
+    let screenMapping = this.airmsService.getUserRoleScreenMap();
+    let roleName = this.airmsService.getUserRole();
+    if (screenMapping !== null || screenMapping.length > 0) {
+      pageValue = screenMapping;
     }
-    const userRoles = [{ name: this.userInfo.roleName, pages: pageValue }];
+    const userRoles = [{ name: roleName, pages: pageValue }];
     this.navigation = [];
     const backupNavigation = { navValues: navigation[0]["children"] };
     const userRole = this.airmsService.getUserRole();

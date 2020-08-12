@@ -61,7 +61,6 @@ export class LogService {
   }
 //dinesh updated
   logUserActivity(logLevel, whereArise, whatEnsue) {
-    console.log('this.airmservicee.getUserName', this.airmsService.getUserName());
     const params = { 
       createdBy: this.airmsService.getUserName(),
       whereArise,
@@ -74,7 +73,6 @@ export class LogService {
   }
 // Email
   logUserActivityForEmail(logLevel, mail, whereArise, whatEnsue) {
-    console.log('mail', mail);
     const params = { 
       createdBy: mail,
       whereArise,
