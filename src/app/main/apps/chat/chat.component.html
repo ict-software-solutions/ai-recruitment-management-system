@@ -159,7 +159,21 @@
         </mat-tab>
 
         <mat-tab label="Client Machine Log" class="note_heading">
-          <div *ngIf="isLoading" class="Loading">Loading..</div>
+          <div *ngIf="isLoading" class="Loading">
+            <div class="spinner-wrapper">
+              <div class="spinner">
+                <div class="inner">
+                  <div class="gap"></div>
+                  <div class="left">
+                    <div class="half-circle"></div>
+                  </div>
+                  <div class="right">
+                    <div class="half-circle"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="example-container4">
             <mat-table [dataSource]="dataSource" class="log-table" #clientLogSort="matSort" matSort
               matSortDirection="desc" matSortActive="whenOccur" [@animateStagger]="{ value: '50' }" fusePerfectScrollbar

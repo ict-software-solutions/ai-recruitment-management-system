@@ -215,6 +215,20 @@
     font-size: 17px;
     margin-left: -14px;
   }
+  .example-container3,
+  .example-container4,
+  .example-container5 {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    min-width: 300px;
+    overflow: auto;
+  }
+  .note {
+    margin-top: -46px;
+    margin-left: 25px;
+    font-size: 8px;
+  }
 }
 @media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
   .mobile-label {

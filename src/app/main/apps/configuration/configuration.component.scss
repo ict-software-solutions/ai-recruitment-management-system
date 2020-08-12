@@ -139,6 +139,13 @@
   #configuration > .center > .header .search-wrapper {
     width: 44%;
   }
+  .example-container2 {
+    display: flex;
+    flex-direction: column;
+    height: 148px;
+    min-width: 300px;
+    overflow: auto;
+  }
 }
 
 @media screen and (min-width: 600px) {

@@ -9,12 +9,8 @@
         <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">
           Configuration
         </span>
-        <button
-          mat-raised-button
-          class="add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-sm-show add-button2"
-          (click)="openDialog({}, 'resetall')"
-          *ngIf="roleName === 'Admin'"
-        >
+        <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-sm-show add-button2"
+          (click)="openDialog({}, 'resetall')" *ngIf="roleName === 'Admin'">
           Reset All
         </button>
       </div>
@@ -27,45 +23,38 @@
       <!-- <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" (click)="addRole()">
         <span>Add User</span>
       </button> -->
-      <button
-        mat-raised-button
-        class="add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-lg-show"
-        *ngIf="roleName === 'Admin'"
-        (click)="openDialog({}, 'resetall')"
-      >
+      <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-lg-show"
+        *ngIf="roleName === 'Admin'" (click)="openDialog({}, 'resetall')">
         Reset All
       </button>
     </div>
     <div class="content-card">
       <div class="example-container2">
-        <mat-table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar class="table-log">
+        <mat-table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }" fusePerfectScrollbar
+          class="table-log">
           <ng-container matColumnDef="name" style="text-overflow: ellipsis; overflow: hidden;">
             <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
             <mat-cell *matCellDef="let element">
               <span class="mobile-label">Name</span>
-              {{ element.name }}</mat-cell
-            >
+              {{ element.name }}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="screenUsed" style="text-overflow: ellipsis;">
             <mat-header-cell *matHeaderCellDef>Screen Used</mat-header-cell>
             <mat-cell *matCellDef="let element">
               <span class="mobile-label">Screen Used</span>
-              {{ element.screenUsed }}</mat-cell
-            >
+              {{ element.screenUsed }}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="function" style="text-overflow: ellipsis;">
             <mat-header-cell *matHeaderCellDef>Function</mat-header-cell>
             <mat-cell *matCellDef="let element">
               <span class="mobile-label">Function</span>
-              {{ element.function }}</mat-cell
-            >
+              {{ element.function }}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="value" style="text-overflow: ellipsis;">
             <mat-header-cell *matHeaderCellDef>Value</mat-header-cell>
             <mat-cell *matCellDef="let element">
               <span class="mobile-label">Value</span>
-              {{ element.value }}</mat-cell
-            >
+              {{ element.value }}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="action" style="text-overflow: ellipsis;">
             <!-- <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>

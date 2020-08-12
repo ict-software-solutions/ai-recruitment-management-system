@@ -53,15 +53,15 @@
   }
 }
 
-.content {
-  overflow: hidden;
+// .content {
+//   overflow: auto;
 
-  .sidebar {
-    &:not(.locked-open) {
-      background: white;
-    }
-  }
-}
+//   // .sidebar {
+//   //   &:not(.locked-open) {
+//   //     background: white;
+//   //   }
+//   // }
+// }
 .button-sm-show {
   display: none;
 }
@@ -72,7 +72,6 @@
   display: flex;
 }
 @media only screen and (max-width: 400px) {
- 
   .button-sm-show {
     display: block !important;
   }
@@ -94,21 +93,21 @@
     display: block !important;
   }
   #contacts > .center > .header .search-wrapper {
-    width: 80%!important;
+    width: 80% !important;
   }
 }
 @media screen and (orientation: landscape) and (max-width: 959px) {
   #contacts .top-bg {
     height: 163px;
   }
-  #contacts  > .center > .header {
+  #contacts > .center > .header {
     // padding: 8px 0;
     height: 102px !important;
     min-height: 102px !important;
     max-height: 192px !important;
   }
-  #contacts  > .center > .header .search-wrapper {
-    width: 41%!important;
+  #contacts > .center > .header .search-wrapper {
+    width: 41% !important;
   }
   .logo-text.h1 {
     font-size: 17px;
@@ -123,12 +122,12 @@
   }
 }
 @media screen and (min-width: 600px) {
- #contacts> .center > .header .search-wrapper {
+  #contacts > .center > .header .search-wrapper {
     width: 41%;
   }
 }
-@media only screen and (device-width : 414px) and (device-height:736px)and(orientation : portrait){
- .button-sm-show {
+@media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
+  .button-sm-show {
     display: block;
   }
   .button-lg-show {
@@ -149,6 +148,6 @@
     display: block !important;
   }
   #contacts > .center > .header .search-wrapper {
-    width: 80%!important;
+    width: 80% !important;
   }
 }
