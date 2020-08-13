@@ -7,6 +7,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ConfigurationComponent, DialogOverviewExampleDialog } from './configuration.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 const routes: Routes = [
     {
@@ -29,7 +31,9 @@ const routes: Routes = [
         FuseSharedModule,
         MatButtonToggleModule,
         MatTableModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        MatButtonModule,
+        MatIconModule
 
 
     ],

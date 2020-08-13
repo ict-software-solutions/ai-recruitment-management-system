@@ -25,7 +25,7 @@
         <!-- <mat-tab label="Field History" class="note_heading">
           <!-<div class="example-container">
             <mat-table [dataSource]="dataSource" #fieldHistorySort="matSort" matSort matSortActive="whenOccur"
-        matSortDirection="desc" [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
+        matSortDirection="desc" [@animateStagger]="{ value: '50' }">
 
               <ng-container matColumnDef="createdBy" style="text-overflow:ellipsis;overflow: hidden;">
                 <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
@@ -108,7 +108,7 @@
           </div>
           <div class="example-container4">
             <mat-table [dataSource]="dataSource" class="log-table" #auditSort="matSort" matSort matSortDirection="desc"
-              matSortActive="whenOccur" [@animateStagger]="{ value: '50' }" fusePerfectScrollbar [hidden]="isLoading">
+              matSortActive="whenOccur" [@animateStagger]="{ value: '50' }"  [hidden]="isLoading">
 
               <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
                 <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
@@ -175,7 +175,7 @@
           </div>
           <div class="example-container4">
             <mat-table [dataSource]="dataSource" class="log-table" #clientLogSort="matSort" matSort
-              matSortDirection="desc" matSortActive="whenOccur" [@animateStagger]="{ value: '50' }" fusePerfectScrollbar
+              matSortDirection="desc" matSortActive="whenOccur" [@animateStagger]="{ value: '50' }"
               [hidden]="isLoading">
               <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
                 <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
@@ -226,8 +226,8 @@
     </div>
   </div>
 
-  <fuse-sidebar class="sidebar" name="project-dashboard-right-sidebar-1" position="right">
-    <div class="content">
+  <fuse-sidebar class="sidebar" name="project-dashboard-right-sidebar-1" position="right" style="background-color: white;" >
+    <div class="content" style="background-color: white;">
       <div style="padding: 18px;">
         <div class="header1" style="display: inline;">
           <div class="title1">Filter By</div>

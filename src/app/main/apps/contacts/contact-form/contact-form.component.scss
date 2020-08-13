@@ -251,7 +251,7 @@ form {
     margin-right: 0px;
   }
   .button_align {
-    margin-top: 20px;
+    margin-top: 0px!important;
   }
   .add-all-btn {
     float: right;
@@ -273,6 +273,14 @@ form {
     margin: 0px 4px;
     font-size: 10px;
   }
+  .example-list {
+    border: solid 1px #ccc;
+    min-height: 31em;
+    background: #eeeded;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+}
 }
 
 @media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
@@ -311,4 +319,22 @@ form {
     margin: 0px 4px;
     font-size: 10px;
   }
+}
+@media only screen and (device-width: 768px) and (device-height: 1024px) and(orientation : portrait) {
+  .mat-card {
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
+    position: relative;
+    padding: 16px;
+    border-radius: 4px;
+    margin-top: 28px;
+}
+.example-list {
+  border: solid 1px #ccc;
+  min-height: 29em;
+  background: #eeeded;
+  border-radius: 4px;
+  overflow: hidden;
+  display: block;
+}
 }
