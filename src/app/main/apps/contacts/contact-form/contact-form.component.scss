@@ -58,16 +58,6 @@
 .page-layout.carded.fullwidth > .center > .content-card {
   box-shadow: none;
 }
-.content {
-  overflow: hidden;
-  background: #f5f5f5;
-  box-shadow: none;
-  .sidebar {
-    &:not(.locked-open) {
-      background: #f5f5f5;
-    }
-  }
-}
 
 form {
   background-color: #fff;
@@ -81,14 +71,12 @@ form {
 .example-container1 {
   width: 100%;
   max-width: 100%;
-  // margin: 0 25px 25px 0;
   display: inline-block;
   vertical-align: top;
 }
 
 .example-list {
   border: solid 1px #ccc;
-  // min-height:64px;
   min-height: 24em;
   background: #eeeded;
   border-radius: 4px;
@@ -220,17 +208,12 @@ form {
     font-size: 10px;
   }
 }
-// @media only screen and (max-width: 768px) {
-//   .button_align {
-//     margin-top: 20px;
-//   }
-// }
+
 @media screen and (orientation: landscape) and (max-width: 959px) {
   #contacts .top-bg {
     height: 163px;
   }
   #contacts > .center > .header {
-    // padding: 8px 0;
     height: 102px !important;
     min-height: 102px !important;
     max-height: 192px !important;

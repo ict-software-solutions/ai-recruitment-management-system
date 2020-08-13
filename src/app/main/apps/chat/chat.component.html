@@ -1,8 +1,9 @@
 <div id="chat" class="page-layout carded fullwidth inner-scroll">
   <div class="top-bg accent"></div>
   <div class="center">
-    <div class="header accent" fxLayoutAlign="center center" fxLayoutAlign.gt-sm="space-between center">
-
+    <!-- <div class="header accent" fxLayoutAlign="center center" fxLayoutAlign.gt-sm="space-between center"> -->
+      <div class="header accent ml-24 mr-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+      fxLayoutAlign.gt-sm="space-between center">
       <div class="logo mb-24 mb-md-0 logo-display1" fxLayout="row" fxLayoutAlign="start center">
         <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
           desktop_mac
@@ -11,24 +12,33 @@
           System Activities
         </span>
       </div>
-
+      <div fxLayout="row" fxLayoutAlign="start center" class="button_align">
+        <button mat-raised-button class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0"
+        style="margin-right: 10px;" (click)="toggleSidebar('project-dashboard-right-sidebar-1')">
+        Filter By
+      </button>
       <button mat-raised-button class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0"
+      (click)="searchByKeyword('')">
+      Clear All
+    </button>
+      </div>
+      <!-- <button mat-raised-button class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0"
         id="filter_button" (click)="toggleSidebar('project-dashboard-right-sidebar-1')">
         Filter By
       </button>
       <button mat-raised-button class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0"
-      id="filter_button" (click)="searchByKeyword('')">
+      id="clear_button" (click)="searchByKeyword('')">
       Clear All
-    </button>
+    </button> -->
+  </div>
 
-
-    </div>
+  
     <div class="content-card" id="cont_card">
       <div class="content">
       <mat-tab-group animationDuration="0ms" (selectedTabChange)="getLogEntries($event.tab.textLabel)"
         [hidden]="isLoading" style="height: 100%;">
         <mat-tab label="Field History" class="note_heading">
-          <div class="example-container">
+          <div class="example-container3">
             <mat-table [dataSource]="dataSource" #fieldHistorySort="matSort" matSort matSortActive="whenOccur"
         matSortDirection="desc" [@animateStagger]="{ value: '50' }">
 
@@ -182,7 +192,7 @@
               </div>
             </div>
           </div>
-          <div class="example-container4">
+          <div class="example-container5">
             <mat-table [dataSource]="dataSource" class="log-table" #clientLogSort="matSort" matSort
               matSortDirection="desc" matSortActive="whenOccur" [@animateStagger]="{ value: '50' }"
               [hidden]="isLoading">

@@ -55,16 +55,16 @@
     }
   }
 }
-.content {
-  overflow: hidden;
-  // background: #f5f5f5;
-  box-shadow: none;
-  .sidebar {
-    &:not(.locked-open) {
-      background: #f5f5f5;
-    }
-  }
-}
+// .content {
+//   overflow: hidden;
+//   // background: #f5f5f5;
+//   box-shadow: none;
+//   .sidebar {
+//     &:not(.locked-open) {
+//       background: #f5f5f5;
+//     }
+//   }
+// }
 // .content {
 //   overflow: auto;
 
@@ -201,7 +201,7 @@
 .example-container7 {
   display: flex;
   flex-direction: column;
-  height: auto !important;
+  height: 340px;
   min-width: 300px;
   overflow: auto;
 }
