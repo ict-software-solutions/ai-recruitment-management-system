@@ -7,7 +7,6 @@ import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { AppMaterialModule } from 'app/app-material/app-material.module';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
-import { ContactsContactListComponent } from 'app/main/apps/contacts/contact-list/contact-list.component';
 import { ContactsComponent } from 'app/main/apps/contacts/contacts.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { ContactsSelectedBarComponent } from 'app/main/apps/contacts/selected-bar/selected-bar.component';
@@ -27,7 +26,6 @@ const routes: Routes = [{
 @NgModule({
     declarations: [
         ContactsComponent,
-        ContactsContactListComponent,
         ContactsSelectedBarComponent,
         ContactsContactFormDialogComponent
     ],

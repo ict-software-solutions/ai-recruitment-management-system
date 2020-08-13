@@ -25,7 +25,7 @@
       <div class="search-wrapper mx-md-0">
         <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
           <mat-icon>search</mat-icon>
-          <input [formControl]="searchInput" placeholder="Search" />
+          <input [formControl]="searchInput" placeholder="Search" (keyup)="searchFromTable($event.target.value)"/>
         </div>
       </div>
 
@@ -41,7 +41,75 @@
     </div>
     <div class="content-card">
       <div class="content">
-      <contacts-contact-list></contacts-contact-list>
+      <!-- <contacts-contact-list></contacts-contact-list> -->
+      <div class="example-container7">
+        <mat-table [dataSource]="dataSource" class="log-table" matSort [@animateStagger]="{ value: '50' }"
+          fusePerfectScrollbar>
+          <!-- Name Column -->
+          <ng-container matColumnDef="rolename">
+            <mat-header-cell *matHeaderCellDef> Role Name</mat-header-cell>
+            <mat-cell *matCellDef="let contact">
+              <span class="mobile-label">Role Name</span>
+              <p class="text-truncate font-weight-600">{{ contact.roleName }}</p>
+            </mat-cell>
+          </ng-container>
+          <!--Description-->
+          <ng-container matColumnDef="desc">
+            <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+            <mat-cell *matCellDef="let contact">
+              <span class="mobile-label">Description</span>
+              <p class="text-truncate font-weight-600">{{ contact.roleDescription }}</p>
+            </mat-cell>
+          </ng-container>
+          <!-- Email Column -->
+      
+          <!--status-->
+          <ng-container matColumnDef="active">
+            <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+            <mat-cell *matCellDef="let contact" style="color: #006699; justify-content: end center;">
+              <span class="mobile-label">Status</span>
+              <!-- <p class="text-truncate font-weight-600">{{contact.active }}</p> -->
+              <p class="text-truncate font-weight-600" *ngIf="contact.active === true">Activate</p>
+              <p class="text-truncate font-weight-600" *ngIf="contact.active === false">Inactive</p>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="roleId" *ngIf="roleName === 'Admin'">
+            <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action </mat-header-cell>
+            <mat-cell *matCellDef="let product" style="justify-content: center;">
+              <span class="mobile-label">Action</span>
+              <button mat-icon-button style="color: #42a1f5;" (click)="editRole(product.roleId)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <span>
+                <button mat-icon-button color="accent" style="color: red; background-color: white;"
+                  (click)="deleteRole(product.roleId)">
+                  <mat-icon>delete</mat-icon>
+                </button></span>
+            </mat-cell>
+          </ng-container>
+      
+          <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+          <mat-row *matRowDef="let contact; columns: displayedColumns" class="contact"> </mat-row>
+        </mat-table>
+        <div *ngIf="isLoading" class="Loading">
+          <div class="spinner-wrapper">
+            <div class="spinner">
+              <div class="inner">
+                <div class="gap"></div>
+                <div class="left">
+                  <div class="half-circle"></div>
+                </div>
+                <div class="right">
+                  <div class="half-circle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+</mat-paginator>
       <!-- / CONTENT -->
       </div>
       <!-- / CENTER -->

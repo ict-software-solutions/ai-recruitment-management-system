@@ -168,3 +168,126 @@
     margin-right: 0px;
   }
 }
+@media only screen and (device-width: 768px) and (device-height: 1024px) and(orientation : portrait) {
+  #contacts > .center > .header {
+    // padding: 8px 0;
+    height: 102px !important;
+    min-height: 102px !important;
+    max-height: 192px !important;
+    justify-content: space-between !important;
+  }
+}
+
+@import "src/@fuse/scss/fuse";
+
+.mat-column-checkbox {
+  flex: 0 1 64px;
+  vertical-align: middle !important;
+}
+
+.mat-column-rolename {
+  padding-left: 45px;
+}
+
+.mat-column-desc {
+  flex: 2 1 80px;
+  width: 300px !important;
+  padding-left: 18px;
+}
+.mat-column-status {
+  flex: 0 -2 50px;
+}
+
+.example-container7 {
+  display: flex;
+  flex-direction: column;
+  height: auto !important;
+  min-width: 300px;
+  overflow: auto;
+}
+
+.mobile-label {
+  display: none;
+}
+
+@media (max-width: 400px) {
+  .mobile-label {
+    width: 95px;
+    display: inline-block;
+    font-weight: bold;
+  }
+
+  .mat-header-row {
+    display: none;
+  }
+
+  .example-container7 {
+    .mat-row {
+      flex-direction: column;
+      align-items: start;
+      padding: 8px 24px;
+      height: 217px !important;
+    }
+  }
+
+  .mat-column-desc {
+    flex: 2 1 80px;
+    width: 300px !important;
+    padding-left: 0px;
+  }
+  .mat-column-rolename {
+    padding-left: 0px;
+  }
+  mat-cell:first-of-type,
+  mat-header-cell:first-of-type,
+  mat-footer-cell:first-of-type {
+    padding-left: 0px !important;
+  }
+  .text-truncate {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 166px;
+  }
+}
+@media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
+  .mobile-label {
+    width: 95px;
+    display: inline-block;
+    font-weight: bold;
+  }
+
+  .mat-header-row {
+    display: none;
+  }
+
+  .example-container7 {
+    .mat-row {
+      flex-direction: column;
+      align-items: start;
+      padding: 8px 24px;
+      height: 217px !important;
+    }
+  }
+  .mat-column-desc {
+    flex: 2 1 80px;
+    width: 300px !important;
+    padding-left: 0px;
+  }
+  .mat-column-rolename {
+    padding-left: 0px;
+  }
+  mat-cell:first-of-type,
+  mat-header-cell:first-of-type,
+  mat-footer-cell:first-of-type {
+    padding-left: 0px !important;
+  }
+  .text-truncate {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 166px;
+  }
+}

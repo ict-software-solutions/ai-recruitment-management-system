@@ -42,7 +42,7 @@ export const navigation: FuseNavigation[] = [
       },
       {
         id: "configuration",
-        title: "Configuration",
+        title: "Config Management",
        // translate: 'NAV.CONFIGURATION',
         type: "item",
         icon: "settings",

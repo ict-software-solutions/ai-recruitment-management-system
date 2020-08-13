@@ -126,11 +126,13 @@
           <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns" class="product"> </mat-row>
         </mat-table>
+
       </div>
 
       <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
         [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading" showFirstLastButtons>
       </mat-paginator>
+      <!-- <div class="container" style="height:200px!important;background-color: white;"></div> -->
     </div>
     <!-- </div> -->
   </div>

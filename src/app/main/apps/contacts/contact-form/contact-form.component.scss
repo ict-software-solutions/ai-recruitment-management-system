@@ -337,4 +337,11 @@ form {
   overflow: hidden;
   display: block;
 }
+#contacts > .center > .header {
+  // padding: 8px 0;
+  height: 102px !important;
+  min-height: 102px !important;
+  max-height: 192px !important;
+  justify-content: space-between !important;
+}
 }
