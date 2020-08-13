@@ -104,6 +104,7 @@ export class ContactsContactFormDialogComponent {
     this.logUserActivity("Role Management - Save", LOG_MESSAGES.CLICK);
     let items = [];
     this.errorMessage = "";
+    if (this.roleMgmtForm.valid) {
     if (this.mappedScreens['value'].length > 0) {
       for (let m = 0; m < this.mappedScreens['value'].length; m++) {
         items.push(this.mappedScreens['value'][m].title);
@@ -147,6 +148,19 @@ export class ContactsContactFormDialogComponent {
         }
       }
     );
+    } else {
+      this.checkForFormFields();
+    }
+  }
+
+  checkForFormFields() {
+    for (const prop in this.roleMgmtForm.controls) {
+      if (Object.prototype.hasOwnProperty.call(this.roleMgmtForm.controls, prop)) {
+        if (this.roleMgmtForm.controls[prop].pristine) {
+          this.roleMgmtForm.controls[prop].markAsTouched();
+        }
+      }
+    }
   }
 
   cancelEdit() {

@@ -20,16 +20,16 @@
         </div>
       </div>
       <div fxLayout="row" fxLayoutAlign="start center" class="button_align">
-        <button mat-raised-button color="basic" class="save-button" [disabled]="roleMgmtForm.invalid" aria-label="SAVE"
+        <button mat-raised-button color="basic" class="save-button" aria-label="SAVE"
           style="margin-right: 10px;" (click)="updateRole(roleMgmtForm.value)" *ngIf="roleId !== 0">
           Save
+        </button> 
+        <button mat-raised-button color="basic" class="save-button"  aria-label="SAVE"
+          style="margin-right: 10px;" (click)="updateRole(roleMgmtForm.value)" *ngIf="roleId === 0">
+          Add
         </button>
         <button mat-raised-button color="basic" class="mr-8 save-button" aria-label="Cancel" (click)="cancelEdit()">
           Cancel
-        </button>
-        <button mat-raised-button color="basic" class="save-button" [disabled]="roleMgmtForm.invalid" aria-label="SAVE"
-          style="margin-right: 10px;" (click)="updateRole(roleMgmtForm.value)" *ngIf="roleId === 0">
-          Add
         </button>
       </div>
     </div>

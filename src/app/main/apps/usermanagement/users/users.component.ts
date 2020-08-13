@@ -125,7 +125,6 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
   }
 
   searchFromTable(filterValue) {
-    this.logUserActivity("User Management - Search", LOG_MESSAGES.CLICK);
     filterValue = filterValue.trim().toLowerCase();
     this.dataSource.filter = filterValue;
   }

@@ -26,18 +26,16 @@ export class LogPublishersService {
           case 'localstorage':
             logPub = new LogLocalStorage();
             break;
-            case 'fieldHistory':
-            logPub = new LogFieldHistoryApi(this.http);
+          case 'fieldhistory':
+            logPub = new LogFieldHistoryApi(this.http,pub.loggerLocation);
             break;
           case 'auditlog':
-            logPub = new LogAuditApi(this.http);
+            logPub = new LogAuditApi(this.http, pub.loggerLocation);
             break;
-            case 'clientlog':
-              logPub = new LogWebApi(this.http);
-              break;
+          case 'clientlog':
+            logPub = new LogWebApi(this.http, pub.loggerLocation);
+            break;
         }
-        // Set location of logging
-        logPub.location = this.env + pub.loggerLocation;
         // Add publisher to array
         this.publishers.push(logPub);
       }
@@ -45,7 +43,6 @@ export class LogPublishersService {
       console.error(' Unable to read Logger Configuration file from ' + PUBLISHERS_FILE);
     });
   }
-
   getLoggers(): Observable<LogPublisherConfig[]> {
     return this.http.get<LogPublisherConfig[]>(PUBLISHERS_FILE);
   }

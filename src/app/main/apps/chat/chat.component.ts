@@ -60,7 +60,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     displayedColumns_fieldHistory: string[] = ['createdBy',  'whereArise', 'screen', 'field', 'oldValue', 'newValue', 'whenOccur'];
     dataSource = new MatTableDataSource();
     dialogRef: any;
-    searchValue = {};
+    searchValue = {keyword: ''};
 
     isLoading = true;
     constructor(
@@ -79,7 +79,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.getLogEntries('Field History');
     }
     toggleSidebar(name): void {
-        this.searchValue = {};
+        this.searchValue = {keyword: ''};
         this._fuseSidebarService.getSidebar(name).toggleOpen();
     }
 

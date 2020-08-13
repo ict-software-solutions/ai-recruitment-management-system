@@ -77,6 +77,7 @@ export class ConfigurationComponent implements OnInit {
     }
     element.type = type;
     element.configData = this.configData;
+    console.log('element', element);
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: "300px",
       data: element,
@@ -201,6 +202,7 @@ export class DialogOverviewExampleDialog {
     };
     this.updateSubscription = this.authService.updateConfig(param, this.token).subscribe((res) => {
       if (res) {
+        if (this.displayData.name === 'Captcha') {
         if (this.displayData.configData[0].value !== param.count) {
           this.logService.logFieldHistory(
             LOG_LEVELS.INFO,
@@ -211,6 +213,8 @@ export class DialogOverviewExampleDialog {
             param.count
           );
         }
+      }
+      else if (this.displayData.name === 'Password Attempts') {
         if (this.displayData.configData[1].value !== param.count) {
           this.logService.logFieldHistory(
             LOG_LEVELS.INFO,
@@ -221,6 +225,7 @@ export class DialogOverviewExampleDialog {
             param.count
           );
         }
+      } else {
         if (this.displayData.configData[2].value !== param.count) {
           this.logService.logFieldHistory(
             LOG_LEVELS.INFO,
@@ -231,6 +236,7 @@ export class DialogOverviewExampleDialog {
             param.count
           );
         }
+      }
         this.successConfig();
       }
     });
@@ -262,6 +268,7 @@ export class DialogOverviewExampleDialog {
     this.resetSubscription = this.authService.resetConfig(object, this.token).subscribe((res: any) => {
       if (res) {
         if (value.viewType === "renew") {
+          if (this.displayData.name === 'Captcha') {
           if (this.displayData.configData[0].value !== Number(res.showCaptchaAfter)) {
             this.logService.logFieldHistory(
               LOG_LEVELS.INFO,
@@ -272,6 +279,7 @@ export class DialogOverviewExampleDialog {
               res.showCaptchaAfter
             );
           }
+        } else if (this.displayData.name === 'Password Attempts') {
           if (this.displayData.configData[1].value !== Number(res.lockAccountAfter)) {
             this.logService.logFieldHistory(
               LOG_LEVELS.INFO,
@@ -282,6 +290,7 @@ export class DialogOverviewExampleDialog {
               res.lockAccountAfter
             );
           }
+        } else {
           if (this.displayData.configData[2].value !== Number(res.sessionTimeoutMins)) {
             this.logService.logFieldHistory(
               LOG_LEVELS.INFO,
@@ -292,6 +301,7 @@ export class DialogOverviewExampleDialog {
               res.sessionTimeoutMins
             );
           }
+        }
         } else {
           this.logService.logFieldHistory(
             LOG_LEVELS.INFO,
