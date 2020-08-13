@@ -69,15 +69,15 @@
   margin-top: -60px;
 }
 #filter_button {
-  margin-right: 10px;
-  margin-bottom: 58px;
-  margin-left: 11px !important;
-}
-#filter_button {
   // margin-right: 10px;
-  // margin-bottom: 58px;
-  margin-left: 11px !important;
+  margin-bottom: 58px;
+  // margin-left: 11px !important;
 }
+// #filter_button {
+//   // margin-right: 10px;
+//   // margin-bottom: 58px;
+//   margin-left: 11px !important;
+// }
 .head {
   margin-top: 27px;
 }
@@ -213,10 +213,10 @@
   .header-display1 {
     display: flex !important;
   }
-  #filter_button {
-    float: right;
-    margin-left: 35px !important;
-  }
+  // #filter_button {
+  //   float: right;
+  //   margin-left: 35px !important;
+  // }
   .logo-display1 {
     margin-top: -29px !important;
   }
@@ -240,8 +240,8 @@
   }
   #filter_button {
     // margin-right: 10px;
-    // margin-bottom: 58px;
-    margin-left: 11px !important;
+    margin-bottom: 58px;
+    // margin-left: 11px !important;
   }
 }
 @media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
@@ -296,10 +296,10 @@
     margin-left: -14px;
   }
 
-  #filter_button {
-    float: right !important;
-    margin-left: 35px !important ;
-  }
+  // #filter_button {
+  //   float: right !important;
+  //   margin-left: 35px !important ;
+  // }
   .logo-display1 {
     margin-top: -19px;
   }
@@ -309,6 +309,14 @@
   #chat .top-bg {
     height: 256px;
   }
+  #chat > .center > .header {
+    height: 192px !important;
+    min-height: 192px !important;
+    max-height: 192px !important;
+    justify-content: space-between !important;
+  }
+}
+@media only screen and (device-width: 768px) and (device-height: 1024px) and(orientation : portrait) {
   #chat > .center > .header {
     height: 192px !important;
     min-height: 192px !important;

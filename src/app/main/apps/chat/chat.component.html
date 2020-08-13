@@ -1,7 +1,7 @@
 <div id="chat" class="page-layout carded fullwidth inner-scroll">
   <div class="top-bg accent"></div>
   <div class="center">
-    <div class="header accent header-display1" fxLayoutAlign="center center" fxLayoutAlign.gt-sm="space-between center">
+    <div class="header accent" fxLayoutAlign="center center" fxLayoutAlign.gt-sm="space-between center">
 
       <div class="logo mb-24 mb-md-0 logo-display1" fxLayout="row" fxLayoutAlign="start center">
         <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
@@ -12,8 +12,7 @@
         </span>
       </div>
 
-      <button mat-raised-button
-        class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0  filter-button"
+      <button mat-raised-button class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0"
         id="filter_button" (click)="toggleSidebar('project-dashboard-right-sidebar-1')">
         Filter By
       </button>
