@@ -9,7 +9,6 @@ import { LogService } from "app/service/shared/log.service";
 import { LOGGED_IN_USER_INFO, LOG_LEVELS, LOG_MESSAGES } from "app/util/constants";
 import { Subscription } from "rxjs";
 import Swal from "sweetalert2";
-import { Screens, Status } from 'app/util/configuration';
 import { filter } from 'lodash';
 
 @Component({

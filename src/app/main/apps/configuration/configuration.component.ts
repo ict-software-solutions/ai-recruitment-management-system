@@ -33,6 +33,7 @@ export class ConfigurationComponent implements OnInit {
   showReset = false;
   roleName: string;
   isLoading = true;
+  configData: any;
   configSubscription: Subscription;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(
@@ -42,7 +43,7 @@ export class ConfigurationComponent implements OnInit {
     private authService: AuthService
   ) {
     this.roleName = airmsService.getUserRole();
-    this.logUserActivity("Configuration", LOG_MESSAGES.CLICK);
+    this.logUserActivity("Config Management", LOG_MESSAGES.CLICK);
     if (this.roleName !== "Admin") {
       this.displayedColumns = ["name", "screenUsed", "function", "value"];
     }
@@ -57,6 +58,7 @@ export class ConfigurationComponent implements OnInit {
           { name: "Password Attempts", screenUsed: "Login", function: "Count", value: res.lockAccountAfter },
           { name: "Set Timeout", screenUsed: "Login", function: "Count", value: res.sessionTimeoutMins },
         ];
+        this.configData = data;
         this.dataSource.data = data;
         this.isLoading = false;
       },
@@ -68,11 +70,12 @@ export class ConfigurationComponent implements OnInit {
   }
 
   openDialog(element, type): void {
-    this.logUserActivity("Configuration -" + type, LOG_MESSAGES.CLICK);
+    this.logUserActivity("Config Management -" + type, LOG_MESSAGES.CLICK);
     if (element === undefined) {
       element = {};
     }
     element.type = type;
+    element.configData = this.configData;
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: "300px",
       data: element,
@@ -105,6 +108,7 @@ export class DialogOverviewExampleDialog {
     private authService: AuthService,
     private airmsService: AirmsService,
     private formBuilder: FormBuilder,
+    private logService: LogService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
     this.displayData = data;
@@ -129,7 +133,7 @@ export class DialogOverviewExampleDialog {
       this.configForm.controls["userName"].patchValue(userName);
       value.userName = userName;
       this.validateUser(value);
-    } else if (value.viewType === "renew" || value.viewType === 'resetall') {
+    } else if (value.viewType === "renew" || value.viewType === "resetall") {
       let name = value.userName;
       let newValue = name.toLowerCase();
       if (newValue !== userName) {
@@ -140,16 +144,16 @@ export class DialogOverviewExampleDialog {
           showConfirmButton: true,
         });
       } else {
-        console.log('renew', value);
         this.validateUser(value);
       }
     }
   }
   validateUser(value) {
+    this.logUserActivity("Config Management - Validate User", LOG_MESSAGES.CLICK);
     this.submitSubscription = this.authService.getConfigLogin(value, this.token).subscribe(
       (res) => {
         if (res === true) {
-          if (value.viewType === 'edit') {
+          if (value.viewType === "edit") {
             this.showDialogData = true;
           } else {
             value.viewType = "all";
@@ -189,12 +193,43 @@ export class DialogOverviewExampleDialog {
   }
 
   updateConfig(value) {
-    let object = {
+    this.logUserActivity("Config Management - Edit Save", LOG_MESSAGES.CLICK);
+    let param = {
       type: value.type,
       count: value.count,
     };
-    this.updateSubscription = this.authService.updateConfig(object, this.token).subscribe((res) => {
+    this.updateSubscription = this.authService.updateConfig(param, this.token).subscribe((res) => {
       if (res) {
+        if (this.displayData.configData[0].value !== param.count) {
+          this.logService.logFieldHistory(
+            LOG_LEVELS.INFO,
+            "On Updating Captcha",
+            "Config Management",
+            "ShowCaptchaAfter",
+            this.displayData.configData[0].value,
+            param.count
+          );
+        }
+        if (this.displayData.configData[1].value !== param.count) {
+          this.logService.logFieldHistory(
+            LOG_LEVELS.INFO,
+            "On Updating Password Attempts",
+            "Config Management",
+            "LockAccountAfter",
+            this.displayData.configData[1].value,
+            param.count
+          );
+        }
+        if (this.displayData.configData[2].value !== param.count) {
+          this.logService.logFieldHistory(
+            LOG_LEVELS.INFO,
+            "On Updating Session Timeout",
+            "Config Management",
+            "SessionTimeoutMins",
+            this.displayData.configData[2].value,
+            param.count
+          );
+        }
         this.successConfig();
       }
     });
@@ -211,6 +246,7 @@ export class DialogOverviewExampleDialog {
     });
   }
   resetConfig(value) {
+    this.logUserActivity("Config Management - Reset", LOG_MESSAGES.CLICK);
     let object = {};
     if (value.viewType === "renew") {
       object = {
@@ -222,8 +258,65 @@ export class DialogOverviewExampleDialog {
         type: value.viewType,
       };
     }
-    this.resetSubscription = this.authService.resetConfig(object, this.token).subscribe((res) => {
+    this.resetSubscription = this.authService.resetConfig(object, this.token).subscribe((res: any) => {
       if (res) {
+        if (value.viewType === "renew") {
+          if (this.displayData.configData[0].value !== Number(res.showCaptchaAfter)) {
+            this.logService.logFieldHistory(
+              LOG_LEVELS.INFO,
+              "On Resetting Captcha",
+              "Config Management",
+              "ShowCaptchaAfter",
+              this.displayData.configData[0].value,
+              res.showCaptchaAfter
+            );
+          }
+          if (this.displayData.configData[1].value !== Number(res.lockAccountAfter)) {
+            this.logService.logFieldHistory(
+              LOG_LEVELS.INFO,
+              "On Resetting Password Attempts",
+              "Config Management",
+              "LockAccountAfter",
+              this.displayData.configData[1].value,
+              res.lockAccountAfter
+            );
+          }
+          if (this.displayData.configData[2].value !== Number(res.sessionTimeoutMins)) {
+            this.logService.logFieldHistory(
+              LOG_LEVELS.INFO,
+              "On Resetting Session Timeout",
+              "Config Management",
+              "SessionTimeoutMins",
+              this.displayData.configData[2].value,
+              res.sessionTimeoutMins
+            );
+          }
+        } else {
+          this.logService.logFieldHistory(
+            LOG_LEVELS.INFO,
+            "On Resetting Captcha",
+            "Config Management",
+            "ShowCaptchaAfter",
+            this.displayData.configData[0].value,
+            res.showCaptchaAfter
+          );
+          this.logService.logFieldHistory(
+            LOG_LEVELS.INFO,
+            "On Resetting Password Attempts",
+            "Config Management",
+            "LockAccountAfter",
+            this.displayData.configData[1].value,
+            res.lockAccountAfter
+          );
+          this.logService.logFieldHistory(
+            LOG_LEVELS.INFO,
+            "On Resetting Session Timeout",
+            "Config Management",
+            "SessionTimeoutMins",
+            this.displayData.configData[2].value,
+            res.sessionTimeoutMins
+          );
+        }
         this.successConfig();
       }
     });
@@ -238,5 +331,8 @@ export class DialogOverviewExampleDialog {
       showConfirmButton: false,
       timer: 1500,
     });
+  }
+  logUserActivity(from, value) {
+    this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
   }
 }

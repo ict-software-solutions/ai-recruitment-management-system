@@ -174,6 +174,10 @@ export class AuthService {
     return this.httpClient.post(apiURL.VALIDATE_USER_URL, object);
   }
 
+  getFieldHistory() {
+    return this.httpClient.get(apiURL.FIELD_HISTORY_URL);
+  }
+
   logout() {
     sessionStorage.clear();
     localStorage.clear();

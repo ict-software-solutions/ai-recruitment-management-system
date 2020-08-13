@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LogConsole, LogLocalStorage, LogPublisher, LogWebApi, LogAuditApi } from './log-publishers';
+import { LogConsole, LogLocalStorage, LogPublisher, LogWebApi, LogAuditApi, LogFieldHistoryApi } from './log-publishers';
 import { environment } from 'environments/environment';
 const PUBLISHERS_FILE = 'assets/log-config.json'; // Path for Log Configuration File
 
@@ -26,12 +26,15 @@ export class LogPublishersService {
           case 'localstorage':
             logPub = new LogLocalStorage();
             break;
-          case 'clientlog':
-            logPub = new LogWebApi(this.http);
+            case 'fieldHistory':
+            logPub = new LogFieldHistoryApi(this.http);
             break;
           case 'auditlog':
             logPub = new LogAuditApi(this.http);
             break;
+            case 'clientlog':
+              logPub = new LogWebApi(this.http);
+              break;
         }
         // Set location of logging
         logPub.location = this.env + pub.loggerLocation;

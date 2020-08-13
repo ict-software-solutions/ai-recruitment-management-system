@@ -23,8 +23,8 @@
       <div class="content">
       <mat-tab-group animationDuration="0ms" (selectedTabChange)="getLogEntries($event.tab.textLabel)"
         [hidden]="isLoading" style="height: 100%;">
-        <!-- <mat-tab label="Field History" class="note_heading">
-          <!-<div class="example-container">
+        <mat-tab label="Field History" class="note_heading">
+          <div class="example-container">
             <mat-table [dataSource]="dataSource" #fieldHistorySort="matSort" matSort matSortActive="whenOccur"
         matSortDirection="desc" [@animateStagger]="{ value: '50' }">
 
@@ -34,6 +34,14 @@
                   <span class="mobile-label">CreatedBy</span>
                  <p class="text-truncate"> {{ element.createdBy }}</p></mat-cell>
               </ng-container>
+              
+              <ng-container matColumnDef="whereArise" style="text-overflow: ellipsis;">
+                <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">WhereArise</span>
+               <p>   {{ element.whereArise }}</p></mat-cell>
+              </ng-container>
+              
               <ng-container matColumnDef="screen" style="text-overflow: ellipsis;">
                 <mat-header-cell *matHeaderCellDef>Screen</mat-header-cell>
                 <mat-cell *matCellDef="let element">
@@ -47,12 +55,6 @@
                 <p>{{ element.field }}</p></mat-cell>
               </ng-container>
 
-              <ng-container matColumnDef="whereArise" style="text-overflow: ellipsis;">
-                <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
-                <mat-cell *matCellDef="let element">
-                  <span class="mobile-label">WhereArise</span>
-               <p>   {{ element.whereArise }}</p></mat-cell>
-              </ng-container>
 
               <ng-container matColumnDef="oldValue">
                 <mat-header-cell *matHeaderCellDef>Old Value</mat-header-cell>
@@ -63,7 +65,7 @@
               <ng-container matColumnDef="newValue" style="text-overflow: ellipsis;overflow: hidden;">
                 <mat-header-cell *matHeaderCellDef>New Value</mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                  <span class="mobile-label">new Value</span>
+                  <span class="mobile-label">New Value</span>
                <p>   {{ element.newValue }}</p></mat-cell>
               </ng-container>
 
@@ -75,10 +77,10 @@
               </ng-container>
 
 
-              <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
-              <mat-row  *matRowDef="let row; columns: displayedColumns" class="product"></mat-row>
+              <mat-header-row *matHeaderRowDef="displayedColumns_fieldHistory; sticky:true"></mat-header-row>
+              <mat-row  *matRowDef="let row; columns: displayedColumns_fieldHistory" class="product"></mat-row>
             </mat-table>
-          </div> ->
+          </div>
           <mat-paginator #paginator1 [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
            [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading">
           </mat-paginator>
@@ -90,7 +92,7 @@
               <li>Troy RMS retains Audit Log for last 12 months only</li>
             </ul>
           </div>
-        </mat-tab> -->
+        </mat-tab>
         <mat-tab label="Audit Log" class="note_heading">
           <div *ngIf="isLoading" class="Loading">
             <div class="spinner-wrapper">
@@ -187,11 +189,23 @@
                   <p class="text-truncate"> {{ element.createdBy }}</p>
                 </mat-cell>
               </ng-container>
+              <ng-container matColumnDef="screen" style="text-overflow: ellipsis;">
+                <mat-header-cell *matHeaderCellDef>Screen</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">Screen</span>
+                  {{ element.screen }}</mat-cell>
+              </ng-container>
               <ng-container matColumnDef="whereAriseFunction" style="text-overflow: ellipsis;">
                 <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
                 <mat-cell *matCellDef="let element">
                   <span class="mobile-label">WhereArise</span>
                   {{ element.whereArise }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="level" style="text-overflow: ellipsis;">
+                <mat-header-cell *matHeaderCellDef>Level</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">Level</span>
+                  {{ element.level }}</mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="whatEnsueClient" style="text-overflow: ellipsis;">
@@ -240,18 +254,18 @@
           </button>
         </div>
         <div style="margin-top: 22px;">
-          <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" style="height: 100%;">
+          <form fxLayout="column" name="search" fxLayoutAlign="start" fxFlex="1 0 auto" style="height: 100%;">
             <mat-form-field appearance="outline">
               <mat-label>Keyword</mat-label>
-              <input matInput type="text" />
+              <input matInput type="text" name="keyword" id="keyword" [(ngModel)]="searchValue.keyword"/>
               <div style="float: right; margin-top: -34px;">
-                <button mat-mini-fab color="accent" aria-label="Example icon button with a home icon">
+                <button mat-mini-fab color="accent" aria-label="Example icon button with a home icon" (click)="searchByKeyword(searchValue)">
                   <mat-icon color="basic">search</mat-icon>
                 </button>
               </div>
             </mat-form-field>
             <p style="text-align: center; margin-top: -5px; color: #0066ff;">or</p>
-            <mat-form-field appearance="outline">
+            <!-- <mat-form-field appearance="outline">
               <mat-label>User Role</mat-label>
               <mat-select>
                 <mat-option value="admin">Admin</mat-option>
@@ -264,7 +278,7 @@
                 <mat-option value="customer">Customer</mat-option>
                 <mat-option value="techsupport">Tech Support</mat-option>
               </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
             <mat-form-field appearance="outline">
               <mat-label>From</mat-label>
               <input matInput [matDatepicker]="pickerA" />

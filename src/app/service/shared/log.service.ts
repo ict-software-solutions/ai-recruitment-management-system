@@ -67,7 +67,8 @@ export class LogService {
       whatEnsue,
       whenOccur: new Date(),
       logActivity: true,
-      logErr: false
+      logErr: false,
+      logFieldHistory: false
     }
     this[logLevel](params);
   }
@@ -79,7 +80,8 @@ export class LogService {
       whatEnsue,
       whenOccur: new Date(),
       logActivity: true,
-      logErr: false
+      logErr: false,
+      logFieldHistory: false
     }
     this[logLevel](params);
   }
@@ -92,7 +94,8 @@ export class LogService {
       message: JSON.stringify(message),
       whenOccur: new Date(), // Should assigned from Server
       logActivity: false,
-      logErr: true
+      logErr: true,
+      logFieldHistory: false
     }
     this[logLevel](params);
   }
@@ -105,11 +108,29 @@ export class LogService {
       message: JSON.stringify(message),
       whenOccur: new Date(), // Should assigned from Server
       logActivity: false,
-      logErr: true
+      logErr: true,
+      logFieldHistory: false
+    }
+    this[logLevel](params);
+  }
+
+  logFieldHistory(logLevel, whereArise, screen, field, oldVal, newVal) {
+    const params = {
+      createdBy: this.airmsService.getUserName(), 
+      whereArise,
+      screen,
+      field,
+      oldVal,
+      newVal,
+      whenOccur: new Date(),
+      logActivity: false,
+      logFieldHistory: true,
+      logErr: false
     }
     this[logLevel](params);
   }
 }
+
 
 export class LogEntry {
   level: string = LogLevel[LogLevel.Debug];

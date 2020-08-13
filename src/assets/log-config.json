@@ -21,7 +21,7 @@
   },
   {
     "loggerName": "fieldhistory",
-    "loggerLocation": "fieldhistories",
-    "isActive": false
+    "loggerLocation": "field-history",
+    "isActive": true
   }
 ]

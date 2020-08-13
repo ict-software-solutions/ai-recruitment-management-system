@@ -16,7 +16,8 @@ export const apiURL = {
     'CONFIG_URL': environment.url + 'config',
     'UPDATE_CONFIG_URL': environment.url + 'config/update',
     'RESET_CONFIG_URL': environment.url + 'config/reset',
-    'VALIDATE_USER_URL': environment.url + 'user/validateUser'
+    'VALIDATE_USER_URL': environment.url + 'user/validateUser',
+    'FIELD_HISTORY_URL': environment.url + 'field-history'
 }
 
 export const TROY_LOGO = "assets/images/logos/troy.png";

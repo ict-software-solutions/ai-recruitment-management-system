@@ -125,4 +125,24 @@ export class LogAuditApi extends LogPublisher {
     console.clear();
     return of(true);
   }
+  
+}
+
+export class LogFieldHistoryApi extends LogPublisher {
+  location: any;
+  constructor(private http: HttpClient) {
+    super();
+  }
+
+  //Add log entry to back end data store
+  log(entry: LogEntry): Observable<boolean> {
+    if (entry['logFieldHistory']) {
+      super.postToAPI(this.location, entry, this.http);
+    }
+    return of(true);
+  }
+  clear(): Observable<boolean> {
+    console.clear();
+    return of(true);
+  }
 }

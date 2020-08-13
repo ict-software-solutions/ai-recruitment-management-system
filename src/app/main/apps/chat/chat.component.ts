@@ -56,10 +56,11 @@ export class ChatComponent implements OnInit, OnDestroy {
     @ViewChild('paginator2') paginator2: MatPaginator;
     @ViewChild('paginator3') paginator3: MatPaginator;
     displayedColumns_audit: string[] = ['createdBy', 'whereAriseScreen', 'whatEnsue', 'whenOccur'];
-    displayedColumns_client: string[] = ['createdBy', 'whereAriseFunction', 'whatEnsueClient', 'whenOccur'];
-    //displayedColumns: string[] = ['createdBy',  'whereArise', 'newValue', 'whenOccur'];
+    displayedColumns_client: string[] = ['createdBy', 'screen', 'whereAriseFunction', 'level', 'whatEnsueClient', 'whenOccur'];
+    displayedColumns_fieldHistory: string[] = ['createdBy',  'whereArise', 'screen', 'field', 'oldValue', 'newValue', 'whenOccur'];
     dataSource = new MatTableDataSource();
     dialogRef: any;
+    searchValue = {};
 
     isLoading = true;
     constructor(
@@ -75,7 +76,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.logUserActivity("System Activities", LOG_MESSAGES.CLICK);
     }
     ngOnInit(): void {
-        this.getLogEntries('Audit Log');
+        this.getLogEntries('Field History');
     }
     toggleSidebar(name): void {
         this._fuseSidebarService.getSidebar(name).toggleOpen();
@@ -109,7 +110,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     
     getFieldHistory() {
         this.logUserActivity("System Activities - Field History", LOG_MESSAGES.CLICK);
-        this.authService.getClientLogEntries().subscribe(res => {
+        this.authService.getFieldHistory().subscribe(res => {
+            console.log('res field history', res);
             this.fieldHistorySort.sort(({ id: 'whenOccur', start: 'desc' }) as MatSortable);
             this.setDataSource(res, this.paginator1, this.fieldHistorySort);
         }, error => {
@@ -141,6 +143,10 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
     }
 
+    searchByKeyword(value) {
+        let filterValue = value.keyword.trim().toLowerCase();
+        this.dataSource.filter = filterValue;
+    }
     getFullDate(date) {
         return this.datePipe.transform(new Date(date), 'MMM dd, yyyy hh:mm:ss a')
     }
