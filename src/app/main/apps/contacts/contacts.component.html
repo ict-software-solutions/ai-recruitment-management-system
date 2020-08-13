@@ -77,12 +77,12 @@
             <mat-header-cell *matHeaderCellDef style="justify-content: center;">Action </mat-header-cell>
             <mat-cell *matCellDef="let product" style="justify-content: center;">
               <span class="mobile-label">Action</span>
-              <button mat-icon-button style="color: #42a1f5;" (click)="editRole(product.roleId)">
+              <button mat-icon-button style="color: #42a1f5;" (click)="editRole(product.roleId)" matTooltip="Edit">
                 <mat-icon>edit</mat-icon>
               </button>
               <span>
                 <button mat-icon-button color="accent" style="color: red; background-color: white;"
-                  (click)="deleteRole(product.roleId)">
+                  (click)="deleteRole(product.roleId)" matTooltip="Delete">
                   <mat-icon>delete</mat-icon>
                 </button></span>
             </mat-cell>

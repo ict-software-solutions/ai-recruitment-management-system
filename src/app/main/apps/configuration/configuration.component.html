@@ -17,7 +17,7 @@
       <div class="search-wrapper mx-md-0">
         <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
           <mat-icon>search</mat-icon>
-          <input #filter placeholder="Search" />
+          <input #filter placeholder="Search" (keyup)="searchFromTable($event.target.value)" />
         </div>
       </div>
       <!-- <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" (click)="addRole()">

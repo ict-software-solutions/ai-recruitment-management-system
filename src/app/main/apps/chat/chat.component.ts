@@ -79,12 +79,12 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.getLogEntries('Field History');
     }
     toggleSidebar(name): void {
+        this.searchValue = {};
         this._fuseSidebarService.getSidebar(name).toggleOpen();
     }
 
     toggleSidebarClosed(name): void {
         this._fuseSidebarService.getSidebar(name).toggleOpen();
-
     }
     getAuditLog() {
         this.logUserActivity("System Activities - Audit Log", LOG_MESSAGES.CLICK);
@@ -144,7 +144,10 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     searchByKeyword(value) {
-        let filterValue = value.keyword.trim().toLowerCase();
+        let filterValue = ''
+        if (value !== '') {
+        filterValue = value.keyword.trim().toLowerCase();
+        } 
         this.dataSource.filter = filterValue;
     }
     getFullDate(date) {

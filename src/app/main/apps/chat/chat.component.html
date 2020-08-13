@@ -16,6 +16,10 @@
         id="filter_button" (click)="toggleSidebar('project-dashboard-right-sidebar-1')">
         Filter By
       </button>
+      <button mat-raised-button class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0"
+      id="filter_button" (click)="searchByKeyword('')">
+      Clear All
+    </button>
 
 
     </div>
@@ -259,7 +263,7 @@
               <mat-label>Keyword</mat-label>
               <input matInput type="text" name="keyword" id="keyword" [(ngModel)]="searchValue.keyword"/>
               <div style="float: right; margin-top: -34px;">
-                <button mat-mini-fab color="accent" aria-label="Example icon button with a home icon" (click)="searchByKeyword(searchValue)">
+                <button mat-mini-fab color="accent" aria-label="Example icon button with a home icon" (click)="searchByKeyword(searchValue)" (click)="toggleSidebarClosed('project-dashboard-right-sidebar-1')">
                   <mat-icon color="basic">search</mat-icon>
                 </button>
               </div>

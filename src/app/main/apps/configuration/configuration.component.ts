@@ -17,11 +17,7 @@ export interface Element {
   value: string;
   action: string;
 }
-const ELEMENT_DATA: Element[] = [
-  { name: "Captcha", screenUsed: "Login", function: "Count", value: "2", action: "" },
-  { name: "Password Attempts", screenUsed: "Login", function: "Count", value: "5", action: "" },
-  { name: "Set Timeout", screenUsed: "Login", function: "Count", value: "2", action: "" },
-];
+
 @Component({
   selector: "app-configuration",
   templateUrl: "./configuration.component.html",
@@ -29,7 +25,7 @@ const ELEMENT_DATA: Element[] = [
 })
 export class ConfigurationComponent implements OnInit {
   displayedColumns: string[] = ["name", "screenUsed", "function", "value", "action"];
-  dataSource = new MatTableDataSource<Element>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<Element>();
   showReset = false;
   roleName: string;
   isLoading = true;
@@ -60,6 +56,7 @@ export class ConfigurationComponent implements OnInit {
         ];
         this.configData = data;
         this.dataSource.data = data;
+        this.dataSource.paginator = this.paginator;
         this.isLoading = false;
       },
       (error) => {
@@ -68,7 +65,11 @@ export class ConfigurationComponent implements OnInit {
       }
     );
   }
-
+  searchFromTable(filterValue) {
+    this.logUserActivity("Config Management - Search", LOG_MESSAGES.CLICK);
+    filterValue = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
   openDialog(element, type): void {
     this.logUserActivity("Config Management -" + type, LOG_MESSAGES.CLICK);
     if (element === undefined) {
