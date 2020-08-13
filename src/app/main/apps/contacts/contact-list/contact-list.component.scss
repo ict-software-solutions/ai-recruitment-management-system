@@ -25,10 +25,17 @@
 //   min-width: 300px;
 //   overflow: auto;
 // }
+// .example-container7 {
+//   display: flex;
+//   flex-direction: column;
+//   height: 309px;
+//   min-width: 300px;
+//   overflow: auto;
+// }
 .example-container7 {
   display: flex;
   flex-direction: column;
-  height: 309px;
+  height:auto !important;
   min-width: 300px;
   overflow: auto;
 }
@@ -133,12 +140,12 @@
   }
 }
 
-@media screen and (orientation: landscape) and (max-width: 959px) {
-  .example-container7 {
-    display: flex;
-    flex-direction: column;
-    height: 148px;
-    min-width: 300px;
-    overflow: auto;
-  }
-}
+// @media screen and (orientation: landscape) and (max-width: 959px) {
+//   .example-container7 {
+//     display: flex;
+//     flex-direction: column;
+//     height: 148px;
+//     min-width: 300px;
+//     overflow: auto;
+//   }
+// }

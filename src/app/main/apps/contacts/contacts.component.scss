@@ -55,7 +55,16 @@
     }
   }
 }
-
+.content {
+  overflow: hidden;
+  // background: #f5f5f5;
+  box-shadow: none;
+  .sidebar {
+    &:not(.locked-open) {
+      background: #f5f5f5;
+    }
+  }
+}
 // .content {
 //   overflow: auto;
 

@@ -84,11 +84,16 @@
 .example-container3,
 .example-container4,
 .example-container5 {
+  // display: flex;
+  // flex-direction: column;
+  // // max-height: 500px;
+  // min-width: 300px;
+  // height: 300px;
+  // overflow: auto;
   display: flex;
   flex-direction: column;
-  // max-height: 500px;
+  height:auto!important;
   min-width: 300px;
-  height: 300px;
   overflow: auto;
 }
 .mat-paginator {
@@ -224,15 +229,15 @@
     font-size: 17px;
     margin-left: -14px;
   }
-  .example-container3,
-  .example-container4,
-  .example-container5 {
-    display: flex;
-    flex-direction: column;
-    height: 100px;
-    min-width: 300px;
-    overflow: auto;
-  }
+  // .example-container3,
+  // .example-container4,
+  // .example-container5 {
+  //   display: flex;
+  //   flex-direction: column;
+  //   height: 100px;
+  //   min-width: 300px;
+  //   overflow: auto;
+  // }
   .note {
     margin-top: -46px;
     margin-left: 25px;
@@ -322,5 +327,16 @@
     min-height: 192px !important;
     max-height: 192px !important;
     justify-content: space-between !important;
+  }
+}
+
+.content {
+  overflow: hidden;
+  // background: #f5f5f5;
+  box-shadow: none;
+  .sidebar {
+    &:not(.locked-open) {
+      background: #f5f5f5;
+    }
   }
 }

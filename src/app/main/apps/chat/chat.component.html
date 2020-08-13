@@ -20,6 +20,7 @@
 
     </div>
     <div class="content-card" id="cont_card">
+      <div class="content">
       <mat-tab-group animationDuration="0ms" (selectedTabChange)="getLogEntries($event.tab.textLabel)"
         [hidden]="isLoading" style="height: 100%;">
         <!-- <mat-tab label="Field History" class="note_heading">
@@ -106,6 +107,7 @@
               </div>
             </div>
           </div>
+          
           <div class="example-container4">
             <mat-table [dataSource]="dataSource" class="log-table" #auditSort="matSort" matSort matSortDirection="desc"
               matSortActive="whenOccur" [@animateStagger]="{ value: '50' }"  [hidden]="isLoading">
@@ -155,6 +157,7 @@
               <li>Troy RMS retains Audit Log for last 12 months only</li>
             </ul>
           </div>
+         
         </mat-tab>
 
         <mat-tab label="Client Machine Log" class="note_heading">
@@ -225,7 +228,7 @@
       </mat-tab-group>
     </div>
   </div>
-
+</div>
   <fuse-sidebar class="sidebar" name="project-dashboard-right-sidebar-1" position="right" style="background-color: white;" >
     <div class="content" style="background-color: white;">
       <div style="padding: 18px;">
