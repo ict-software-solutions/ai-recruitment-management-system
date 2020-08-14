@@ -157,6 +157,14 @@
   .next_row {
     margin-top: 19px !important;
   }
+  .page-layout.carded > .top-bg {
+  height: 163px;
+  }
+  .center > .content-card {
+    background: white;
+    border-radius: 8px 8px 0 0;
+    margin-top: 3px;
+  }
 }
 @media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
   .profile_header {
