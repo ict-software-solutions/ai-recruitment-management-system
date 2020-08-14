@@ -73,6 +73,15 @@
 .button-lg-show {
   display: block;
 }
+.mat-column-function {
+  flex: 0 1 144px;
+}
+.mat-column-screenUsed {
+  flex: 0 1 242px;
+}
+mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
+  padding-left: 40px;
+}
 @media only screen and (max-width: 400px) {
   .mobile-label {
     width: 122px;
@@ -152,6 +161,12 @@
     min-width: 300px;
     overflow: auto;
   }
+  .mat-column-screenUsed {
+    flex: 0 1 104px;
+  }
+  .mat-column-function {
+    flex: 0 1 74px;
+  }
 }
 
 @media screen and (min-width: 600px) {
@@ -205,5 +220,13 @@
     width: 100%;
     margin-left: 0px;
     margin-right: 0px;
+  }
+}
+@media only screen and (device-width: 768px) and (device-height: 1024px) and(orientation : portrait) {
+  .mat-column-screenUsed {
+    flex: 0 1 104px;
+  }
+  .mat-column-function {
+    flex: 0 1 74px;
   }
 }

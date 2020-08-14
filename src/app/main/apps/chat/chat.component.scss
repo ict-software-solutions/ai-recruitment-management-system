@@ -148,6 +148,14 @@
       height: 206px !important;
     }
   }
+  .example-container5 {
+    .mat-row {
+      flex-direction: column;
+      align-items: start;
+      padding: 8px 24px;
+      height: 300px !important;
+    }
+  }
 
   mat-cell:first-of-type,
   mat-header-cell:first-of-type,
@@ -258,7 +266,14 @@
       height: 206px !important;
     }
   }
-
+  .example-container5 {
+    .mat-row {
+      flex-direction: column;
+      align-items: start;
+      padding: 8px 24px;
+      height: 300px !important;
+    }
+  }
   mat-cell:first-of-type,
   mat-header-cell:first-of-type,
   mat-footer-cell:first-of-type {
