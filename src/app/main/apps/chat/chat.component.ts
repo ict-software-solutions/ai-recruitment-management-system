@@ -63,6 +63,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     dialogRef: any;
     toDateValue = new Date();
     fromDateValue: any;
+    maxDate = new Date();
     searchValue = {keyword: '', fromDate: new Date(), toDate: new Date()};
     
     type = '';
@@ -86,10 +87,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     toggleSidebar(name): void {
         console.log('this.fromDateValue', this.fromDateValue, 'this.toDateValue', this.toDateValue);
         this.fromDateValue = new Date();
-        this.fromDateValue = this.fromDateValue.setDate(this.toDateValue.getDate() - 7);
+        this.fromDateValue = this.getFromDate();
         console.log('this.fromDateValue after', this.fromDateValue, 'this.toDateValue', this.toDateValue);
         this.searchValue = {keyword: '', fromDate: this.fromDateValue, toDate: this.toDateValue};
         this._fuseSidebarService.getSidebar(name).toggleOpen();
+    }
+    getFromDate() {
+        let date = this.toDateValue;
+        date.setDate(date.getDate() - 7);
+        return date;
     }
 
     toggleSidebarClosed(name): void {
@@ -99,8 +105,8 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.logUserActivity("System Activities - Audit Log", LOG_MESSAGES.CLICK);
         this.dataSource.data = [];
         this.authService.getAuditLogEntries().subscribe((res: any) => {
-        res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
-        this.setDataSource(res, this.paginator2, this.auditSort);
+    //    res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
+        this.setDataSource(res, this.paginator2);
         }, error => {
         this.logService.logError(LOG_LEVELS.ERROR, "System Activities", "On fetching Audit Log", JSON.stringify(error));
         });
@@ -109,8 +115,8 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.logUserActivity("System Activities - Client Machine Log", LOG_MESSAGES.CLICK);
         this.dataSource.data = [];
         this.authService.getClientLogEntries().subscribe((res: any) => {
-            res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
-            this.setDataSource(res, this.paginator3, this.clientLogSort);
+         //   res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
+            this.setDataSource(res, this.paginator3);
         }, error => {
         this.logService.logError(LOG_LEVELS.ERROR, "System Activities", "On fetching Client Machine Log", JSON.stringify(error));
         });
@@ -121,15 +127,15 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.logUserActivity("System Activities - Field History", LOG_MESSAGES.CLICK);
         this.authService.getFieldHistory().subscribe((res:any) => {
             console.log('res field history', res);
-            res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
+       //     res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
             //this.fieldHistorySort.sort(({ id: 'whenOccur', start: 'desc' }) as MatSortable);
-            this.setDataSource(res, this.paginator1, this.fieldHistorySort);
+            this.setDataSource(res, this.paginator1);
         }, error => {
         this.logService.logError(LOG_LEVELS.ERROR, "System Activities", "On fetching Field History", JSON.stringify(error));
         });
     }
 
-    setDataSource(data, paginator: MatPaginator, sort: MatSort) {
+    setDataSource(data, paginator: MatPaginator) {
         data.forEach(item => {
             item.whenOccur = this.getFullDate(item.whenOccur);
         });
@@ -137,7 +143,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.dataSource = new MatTableDataSource(data);
         paginator.firstPage();
         this.dataSource.paginator = paginator;
-        this.dataSource.sort = sort;
+        //this.dataSource.sort = sort;
         paginator.length = data.length;
         this.isLoading = false;
     }
@@ -168,17 +174,12 @@ export class ChatComponent implements OnInit, OnDestroy {
         value.fromDate = this.datePipe.transform(value.fromDate, "yyyy MM dd");
         console.log('searchby date formDate', value);
         this.searchSubscription = this.authService.getSearchDataForLogEntries(value, token).subscribe((res: any) => {
-            if (value.type === 'Client Machine Log') {
-                res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
-                this.setDataSource(res, this.paginator3, this.clientLogSort);
+            if (value.type === 'Client Machine Log'){
+                this.setDataSource(res, this.paginator3);
             } else if (value.type === 'Audit Log') {
-                res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
-                this.setDataSource(res, this.paginator2, 
-                    
-                    this.auditSort);
+                this.setDataSource(res, this.paginator2);
             } else {
-                this.fieldHistorySort.sort(({ id: 'whenOccur', start: 'desc' }) as MatSortable);
-                this.setDataSource(res, this.paginator1, this.fieldHistorySort);
+                this.setDataSource(res, this.paginator1);
             }
         });
     }

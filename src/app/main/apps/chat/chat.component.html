@@ -49,10 +49,6 @@
             <div class="example-container3">
               <mat-table
                 [dataSource]="dataSource"
-                #fieldHistorySort="matSort"
-                matSort
-                matSortActive="whenOccur"
-                matSortDirection="desc"
                 [@animateStagger]="{ value: '50' }"
               >
                 <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis; overflow: hidden;">
@@ -153,10 +149,6 @@
               <mat-table
                 [dataSource]="dataSource"
                 class="log-table"
-                #auditSort="matSort"
-                matSort
-                matSortDirection="desc"
-                matSortActive="whenOccur"
                 [@animateStagger]="{ value: '50' }"
                 [hidden]="isLoading"
               >
@@ -250,10 +242,6 @@
               <mat-table
                 [dataSource]="dataSource"
                 class="log-table"
-                #clientLogSort="matSort"
-                matSort
-                matSortDirection="desc"
-                matSortActive="whenOccur"
                 [@animateStagger]="{ value: '50' }"
                 [hidden]="isLoading"
               >
@@ -370,8 +358,7 @@
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>To</mat-label>
-              <input matInput [matDatepicker]="pickerB" name="toDate" id="toDate
-              " [(ngModel)]="searchValue.toDate"/>
+              <input matInput [matDatepicker]="pickerB" name="toDate" id="toDate" [max]="maxDate" [(ngModel)]="searchValue.toDate"/>
               <mat-datepicker-toggle matSuffix [for]="pickerB"></mat-datepicker-toggle>
               <mat-datepicker #pickerB></mat-datepicker>
             </mat-form-field>
