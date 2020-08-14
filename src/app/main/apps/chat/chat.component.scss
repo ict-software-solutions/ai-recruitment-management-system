@@ -48,7 +48,15 @@
     }
   }
 }
-
+.mat-column-screen {
+  flex: 0 1 170px;
+}
+// .mat-column-whereArise {
+//   flex: 0 1 242px;
+// }
+// .mat-column-field {
+//   flex: 0 1 242px;
+// }
 .note {
   margin-top: -63px;
   margin-left: 25px;
@@ -238,6 +246,21 @@
   }
   #cont_card {
     margin-top: 1px !important;
+  }
+  .mat-column-screen {
+    flex: 0 1 100px;
+  }
+  .mat-column-whereArise {
+    flex: 0 1 100px;
+  }
+  .mat-column-field {
+    flex: 0 1 100px;
+  }
+  .mat-column-oldValue {
+    flex: 0 1 46px;
+  }
+  .mat-column-newValue {
+    flex: 0 1 46px;
   }
 }
 @media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {

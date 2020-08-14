@@ -45,21 +45,7 @@
           style="height: 100%;"
         >
           <mat-tab label="Field History" class="note_heading">
-            <div *ngIf="isLoading" class="Loading">
-              <div class="spinner-wrapper">
-                <div class="spinner">
-                  <div class="inner">
-                    <div class="gap"></div>
-                    <div class="left">
-                      <div class="half-circle"></div>
-                    </div>
-                    <div class="right">
-                      <div class="half-circle"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          
             <div class="example-container3">
               <mat-table
                 [dataSource]="dataSource"
@@ -101,15 +87,15 @@
                 </ng-container>
 
                 <ng-container matColumnDef="oldValue">
-                  <mat-header-cell *matHeaderCellDef>Old Value</mat-header-cell>
-                  <mat-cell *matCellDef="let element">
+                  <mat-header-cell *matHeaderCellDef style="justify-content: center;">Old Value</mat-header-cell>
+                  <mat-cell *matCellDef="let element" style="justify-content: center;">
                     <span class="mobile-label">Old Value</span>
                     <p>{{ element.oldVal}}</p></mat-cell
                   >
                 </ng-container>
                 <ng-container matColumnDef="newValue" style="text-overflow: ellipsis; overflow: hidden;">
-                  <mat-header-cell *matHeaderCellDef>New Value</mat-header-cell>
-                  <mat-cell *matCellDef="let element">
+                  <mat-header-cell *matHeaderCellDef style="justify-content: center;">New Value</mat-header-cell>
+                  <mat-cell *matCellDef="let element" style="justify-content: center;">
                     <span class="mobile-label">New Value</span>
                     <p>{{ element.newVal }}</p></mat-cell
                   >
@@ -126,6 +112,21 @@
                 <mat-header-row *matHeaderRowDef="displayedColumns_fieldHistory; sticky: true"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns_fieldHistory" class="product"></mat-row>
               </mat-table>
+              <div *ngIf="isLoading" class="Loading">
+                <div class="spinner-wrapper">
+                  <div class="spinner">
+                    <div class="inner">
+                      <div class="gap"></div>
+                      <div class="left">
+                        <div class="half-circle"></div>
+                      </div>
+                      <div class="right">
+                        <div class="half-circle"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <mat-paginator
               #paginator1
@@ -146,21 +147,7 @@
             </div>
           </mat-tab>
           <mat-tab label="Audit Log" class="note_heading">
-            <div *ngIf="isLoading" class="Loading">
-              <div class="spinner-wrapper">
-                <div class="spinner">
-                  <div class="inner">
-                    <div class="gap"></div>
-                    <div class="left">
-                      <div class="half-circle"></div>
-                    </div>
-                    <div class="right">
-                      <div class="half-circle"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
 
             <div class="example-container4">
               <mat-table
@@ -207,6 +194,21 @@
                 <mat-header-row *matHeaderRowDef="displayedColumns_audit; sticky: true"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns_audit" class="product"></mat-row>
               </mat-table>
+              <div *ngIf="isLoading" class="Loading">
+                <div class="spinner-wrapper">
+                  <div class="spinner">
+                    <div class="inner">
+                      <div class="gap"></div>
+                      <div class="left">
+                        <div class="half-circle"></div>
+                      </div>
+                      <div class="right">
+                        <div class="half-circle"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <mat-paginator
               #paginator2
