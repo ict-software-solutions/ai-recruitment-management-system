@@ -159,9 +159,12 @@ export class FormsComponent implements OnInit, OnDestroy {
   }
   getRoles() {
     this.authService.getRoleList().subscribe(
-      (res) => {
+      (res: any) => {
         this.logUserActivity("User Management - Fetching Roles", LOG_MESSAGES.SUCCESS);
         this.roleLists = res;
+        this.roleLists =  this.roleLists.filter((el)=> {
+          return el['active'] == true;
+        });
       },
       (error) => {
         this.logService.logError(LOG_LEVELS.ERROR, "User Management - Fetching Roles", "On Fetching Roles", JSON.stringify(error));

@@ -9,8 +9,9 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { AirmsService } from 'app/service/airms.service';
 import { AuthService } from 'app/service/auth.service';
 import { LOGGED_IN_USER_INFO, LOG_LEVELS, LOG_MESSAGES } from 'app/util/constants';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { LogService } from 'app/service/shared/log.service';
+import { viewClassName } from '@angular/compiler';
 
 // import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
@@ -56,12 +57,16 @@ export class ChatComponent implements OnInit, OnDestroy {
     @ViewChild('paginator2') paginator2: MatPaginator;
     @ViewChild('paginator3') paginator3: MatPaginator;
     displayedColumns_audit: string[] = ['createdBy', 'whereAriseScreen', 'whatEnsue', 'whenOccur'];
-    displayedColumns_client: string[] = ['createdBy', 'screen', 'whereAriseFunction', 'level', 'whatEnsueClient', 'whenOccur'];
-    displayedColumns_fieldHistory: string[] = ['createdBy',  'whereArise', 'screen', 'field', 'oldValue', 'newValue', 'whenOccur'];
+    displayedColumns_client: string[] = ['createdBy', 'whichPlace', 'whereAriseFunction',  'level', 'logMessage', 'whenOccur'];
+    displayedColumns_fieldHistory: string[] = ['createdBy', 'screen', 'whereArise', 'field', 'oldValue', 'newValue', 'whenOccur'];
     dataSource = new MatTableDataSource();
     dialogRef: any;
-    searchValue = {keyword: ''};
-
+    toDateValue = new Date();
+    fromDateValue: any;
+    searchValue = {keyword: '', fromDate: new Date(), toDate: new Date()};
+    
+    type = '';
+    searchSubscription: Subscription;
     isLoading = true;
     constructor(
         public dialog: MatDialog,
@@ -79,7 +84,11 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.getLogEntries('Field History');
     }
     toggleSidebar(name): void {
-        this.searchValue = {keyword: ''};
+        console.log('this.fromDateValue', this.fromDateValue, 'this.toDateValue', this.toDateValue);
+        this.fromDateValue = new Date();
+        this.fromDateValue = this.fromDateValue.setDate(this.toDateValue.getDate() - 7);
+        console.log('this.fromDateValue after', this.fromDateValue, 'this.toDateValue', this.toDateValue);
+        this.searchValue = {keyword: '', fromDate: this.fromDateValue, toDate: this.toDateValue};
         this._fuseSidebarService.getSidebar(name).toggleOpen();
     }
 
@@ -110,9 +119,10 @@ export class ChatComponent implements OnInit, OnDestroy {
     
     getFieldHistory() {
         this.logUserActivity("System Activities - Field History", LOG_MESSAGES.CLICK);
-        this.authService.getFieldHistory().subscribe(res => {
+        this.authService.getFieldHistory().subscribe((res:any) => {
             console.log('res field history', res);
-            this.fieldHistorySort.sort(({ id: 'whenOccur', start: 'desc' }) as MatSortable);
+            res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
+            //this.fieldHistorySort.sort(({ id: 'whenOccur', start: 'desc' }) as MatSortable);
             this.setDataSource(res, this.paginator1, this.fieldHistorySort);
         }, error => {
         this.logService.logError(LOG_LEVELS.ERROR, "System Activities", "On fetching Field History", JSON.stringify(error));
@@ -134,6 +144,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     getLogEntries(event) {
         this.isLoading = true;
+        this.type = event;
         if (event === 'Client Machine Log') {
             this.getClientLog();
         } else if (event === 'Audit Log') {
@@ -149,6 +160,27 @@ export class ChatComponent implements OnInit, OnDestroy {
         filterValue = value.keyword.trim().toLowerCase();
         } 
         this.dataSource.filter = filterValue;
+    }
+    searchByDate(value) {
+        console.log('searchby date', value);
+        let token = this.airmsService.getToken();
+        value.type = this.type;
+        value.fromDate = this.datePipe.transform(value.fromDate, "yyyy MM dd");
+        console.log('searchby date formDate', value);
+        this.searchSubscription = this.authService.getSearchDataForLogEntries(value, token).subscribe((res: any) => {
+            if (value.type === 'Client Machine Log') {
+                res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
+                this.setDataSource(res, this.paginator3, this.clientLogSort);
+            } else if (value.type === 'Audit Log') {
+                res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
+                this.setDataSource(res, this.paginator2, 
+                    
+                    this.auditSort);
+            } else {
+                this.fieldHistorySort.sort(({ id: 'whenOccur', start: 'desc' }) as MatSortable);
+                this.setDataSource(res, this.paginator1, this.fieldHistorySort);
+            }
+        });
     }
     getFullDate(date) {
         return this.datePipe.transform(new Date(date), 'MMM dd, yyyy hh:mm:ss a')

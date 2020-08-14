@@ -52,10 +52,15 @@ export class AirmsService {
   getUserName() {
     const user = this.getUserInfo();
     if (user !== undefined && user !== null) {
-      return user["userName"];
+      return user['userName']
     }
   }
-
+  getUserFirstLastName() {
+    const user = this.getUserInfo();
+    if (user !== undefined && user !== null) {
+      return user['firstName'] +" " + user['lastName'];
+    }
+  }
 
   public getBrowserName() {
     const agent = window.navigator.userAgent;

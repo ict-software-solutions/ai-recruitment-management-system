@@ -22,6 +22,6 @@
   {
     "loggerName": "fieldhistory",
     "loggerLocation": "field-history",
-    "isActive": false
+    "isActive": true
   }
 ]

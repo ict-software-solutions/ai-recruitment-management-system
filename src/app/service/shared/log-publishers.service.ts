@@ -43,6 +43,7 @@ export class LogPublishersService {
       console.error(' Unable to read Logger Configuration file from ' + PUBLISHERS_FILE);
     });
   }
+
   getLoggers(): Observable<LogPublisherConfig[]> {
     return this.http.get<LogPublisherConfig[]>(PUBLISHERS_FILE);
   }

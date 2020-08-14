@@ -62,7 +62,7 @@ export class LogService {
 //dinesh updated
   logUserActivity(logLevel, whereArise, whatEnsue) {
     const params = { 
-      createdBy: this.airmsService.getUserName(),
+      createdBy: this.airmsService.getUserFirstLastName(),
       whereArise,
       whatEnsue,
       whenOccur: new Date(),
@@ -88,10 +88,11 @@ export class LogService {
 
   logError(logLevel, screen, whereArise, message) {
     const params = {
-      createdBy: this.airmsService.getUserName(), 
-      screen,
+      logLevel: logLevel,
+      createdBy: this.airmsService.getUserFirstLastName(), 
+      whichPlace: screen,
       whereArise,
-      message: JSON.stringify(message),
+      logMessage: JSON.stringify(message),
       whenOccur: new Date(), // Should assigned from Server
       logActivity: false,
       logErr: true,
@@ -102,10 +103,11 @@ export class LogService {
 
   logErrorForEmail(logLevel, mail, screen, whereArise, message) {
     const params = {
+      logLevel: logLevel,
       createdBy: mail, // UserId
-      screen,
+      whichPlace: screen,
       whereArise,
-      message: JSON.stringify(message),
+      logMessage: JSON.stringify(message),
       whenOccur: new Date(), // Should assigned from Server
       logActivity: false,
       logErr: true,
@@ -116,7 +118,7 @@ export class LogService {
 
   logFieldHistory(logLevel, whereArise, screen, field, oldVal, newVal) {
     const params = {
-      createdBy: this.airmsService.getUserName(), 
+      createdBy: this.airmsService.getUserFirstLastName(), 
       whereArise,
       screen,
       field,

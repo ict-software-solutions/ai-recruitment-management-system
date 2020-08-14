@@ -178,6 +178,22 @@ export class AuthService {
     return this.httpClient.get(apiURL.FIELD_HISTORY_URL);
   }
 
+  getSearchDataForLogEntries(object, token) {
+    const httpOptions = {
+      headers: new HttpHeaders({ Authorization: "Bearer " + token }),
+    };
+    let params = {
+      "fromDate": "2020-07-01",
+      "toDate": "2020-08-01"
+    }
+    if (object.type === 'Audit Log') {
+    return this.httpClient.post(apiURL.AUDITLOG_SEARCH_URL, params);
+    } else if (object.type === 'Client Machine Log') {
+      return this.httpClient.post(apiURL.CLIENTLOG_SEARCH_URL, params);
+    } else {
+      return this.httpClient.post(apiURL.FIELDHISTORY_SEARCH_URL, params);
+    }
+  }
   logout() {
     sessionStorage.clear();
     localStorage.clear();

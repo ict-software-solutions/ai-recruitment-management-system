@@ -203,7 +203,9 @@ export class DialogOverviewExampleDialog {
     this.updateSubscription = this.authService.updateConfig(param, this.token).subscribe((res) => {
       if (res) {
         if (this.displayData.name === 'Captcha') {
+          console.log('captcha update');
         if (this.displayData.configData[0].value !== param.count) {
+          console.log('captcha update 1');
           this.logService.logFieldHistory(
             LOG_LEVELS.INFO,
             "On Updating Captcha",
@@ -215,7 +217,9 @@ export class DialogOverviewExampleDialog {
         }
       }
       else if (this.displayData.name === 'Password Attempts') {
+        console.log('pwd update');
         if (this.displayData.configData[1].value !== param.count) {
+          console.log('pwd update 1');
           this.logService.logFieldHistory(
             LOG_LEVELS.INFO,
             "On Updating Password Attempts",
@@ -226,7 +230,9 @@ export class DialogOverviewExampleDialog {
           );
         }
       } else {
+        console.log('session update');
         if (this.displayData.configData[2].value !== param.count) {
+          console.log('session update 1');
           this.logService.logFieldHistory(
             LOG_LEVELS.INFO,
             "On Updating Session Timeout",
@@ -269,7 +275,9 @@ export class DialogOverviewExampleDialog {
       if (res) {
         if (value.viewType === "renew") {
           if (this.displayData.name === 'Captcha') {
+            console.log('captcha reset');
           if (this.displayData.configData[0].value !== Number(res.showCaptchaAfter)) {
+          console.log('captcha reset 1');
             this.logService.logFieldHistory(
               LOG_LEVELS.INFO,
               "On Resetting Captcha",
@@ -280,7 +288,9 @@ export class DialogOverviewExampleDialog {
             );
           }
         } else if (this.displayData.name === 'Password Attempts') {
+          console.log('pwd reset');
           if (this.displayData.configData[1].value !== Number(res.lockAccountAfter)) {
+          console.log('pwd reset 1');
             this.logService.logFieldHistory(
               LOG_LEVELS.INFO,
               "On Resetting Password Attempts",
@@ -291,7 +301,9 @@ export class DialogOverviewExampleDialog {
             );
           }
         } else {
+          console.log('session reset');
           if (this.displayData.configData[2].value !== Number(res.sessionTimeoutMins)) {
+          console.log('session reset 1');
             this.logService.logFieldHistory(
               LOG_LEVELS.INFO,
               "On Resetting Session Timeout",
@@ -303,6 +315,7 @@ export class DialogOverviewExampleDialog {
           }
         }
         } else {
+          console.log('session reset all');
           this.logService.logFieldHistory(
             LOG_LEVELS.INFO,
             "On Resetting Captcha",
