@@ -141,7 +141,6 @@ export class ContactsComponent implements OnInit, OnDestroy {
       }
     
 searchFromTable(filterValue) {
-  this.logUserActivity("Role Management - Search", LOG_MESSAGES.CLICK);
   filterValue = filterValue.trim().toLowerCase();
   this.dataSource.filter = filterValue;
 }

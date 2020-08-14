@@ -190,7 +190,17 @@ export class LoginComponent implements OnInit, OnDestroy {
           });
           this.inActive = true;
         } else if (error.status === 400) {
+          if (error.error.message === 'Role InActive') {
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: "User Role is Inactive",
+              text: "Please contact support",
+              confirmButtonText: "OK",
+            });
+          } else {
           this.invalidData = false;
+          }
         }
         this.logUserActivityForEmail("Login Page", value.userName, LOG_MESSAGES.FAILURE);
         this.logService.logErrorForEmail(LOG_LEVELS.ERROR, value.userName, "Login page", "On Try Login", JSON.stringify(error));
