@@ -39,7 +39,7 @@
 }
 .buttons {
   float: right;
-  margin-top: -60px;
+  margin-top: -56px;
   display: flex;
 }
 .edit_buttons {
@@ -48,22 +48,22 @@
 .submit-button-save {
   margin-right: 10px;
   width: 100px;
-  padding: 5px;
+  // padding: 5px;
 }
 .submit-button-cancel {
   margin-right: 10px;
   width: 100px;
-  padding: 5px;
+  // padding: 5px;
 }
 .submit-button-add {
   margin-right: 10px;
   width: 100px;
-  padding: 5px;
+  // padding: 5px;
 }
 .submit-button-update {
   margin-right: 10px;
   width: 100px;
-  padding: 5px;
+  // padding: 5px;
 }
 .image_upload {
   margin-left: -14px;
@@ -120,7 +120,7 @@
 }
 @media screen and (orientation: landscape) and (max-width: 959px) {
   .profile_header {
-    height: 150px;
+    height: 85px;
     font-size: bold;
     font-size: 17px;
     padding: 16px;
@@ -132,28 +132,17 @@
     margin-top: -84px;
   }
   .buttons {
-    margin-top: 20px;
-    width: 100%;
+    float: right;
+    margin-top: -47px;
+    display: flex;
   }
 
-  .submit-button-save {
-    width: 50%;
-  }
-  .submit-button-cancel {
-    width: 50%;
-  }
-  .submit-button-update {
-    width: 50%;
-  }
-  .submit-button-add {
-    width: 50%;
-  }
   .edit_button {
     margin-right: 17px;
     float: right;
   }
   .next_row {
-    margin-top: 0px;
+    margin-top: 19px !important;
   }
 }
 @media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
@@ -163,6 +152,7 @@
     font-size: 17px;
     padding: 16px;
     color: white;
+    justify-content: space-between;
   }
 
   .info {
@@ -172,6 +162,7 @@
   .buttons {
     margin-top: 20px;
     width: 100%;
+    justify-content: space-between;
   }
 
   .submit-button-save {
@@ -191,7 +182,7 @@
     float: right;
   }
   .next_row {
-    margin-top: 0px;
+    margin-top: 19px !important;
   }
 }
 @media only screen and (max-width: 730px) {
@@ -206,5 +197,10 @@
   }
   .submit-button-add {
     width: 140px;
+  }
+}
+@media screen and (max-width: 959px) and (orientation: landscape) {
+  .next_row[_ngcontent-eqm-c41] {
+    margin-top: 19px !important;
   }
 }
