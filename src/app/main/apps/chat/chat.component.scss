@@ -58,15 +58,20 @@
 .mat-column-newValue {
   flex: 0 1 95px;
 }
-
-.mat-column-logMessage {
-  flex: 0 1 95px;
-}
 .mat-column-level {
-  flex: 0 1 95px;
+  flex: 0 1 60px;
 }
 .mat-column-createdBy {
   flex: 0 1 143px;
+}
+.mat-column-whereAriseScreen {
+  flex: 1 1 143px;
+}
+.mat-column-logMessage {
+  flex: 1 1 95px;
+}
+.mat-column-whatEnsue {
+  flex: 1 1 153px;
 }
 
 // .mat-column-whereArise {
