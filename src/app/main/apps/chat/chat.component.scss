@@ -48,9 +48,27 @@
     }
   }
 }
+
 .mat-column-screen {
   flex: 0 1 170px;
 }
+.mat-column-oldValue {
+  flex: 0 1 54px;
+}
+.mat-column-newValue {
+  flex: 0 1 95px;
+}
+
+.mat-column-logMessage {
+  flex: 0 1 95px;
+}
+.mat-column-level {
+  flex: 0 1 95px;
+}
+.mat-column-createdBy {
+  flex: 0 1 143px;
+}
+
 // .mat-column-whereArise {
 //   flex: 0 1 242px;
 // }
@@ -130,6 +148,12 @@
 .button_align1 {
   margin-top: -56px;
 }
+.logo-display3{
+  margin-top:-54px
+}
+.buttons2{
+  margin-top:-54px
+}
 @media only screen and (max-width: 400px) {
   .mobile-label {
     width: 96px;
@@ -204,11 +228,12 @@
     max-height: 192px !important;
     justify-content: space-between !important;
   }
-  .button_align1 {
-    margin-bottom: 88px;
+
+  .logo-display3{
+    margin-top:16px
   }
-  .logo-display1 {
-    margin-top: 20px;
+  .buttons2{
+    margin-bottom:88px
   }
 }
 @media screen and (orientation: landscape) and (max-width: 959px) {
@@ -262,6 +287,22 @@
   .mat-column-newValue {
     flex: 0 1 46px;
   }
+  .mat-column-createdBy {
+    flex: 0 1 46px;
+  }
+  .logo-display3{
+  margin-top:12px
+}
+.buttons2{
+  margin-bottom:10px
+}
+.mat-column-level {
+  flex: 0 1 45px;
+}
+.mat-column-createdBy {
+  flex: 0 1 105px;
+}
+ 
 }
 @media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
   .mobile-label {
@@ -341,11 +382,11 @@
     max-height: 192px !important;
     justify-content: space-between !important;
   }
-  .button_align1 {
-    margin-bottom: 88px;
+  .logo-display3{
+    margin-top:16px
   }
-  .logo-display1 {
-    margin-top: 20px;
+  .buttons2{
+    margin-bottom:88px
   }
 }
 @media only screen and (device-width: 768px) and (device-height: 1024px) and(orientation : portrait) {
@@ -355,11 +396,10 @@
     max-height: 192px !important;
     justify-content: space-between !important;
   }
-  .logo-display1 {
-    // margin-left: 100px;
-    margin-top: 15px;
+  .logo-display3{
+    margin-top: 19px!important;
   }
-  .button_align1 {
-    margin-bottom: 88px;
+  .buttons2{
+    margin-bottom:80px;
   }
 }

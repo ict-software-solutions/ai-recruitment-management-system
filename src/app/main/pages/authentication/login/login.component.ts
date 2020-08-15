@@ -198,6 +198,15 @@ export class LoginComponent implements OnInit, OnDestroy {
               text: "Please contact support",
               confirmButtonText: "OK",
             });
+            if (error.error.resCode === '"AC-INA"') {
+              Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "Invalid Account",
+                text: "Please contact support",
+                confirmButtonText: "OK",
+              });
+            }
           } else {
           this.invalidData = false;
           }

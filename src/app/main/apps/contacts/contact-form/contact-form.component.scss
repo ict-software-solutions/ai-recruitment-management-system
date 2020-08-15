@@ -11,6 +11,7 @@
       height: 136px !important;
       min-height: 136px !important;
       max-height: 136px !important;
+      justify-content: space-between;
 
       .search-wrapper {
         width: 100%;
@@ -169,7 +170,14 @@ form {
 .status {
   margin-left: 8px;
 }
-
+.header{
+flex-flow: row wrap;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
 @media only screen and (max-width: 400px) {
   .space {
     margin-right: 0px;
@@ -206,6 +214,13 @@ form {
     margin: 0px 4px;
     font-size: 10px;
   }
+  .logo-display2{
+  margin-left: 114px;
+  margin-top: 20px;
+  }
+  .buttons1{
+    margin-right:50px;
+  }
 }
 
 @media screen and (orientation: landscape) and (max-width: 959px) {
@@ -216,6 +231,7 @@ form {
     height: 102px !important;
     min-height: 102px !important;
     max-height: 192px !important;
+    justify-content: space-between!important;
   }
   #contacts > .center > .header .search-wrapper {
     width: 41% !important;
@@ -301,6 +317,13 @@ form {
     margin: 0px 4px;
     font-size: 10px;
   }
+  .logo-display2{
+    margin-left: 114px;
+    margin-top: 20px;
+    }
+    .buttons1{
+      margin-right:81px!important;
+    }
 }
 @media only screen and (device-width: 768px) and (device-height: 1024px) and(orientation : portrait) {
   .mat-card {

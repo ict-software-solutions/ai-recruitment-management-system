@@ -9,7 +9,9 @@
       fxLayout.gt-sm="row"
       fxLayoutAlign.gt-sm="space-between center"
     >
-      <div class="logo mb-24 mb-md-0 logo-display1" fxLayout="row" fxLayoutAlign="start center">
+      <!-- <div class="logo mb-24 mb-md-0 logo-display1" fxLayout="row" fxLayoutAlign="start center"> -->
+        <div class="logo mb-24 mb-md-0 logo-display3" fxLayout="row" fxLayoutAlign="start center">
+   
         <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
           desktop_mac
         </mat-icon>
@@ -17,7 +19,8 @@
           System Activities
         </span>
       </div>
-      <div fxLayout="row" fxLayoutAlign="start center" class="button_align1">
+      <div class="buttons2">
+      <!-- <div fxLayout="row" fxLayoutAlign="start center" class="button_align1"> -->
         <button
           mat-raised-button
           class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0"
@@ -44,7 +47,7 @@
           [hidden]="isLoading"
           style="height: 100%;"
         >
-          <mat-tab label="Field History" class="note_heading">
+          <mat-tab label="Field History" class="note_heading" *ngIf="roleName === 'Admin'"> 
           
             <div class="example-container3">
               <mat-table
@@ -97,7 +100,7 @@
                   >
                 </ng-container>
 
-                <ng-container matColumnDef="whenOccur" sFtyle="text-overflow: ellipsis;">
+                <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
                   <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <span class="mobile-label">WhenOccur</span>
@@ -142,7 +145,7 @@
               </ul>
             </div>
           </mat-tab>
-          <mat-tab label="Audit Log" class="note_heading">
+          <mat-tab label="Audit Log" class="note_heading"*ngIf="roleName === 'Admin' ||roleName === 'Manager'" >
             
 
             <div class="example-container4">
@@ -222,7 +225,7 @@
             </div>
           </mat-tab>
 
-          <mat-tab label="Client Machine Log" class="note_heading">
+          <mat-tab label="Client Machine Log" class="note_heading" *ngIf="roleName === 'Admin' ||roleName === 'Tech Support'">
             <div *ngIf="isLoading" class="Loading">
               <div class="spinner-wrapper">
                 <div class="spinner">

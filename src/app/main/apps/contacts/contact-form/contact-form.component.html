@@ -1,31 +1,27 @@
 <div id="contacts" class="page-layout carded fullwidth inner-scroll">
   <div class="top-bg accent"></div>
   <div class="center">
-    <div class="header accent ml-24 mr-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
-      fxLayoutAlign.gt-sm="space-between center">
-      <!-- APP TITLE -->
-      <div fxLayout="row" fxLayoutAlign="start center">
-        <div class="logo" fxLayout="row" fxLayoutAlign="start center">
-          <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
-            account_circle
-          </mat-icon>
-          <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }"
-            *ngIf="roleId === 0">
-            Add Role
-          </span>
-          <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }"
-            *ngIf="roleId !== 0">
-            Edit Role
-          </span>
-        </div>
+    <div class="header accent header-display" fxLayoutAlign="center center" fxLayoutAlign.gt-sm="space-between center">
+      <div class="logo mb-24 mb-md-0 logo-display2" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
+          account_circle
+        </mat-icon>
+        <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }"
+          *ngIf="roleId === 0">
+          Add Role
+        </span>
+        <span class="logo-text h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }"
+          *ngIf="roleId !== 0">
+          Edit Role
+        </span>
       </div>
-      <div fxLayout="row" fxLayoutAlign="start center" class="button_align">
-        <button mat-raised-button color="basic" class="save-button" aria-label="SAVE"
-          style="margin-right: 10px;" (click)="updateRole(roleMgmtForm.value)" *ngIf="roleId !== 0">
+      <div class="buttons1">
+        <button mat-raised-button color="basic" class="save-button" aria-label="SAVE" style="margin-right: 10px;"
+          (click)="updateRole(roleMgmtForm.value)" *ngIf="roleId !== 0">
           Save
-        </button> 
-        <button mat-raised-button color="basic" class="save-button"  aria-label="SAVE"
-          style="margin-right: 10px;" (click)="updateRole(roleMgmtForm.value)" *ngIf="roleId === 0">
+        </button>
+        <button mat-raised-button color="basic" class="save-button" aria-label="SAVE" style="margin-right: 10px;"
+          (click)="updateRole(roleMgmtForm.value)" *ngIf="roleId === 0">
           Add
         </button>
         <button mat-raised-button color="basic" class="mr-8 save-button" aria-label="Cancel" (click)="cancelEdit()">
@@ -33,7 +29,7 @@
         </button>
       </div>
     </div>
-    <div class="content-card ml-24 mr-24">
+    <div class="content-card">
       <div class="content">
         <form class="mat-elevation-z4 p-24" name="form" [formGroup]="roleMgmtForm">
           <div fxLayout="row" fxLayoutAlign="start center" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%">

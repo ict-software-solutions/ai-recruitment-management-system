@@ -29,6 +29,7 @@ export interface PeriodicElement {
     whereAriseScreen: string;
     whereAriseFunction: string;
     whatEnsueClient: string;
+    
 }
 
 @Component({
@@ -58,6 +59,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     maxDate = new Date();
     minDate = new Date();
     errorForCount = false;
+    roleName: string;
     constructor(
         public dialog: MatDialog,
         private datePipe: DatePipe,
@@ -69,9 +71,16 @@ export class ChatComponent implements OnInit, OnDestroy {
         // private _matPaginator: MatPaginator
     ) {
         this.logUserActivity("System Activities", LOG_MESSAGES.CLICK);
+        this.roleName = airmsService.getUserRole();
     }
     ngOnInit(): void {
-        this.getLogEntries('Field History');
+        if (this.roleName === 'Admin') {
+            this.getLogEntries('Field History');
+            } else if (this.roleName === 'Manager') {
+                this.getLogEntries('Audit Log');
+            } else {
+                this.getLogEntries('Client Machine Log');
+            }
     }
     toggleSidebar(name): void {
         let today = new Date();
@@ -128,12 +137,8 @@ export class ChatComponent implements OnInit, OnDestroy {
         data.forEach(item => {
             item.whenOccur = this.getFullDate(item.whenOccur);
         });
-        paginator.pageIndex = 0;
         this.dataSource = new MatTableDataSource(data);
-        paginator.firstPage();
         this.dataSource.paginator = paginator;
-        //this.dataSource.sort = sort;
-        paginator.length = data.length;
         this.isLoading = false;
     }
 
