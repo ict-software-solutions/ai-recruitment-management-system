@@ -114,7 +114,6 @@
                 </div>
               </div>
             </header> -->
-            <h3 style="margin-top: -1px;">Update your details and change password here !</h3>
             <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="start center">
               <mat-form-field appearance="outline" fxFlex="33%">
                 <mat-label>First Name</mat-label>
@@ -290,10 +289,10 @@
               <mat-form-field appearance="outline" fxFlex="82%" *ngIf="showForMyProfile === false && userId != 0"
                 style="width: 232px;">
                 <mat-label>Valid From</mat-label>
-                <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom"
-                  [readonly]="viewMode" />
+                <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom" [min]="minDate"
+                  [readonly]="viewMode" (dateChange)="dateChanges($event.target.value, 'from')"/>
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
+                <mat-datepicker #picker1 ></mat-datepicker>
               </mat-form-field>
 
               <mat-form-field appearance="outline" fxFlex="82%" *ngIf="showForAddEditUser === false && userId === 0"
@@ -333,7 +332,7 @@
 
               <mat-form-field appearance="outline" fxFlex="33%" style="width: 232px;">
                 <mat-label>Valid To</mat-label>
-                <input matInput [matDatepicker]="picker4" name="validTo" formControlName="validTo"
+                <input matInput [matDatepicker]="picker4" name="validTill" formControlName="validTill" [min]="minToDate"
                   [readonly]="viewMode" />
                 <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                 <mat-datepicker #picker4></mat-datepicker>
@@ -376,15 +375,15 @@
               *ngIf="showForAddEditUser === false && userId === 0" style="margin-top: 12px;">
               <mat-form-field appearance="outline" fxFlex="33%" style="width: 232px;">
                 <mat-label>Valid From</mat-label>
-                <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom"
-                  [readonly]="viewMode" />
+                <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom" [min]="minDate"
+                  [readonly]="viewMode" (dateChange)="dateChanges($event.target.value, 'from')"/>
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
+                <mat-datepicker #picker1 ></mat-datepicker>
               </mat-form-field>
 
               <mat-form-field appearance="outline" fxFlex="34%" style="width: 232px;">
                 <mat-label>Valid To</mat-label>
-                <input matInput [matDatepicker]="picker4" name="validTo" formControlName="validTo"
+                <input matInput [matDatepicker]="picker4" name="validTill" formControlName="validTill" [min]="minToDate"
                   [readonly]="viewMode" />
                 <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                 <mat-datepicker #picker4></mat-datepicker>

@@ -54,7 +54,7 @@
         "hammerjs": "2.0.8",
         "jquery": "^3.5.1",
         "lodash": "^4.17.19",
-        "moment": "2.24.0",
+        "moment": "^2.27.0",
         "ng-connection-service": "^1.0.4",
         "ng-recaptcha": "^5.0.0",
         "ng2-charts": "2.3.0",

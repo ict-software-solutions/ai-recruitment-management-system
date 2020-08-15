@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { apiURL, LOGGED_IN_USER } from "app/util/constants";
 import { map } from "rxjs/operators";
@@ -183,15 +183,16 @@ export class AuthService {
       headers: new HttpHeaders({ Authorization: "Bearer " + token }),
     };
     let params = {
-      "fromDate": "2020-07-01",
-      "toDate": "2020-08-01"
+      "fromDate": object.fromDate,
+      "toDate": object.toDate
     }
+  
     if (object.type === 'Audit Log') {
-    return this.httpClient.post(apiURL.AUDITLOG_SEARCH_URL, params);
+    return this.httpClient.post(apiURL.AUDITLOG_SEARCH_URL, params, httpOptions);
     } else if (object.type === 'Client Machine Log') {
-      return this.httpClient.post(apiURL.CLIENTLOG_SEARCH_URL, params);
+      return this.httpClient.post(apiURL.CLIENTLOG_SEARCH_URL, params, httpOptions);
     } else {
-      return this.httpClient.post(apiURL.FIELDHISTORY_SEARCH_URL, params);
+      return this.httpClient.post(apiURL.FIELDHISTORY_SEARCH_URL, params, httpOptions);
     }
   }
   logout() {

@@ -24,6 +24,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { UserService } from "app/service/user.service";
 import { AuthService } from "app/service/auth.service";
 import { LogService } from "app/service/shared/log.service";
+import * as moment from 'moment'; 
 declare var $: any;
 
 @Component({
@@ -66,6 +67,8 @@ export class FormsComponent implements OnInit, OnDestroy {
   roleLists: any;
   flagForScreen = "";
   usertypes = USER_TYPE;
+  minDate = new Date();
+  minToDate = this.minDate;
 
   constructor(
     private userService: UserService,
@@ -110,8 +113,8 @@ export class FormsComponent implements OnInit, OnDestroy {
       password: [""],
       newPassword: [""],
       check: [""],
-      validFrom: [""],
-      validTo: [""],
+      validFrom: [new Date()],
+      validTill: [""],
       passwordExpiry: [""],
       passwordSince: [""],
       userName: ["", [Validators.minLength(6), Validators.maxLength(30), Validators.required, Validators.pattern(USERNAME_PATTERN)]],
@@ -185,6 +188,12 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.userForm.patchValue(res);
         this.userForm.controls["userType"].patchValue(this.userDetails.userType);
         this.userForm.controls["roleId"].patchValue(this.userDetails.roles.roleId);
+        if (this.userDetails.validFrom !== null) {
+          this.userForm.controls['validFrom'].patchValue(new Date(this.userDetails.validFrom));
+        }
+        if (this.userDetails.validTill !== null) {
+          this.userForm.controls['validTo'].patchValue(new Date(this.userDetails.validTill));
+        }
         if (this.userDetails.profileImage !== null && this.userDetails.profileImage !== "") {
           this.userDetails.profileImage = atob(this.userDetails.profileImage);
           this.contactProfilePic = this.userDetails.profileImage;
@@ -229,6 +238,14 @@ export class FormsComponent implements OnInit, OnDestroy {
   edit() {
     this.enableEdit == true;
   }
+  dateChanges(event, type) {
+    console.log('event', event, new Date(event));
+    this.minToDate = new Date(event);
+    
+  
+   // console.log('dateChanges', fromData, type);
+  //  this.minToDate = new Date(fromData);
+  }
   emailChange(screenType, email) {
     if (screenType === "myProfile") {
       if (this.userInfo.emailAddress !== email) {
@@ -252,6 +269,13 @@ export class FormsComponent implements OnInit, OnDestroy {
     }
   }
   updateProfile(value) {
+    console.log('validFrom', value.validFrom);
+    if (value.validFrom !== undefined) {
+    value.validFrom = moment(value.validFrom).format('YYYY-MM-DD');
+    } 
+    if (value.validTill !== undefined) {
+      value.validTill = moment(value.validTill).format('YYYY-MM-DD');
+    }
     this.logUserActivity("User Management - Save", LOG_MESSAGES.CLICK);
     this.errorMessage = "";
     if (this.userForm.valid) {
@@ -271,6 +295,8 @@ export class FormsComponent implements OnInit, OnDestroy {
         userName: value.userName,
         userType: value.userType,
         roleId: value.roleId,
+        validFrom: value.validFrom,
+        validTill: value.validTill
       };
       if (this.contactProfilePic !== null && this.contactProfilePic !== undefined && this.contactProfilePic !== "") {
         updateObject["profileImage"] = btoa(this.contactProfilePic);

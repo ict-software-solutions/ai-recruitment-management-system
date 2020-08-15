@@ -11,7 +11,8 @@ import { AuthService } from 'app/service/auth.service';
 import { LOGGED_IN_USER_INFO, LOG_LEVELS, LOG_MESSAGES } from 'app/util/constants';
 import { Subject, Subscription } from 'rxjs';
 import { LogService } from 'app/service/shared/log.service';
-import { viewClassName } from '@angular/compiler';
+import * as moment from 'moment'; 
+import Swal from 'sweetalert2';
 
 // import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
@@ -29,18 +30,7 @@ export interface PeriodicElement {
     whereAriseFunction: string;
     whatEnsueClient: string;
 }
-// const ELEMENT_DATA: PeriodicElement[] = [
-//     { createdBy: 'Karthiga', screen: 'Profile', whereArise: 'Edit', level: 'Error', whereAriseScreen: 'My Profile', whereAriseFunction: 'Update', whatEnsue: 'View', whatEnsueClient: 'email already exists', field: 'User name', oldValue: 'Karthiga', newValue: 'Karthiga-01', whenOccur: 'Jul 27,2020  08.00.11AM' },
-//     { createdBy: 'Tamilselvi balasubramaniyam', screen: 'Profile', whereArise: 'Edit', level: 'Error', whereAriseScreen: 'User Management', whereAriseFunction: 'Update', whatEnsueClient: 'username already exists', field: 'Email', oldValue: 'thiga@gmail.com', newValue: 'kathiga@gmail.com', whatEnsue: 'View', whenOccur: 'Jul 26,2020  08.00.11AM' },
-//     { createdBy: 'Janani', screen: 'Profile', whereArise: 'Edit', level: 'Error', whereAriseScreen: 'Role Management', whereAriseFunction: 'Update', whatEnsue: 'Update', whatEnsueClient: 'newpassword cannot be same as oldpassword', field: 'Email', oldValue: 'karthiga@gmail.com', newValue: 'thiga@gmail.com', whenOccur: 'Jul 27,2020  08.00.11AM' },
-//     { createdBy: 'Dinesh', screen: 'User Management', whereArise: 'Add', level: 'Error', whereAriseScreen: 'User Management', whereAriseFunction: 'Add', whatEnsue: 'Update', whatEnsueClient: 'email already exists', field: 'User role', oldValue: 'Client', newValue: 'Admin', whenOccur: 'Jul 27,2020  08.00.11AM' },
-//     { createdBy: 'Aravind', screen: 'User Management', whereArise: 'Edit', level: 'Error', whereAriseScreen: 'User Management', whereAriseFunction: 'Update', whatEnsue: 'Update', whatEnsueClient: 'email already exists', field: 'User role', oldValue: 'Client', newValue: 'Client View', whenOccur: 'Jul 27,2020  08.00.11AM' },
-//     { createdBy: 'Dinesh', screen: 'User Management', whereArise: 'Add', level: 'Error', whereAriseScreen: 'User Management', whereAriseFunction: 'Add', whatEnsue: 'Update', whatEnsueClient: 'email already exists', field: 'User role', oldValue: 'Client', newValue: 'Admin', whenOccur: 'Jul 27,2020  08.00.11AM' },
-//     { createdBy: 'Aravind', screen: 'User Management', whereArise: 'Edit', level: 'Error', whereAriseScreen: 'User Management', whereAriseFunction: 'Update', whatEnsue: 'Update', whatEnsueClient: 'email already exists', field: 'User role', oldValue: 'Client', newValue: 'Client View', whenOccur: 'Jul 27,2020  08.00.11AM' },
-//     { createdBy: 'Dinesh', screen: 'User Management', whereArise: 'Add', level: 'Error', whereAriseScreen: 'User Management', whereAriseFunction: 'Add', whatEnsue: 'Update', whatEnsueClient: 'email already exists', field: 'User role', oldValue: 'Client', newValue: 'Admin', whenOccur: 'Jul 27,2020  08.00.11AM' },
-//     { createdBy: 'Aravind', screen: 'User Management', whereArise: 'Edit', level: 'Error', whereAriseScreen: 'User Management', whereAriseFunction: 'Update', whatEnsue: 'Update', whatEnsueClient: 'email already exists', field: 'User role', oldValue: 'Client', newValue: 'Client View', whenOccur: 'Jul 27,2020  08.00.11AM' },
 
-// ];
 @Component({
     selector: 'chat',
     templateUrl: './chat.component.html',
@@ -61,14 +51,13 @@ export class ChatComponent implements OnInit, OnDestroy {
     displayedColumns_fieldHistory: string[] = ['createdBy', 'screen', 'whereArise', 'field', 'oldValue', 'newValue', 'whenOccur'];
     dataSource = new MatTableDataSource();
     dialogRef: any;
-    toDateValue = new Date();
-    fromDateValue: any;
-    maxDate = new Date();
     searchValue = {keyword: '', fromDate: new Date(), toDate: new Date()};
-    
     type = '';
     searchSubscription: Subscription;
     isLoading = true;
+    maxDate = new Date();
+    minDate = new Date();
+    errorForCount = false;
     constructor(
         public dialog: MatDialog,
         private datePipe: DatePipe,
@@ -85,16 +74,16 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.getLogEntries('Field History');
     }
     toggleSidebar(name): void {
-        console.log('this.fromDateValue', this.fromDateValue, 'this.toDateValue', this.toDateValue);
-        this.fromDateValue = new Date();
-        this.fromDateValue = this.getFromDate();
-        console.log('this.fromDateValue after', this.fromDateValue, 'this.toDateValue', this.toDateValue);
-        this.searchValue = {keyword: '', fromDate: this.fromDateValue, toDate: this.toDateValue};
+        let today = new Date();
+        let fromDate = this.getFromDate(today);
+        console.log('this.fromDateValue after', fromDate);
+        this.searchValue = {keyword: '', fromDate, toDate: today};
+        this.minDate = fromDate;
         this._fuseSidebarService.getSidebar(name).toggleOpen();
     }
-    getFromDate() {
-        let date = this.toDateValue;
-        date.setDate(date.getDate() - 7);
+    getFromDate(value) {
+        let date = new Date(value);
+        date.setDate(date.getDate() - 6);
         return date;
     }
 
@@ -167,21 +156,40 @@ export class ChatComponent implements OnInit, OnDestroy {
         } 
         this.dataSource.filter = filterValue;
     }
+    dateChanges(event, type) {
+        console.log('event', event, type);
+    }
+    checkForDate(date1, date2) {
+        var Difference_In_Time = date2.getTime() - date1.getTime();
+        return Math.round(Difference_In_Time / (1000 * 3600 * 24));
+    
+    }
     searchByDate(value) {
+        this.errorForCount = false;
         console.log('searchby date', value);
         let token = this.airmsService.getToken();
         value.type = this.type;
-        value.fromDate = this.datePipe.transform(value.fromDate, "yyyy MM dd");
+        let checkDates = this.checkForDate(new Date(value.fromDate), new Date(value.toDate));
+        value.fromDate = moment(value.validFrom).format('YYYY-MM-DD');
+        value.toDate = moment(value.validFrom).format('YYYY-MM-DD');
+        
+        if (checkDates <=91) {
         console.log('searchby date formDate', value);
         this.searchSubscription = this.authService.getSearchDataForLogEntries(value, token).subscribe((res: any) => {
             if (value.type === 'Client Machine Log'){
+                res.sort((a, b) => b.id - a.id);
                 this.setDataSource(res, this.paginator3);
             } else if (value.type === 'Audit Log') {
+           res.sort((a, b) => b.id - a.id);
                 this.setDataSource(res, this.paginator2);
             } else {
+           res.sort((a, b) => b.id - a.id);
                 this.setDataSource(res, this.paginator1);
             }
         });
+    } else {
+        this.errorForCount = true;
+    }
     }
     getFullDate(date) {
         return this.datePipe.transform(new Date(date), 'MMM dd, yyyy hh:mm:ss a')
