@@ -37,10 +37,12 @@ color: white;
   </mat-form-field>
 </div>
 <div mat-dialog-actions style="padding: 15px;">
-  <button mat-raised-button color="basic" style="width: 100px;" (click)="cancel()">Cancel</button>
   <button mat-raised-button class="accent" style="width: 100px;" (click)="submit(configForm.value)"
-    *ngIf="!showDialogData">Submit</button>
+  *ngIf="!showDialogData">Submit</button>
   <button mat-raised-button class="accent" style="width: 100px;" (click)="save(configForm.value)" *ngIf="showDialogData">Save</button>
+
+  <button mat-raised-button color="basic" style="width: 100px;" (click)="cancel()">Cancel</button>
+ 
 </div>
 </form>
 
