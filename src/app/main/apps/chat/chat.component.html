@@ -2,16 +2,11 @@
   <div class="top-bg accent"></div>
   <div class="center">
     <!-- <div class="header accent" fxLayoutAlign="center center" fxLayoutAlign.gt-sm="space-between center"> -->
-    <div
-      class="header accent ml-24 mr-24"
-      fxLayout="column"
-      fxLayoutAlign="center center"
-      fxLayout.gt-sm="row"
-      fxLayoutAlign.gt-sm="space-between center"
-    >
+    <div class="header accent ml-24 mr-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+      fxLayoutAlign.gt-sm="space-between center">
       <!-- <div class="logo mb-24 mb-md-0 logo-display1" fxLayout="row" fxLayoutAlign="start center"> -->
-        <div class="logo mb-24 mb-md-0 logo-display3" fxLayout="row" fxLayoutAlign="start center">
-   
+      <div class="logo mb-24 mb-md-0 logo-display3" fxLayout="row" fxLayoutAlign="start center">
+
         <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
           desktop_mac
         </mat-icon>
@@ -20,20 +15,13 @@
         </span>
       </div>
       <div class="buttons2">
-      <!-- <div fxLayout="row" fxLayoutAlign="start center" class="button_align1"> -->
-        <button
-          mat-raised-button
-          class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0"
-          style="margin-right: 10px;"
-          (click)="toggleSidebar('project-dashboard-right-sidebar-1')"
-        >
+        <!-- <div fxLayout="row" fxLayoutAlign="start center" class="button_align1"> -->
+        <button mat-raised-button class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0"
+          style="margin-right: 10px;" (click)="toggleSidebar('project-dashboard-right-sidebar-1')">
           Filter By
         </button>
-        <button
-          mat-raised-button
-          class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0"
-          (click)="searchByKeyword('')"
-        >
+        <button mat-raised-button class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0"
+          (click)="searchByKeyword('')">
           Clear All
         </button>
       </div>
@@ -41,71 +29,64 @@
 
     <div class="content-card" id="cont_card">
       <div class="content">
-        <mat-tab-group
-          animationDuration="0ms"
-          (selectedTabChange)="getLogEntries($event.tab.textLabel)"
-          [hidden]="isLoading"
-          style="height: 100%;"
-        >
-          <mat-tab label="Field History" class="note_heading" *ngIf="roleName === 'Admin'"> 
-          
+        <mat-tab-group animationDuration="0ms" (selectedTabChange)="getLogEntries($event.tab.textLabel)"
+          [hidden]="isLoading" style="height: 100%;">
+          <mat-tab label="Field History" class="note_heading" *ngIf="roleName === 'Admin'">
+
             <div class="example-container3">
-              <mat-table
-                [dataSource]="dataSource"
-                [@animateStagger]="{ value: '50' }"
-              >
+              <mat-table [dataSource]="dataSource" [@animateStagger]="{ value: '50' }">
                 <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis; overflow: hidden;">
                   <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <span class="mobile-label">CreatedBy</span>
-                    <p class="text-truncate">{{ element.createdBy }}</p></mat-cell
-                  >
+                    <p>{{ element.createdBy }}</p>
+                  </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="screen" style="text-overflow: ellipsis;">
                   <mat-header-cell *matHeaderCellDef>Screen</mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <span class="mobile-label">Screen</span>
-                    <p>{{ element.screen }}</p></mat-cell
-                  >
-                <ng-container matColumnDef="whereArise" style="text-overflow: ellipsis;">
-                  <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
-                  <mat-cell *matCellDef="let element">
-                    <span class="mobile-label">WhereArise</span>
-                    <p>{{ element.whereArise }}</p></mat-cell
-                  >
-                </ng-container>
+                    <p>{{ element.screen }}</p>
+                  </mat-cell>
+                  <ng-container matColumnDef="whereArise" style="text-overflow: ellipsis;">
+                    <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                      <span class="mobile-label">WhereArise</span>
+                      <p>{{ element.whereArise }}</p>
+                    </mat-cell>
+                  </ng-container>
 
-             
+
                 </ng-container>
                 <ng-container matColumnDef="field" style="text-overflow: ellipsis;">
                   <mat-header-cell *matHeaderCellDef>Field</mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <span class="mobile-label">Field</span>
-                    <p>{{ element.field }}</p></mat-cell
-                  >
+                    <p>{{ element.field }}</p>
+                  </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="oldValue">
                   <mat-header-cell *matHeaderCellDef style="justify-content: center;">Old Value</mat-header-cell>
                   <mat-cell *matCellDef="let element" style="justify-content: center;">
                     <span class="mobile-label">Old Value</span>
-                    <p>{{ element.oldVal}}</p></mat-cell
-                  >
+                    <p>{{ element.oldVal}}</p>
+                  </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="newValue" style="text-overflow: ellipsis; overflow: hidden;">
                   <mat-header-cell *matHeaderCellDef style="justify-content: center;">New Value</mat-header-cell>
                   <mat-cell *matCellDef="let element" style="justify-content: center;">
                     <span class="mobile-label">New Value</span>
-                    <p>{{ element.newVal }}</p></mat-cell
-                  >
+                    <p>{{ element.newVal }}</p>
+                  </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
                   <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <span class="mobile-label">WhenOccur</span>
-                    <p class="text-truncate">{{ element.whenOccur }}</p></mat-cell
-                  >
+                    <p>{{ element.whenOccur }}</p>
+                  </mat-cell>
                 </ng-container>
 
                 <mat-header-row *matHeaderRowDef="displayedColumns_fieldHistory; sticky: true"></mat-header-row>
@@ -127,14 +108,8 @@
                 </div>
               </div>
             </div>
-            <mat-paginator
-              #paginator1
-              [length]="dataSource.filteredData.length"
-              [pageIndex]="0"
-              [pageSize]="5"
-              [pageSizeOptions]="[5, 10, 25, 100]"
-              [hidden]="isLoading" showFirstLastButtons
-            >
+            <mat-paginator #paginator1 [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+              [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading" showFirstLastButtons>
             </mat-paginator>
             <div class="note" [hidden]="isLoading">
               <p class="note_heading">Please Note</p>
@@ -145,21 +120,17 @@
               </ul>
             </div>
           </mat-tab>
-          <mat-tab label="Audit Log" class="note_heading"*ngIf="roleName === 'Admin' ||roleName === 'Manager'" >
-            
+          <mat-tab label="Audit Log" class="note_heading" *ngIf="roleName === 'Admin' ||roleName === 'Manager'">
+
 
             <div class="example-container4">
-              <mat-table
-                [dataSource]="dataSource"
-                class="log-table"
-                [@animateStagger]="{ value: '50' }"
-                [hidden]="isLoading"
-              >
-                <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
+              <mat-table [dataSource]="dataSource" class="log-table" [@animateStagger]="{ value: '50' }"
+                [hidden]="isLoading">
+                <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;" class="createdByAudit">
                   <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <span class="mobile-label">CreatedBy</span>
-                    <p class="text-truncate">{{ element.createdBy }}</p>
+                    <p>{{ element.createdBy }}</p>
                   </mat-cell>
                 </ng-container>
 
@@ -167,8 +138,7 @@
                   <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <span class="mobile-label">WhereArise</span>
-                    {{ element.whereArise }}</mat-cell
-                  >
+                    <p>{{ element.whereArise }}</p></mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="whatEnsue" style="text-overflow: ellipsis;">
@@ -183,7 +153,7 @@
                   <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <span class="mobile-label">WhenOccur</span>
-                    <p class="text-truncate">{{ element.whenOccur }}</p>
+                    <p>{{ element.whenOccur }}</p>
                   </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="displayedColumns_audit; sticky: true"></mat-header-row>
@@ -205,15 +175,8 @@
                 </div>
               </div>
             </div>
-            <mat-paginator
-              #paginator2
-              [length]="dataSource.filteredData.length"
-              [pageIndex]="0"
-              [pageSize]="5"
-              [pageSizeOptions]="[5, 10, 25, 100]"
-              [hidden]="isLoading"
-              showFirstLastButtons
-            >
+            <mat-paginator #paginator2 [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+              [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading" showFirstLastButtons>
             </mat-paginator>
             <div class="note" [hidden]="isLoading">
               <p class="note_heading">Please Note</p>
@@ -225,7 +188,8 @@
             </div>
           </mat-tab>
 
-          <mat-tab label="Client Machine Log" class="note_heading" *ngIf="roleName === 'Admin' ||roleName === 'Tech Support'">
+          <mat-tab label="Client Machine Log" class="note_heading"
+            *ngIf="roleName === 'Admin' ||roleName === 'Tech Support'">
             <div *ngIf="isLoading" class="Loading">
               <div class="spinner-wrapper">
                 <div class="spinner">
@@ -242,75 +206,61 @@
               </div>
             </div>
             <div class="example-container5">
-              <mat-table
-                [dataSource]="dataSource"
-                class="log-table"
-                [@animateStagger]="{ value: '50' }"
-                [hidden]="isLoading"
-              >
-              
+              <mat-table [dataSource]="dataSource" class="log-table" [@animateStagger]="{ value: '50' }"
+                [hidden]="isLoading">
+
 
                 <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
                   <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <span class="mobile-label">CreatedBy</span>
-                    <p class="text-truncate">{{ element.createdBy }}</p>
+                    <p>{{ element.createdBy }}</p>
                   </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="whichPlace" style="text-overflow: ellipsis;">
                   <mat-header-cell *matHeaderCellDef>Screen</mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <span class="mobile-label">Screen</span>
-                    {{ element.whichPlace }}</mat-cell
-                  >
+                   <p>{{ element.whichPlace }} </p> </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="whereAriseFunction" style="text-overflow: ellipsis;">
                   <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <span class="mobile-label">WhereArise</span>
-                    {{ element.whereArise }}</mat-cell
-                  >
+                    <p>{{ element.whereArise }}</p></mat-cell>
                 </ng-container>
-                
+
                 <ng-container matColumnDef="level" style="text-overflow: ellipsis;">
                   <mat-header-cell *matHeaderCellDef>Level</mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <span class="mobile-label">Level</span>
-                    {{ element.logLevel }}</mat-cell
-                  >
+                    <p>{{ element.logLevel }}</p></mat-cell>
                 </ng-container>
 
-            
 
-                
+
+
                 <ng-container matColumnDef="logMessage" style="text-overflow: ellipsis;">
                   <mat-header-cell *matHeaderCellDef>Message</mat-header-cell>
                   <mat-cell *matCellDef="let element">
-                    <span class="mobile-label">Log Message</span>
-                    {{ element.logMessage }}</mat-cell
-                  >
+                    <span class="mobile-label">Message</span>
+                    <p class="messagelabel">{{ element.logMessage }}</p></mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
                   <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <span class="mobile-label">WhenOccur</span>
-                    <p class="text-truncate">{{ element.whenOccur }}</p>
+                    <p>{{ element.whenOccur }}</p>
                   </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="displayedColumns_client; sticky: true"></mat-header-row>
-                <mat-row id="field-row" *matRowDef="let row; columns: displayedColumns_client" class="product"></mat-row>
+                <mat-row id="field-row" *matRowDef="let row; columns: displayedColumns_client" class="product">
+                </mat-row>
               </mat-table>
             </div>
-            <mat-paginator
-              #paginator3
-              [length]="dataSource.filteredData.length"
-              [pageIndex]="0"
-              [pageSize]="5"
-              [pageSizeOptions]="[5, 10, 25, 100]"
-              [hidden]="isLoading"
-              showFirstLastButtons
-            >
+            <mat-paginator #paginator3 [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+              [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading" showFirstLastButtons>
             </mat-paginator>
             <div class="note" [hidden]="isLoading">
               <p class="note_heading">Please Note</p>
@@ -325,12 +275,14 @@
       </div>
     </div>
   </div>
-  <fuse-sidebar class="sidebar" name="project-dashboard-right-sidebar-1" position="right" style="background-color: white;">
+  <fuse-sidebar class="sidebar" name="project-dashboard-right-sidebar-1" position="right"
+    style="background-color: white;">
     <div class="content" style="background-color: white;">
       <div style="padding: 18px;">
         <div class="header1" style="display: inline;">
           <div class="title1">Filter By</div>
-          <button mat-icon-button class="sidebar-toggle" (click)="toggleSidebarClosed('project-dashboard-right-sidebar-1')">
+          <button mat-icon-button class="sidebar-toggle"
+            (click)="toggleSidebarClosed('project-dashboard-right-sidebar-1')">
             <mat-icon class="secondary-text">arrow_forward</mat-icon>
           </button>
         </div>
@@ -340,13 +292,9 @@
               <mat-label>Keyword</mat-label>
               <input matInput type="text" name="keyword" id="keyword" [(ngModel)]="searchValue.keyword" />
               <div style="float: right; margin-top: -34px;">
-                <button
-                  mat-mini-fab
-                  color="accent"
-                  aria-label="Example icon button with a home icon"
+                <button mat-mini-fab color="accent" aria-label="Example icon button with a home icon"
                   (click)="searchByKeyword(searchValue)"
-                  (click)="toggleSidebarClosed('project-dashboard-right-sidebar-1')"
-                >
+                  (click)="toggleSidebarClosed('project-dashboard-right-sidebar-1')">
                   <mat-icon color="basic">search</mat-icon>
                 </button>
               </div>
@@ -355,17 +303,18 @@
             <mat-form-field appearance="outline">
               <mat-label>From</mat-label>
               <input matInput [matDatepicker]="pickerA" name="fromDate" id="fromDate
-              " [(ngModel)]="searchValue.fromDate" (dateChange)="dateChanges($event.target.value, 'from')"/>
+              " [(ngModel)]="searchValue.fromDate" (dateChange)="dateChanges($event.target.value, 'from')" />
               <mat-datepicker-toggle matSuffix [for]="pickerA"></mat-datepicker-toggle>
               <mat-datepicker #pickerA></mat-datepicker>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>To</mat-label>
-              <input matInput [matDatepicker]="pickerB" name="toDate" id="toDate" [min]="minDate" [max]="maxDate" [(ngModel)]="searchValue.toDate" (dateChange)="dateChanges($event.target.value, 'to')"/>
+              <input matInput [matDatepicker]="pickerB" name="toDate" id="toDate" [min]="minDate" [max]="maxDate"
+                [(ngModel)]="searchValue.toDate" (dateChange)="dateChanges($event.target.value, 'to')" />
               <mat-datepicker-toggle matSuffix [for]="pickerB"></mat-datepicker-toggle>
               <mat-datepicker #pickerB></mat-datepicker>
             </mat-form-field>
-            
+
             <button mat-raised-button color="accent" (click)="searchByDate(searchValue)">Search</button>
             <span *ngIf="errorForCount">Users can pull data for any 91 days only using Search</span>
           </form>

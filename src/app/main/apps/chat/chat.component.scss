@@ -59,10 +59,13 @@
   flex: 0 1 95px;
 }
 .mat-column-level {
-  flex: 0 1 60px;
+  flex: 0 1 49px;
 }
 .mat-column-createdBy {
-  flex: 0 1 143px;
+  flex: 0 1 182px;
+}
+.mat-column-field{
+  flex: 0 1 124px;
 }
 .mat-column-whereAriseScreen {
   flex: 1 1 143px;
@@ -71,8 +74,18 @@
   flex: 1 1 95px;
 }
 .mat-column-whatEnsue {
-  flex: 1 1 153px;
+  flex: 1 1 132px;
 }
+.mat-column-whichPlace {
+  flex: 0 1 132px;
+}
+.mat-column-whereAriseFunction{
+  flex: 0 1 132px;
+}
+.mat-column-whenOccur{
+  margin-left:10px;
+}
+
 
 // .mat-column-whereArise {
 //   flex: 0 1 242px;
@@ -165,7 +178,10 @@
     display: inline-block;
     font-weight: bold;
   }
+.messagelabel{
+  margin-left:37px!important;
 
+}
   .mat-header-row {
     display: none;
   }
@@ -240,8 +256,12 @@
   .buttons2{
     margin-bottom:88px
   }
+  .mat-column-whenOccur{
+    margin-left:0px;
+  }
 }
 @media screen and (orientation: landscape) and (max-width: 959px) {
+  
   #chat .top-bg {
     height: 163px;
   }
@@ -292,9 +312,7 @@
   .mat-column-newValue {
     flex: 0 1 46px;
   }
-  .mat-column-createdBy {
-    flex: 0 1 46px;
-  }
+
   .logo-display3{
   margin-top:12px
 }
@@ -307,6 +325,12 @@
 .mat-column-createdBy {
   flex: 0 1 105px;
 }
+.mat-column-whichPlace {
+  flex: 0 1 89px;
+}
+.mat-column-whereAriseFunction {
+  flex: 0 1 97px;
+}
  
 }
 @media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
@@ -315,7 +339,10 @@
     display: inline-block;
     font-weight: bold;
   }
-
+  .messagelabel{
+    margin-left:37px!important;
+  
+  }
   .mat-header-row {
     display: none;
   }
@@ -393,6 +420,9 @@
   .buttons2{
     margin-bottom:88px
   }
+  .mat-column-whenOccur{
+    margin-left:0px;
+  }
 }
 @media only screen and (device-width: 768px) and (device-height: 1024px) and(orientation : portrait) {
   #chat > .center > .header {
@@ -407,4 +437,13 @@
   .buttons2{
     margin-bottom:80px;
   }
+  .mat-column-whichPlace {
+    flex: 0 1 121px;
+}
+.mat-column-oldValue {
+  flex: 0 1 33px;
+}
+.mat-column-newValue {
+  flex: 0 1 33px;
+}
 }

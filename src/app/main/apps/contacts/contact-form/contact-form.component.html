@@ -16,6 +16,9 @@
         </span>
       </div>
       <div class="buttons1">
+        <button mat-raised-button color="basic" class="mr-8 save-button" aria-label="Cancel" (click)="cancelEdit()">
+          Cancel
+        </button>
         <button mat-raised-button color="basic" class="save-button" aria-label="SAVE" style="margin-right: 10px;"
           (click)="updateRole(roleMgmtForm.value)" *ngIf="roleId !== 0">
           Save
@@ -24,10 +27,9 @@
           (click)="updateRole(roleMgmtForm.value)" *ngIf="roleId === 0">
           Add
         </button>
-        <button mat-raised-button color="basic" class="mr-8 save-button" aria-label="Cancel" (click)="cancelEdit()">
-          Cancel
-        </button>
+       
       </div>
+      
     </div>
     <div class="content-card">
       <div class="content">
