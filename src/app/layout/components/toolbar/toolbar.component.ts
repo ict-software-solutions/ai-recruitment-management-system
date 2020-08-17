@@ -218,9 +218,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
     }
     logoutAIRMS() {
+        this.logUserActivity("Logout", LOG_MESSAGES.CLICK);
         this.authService.logout();
         this.router.navigate(['']);
-        this.logUserActivity("Logout", LOG_MESSAGES.CLICK);
     }
 
     unsubscribe(subscription: Subscription) {

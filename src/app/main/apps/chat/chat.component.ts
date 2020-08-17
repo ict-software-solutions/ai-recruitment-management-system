@@ -103,7 +103,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.logUserActivity("System Activities - Audit Log", LOG_MESSAGES.CLICK);
         this.dataSource.data = [];
         this.authService.getAuditLogEntries().subscribe((res: any) => {
-    //    res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
         this.setDataSource(res, this.paginator2);
         }, error => {
         this.logService.logError(LOG_LEVELS.ERROR, "System Activities", "On fetching Audit Log", JSON.stringify(error));
@@ -113,7 +112,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.logUserActivity("System Activities - Client Machine Log", LOG_MESSAGES.CLICK);
         this.dataSource.data = [];
         this.authService.getClientLogEntries().subscribe((res: any) => {
-         //   res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
             this.setDataSource(res, this.paginator3);
         }, error => {
         this.logService.logError(LOG_LEVELS.ERROR, "System Activities", "On fetching Client Machine Log", JSON.stringify(error));
@@ -125,8 +123,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.logUserActivity("System Activities - Field History", LOG_MESSAGES.CLICK);
         this.authService.getFieldHistory().subscribe((res:any) => {
             console.log('res field history', res);
-       //     res.sort((a, b) => new Date(b.whenOccur).getTime() - new Date(a.whenOccur).getTime());
-            //this.fieldHistorySort.sort(({ id: 'whenOccur', start: 'desc' }) as MatSortable);
             this.setDataSource(res, this.paginator1);
         }, error => {
         this.logService.logError(LOG_LEVELS.ERROR, "System Activities", "On fetching Field History", JSON.stringify(error));
