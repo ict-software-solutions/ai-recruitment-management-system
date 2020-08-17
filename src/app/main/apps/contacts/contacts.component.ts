@@ -141,8 +141,10 @@ export class ContactsComponent implements OnInit, OnDestroy {
       }
     
 searchFromTable(filterValue) {
+  console.log('filterValue', filterValue);
   filterValue = filterValue.trim().toLowerCase();
   this.dataSource.filter = filterValue;
+  console.log('this.dataSource.filter', this.dataSource.filter);
 }
 
       ngOnDestroy(): void {

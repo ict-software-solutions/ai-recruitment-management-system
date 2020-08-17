@@ -190,9 +190,13 @@ export class FormsComponent implements OnInit, OnDestroy {
         this.userForm.controls["roleId"].patchValue(this.userDetails.roles.roleId);
         if (this.userDetails.validFrom !== null) {
           this.userForm.controls['validFrom'].patchValue(new Date(this.userDetails.validFrom));
+          this.minDate = new Date(this.userDetails.validFrom);
         }
         if (this.userDetails.validTill !== null) {
           this.userForm.controls['validTo'].patchValue(new Date(this.userDetails.validTill));
+        }
+        if (this.userDetails.passwordSince !== null) {
+          this.userForm.controls['passwordSince'].patchValue(new Date(this.userDetails.passwordSince));
         }
         if (this.userDetails.profileImage !== null && this.userDetails.profileImage !== "") {
           this.userDetails.profileImage = atob(this.userDetails.profileImage);

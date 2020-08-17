@@ -186,14 +186,15 @@ export class AuthService {
       "fromDate": object.fromDate,
       "toDate": object.toDate
     }
-  
+    let url;
     if (object.type === 'Audit Log') {
-    return this.httpClient.post(apiURL.AUDITLOG_SEARCH_URL, params, httpOptions);
+      url = apiURL.AUDITLOG_SEARCH_URL;
     } else if (object.type === 'Client Machine Log') {
-      return this.httpClient.post(apiURL.CLIENTLOG_SEARCH_URL, params, httpOptions);
+      url = apiURL.CLIENTLOG_SEARCH_URL;
     } else {
-      return this.httpClient.post(apiURL.FIELDHISTORY_SEARCH_URL, params, httpOptions);
+      url = apiURL.FIELDHISTORY_SEARCH_URL;
     }
+     return this.httpClient.post(url, params, httpOptions);
   }
   logout() {
     sessionStorage.clear();

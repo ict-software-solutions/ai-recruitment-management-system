@@ -118,9 +118,9 @@ export class ContactsContactFormDialogComponent {
       screenMapping: items,
     };
     if (this.roleId === 0) {
-      updateObject["createdBy"] = this.userName;
+      updateObject["createdBy"] = this.airmsService.getUserFirstLastName();
     } else {
-      updateObject["modifiedBy"] = this.userName;
+      updateObject["modifiedBy"] = this.airmsService.getUserFirstLastName();
     }
     this.updateRoleSubscription = this.authService.updateRolesInfo(updateObject).subscribe(
       (res) => {

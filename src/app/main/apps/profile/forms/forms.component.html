@@ -237,7 +237,7 @@
               <mat-form-field appearance="outline" fxFlex="82%" *ngIf="showForMyProfile === false && userId != 0"
                 style="width: 232px;">
                 <mat-label>Valid From</mat-label>
-                <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom" 
+                <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom" [min]="minDate"
                   [readonly]="viewMode" (dateChange)="dateChanges($event.target.value, 'from')"/>
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1 ></mat-datepicker>
@@ -265,9 +265,9 @@
               <mat-form-field appearance="outline" fxFlex="33%" style="width: 232px;">
                 <mat-label>Password Since</mat-label>
                 <input matInput [matDatepicker]="picker2" name="passwordSince" formControlName="passwordSince"
-                  [readonly]="viewMode" />
-                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
+                  readonly />
+                <mat-datepicker-toggle matSuffix [for]="picker2" disabled></mat-datepicker-toggle>
+                <mat-datepicker #picker2 disabled></mat-datepicker>
               </mat-form-field>
 
               <mat-form-field appearance="outline" fxFlex="34%" style="width: 232px;">
@@ -323,7 +323,7 @@
               *ngIf="showForAddEditUser === false && userId === 0" style="margin-top: 12px;">
               <mat-form-field appearance="outline" fxFlex="33%" style="width: 232px;">
                 <mat-label>Valid From</mat-label>
-                <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom" 
+                <input matInput [matDatepicker]="picker1" name="validFrom" formControlName="validFrom" [min]="minDate"
                   [readonly]="viewMode" (dateChange)="dateChanges($event.target.value, 'from')"/>
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1 ></mat-datepicker>

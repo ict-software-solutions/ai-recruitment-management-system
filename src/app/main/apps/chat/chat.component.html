@@ -302,21 +302,22 @@
             <p style="text-align: center; margin-top: -5px; color: #0066ff;">or</p>
             <mat-form-field appearance="outline">
               <mat-label>From</mat-label>
-              <input matInput [matDatepicker]="pickerA" name="fromDate" id="fromDate
-              " [(ngModel)]="searchValue.fromDate" (dateChange)="dateChanges($event.target.value, 'from')" />
+              <input matInput [matDatepicker]="pickerA" name="fromDate" id="fromDate" [max]="maxDate"
+               [(ngModel)]="searchValue.fromDate" (dateChange)="dateChanges($event.target.value, 'from')"/>
               <mat-datepicker-toggle matSuffix [for]="pickerA"></mat-datepicker-toggle>
               <mat-datepicker #pickerA></mat-datepicker>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>To</mat-label>
-              <input matInput [matDatepicker]="pickerB" name="toDate" id="toDate" [min]="minDate" [max]="maxDate"
-                [(ngModel)]="searchValue.toDate" (dateChange)="dateChanges($event.target.value, 'to')" />
+              <input matInput [matDatepicker]="pickerB" name="toDate" id="toDate" [min]="minDate" [(ngModel)]="searchValue.toDate" (dateChange)="dateChanges($event.target.value, 'to')"/>
               <mat-datepicker-toggle matSuffix [for]="pickerB"></mat-datepicker-toggle>
               <mat-datepicker #pickerB></mat-datepicker>
             </mat-form-field>
 
             <button mat-raised-button color="accent" (click)="searchByDate(searchValue)">Search</button>
-            <span *ngIf="errorForCount">Users can pull data for any 91 days only using Search</span>
+            <div>      
+                    <mat-error *ngIf="errorForCount">Users can pull data for any 91 days only using Search</mat-error>
+                  </div>
           </form>
         </div>
         <div></div>

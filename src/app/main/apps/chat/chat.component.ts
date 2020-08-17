@@ -14,8 +14,6 @@ import { LogService } from 'app/service/shared/log.service';
 import * as moment from 'moment'; 
 import Swal from 'sweetalert2';
 
-// import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-
 export interface PeriodicElement {
     createdBy: string;
     whereArise: string;
@@ -133,6 +131,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         data.forEach(item => {
             item.whenOccur = this.getFullDate(item.whenOccur);
         });
+        data.sort((a, b) => b.id - a.id);
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = paginator;
         this.isLoading = false;
@@ -159,39 +158,44 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
     dateChanges(event, type) {
         console.log('event', event, type);
+        if (type== 'from') {
+            this.minDate = event;
+        } else {
+            this.maxDate = event;
+        }
     }
     checkForDate(date1, date2) {
-        var Difference_In_Time = date2.getTime() - date1.getTime();
+        console.log('searchby date check for dates 123', date1, date2);
+        var dateFrom = new Date(date1);
+        var dateTo = new Date(date2);
+        var Difference_In_Time = dateTo.getTime() - dateFrom.getTime();
         return Math.round(Difference_In_Time / (1000 * 3600 * 24));
     
     }
     searchByDate(value) {
         this.errorForCount = false;
-        console.log('searchby date', value);
         let token = this.airmsService.getToken();
         value.type = this.type;
-        let checkDates = this.checkForDate(new Date(value.fromDate), new Date(value.toDate));
-        value.fromDate = moment(value.validFrom).format('YYYY-MM-DD');
-        value.toDate = moment(value.validFrom).format('YYYY-MM-DD');
-        
+        let checkDates = this.checkForDate(value.fromDate, value.toDate);
+        value.fromDate = moment(value.fromDate).format('YYYY-MM-DD');
+        value.toDate = moment(value.toDate).format('YYYY-MM-DD');
         if (checkDates <=91) {
         console.log('searchby date formDate', value);
         this.searchSubscription = this.authService.getSearchDataForLogEntries(value, token).subscribe((res: any) => {
             if (value.type === 'Client Machine Log'){
-                res.sort((a, b) => b.id - a.id);
                 this.setDataSource(res, this.paginator3);
             } else if (value.type === 'Audit Log') {
-           res.sort((a, b) => b.id - a.id);
                 this.setDataSource(res, this.paginator2);
             } else {
-           res.sort((a, b) => b.id - a.id);
                 this.setDataSource(res, this.paginator1);
             }
+           this.toggleSidebarClosed('project-dashboard-right-sidebar-1');
         });
     } else {
         this.errorForCount = true;
     }
     }
+    
     getFullDate(date) {
         return this.datePipe.transform(new Date(date), 'MMM dd, yyyy hh:mm:ss a')
     }

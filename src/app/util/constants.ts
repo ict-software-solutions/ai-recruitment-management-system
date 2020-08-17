@@ -11,16 +11,16 @@ export const apiURL = {
     'CHANGE_PASSWORD': environment.url + 'user/setNewPassword',
     'ROLES':environment.url + 'roles',
     'ADDUSER_URL':environment.url + 'user/addUser',
-    'CLIENT_LOG_URL': environment.url + 'clientLogs',
+    'CLIENT_LOG_URL': environment.url + 'clientLog',
     'AUDIT_LOG_URL': environment.url + 'auditLog',
     'CONFIG_URL': environment.url + 'config',
     'UPDATE_CONFIG_URL': environment.url + 'config/update',
     'RESET_CONFIG_URL': environment.url + 'config/reset',
     'VALIDATE_USER_URL': environment.url + 'user/validateUser',
     'FIELD_HISTORY_URL': environment.url + 'field-history',
-    'AUDITLOG_SEARCH_URL': environment.url + 'auditLog/search',
-    'CLIENTLOG_SEARCH_URL': environment.url + 'clientLogs/search',
-    'FIELDHISTORY_SEARCH_URL': environment.url + 'field-history/search'
+    'AUDITLOG_SEARCH_URL': environment.url + 'auditLog/searchLog',
+    'CLIENTLOG_SEARCH_URL': environment.url + 'clientLog/searchLog',
+    'FIELDHISTORY_SEARCH_URL': environment.url + 'field-history/searchLog'
 }
 
 export const TROY_LOGO = "assets/images/logos/troy.png";

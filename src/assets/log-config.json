@@ -11,7 +11,7 @@
   },
   {
     "loggerName": "clientlog",
-    "loggerLocation": "clientLogs",
+    "loggerLocation": "clientLog",
     "isActive": true
   },
   {
