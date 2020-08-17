@@ -170,13 +170,13 @@ form {
 .status {
   margin-left: 8px;
 }
-.header{
-flex-flow: row wrap;
-    box-sizing: border-box;
-    display: flex;
-    place-content: center;
-    align-items: center;
-    justify-content: space-between;
+.header {
+  flex-flow: row wrap;
+  box-sizing: border-box;
+  display: flex;
+  place-content: center;
+  align-items: center;
+  justify-content: space-between;
 }
 @media only screen and (max-width: 400px) {
   .space {
@@ -214,12 +214,15 @@ flex-flow: row wrap;
     margin: 0px 4px;
     font-size: 10px;
   }
-  .logo-display2{
-  margin-left: 114px;
-  margin-top: 20px;
+  .logo-display2 {
+    margin-left: 114px;
+    margin-top: 20px;
   }
-  .buttons1{
-    margin-right:50px;
+  .buttons1 {
+    margin-right: 50px;
+  }
+  #cont-card-role {
+    margin-top: -41px;
   }
 }
 
@@ -231,7 +234,7 @@ flex-flow: row wrap;
     height: 102px !important;
     min-height: 102px !important;
     max-height: 192px !important;
-    justify-content: space-between!important;
+    justify-content: space-between !important;
   }
   #contacts > .center > .header .search-wrapper {
     width: 41% !important;
@@ -249,7 +252,7 @@ flex-flow: row wrap;
     margin-right: 0px;
   }
   .button_align {
-    margin-top: 0px!important;
+    margin-top: 0px !important;
   }
   .add-all-btn {
     float: right;
@@ -278,7 +281,10 @@ flex-flow: row wrap;
     border-radius: 4px;
     overflow: hidden;
     display: block;
-}
+  }
+  .logo-display2 {
+    margin-top: 21px;
+  }
 }
 
 @media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
@@ -317,13 +323,16 @@ flex-flow: row wrap;
     margin: 0px 4px;
     font-size: 10px;
   }
-  .logo-display2{
+  .logo-display2 {
     margin-left: 114px;
     margin-top: 20px;
-    }
-    .buttons1{
-      margin-right:81px!important;
-    }
+  }
+  .buttons1 {
+    margin-right: 81px !important;
+  }
+  #cont-card-role {
+    margin-top: -41px;
+  }
 }
 @media only screen and (device-width: 768px) and (device-height: 1024px) and(orientation : portrait) {
   .mat-card {
@@ -333,20 +342,20 @@ flex-flow: row wrap;
     padding: 16px;
     border-radius: 4px;
     margin-top: 28px;
-}
-.example-list {
-  border: solid 1px #ccc;
-  min-height: 29em;
-  background: #eeeded;
-  border-radius: 4px;
-  overflow: hidden;
-  display: block;
-}
-#contacts > .center > .header {
-  // padding: 8px 0;
-  height: 102px !important;
-  min-height: 102px !important;
-  max-height: 192px !important;
-  justify-content: space-between !important;
-}
+  }
+  .example-list {
+    border: solid 1px #ccc;
+    min-height: 29em;
+    background: #eeeded;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+  }
+  #contacts > .center > .header {
+    // padding: 8px 0;
+    height: 102px !important;
+    min-height: 102px !important;
+    max-height: 192px !important;
+    justify-content: space-between !important;
+  }
 }

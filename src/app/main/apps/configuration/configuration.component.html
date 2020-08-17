@@ -10,7 +10,7 @@
           Config Management
         </span>
         <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-sm-show add-button2"
-          (click)="openDialog({}, 'resetall')" *ngIf="roleName === 'Admin'">
+          style="width:100%;" (click)="openDialog({}, 'resetall')" *ngIf="roleName === 'Admin'">
           Reset All
         </button>
       </div>
@@ -26,7 +26,7 @@
       </button>
     </div>
     <div class="content-card">
-     
+
       <div class="example-container2">
         <mat-table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }" class="table-log">
           <ng-container matColumnDef="name" style="text-overflow: ellipsis; overflow: hidden;">
@@ -68,7 +68,7 @@
           <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns" layout-gt-xs-height:100px></mat-row>
         </mat-table>
-        
+
       </div>
       <mat-paginator #paginator [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"> </mat-paginator>
     </div>

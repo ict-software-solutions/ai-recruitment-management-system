@@ -1,6 +1,6 @@
 @import "src/@fuse/scss/fuse";
 
-#contacts {
+#contacts1 {
   .top-bg {
     @include media-breakpoint("lt-md") {
       height: 256px;
@@ -65,7 +65,9 @@
 .header-display {
   display: flex;
 }
-mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
+mat-cell:first-of-type,
+mat-header-cell:first-of-type,
+mat-footer-cell:first-of-type {
   padding-left: 40px;
 }
 @media only screen and (max-width: 400px) {
@@ -83,30 +85,30 @@ mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-
     margin-left: 74px;
     margin-bottom: 18px;
   }
-  .logo-display {
+  .logo-display-role {
     margin-bottom: 10px;
   }
   .header-display {
     display: block !important;
   }
-  #contacts > .center > .header .search-wrapper {
+  #contacts1 > .center > .header .search-wrapper {
     margin-right: 0px;
     margin-left: 0px;
     width: 100%;
   }
 }
 @media screen and (orientation: landscape) and (max-width: 959px) {
-  #contacts .top-bg {
+  #contacts1 .top-bg {
     height: 163px;
   }
-  #contacts > .center > .header {
+  #contacts1 > .center > .header {
     // padding: 8px 0;
     height: 102px !important;
     min-height: 102px !important;
     max-height: 192px !important;
     justify-content: space-between !important;
   }
-  #contacts > .center > .header .search-wrapper {
+  #contacts1 > .center > .header .search-wrapper {
     width: 41% !important;
   }
   .logo-text.h1 {
@@ -117,12 +119,12 @@ mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-
     margin-left: 20px;
     margin-bottom: 18px;
   }
-  .logo-display {
+  .logo-display-role {
     margin-top: 24px;
   }
 }
 @media screen and (min-width: 600px) {
-  #contacts > .center > .header .search-wrapper {
+  #contacts1 > .center > .header .search-wrapper {
     width: 41%;
   }
 }
@@ -141,25 +143,32 @@ mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-
     margin-left: 124px;
     margin-bottom: 18px;
   }
-  .logo-display {
+  .logo-display-role {
     margin-bottom: 10px;
   }
   .header-display {
     display: block !important;
   }
-  #contacts > .center > .header .search-wrapper {
+  #contacts1 > .center > .header .search-wrapper {
     width: 100% !important;
     margin-left: 0px;
     margin-right: 0px;
   }
 }
 @media only screen and (device-width: 768px) and (device-height: 1024px) and(orientation : portrait) {
-  #contacts > .center > .header {
+  #contacts1 > .center > .header {
     // padding: 8px 0;
     height: 102px !important;
     min-height: 102px !important;
     max-height: 192px !important;
     justify-content: space-between !important;
+    margin-top: 45px;
+  }
+  #cont-card-role-list {
+    margin-top: 48px;
+  }
+  .logo-display-role {
+    margin-top: 22px;
   }
 }
 

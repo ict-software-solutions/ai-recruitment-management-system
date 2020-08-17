@@ -27,11 +27,9 @@
           (click)="updateRole(roleMgmtForm.value)" *ngIf="roleId === 0">
           Add
         </button>
-       
       </div>
-      
     </div>
-    <div class="content-card">
+    <div class="content-card" id="cont-card-role">
       <div class="content">
         <form class="mat-elevation-z4 p-24" name="form" [formGroup]="roleMgmtForm">
           <div fxLayout="row" fxLayoutAlign="start center" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%">
