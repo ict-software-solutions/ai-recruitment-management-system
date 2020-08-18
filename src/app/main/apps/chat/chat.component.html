@@ -19,7 +19,7 @@
           </button>
           <button mat-raised-button
             class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-sm-show"
-            (click)="searchByKeyword('')">
+            (click)="clearAll(type)">
             Clear All
           </button>
         </div>
@@ -33,7 +33,7 @@
           </button>
           <button mat-raised-button
             class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-lg-show"
-            (click)="searchByKeyword('')">
+            (click)="clearAll(type)">
             Clear All
           </button>
         </div>
@@ -325,6 +325,21 @@
             </mat-form-field>
 
             <button mat-raised-button color="accent" (click)="searchByDate(searchValue)">Search</button>
+            <div *ngIf="isLoading" class="Loading">
+              <div class="spinner-wrapper">
+                <div class="spinner">
+                  <div class="inner">
+                    <div class="gap"></div>
+                    <div class="left">
+                      <div class="half-circle"></div>
+                    </div>
+                    <div class="right">
+                      <div class="half-circle"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="container" style="width:240px;margin-top:10px;">
               <p>
                 <mat-error *ngIf="errorForCount" class="error-message">Users can pull data for only 91 days using Search

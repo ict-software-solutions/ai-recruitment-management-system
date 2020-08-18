@@ -193,7 +193,7 @@ export class FormsComponent implements OnInit, OnDestroy {
           this.minDate = new Date(this.userDetails.validFrom);
         }
         if (this.userDetails.validTill !== null) {
-          this.userForm.controls['validTo'].patchValue(new Date(this.userDetails.validTill));
+          this.userForm.controls['validTill'].patchValue(new Date(this.userDetails.validTill));
         }
         if (this.userDetails.passwordSince !== null) {
           this.userForm.controls['passwordSince'].patchValue(new Date(this.userDetails.passwordSince));

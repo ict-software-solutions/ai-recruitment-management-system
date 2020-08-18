@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: ["", [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
     });
     const firstParam: string = this.route.snapshot.queryParamMap.get("status");
-    if (firstParam === "'active'") {
+    if (firstParam === '"active"') {
       Swal.fire({
         position: "center",
         icon: "success",

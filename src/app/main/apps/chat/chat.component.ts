@@ -58,6 +58,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     minDate = new Date();
     errorForCount = false;
     roleName: string;
+    logTypeScreen: string;
     constructor(
         public dialog: MatDialog,
         private datePipe: DatePipe,
@@ -149,6 +150,10 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
     }
 
+    clearAll(type) {
+        console.log('type', type);
+        this.getLogEntries(type);
+    }
     searchByKeyword(value) {
         let filterValue = ''
         if (value !== '') {
@@ -174,6 +179,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
     searchByDate(value) {
         this.errorForCount = false;
+        this.isLoading = true;
         let token = this.airmsService.getToken();
         value.type = this.type;
         let checkDates = this.checkForDate(value.fromDate, value.toDate);
@@ -182,6 +188,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (checkDates <=91) {
         console.log('searchby date formDate', value);
         this.searchSubscription = this.authService.getSearchDataForLogEntries(value, token).subscribe((res: any) => {
+            this.isLoading = false;
             if (value.type === 'Client Machine Log'){
                 this.setDataSource(res, this.paginator3);
             } else if (value.type === 'Audit Log') {
@@ -192,6 +199,7 @@ export class ChatComponent implements OnInit, OnDestroy {
            this.toggleSidebarClosed('project-dashboard-right-sidebar-1');
         });
     } else {
+        this.isLoading = false;
         this.errorForCount = true;
     }
     }

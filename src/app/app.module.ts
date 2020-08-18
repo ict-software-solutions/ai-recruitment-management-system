@@ -9,7 +9,6 @@ import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from
 import { FuseModule } from "@fuse/fuse.module";
 import { FuseSharedModule } from "@fuse/shared.module";
 import { Keepalive, NgIdleKeepaliveModule } from "@ng-idle/keepalive";
-import { TranslateModule } from "@ngx-translate/core";
 import { InMemoryWebApiModule } from "angular-in-memory-web-api";
 import { AppComponent } from "app/app.component";
 import { FakeDbService } from "app/fake-db/fake-db.service";
@@ -22,6 +21,8 @@ import { AuthGuard } from './service/shared/auth.guard';
 import { LogPublishersService } from "./service/shared/log-publishers.service";
 import { LogService } from "./service/shared/log.service";
 import { TokenInterceptor } from './service/shared/token.interceptor';
+import { TranslateModule } from '@ngx-translate/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 const appRoutes: Routes = [
     {
@@ -73,6 +74,7 @@ const appRoutes: Routes = [
             useClass: TokenInterceptor,
             multi: true
         }, LogService, LogPublishersService, Keepalive,
+        { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
         AuthGuard],
 
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
