@@ -48,7 +48,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
   ) { this.logUserActivity("User Management", LOG_MESSAGES.CLICK); 
     this.roleName = airmsService.getUserRole();
     if (this.roleName !== 'Admin') {
-      this.displayedColumns = ["image", "firstName", "lastName", "userType", "roleName", "activated"];
+      this.displayedColumns = ["image","firstName", "lastName", "userType", "roleName", "activated"];
     }
 }
 
@@ -68,6 +68,9 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy {
         res.forEach((user) => {
           if (user["profileImage"] !== null && user["profileImage"] !== "") {
             user["profileImage"] = atob(user["profileImage"]);
+          }
+          if(user['roles']!== null) {
+            user["roleName"] = user['roles']['roleName'];
           }
         });
         this.isLoading = false;

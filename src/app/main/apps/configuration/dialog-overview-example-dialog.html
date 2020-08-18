@@ -33,7 +33,7 @@ color: white;
   <p>The default value is {{displayData.value}}</p>
   <mat-form-field appearance="outline" style="width: 250px;">
     <input type="number" class="form-control" matInput name="value" placeholder="Count" 
-      formControlName="count" />
+      formControlName="count" min=0 oninput="validity.valid||(value='');"/>
   </mat-form-field>
 </div>
 <div mat-dialog-actions style="padding: 15px;">
