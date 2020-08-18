@@ -150,7 +150,7 @@ e-commerce-products {
     margin-left: -14px;
   }
   .add-button {
-    margin-left: 74px;
+    margin-left: 86px;
     margin-bottom: 18px;
   }
   .logo-display {
@@ -263,4 +263,9 @@ e-commerce-products {
   .logo-display {
     margin-bottom: 10px;
   }
+}
+@media only screen and (device-width: 768px) and (device-height: 1024px) and(orientation : portrait) {
+.logo-display{
+  margin-top: 22px;
+}
 }

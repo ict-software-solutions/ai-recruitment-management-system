@@ -160,7 +160,7 @@ mat-footer-cell:first-of-type {
   .example-container2 {
     display: flex;
     flex-direction: column;
-    height: 148px;
+    height: 256px;
     min-width: 300px;
     overflow: auto;
   }
@@ -234,5 +234,8 @@ mat-footer-cell:first-of-type {
   }
   #configuration > .center > .header .search-wrapper {
     width: 39%;
+  }
+  .logo-display{
+    margin-top:22px;
   }
 }

@@ -261,16 +261,20 @@
   }
   .logo-display3 {
     margin-top: 20px;
-    margin-left: 86px;
+    margin-left: 101px;
   }
   .button-list {
     .buttons-show {
-      margin-left: 70px;
+      margin-left: 81px;
       margin-top: -24px;
     }
   }
 }
 @media screen and (orientation: landscape) and (max-width: 959px) {
+  #cont-landscape{
+    height:300px!important;
+    overflow:scroll;
+  }
   #chat .top-bg {
     height: 163px;
   }
@@ -424,17 +428,30 @@
   }
   .logo-display3 {
     margin-top: 20px;
+    
   }
   .button-list {
     margin-top: 0px;
   }
   .logo-display3 {
     margin-top: 20px;
-    margin-left: 110px;
+    margin-left: 120px;
   }
   .button-list {
     .buttons-show {
-      margin-left: 95px;
+      margin-left: 104px;
+      margin-top: -24px;
+    }
+  }
+}
+@media only screen and (device-width: 768px) and (device-height: 1024px) and(orientation : portrait) {
+  .logo-display3 {
+    margin-top: 20px;
+    margin-left: 120px;
+  }
+  .button-list {
+    .buttons-show {
+      margin-left: 104px;
       margin-top: -24px;
     }
   }
@@ -458,6 +475,6 @@
   }
   .logo-display3 {
     margin-top: -40px;
-    // margin-left: 110px;
+    margin-left: 10px;
   }
 }

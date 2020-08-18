@@ -26,8 +26,10 @@
       </button>
     </div>
     <div class="content-card">
-
+      <div class="content">
+        
       <div class="example-container2">
+     
         <mat-table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }" class="table-log">
           <ng-container matColumnDef="name" style="text-overflow: ellipsis; overflow: hidden;">
             <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
@@ -68,9 +70,25 @@
           <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns" layout-gt-xs-height:100px></mat-row>
         </mat-table>
-
+        <div *ngIf="isLoading" class="Loading">
+          <div class="spinner-wrapper">
+            <div class="spinner">
+              <div class="inner">
+                <div class="gap"></div>
+                <div class="left">
+                  <div class="half-circle"></div>
+                </div>
+                <div class="right">
+                  <div class="half-circle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
       <mat-paginator #paginator [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"> </mat-paginator>
     </div>
+  </div>
   </div>
 </div>
