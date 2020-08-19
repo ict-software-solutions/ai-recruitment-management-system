@@ -45,7 +45,7 @@
       <div class="content">
         <mat-tab-group animationDuration="0ms" (selectedTabChange)="getLogEntries($event.tab.textLabel)"
           [hidden]="isLoading" style="height: 100%;">
-          <mat-tab label="Field History" class="note_heading" *ngIf="roleName === 'Admin'">
+          <mat-tab label="Field History" class="note_heading" *ngIf="roleName === 'Admin'||roleName === 'Tech Support'">
             <div class="example-container3">
               <mat-table [dataSource]="dataSource" [@animateStagger]="{ value: '50' }">
                 <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis; overflow: hidden;">
@@ -131,7 +131,7 @@
               </ul>
             </div>
           </mat-tab>
-          <mat-tab label="Audit Log" class="note_heading" *ngIf="roleName === 'Admin' || roleName === 'Manager'">
+          <mat-tab label="Audit Log" class="note_heading" *ngIf="roleName === 'Admin' || roleName === 'Manager' || roleName === 'Tech Support'">
             <div class="example-container4">
               <mat-table [dataSource]="dataSource" class="log-table" [@animateStagger]="{ value: '50' }"
                 [hidden]="isLoading">
