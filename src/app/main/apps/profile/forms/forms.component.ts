@@ -118,6 +118,7 @@ export class FormsComponent implements OnInit, OnDestroy {
       passwordExpiry: [""],
       passwordSince: [""],
       userName: ["", [Validators.minLength(6), Validators.maxLength(30), Validators.required, Validators.pattern(USERNAME_PATTERN)]],
+      locked: ['']
     });
 
     this.route.queryParams.subscribe((params) => {
@@ -185,6 +186,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     this.getUserInfoSubscription = this.authService.getProfileInfo(userId).subscribe(
       (res) => {
         this.userDetails = res;
+        console.log('user', res);
         this.userForm.patchValue(res);
         this.userForm.controls["userType"].patchValue(this.userDetails.userType);
         this.userForm.controls["roleId"].patchValue(this.userDetails.roles.roleId);
@@ -273,7 +275,7 @@ export class FormsComponent implements OnInit, OnDestroy {
     }
   }
   updateProfile(value) {
-    console.log('validFrom', value.validFrom);
+    console.log('validFrom', value);
     if (value.validFrom !== undefined) {
     value.validFrom = moment(value.validFrom).format('YYYY-MM-DD');
     } 
@@ -300,7 +302,8 @@ export class FormsComponent implements OnInit, OnDestroy {
         userType: value.userType,
         roleId: value.roleId,
         validFrom: value.validFrom,
-        validTill: value.validTill
+        validTill: value.validTill,
+        locked: value.locked
       };
       if (this.contactProfilePic !== null && this.contactProfilePic !== undefined && this.contactProfilePic !== "") {
         updateObject["profileImage"] = btoa(this.contactProfilePic);

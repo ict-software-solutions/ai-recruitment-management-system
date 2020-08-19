@@ -292,8 +292,8 @@
               <div fxFlex="33%" appearance="outline" *ngIf="userDetails?.locked === true">
                 <section class="tp-section">
                   <label class="example-margin">Account Status:</label>&nbsp;
-                  <input type="radio" value="activated" [checked]="false" name="status" /> Activated &nbsp;
-                  <input type="radio" value="locked" [checked]="true" name="status" /> Locked
+                  <input type="radio" [value]=false [checked]=false formControlName="locked"/> Activated &nbsp;
+                  <input type="radio" [value]=true [checked]=true  formControlName="locked"/> Locked
                 </section>
               </div>
               <div fxFlex="34%" class="px-8" appearance="outline" *ngIf="flagForScreen === 'editUser'">

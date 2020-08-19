@@ -521,8 +521,12 @@
   .messagelabel {
     font-size: 9px;
 }
-  .mat-column-level {
-    flex: 0 1 52px;
+ 
+.mat-column-level {
+  flex: 0 1 38px;
+}
+.mat-column-createdBy {
+flex: 0 1 87px;
 }
 }
 @media only screen and (device-width: 1024px) and (device-height: 768px) and(orientation : landscape) {
