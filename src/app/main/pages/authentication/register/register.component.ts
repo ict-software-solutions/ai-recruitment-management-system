@@ -92,7 +92,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.errorMessage = "User name already exists";
         }
         this.alreadyExist = true;
-        this.logService.logErrorForEmail(LOG_LEVELS.ERROR, value.emailAddress, "Register_Page", "on Register user", JSON.stringify(error));
+        this.logService.logErrorForEmail(LOG_LEVELS.ERROR, value.emailAddress, "Register Page", "on Register user", JSON.stringify(error));
         this.logUserActivityForEmail("CREATE AN ACCOUNT", value.emailAddress, LOG_MESSAGES.FAILURE);
       }
     );
