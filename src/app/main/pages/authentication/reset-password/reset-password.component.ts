@@ -97,7 +97,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     } else if (this.changePassword === false) {
       if (this.resetPasswordForm.get("password").value === this.resetPasswordForm.get("newPassword").value) {
         Swal.fire({
-          text: "New password cannot be same as Old Password",
+          title: "New password cannot be same as Old Password",
           icon: "warning",
           confirmButtonText: "OK",
         });
@@ -117,7 +117,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
       (error) => {
         if (error.error.message === "old password does not match") {
           Swal.fire({
-            text: "Current password does not match",
+            title: "Current password does not match",
             icon: "warning",
             confirmButtonText: "OK",
           });
@@ -132,7 +132,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
   passwordResetDone() {
     Swal.fire({
-      text: "Your Password has been Changed",
+      title: "Your Password has been Changed",
       icon: "success",
       confirmButtonText: "OK",
     }).then(() => {

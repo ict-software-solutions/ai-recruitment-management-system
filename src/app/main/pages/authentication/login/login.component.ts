@@ -221,7 +221,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.resendActivationMail(this.loginForm.value.userName).subscribe((res: any) => {
       if (res.message === "activation link send successfully") {
         Swal.fire({
-          text: "Activation link send your email successfully",
+          title: "Activation link sent to your mail successfully",
           icon: "success",
           showConfirmButton: true,
         });

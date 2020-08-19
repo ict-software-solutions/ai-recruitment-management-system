@@ -98,7 +98,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.resendMailSubscription =this.authService.resendActivationMail(this.registerForm.value.userName).subscribe((res: any) => {
       if (res.message === "activation link send successfully") {
         Swal.fire({
-          text: "Activation link send your email successfully",
+          title: "Activation link sent to your mail successfully",
           icon: "success",
           showConfirmButton: true,
         });

@@ -51,7 +51,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
                 Swal.fire({
                     position: 'center',
                     icon: 'warning',
-                    text: 'Incorrect Email address. Please enter a valid Email address',
+                    title: 'Incorrect Email address. Please enter a valid Email address',
                     showConfirmButton: true,
                 })
             }
@@ -62,7 +62,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         Swal.fire({
             position: 'center',
             icon: 'success',
-            text: 'Reset Password link sent to your email id',
+            title: 'Reset Password link sent to your mail suceessfully',
             confirmButtonText: 'OK',
         });
     }

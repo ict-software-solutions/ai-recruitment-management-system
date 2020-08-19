@@ -71,16 +71,22 @@
   flex: 1 1 143px;
 }
 .mat-column-logMessage {
-  flex: 1 1 95px;
+  flex: 6 1 277px;
+  
+}
+.messagelabel{
+  font-size:12px;
 }
 .mat-column-whatEnsue {
   flex: 1 1 132px;
 }
 .mat-column-whichPlace {
-  flex: 0 1 132px;
+  flex: 0 1 85px;
+
 }
 .mat-column-whereAriseFunction {
-  flex: 0 1 132px;
+  flex: 0 1 91px;
+
 }
 .mat-column-whenOccur {
   margin-left: 10px;
@@ -268,7 +274,15 @@
       margin-left: 81px;
       margin-top: -24px;
     }
+ }
+  .messagelabel {
+    // margin-left: 63px !important;
+    font-size: 7.5px;
+
   }
+  // .whenoccur-label{
+  //   margin-left: 63px !important;
+  // }
 }
 @media screen and (orientation: landscape) and (max-width: 959px) {
   #cont-landscape{
@@ -335,6 +349,19 @@
   }
   .button-list2 {
     margin-top: -3px;
+  }
+  .mat-column-whereAriseScreen {
+    flex: 1 1 143px;
+  }
+  .mat-column-logMessage {
+    flex: 6 1 277px;
+    
+  }
+  .messagelabel{
+    font-size:12px;
+  }
+  .mat-column-level {
+    flex: 0 1 49px;
   }
 }
 @media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
@@ -443,6 +470,14 @@
       margin-top: -24px;
     }
   }
+  .messagelabel {
+    // margin-left: 63px !important;
+    font-size: 7.5px;
+
+  }
+  // .whenoccur-label{
+  //   margin-left: 63px !important;
+  // }
 }
 @media only screen and (device-width: 768px) and (device-height: 1024px) and(orientation : portrait) {
   .logo-display3 {
@@ -464,9 +499,9 @@
     justify-content: space-between !important;
   }
 
-  .mat-column-whichPlace {
-    flex: 0 1 121px;
-  }
+  // .mat-column-whichPlace {
+  //   flex: 0 1 121px;
+  // }
   .mat-column-oldValue {
     flex: 0 1 33px;
   }
@@ -476,5 +511,17 @@
   .logo-display3 {
     margin-top: -40px;
     margin-left: 10px;
+  }
+  .mat-column-whichPlace {
+    flex: 0 1 85px;
+  
+  }
+  .mat-column-whereAriseFunction {
+    flex: 0 1 91px;
+  
+  }
+  .mat-column-logMessage {
+    flex: 6 1 277px;
+    font-size:12px;
   }
 }
