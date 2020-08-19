@@ -75,8 +75,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Active your account with the link sent to your email address",
+          title: "Activate your account with the link sent to your mail",
           showConfirmButton: true,
+        }).then((res)=> {
+          if (res.value === true) {
+            this.router.navigate([""]);
+          }
         });
 
         this.logUserActivityForEmail("CREATE AN ACCOUNT", value.emailAddress, LOG_MESSAGES.SUCCESS);

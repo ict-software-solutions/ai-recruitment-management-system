@@ -100,6 +100,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login(value) {
     this.loginClicked = true;
+    this.invalidData = true;
     this.logUserActivityForEmail("LOGIN", value.userName, LOG_MESSAGES.CLICK);
     this.inActive = true;
     this.errorMessage = "";

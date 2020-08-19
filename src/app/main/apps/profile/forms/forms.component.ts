@@ -336,8 +336,12 @@ export class FormsComponent implements OnInit, OnDestroy {
                 icon: "warning",
                 title: "You have made changes in Email or Username or Password",
                 confirmButtonText: "Ok",
+              }).then((res)=> {
+                if (res.value === true) {
+                  this.logoutAIRMS();
+                }
               });
-              this.logoutAIRMS();
+             
             } else {
               this.updateUserInLocalStorge(res);
               Swal.fire({
