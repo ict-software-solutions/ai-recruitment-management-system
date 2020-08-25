@@ -4,7 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dial
 import { MatTableDataSource } from "@angular/material/table";
 import Swal from "sweetalert2";
 import { AirmsService } from "app/service/airms.service";
-import { LOG_MESSAGES, LOG_LEVELS } from "app/util/constants";
+import { LOG_MESSAGES, LOG_LEVELS, CONFIG_DATA } from "app/util/constants";
 import { LogService } from "app/service/shared/log.service";
 import { AuthService } from "app/service/auth.service";
 import { Subscription } from "rxjs";
@@ -58,6 +58,7 @@ export class ConfigurationComponent implements OnInit {
         this.dataSource.data = data;
         this.dataSource.paginator = this.paginator;
         this.isLoading = false;
+        this.updateConfigData(res.sessionTimeoutMins);
       },
       (error) => {
         this.isLoading = false;
@@ -89,6 +90,13 @@ export class ConfigurationComponent implements OnInit {
   ngOnInit(): void {}
   logUserActivity(from, value) {
     this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
+  }
+  updateConfigData(data) {
+    let configData = {
+      'setTimeout': Number(data)
+    }
+    this.airmsService.setSessionStorage(CONFIG_DATA, configData);
+    this.authService.publishConfigData(true);
   }
 }
 @Component({

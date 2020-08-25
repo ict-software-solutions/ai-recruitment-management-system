@@ -2,13 +2,20 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { apiURL, LOGGED_IN_USER } from "app/util/constants";
 import { map } from "rxjs/operators";
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
   hasUserLoggedIn: boolean = false;
+  configUpdateSub = new BehaviorSubject<any>(null);
+  configUpdated$ = this.configUpdateSub.asObservable();
 
   constructor(private httpClient: HttpClient) { }
+  publishConfigData(data) {
+    this.configUpdateSub.next(data);
+  }
+  
 
   signup(value, userId) {
     let url = apiURL.USER + "/" + value.userId;

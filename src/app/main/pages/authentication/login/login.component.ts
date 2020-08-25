@@ -5,7 +5,7 @@ import { fuseAnimations } from "@fuse/animations";
 import { FuseConfigService } from "@fuse/services/config.service";
 import { AirmsService } from "app/service/airms.service";
 import { LogService } from "app/service/shared/log.service";
-import { IP_ADDRESS, LAYOUT_STRUCTURE, LOGGED_IN_USER_INFO, LOG_LEVELS, LOG_MESSAGES, TROY_LOGO } from "app/util/constants";
+import { IP_ADDRESS, LAYOUT_STRUCTURE, LOGGED_IN_USER_INFO, LOG_LEVELS, LOG_MESSAGES, TROY_LOGO, CONFIG_DATA } from "app/util/constants";
 import { Subscription } from "rxjs";
 import Swal from "sweetalert2";
 import { AuthService } from "../../../../service/auth.service";
@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   invalidData = true;
   loginSubscription: Subscription;
   getUserSubscription: Subscription;
+  getConfigSubscription: Subscription;
   showResetContent = false;
   passwordExpired = false;
   inActive = false;
@@ -63,8 +64,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      userName: ["", Validators.required],
-      password: ["", [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
+      userName: ["adminRole", Validators.required],
+      password: ["@Test123$", [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
     });
     const firstParam: string = this.route.snapshot.queryParamMap.get("status");
     if (firstParam === '"active"') {
@@ -110,7 +111,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.logUserActivityForEmail("LOGIN", value.userName, LOG_MESSAGES.SUCCESS);
         loginInfo = res;
         this.getUserSubscription = this.authService.getUserById(res["token"], res["userId"]).subscribe(
-          (userDetails) => {
+         async (userDetails) => {
+            await this.getConfig();
             let user_info = {
               userName: userDetails["userName"],
               userType: userDetails["userType"],
@@ -217,6 +219,19 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     );
   }
+  getConfig() {
+    return new Promise(resolve=>{
+    this.getConfigSubscription = this.authService.getConfig().subscribe((res:any) => {
+      console.log('res', res);
+      let configData = {
+        'setTimeout': Number(res.sessionTimeoutMins)
+      }
+      console.log('config', configData);
+      this.airmsService.setSessionStorage(CONFIG_DATA, JSON.stringify(configData));
+    resolve(true);
+    });
+  });
+  }
   resend() {
     this.errorMessage = "";
     this.authService.resendActivationMail(this.loginForm.value.userName).subscribe((res: any) => {
@@ -247,7 +262,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.logoPath = null;
     this.authService = null;
     this.router = null;
-    this.airmsService = null;
+  //  this.airmsService = null;
     this.logService = null;
     this.hide = null;
     this.invalidData = null;

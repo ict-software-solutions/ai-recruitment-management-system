@@ -41,12 +41,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.registerForm = this.buildRegisterForm();
-    this.registerForm
-      .get("password")
-      .valueChanges.pipe(takeUntil(this.unsubscribeAll))
-      .subscribe(() => {
-        this.registerForm.get("passwordConfirm").updateValueAndValidity();
-      });
   }
 
   buildRegisterForm() {
@@ -65,7 +59,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.logUserActivityForEmail("CREATE AN ACCOUNT", value.emailAddress, LOG_MESSAGES.CLICK);
     this.alreadyExist = false;
     this.activationLink = false;
-
     this.errorMessage = "";
     let userId = 0;
     value.userId = userId;
@@ -146,20 +139,4 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 }
 
-export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-  if (!control.parent || !control) {
-    return null;
-  }
-  const password = control.parent.get("password");
-  const passwordConfirm = control.parent.get("passwordConfirm");
-  if (!password || !passwordConfirm) {
-    return null;
-  }
-  if (passwordConfirm.value === "") {
-    return null;
-  }
-  if (password.value === passwordConfirm.value) {
-    return null;
-  }
-  return { passwordsNotMatching: true };
-};
+

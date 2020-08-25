@@ -33,6 +33,7 @@ export const SIGNUP = '$$AIRMS-USER$$';
 export const GET_ALL_USER ='$$AIRMS-ALL-USERS$$';
 export const GET_USERS ='$$AIRMS-USERS-INFO$$';
 export const IP_ADDRESS = '$$AIRMS-USERS-IPADDRESS$$';
+export const CONFIG_DATA = '$$AIRMS-CONFIG-MANAGEMENT$$';
 export const ADMIN = "Admin";
 export const MANAGER = "Manager";
 export const CANDIDATECONSULTANT = "Candidate Consultant";
