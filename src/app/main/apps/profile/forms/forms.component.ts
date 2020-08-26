@@ -332,6 +332,7 @@ export class FormsComponent implements OnInit, OnDestroy {
 
       this.updateUserSubscription = this.authService.signup(updateObject, this.user).subscribe(
         (res) => {
+          if (res['userId']!== undefined) {
           if (this.userId === Number(this.userInfo.userId)) {
             if (this.userForm.get("emailAddress").dirty || this.userForm.get("userName").dirty || this.userForm.get("newPassword").dirty) {
               Swal.fire({
@@ -384,51 +385,57 @@ export class FormsComponent implements OnInit, OnDestroy {
             this.logUserActivity('User Management - Edit', 'Password Modified');
           }
         }
+      } else {
+        this.errorResponse(res);
+      }
         },
         (error) => {
-          this.logService.logError(LOG_LEVELS.ERROR, "User Management - Save", "On updating user", JSON.stringify(error));
-          if (error.error.message === "old password does not match") {
-            this.errorMessage = error.error.message;
-            this.oldPasswordWrong = true;
-            Swal.fire({
-              position: "center",
-              icon: "warning",
-              title: "Current password is wrong",
-              showConfirmButton: true,
-            });
-          } else if (error.error.resCode === "EML-EXT") {
-            Swal.fire({
-              position: "center",
-              icon: "warning",
-              title: "Email already Exist",
-              showConfirmButton: true,
-            });
-          } else if (error.error.resCode === "URN-EXT") {
-            Swal.fire({
-              position: "center",
-              icon: "warning",
-              title: "Username already exist",
-              showConfirmButton: true,
-            });
-          } else if (error.error.resCode === "EML-EXT") {
-            Swal.fire({
-              position: "center",
-              icon: "warning",
-              title: "Email already Exist",
-              showConfirmButton: true,
-            });
-          } else if (error.error.resCode === "URN-EXT") {
-            Swal.fire({
-              position: "center",
-              icon: "warning",
-              title: "Username already exist",
-              showConfirmButton: true,
-            });
-          }
+          this.errorResponse(error.error);
         }
       );
     } else {
       this.checkForFormFields();
+    }
+  }
+  errorResponse(error) {
+    this.logService.logError(LOG_LEVELS.ERROR, "User Management - Save", "On updating user", JSON.stringify(error));
+    if (error.message === "old password does not match") {
+      this.errorMessage = error.message;
+      this.oldPasswordWrong = true;
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: "Current password is wrong",
+        showConfirmButton: true,
+      });
+    } else if (error.resCode === "EML-EXT") {
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: "Email already Exist",
+        showConfirmButton: true,
+      });
+    } else if (error.resCode === "URN-EXT") {
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: "Username already exist",
+        showConfirmButton: true,
+      });
+    } else if (error.resCode === "EML-EXT") {
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: "Email already Exist",
+        showConfirmButton: true,
+      });
+    } else if (error.resCode === "URN-EXT") {
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: "Username already exist",
+        showConfirmButton: true,
+      });
     }
   }
   checkForFormFields() {

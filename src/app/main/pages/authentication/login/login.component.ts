@@ -64,8 +64,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      userName: ["adminRole", Validators.required],
-      password: ["@Test123$", [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
+      userName: ["", Validators.required],
+      password: ["", [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
     });
     const firstParam: string = this.route.snapshot.queryParamMap.get("status");
     if (firstParam === '"active"') {
@@ -108,8 +108,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     let loginInfo: any;
     this.loginSubscription = this.authService.login(value).subscribe(
       (res) => {
+        console.log('res', res);
         this.logUserActivityForEmail("LOGIN", value.userName, LOG_MESSAGES.SUCCESS);
         loginInfo = res;
+        if(res["userId"] !== undefined) {
         this.getUserSubscription = this.authService.getUserById(res["token"], res["userId"]).subscribe(
          async (userDetails) => {
             await this.getConfig();
@@ -135,89 +137,182 @@ export class LoginComponent implements OnInit, OnDestroy {
           }, (error) => {
             this.logService.logErrorForEmail(LOG_LEVELS.ERROR, value.userName, "Login page", "On Fetch User", JSON.stringify(error));
           }
+        
         );
-      },
-      (error) => {
-        this.loginClicked = false;
-        if (error.error.resCode === "PWD-EXPD") {
-          this.passwordExpired = true;
-          Swal.fire({
-            title: "Password expired. Please change the password",
-            icon: "warning",
-            confirmButtonText: "Reset Your Password",
-          }).then(() => {
-            let navigationExtras: NavigationExtras = {
-              queryParams: {
-                userName: this.loginForm.get("userName").value,
-              },
-              skipLocationChange: true,
-            };
-            this.router.navigate(["/pages/auth/reset-password"], navigationExtras);
-          });
-        } else if (error.error.message === "Invalid Password You-have-2-attempts") {
-          this.errorMessage = error.error.message;
-          this.reCaptcha = true;
-        } else if (error.error.message === "Invalid Password You-have-1-attempts") {
-          this.reCaptcha = true;
-          Swal.fire({
-            position: "center",
-            icon: "warning",
-            title: "One more attempt remaining",
-            text: "If login is unsuccessfull,Your account will be locked",
-            confirmButtonText: "OK",
-          });
-        } else if (
-          error.error.message === "Account Locked, Please contact support" ||
-          error.error.message === "Invalid Password You-have-0-attempts"
-        ) {
-          this.inActive = true;
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Account Locked, Please contact support",
-            confirmButtonText: "OK",
-          });
-        } else if (error.error.message === "Account Inactive") {
-          Swal.fire({
-            title: "Activation",
-            text: "Please consider activating your account",
-            icon: "warning",
-            showCancelButton: true,
-            cancelButtonText: "Ok",
-            cancelButtonColor: "#008ae6",
-            confirmButtonText: "Resend Mail",
-          }).then((res) => {
-            if (res.value === true) {
-              this.resend();
-            }
-          });
-          this.inActive = true;
-        } else if (error.status === 400) {
-          if (error.error.message === 'Role InActive') {
-            Swal.fire({
-              position: "center",
-              icon: "warning",
-              title: "User Role is Inactive",
-              text: "Please contact support",
-              confirmButtonText: "OK",
-            });
-            if (error.error.resCode === '"AC-INA"') {
-              Swal.fire({
-                position: "center",
-                icon: "warning",
-                title: "Invalid Account",
-                text: "Please contact support",
-                confirmButtonText: "OK",
-              });
-            }
-          } else {
+        } else {
+          this.loginClicked = false;
+          if(res === false) {
           this.invalidData = false;
+          } else {
+          this.errorResponse(res, value);
           }
         }
-        this.logUserActivityForEmail("Login Page", value.userName, LOG_MESSAGES.FAILURE);
-        this.logService.logErrorForEmail(LOG_LEVELS.ERROR, value.userName, "Login page", "On Try Login", JSON.stringify(error));
-      }
+      },
+      (error) => {
+        console.log('error', error);
+        this.loginClicked = false;
+        this.errorResponse(error.error, value);
+      //   if (error.error.resCode === "PWD-EXPD") {
+      //     this.passwordExpired = true;
+      //     Swal.fire({
+      //       title: "Password expired. Please change the password",
+      //       icon: "warning",
+      //       confirmButtonText: "Reset Your Password",
+      //     }).then(() => {
+      //       let navigationExtras: NavigationExtras = {
+      //         queryParams: {
+      //           userName: this.loginForm.get("userName").value,
+      //         },
+      //         skipLocationChange: true,
+      //       };
+      //       this.router.navigate(["/pages/auth/reset-password"], navigationExtras);
+      //     });
+      //   } else if (error.error.message === "Invalid Password You-have-2-attempts") {
+      //     this.errorMessage = error.error.message;
+      //     this.reCaptcha = true;
+      //   } else if (error.error.message === "Invalid Password You-have-1-attempts") {
+      //     this.reCaptcha = true;
+      //     Swal.fire({
+      //       position: "center",
+      //       icon: "warning",
+      //       title: "One more attempt remaining",
+      //       text: "If login is unsuccessfull,Your account will be locked",
+      //       confirmButtonText: "OK",
+      //     });
+      //   } else if (
+      //     error.error.message === "Account Locked, Please contact support" ||
+      //     error.error.message === "Invalid Password You-have-0-attempts"
+      //   ) {
+      //     this.inActive = true;
+      //     Swal.fire({
+      //       position: "center",
+      //       icon: "error",
+      //       title: "Account Locked, Please contact support",
+      //       confirmButtonText: "OK",
+      //     });
+      //   } else if (error.error.message === "Account Inactive") {
+      //     Swal.fire({
+      //       title: "Activation",
+      //       text: "Please consider activating your account",
+      //       icon: "warning",
+      //       showCancelButton: true,
+      //       cancelButtonText: "Ok",
+      //       cancelButtonColor: "#008ae6",
+      //       confirmButtonText: "Resend Mail",
+      //     }).then((res) => {
+      //       if (res.value === true) {
+      //         this.resend();
+      //       }
+      //     });
+      //     this.inActive = true;
+      //   } else if (error.status === 400) {
+      //     if (error.error.message === 'Role InActive') {
+      //       Swal.fire({
+      //         position: "center",
+      //         icon: "warning",
+      //         title: "User Role is Inactive",
+      //         text: "Please contact support",
+      //         confirmButtonText: "OK",
+      //       });
+      //       if (error.error.resCode === '"AC-INA"') {
+      //         Swal.fire({
+      //           position: "center",
+      //           icon: "warning",
+      //           title: "Invalid Account",
+      //           text: "Please contact support",
+      //           confirmButtonText: "OK",
+      //         });
+      //       }
+      //     } else {
+      //     this.invalidData = false;
+      //     }
+      //   }
+      //   this.logUserActivityForEmail("Login Page", value.userName, LOG_MESSAGES.FAILURE);
+      //   this.logService.logErrorForEmail(LOG_LEVELS.ERROR, value.userName, "Login page", "On Try Login", JSON.stringify(error));
+       }
     );
+  }
+
+  errorResponse(error, value) {
+    console.log('error Response', error, value);
+    this.loginClicked = false;
+    if (error.resCode === "PWD-EXPD") {
+      this.passwordExpired = true;
+      Swal.fire({
+        title: "Password expired. Please change the password",
+        icon: "warning",
+        confirmButtonText: "Reset Your Password",
+      }).then(() => {
+        let navigationExtras: NavigationExtras = {
+          queryParams: {
+            userName: this.loginForm.get("userName").value,
+          },
+          skipLocationChange: true,
+        };
+        this.router.navigate(["/pages/auth/reset-password"], navigationExtras);
+      });
+    } else if (error.message === "Invalid Password You-have-2-attempts") {
+      this.errorMessage = error.message;
+      this.reCaptcha = true;
+    } else if (error.message === "Invalid Password You-have-1-attempts") {
+      this.reCaptcha = true;
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: "One more attempt remaining",
+        text: "If login is unsuccessfull,Your account will be locked",
+        confirmButtonText: "OK",
+      });
+    } else if (
+      error.message === "Account Locked, Please contact support" ||
+      error.message === "Invalid Password You-have-0-attempts"
+    ) {
+      this.inActive = true;
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Account Locked, Please contact support",
+        confirmButtonText: "OK",
+      });
+    } else if (error.message === "Account Inactive") {
+      Swal.fire({
+        title: "Activation",
+        text: "Please consider activating your account",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonText: "Ok",
+        cancelButtonColor: "#008ae6",
+        confirmButtonText: "Resend Mail",
+      }).then((res) => {
+        if (res.value === true) {
+          this.resend();
+        }
+      });
+      this.inActive = true;
+    } else if (error.status === 400) {
+      if (error.message === 'Role InActive') {
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "User Role is Inactive",
+          text: "Please contact support",
+          confirmButtonText: "OK",
+        });
+        if (error.resCode === '"AC-INA"') {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Invalid Account",
+            text: "Please contact support",
+            confirmButtonText: "OK",
+          });
+        }
+      } else {
+      this.invalidData = false;
+      }
+    }
+    this.logUserActivityForEmail("Login Page", value.userName, LOG_MESSAGES.FAILURE);
+    this.logService.logErrorForEmail(LOG_LEVELS.ERROR, value.userName, "Login page", "On Try Login", JSON.stringify(error));
   }
   getConfig() {
     return new Promise(resolve=>{

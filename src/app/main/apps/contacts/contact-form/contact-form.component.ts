@@ -124,6 +124,7 @@ export class ContactsContactFormDialogComponent {
     }
     this.updateRoleSubscription = this.authService.updateRolesInfo(updateObject).subscribe(
       (res) => {
+        if(res['roleId']!== undefined) {
         Swal.fire({
           title: "Role Saved",
           icon: "success",
@@ -134,22 +135,28 @@ export class ContactsContactFormDialogComponent {
             this.router.navigate(["/apps/contacts"]);
           }
         });
+      } else {
+        this.errorResponse(res);
+      }
       },
       (error) => {
-        this.logService.logError(LOG_LEVELS.ERROR, "Role Management - Save", "On updating role", JSON.stringify(error));
-        if (error.error.resCode === "RL-AL-ET") {
-          this.errorMessage = error.error.message;
-          Swal.fire({
-            position: "center",
-            icon: "warning",
-            title: "Role already exists",
-            showConfirmButton: true,
-          });
-        }
+        this.errorResponse(error.error);
       }
     );
     } else {
       this.checkForFormFields();
+    }
+  }
+  errorResponse(error) {
+    this.logService.logError(LOG_LEVELS.ERROR, "Role Management - Save", "On updating role", JSON.stringify(error));
+    if (error.resCode === "RL-AL-ET") {
+      this.errorMessage = error.message;
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: "Role already exists",
+        showConfirmButton: true,
+      });
     }
   }
 

@@ -29,12 +29,11 @@ export class AuthService {
   login(param) {
     return this.httpClient.post(apiURL.LOGIN_URL, param).pipe(
       map((response: any) => {
-        if (response["userId"] === undefined) {
-          return false;
-        }
+        if (response["userId"] !== undefined) {
         this.hasUserLoggedIn = true;
         const userInfo = { token: response["token"], userId: response["userId"] };
         sessionStorage.setItem(LOGGED_IN_USER, JSON.stringify(userInfo));
+      }
         return response;
       })
     );

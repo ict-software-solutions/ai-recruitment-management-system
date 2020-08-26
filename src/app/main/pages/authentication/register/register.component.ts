@@ -63,7 +63,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     let userId = 0;
     value.userId = userId;
     this.signupSubscription = this.authService.signup(value, userId).subscribe(
-      () => {
+      (res) => {
+        if (res['userId'] !== undefined) {
         this.activationLink = true;
         Swal.fire({
           position: "center",
@@ -77,18 +78,24 @@ export class RegisterComponent implements OnInit, OnDestroy {
         });
 
         this.logUserActivityForEmail("CREATE AN ACCOUNT", value.emailAddress, LOG_MESSAGES.SUCCESS);
+      } else {
+        this.errorResponse(res, value);
+      }
       },
       (error) => {
-        if (error.error.message === "email already exists") {
-          this.errorMessage = "Email already in use";
-        } else if (error.error.message === "userName already exists") {
-          this.errorMessage = "User name already exists";
-        }
-        this.alreadyExist = true;
-        this.logService.logErrorForEmail(LOG_LEVELS.ERROR, value.emailAddress, "Register Page", "on Register user", JSON.stringify(error));
-        this.logUserActivityForEmail("CREATE AN ACCOUNT", value.emailAddress, LOG_MESSAGES.FAILURE);
+        this.errorResponse(error.error, value);
       }
     );
+  }
+  errorResponse(error, value) {
+    if (error.error.message === "email already exists") {
+      this.errorMessage = "Email already in use";
+    } else if (error.error.message === "userName already exists") {
+      this.errorMessage = "User name already exists";
+    }
+    this.alreadyExist = true;
+    this.logService.logErrorForEmail(LOG_LEVELS.ERROR, value.emailAddress, "Register Page", "on Register user", JSON.stringify(error));
+    this.logUserActivityForEmail("CREATE AN ACCOUNT", value.emailAddress, LOG_MESSAGES.FAILURE);
   }
   resend() {
     this.errorMessage = "";
