@@ -43,21 +43,26 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         this.authService.sendResetLink(this.forgotPasswordForm.value.emailAddress).subscribe((res:any)=>{
             if (res.resCode === "CNG-PWD-LNK-SEND") {
                 this.sendLink();
+            } else{
+           this.errorResponse(res);
             }
         }, error => {
-            if (error.error.message === 'email/userName not registered' || error.error.message === "Account Inactive") {
-                this.errorMessage = error.error.message;
-                this.wrongEmail = true;
-                Swal.fire({
-                    position: 'center',
-                    icon: 'warning',
-                    title: 'Incorrect Email address. Please enter a valid Email address',
-                    showConfirmButton: true,
-                })
-            }
+           this.errorResponse(error.error);
         });
     }
 
+    errorResponse(error) {
+        if (error.message === 'email/userName not registered' || error.message === "Account Inactive") {
+            this.errorMessage = error.message;
+            this.wrongEmail = true;
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Incorrect Email address. Please enter a valid Email address',
+                showConfirmButton: true,
+            })
+        }
+    }
     sendLink() {
         Swal.fire({
             position: 'center',

@@ -111,25 +111,30 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
       (res: any) => {
         if (res.message === "your password has been changed") {
           this.passwordResetDone();
+        } else {
+          this.errorResponse(res);
         }
         this.logUserActivity("RESET YOUR PASSWORD", LOG_MESSAGES.SUCCESS);
       },
       (error) => {
-        if (error.error.message === "old password does not match") {
-          Swal.fire({
-            title: "Current password does not match",
-            icon: "warning",
-            confirmButtonText: "OK",
-          });
-          this.errorMessage = "Current password does not match";
-        }
-        this.oldpassword = true;
-        this.logService.logError(LOG_LEVELS.ERROR, "Reset_Password_Page", "on Reset_Password user", JSON.stringify(error));
-        this.logUserActivity("RESET YOUR PASSWORD", LOG_MESSAGES.FAILURE);
+        this.errorResponse(error.error);
       }
     );
   }
 
+  errorResponse(error) {
+    if (error.message === "old password does not match") {
+      Swal.fire({
+        title: "Current password does not match",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      this.errorMessage = "Current password does not match";
+    }
+    this.oldpassword = true;
+    this.logService.logError(LOG_LEVELS.ERROR, "Reset_Password_Page", "on Reset_Password user", JSON.stringify(error));
+    this.logUserActivity("RESET YOUR PASSWORD", LOG_MESSAGES.FAILURE);
+  }
   passwordResetDone() {
     Swal.fire({
       title: "Your Password has been Changed",
