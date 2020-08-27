@@ -64,7 +64,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     value.userId = userId;
     this.signupSubscription = this.authService.signup(value, userId).subscribe(
       (res) => {
-        if (res['userId'] !== undefined) {
+        if (res === true) {
         this.activationLink = true;
         Swal.fire({
           position: "center",
@@ -88,9 +88,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     );
   }
   errorResponse(error, value) {
-    if (error.error.message === "email already exists") {
+    if (error.message === "email already exists") {
       this.errorMessage = "Email already in use";
-    } else if (error.error.message === "userName already exists") {
+    } else if (error.message === "userName already exists") {
       this.errorMessage = "User name already exists";
     }
     this.alreadyExist = true;
