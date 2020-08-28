@@ -332,7 +332,7 @@ export class FormsComponent implements OnInit, OnDestroy {
 
       this.updateUserSubscription = this.authService.signup(updateObject, this.user).subscribe(
         (res) => {
-          if (res['userId']!== undefined) {
+          if (res === true) {
           if (this.userId === Number(this.userInfo.userId)) {
             if (this.userForm.get("emailAddress").dirty || this.userForm.get("userName").dirty || this.userForm.get("newPassword").dirty) {
               Swal.fire({
