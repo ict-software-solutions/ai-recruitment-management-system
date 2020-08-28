@@ -399,7 +399,7 @@
             </div>
             <div></div>
             <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" style="margin-top: 20px;" style="float:left;"> -->
-            <p style="text-align: right; margin-top: 44px;">Last Login: {{ lastLogin }}</p>
+            <p style="text-align: right; margin-top: 44px;" *ngIf="lastLogin !== undefined && lastLogin !== null && lastLogin !== ''">Last Login: {{ lastLogin }}</p>
           </form>
         </div>
         <!-- </div> -->
