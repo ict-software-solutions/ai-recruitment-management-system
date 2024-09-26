@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { LogLevel } from './log-level.enum';
 import { LogPublisher } from './log-publishers';
 import { LogPublishersService } from './log-publishers.service';
+import { AirmsService } from '../airms.service';
 // import { NGaugeService } from './ngauge.service';
 
 @Injectable()
@@ -10,9 +11,7 @@ export class LogService {
   level: LogLevel = LogLevel.All;
   logWithDate = true;
   publishers: LogPublisher[];
-
-
-  constructor(private publishersService: LogPublishersService) {
+  constructor(private publishersService: LogPublishersService, private airmsService: AirmsService) {
     this.publishers = this.publishersService.publishers;
   }
 
@@ -63,29 +62,77 @@ export class LogService {
 //dinesh updated
   logUserActivity(logLevel, whereArise, whatEnsue) {
     const params = { 
-      createdBy: 0,
+      createdBy: this.airmsService.getUserFirstLastName(),
       whereArise,
       whatEnsue,
       whenOccur: new Date(),
       logActivity: true,
-      logErr: false
+      logErr: false,
+      logFieldHistory: false
+    }
+    this[logLevel](params);
+  }
+// Email
+  logUserActivityForEmail(logLevel, mail, whereArise, whatEnsue) {
+    const params = { 
+      createdBy: mail,
+      whereArise,
+      whatEnsue,
+      whenOccur: new Date(),
+      logActivity: true,
+      logErr: false,
+      logFieldHistory: false
     }
     this[logLevel](params);
   }
 
   logError(logLevel, screen, whereArise, message) {
     const params = {
-      createdBy: 0, // UserId
-      screen,
+      logLevel: logLevel,
+      createdBy: this.airmsService.getUserFirstLastName(), 
+      whichPlace: screen,
       whereArise,
-      message: JSON.stringify(message),
+      logMessage: JSON.stringify(message),
       whenOccur: new Date(), // Should assigned from Server
       logActivity: false,
-      logErr: true
+      logErr: true,
+      logFieldHistory: false
+    }
+    this[logLevel](params);
+  }
+
+  logErrorForEmail(logLevel, mail, screen, whereArise, message) {
+    const params = {
+      logLevel: logLevel,
+      createdBy: mail, // UserId
+      whichPlace: screen,
+      whereArise,
+      logMessage: JSON.stringify(message),
+      whenOccur: new Date(), // Should assigned from Server
+      logActivity: false,
+      logErr: true,
+      logFieldHistory: false
+    }
+    this[logLevel](params);
+  }
+
+  logFieldHistory(logLevel, whereArise, screen, field, oldVal, newVal) {
+    const params = {
+      createdBy: this.airmsService.getUserFirstLastName(), 
+      whereArise,
+      screen,
+      field,
+      oldVal,
+      newVal,
+      whenOccur: new Date(),
+      logActivity: false,
+      logFieldHistory: true,
+      logErr: false
     }
     this[logLevel](params);
   }
 }
+
 
 export class LogEntry {
   level: string = LogLevel[LogLevel.Debug];

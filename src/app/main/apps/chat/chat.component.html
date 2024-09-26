@@ -1,0 +1,357 @@
+<div id="chat" class="page-layout carded fullwidth inner-scroll">
+  <div class="top-bg accent"></div>
+  <div class="center">
+    <div class="header accent header-display3" fxLayoutAlign="center center" fxLayoutAlign.gt-sm="space-between center">
+      <div class="logo mb-24 mb-md-0 logo-display3" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon s-32 mr-16" [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">
+          desktop_mac
+        </mat-icon>
+        <span class="logo-text3 h1" [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">
+          System Activities
+        </span>
+      </div>
+      <div class="button-list mx-md-0 button-sm-show">
+        <div class="buttons-show" fxFlex fxLayout="row" fxLayoutAlign="start center">
+          <button mat-raised-button
+            class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-sm-show"
+            style="margin-right: 10px;" (click)="toggleSidebar('project-dashboard-right-sidebar-1')">
+            Filter By
+          </button>
+          <button mat-raised-button
+            class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-sm-show"
+            (click)="clearAll(type)">
+            Clear All
+          </button>
+        </div>
+      </div>
+      <div class="button-list2 button-lg-show">
+        <div class="button" fxFlex fxLayout="row" fxLayoutAlign="start center">
+          <button mat-raised-button
+            class="filter-button mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-lg-show"
+            style="margin-right: 10px;" (click)="toggleSidebar('project-dashboard-right-sidebar-1')">
+            Filter By
+          </button>
+          <button mat-raised-button
+            class="sidebar-toggle mt-md-0 add-product-button fuse-white mt-24 mt-md-0 mt-sm-0 button-lg-show"
+            (click)="clearAll(type)">
+            Clear All
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="content-card" id="cont_card">
+      <div class="content">
+        <mat-tab-group animationDuration="0ms" (selectedTabChange)="getLogEntries($event.tab.textLabel)"
+          [hidden]="isLoading" style="height: 100%;">
+          <mat-tab label="Field History" class="note_heading" *ngIf="roleName === 'Admin'||roleName === 'Tech Support'">
+            <div class="example-container3">
+              <mat-table [dataSource]="dataSource" [@animateStagger]="{ value: '50' }">
+                <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis; overflow: hidden;">
+                  <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <span class="mobile-label">CreatedBy</span>
+                    <p class="text-truncate">{{ element.createdBy }}</p>
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="screen" style="text-overflow: ellipsis;">
+                  <mat-header-cell *matHeaderCellDef>Screen</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <span class="mobile-label">Screen</span>
+                    <p>{{ element.screen }}</p>
+                  </mat-cell>
+                  <ng-container matColumnDef="whereArise" style="text-overflow: ellipsis;">
+                    <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                      <span class="mobile-label">WhereArise</span>
+                      <p>{{ element.whereArise }}</p>
+                    </mat-cell>
+                  </ng-container>
+                </ng-container>
+                <ng-container matColumnDef="field" style="text-overflow: ellipsis;">
+                  <mat-header-cell *matHeaderCellDef>Field</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <span class="mobile-label">Field</span>
+                    <p>{{ element.field }}</p>
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="oldValue">
+                  <mat-header-cell *matHeaderCellDef style="justify-content: center;">Old Value</mat-header-cell>
+                  <mat-cell *matCellDef="let element" style="justify-content: center;">
+                    <span class="mobile-label">Old Value</span>
+                    <p>{{ element.oldVal }}</p>
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="newValue" style="text-overflow: ellipsis; overflow: hidden;">
+                  <mat-header-cell *matHeaderCellDef style="justify-content: center;">New Value</mat-header-cell>
+                  <mat-cell *matCellDef="let element" style="justify-content: center;">
+                    <span class="mobile-label">New Value</span>
+                    <p>{{ element.newVal }}</p>
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
+                  <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <span class="mobile-label">WhenOccur</span>
+                    <p>{{ element.whenOccur }}</p>
+                  </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns_fieldHistory; sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns_fieldHistory" class="product"></mat-row>
+              </mat-table>
+              <div *ngIf="isLoading" class="Loading">
+                <div class="spinner-wrapper">
+                  <div class="spinner">
+                    <div class="inner">
+                      <div class="gap"></div>
+                      <div class="left">
+                        <div class="half-circle"></div>
+                      </div>
+                      <div class="right">
+                        <div class="half-circle"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <mat-paginator #paginator1 [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+              [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading" showFirstLastButtons>
+            </mat-paginator>
+            <div class="note" [hidden]="isLoading">
+              <p class="note_heading">Please Note</p>
+              <ul>
+                <li>Field History for recent 7 days shown upon arrival</li>
+                <li>Users can pull data for any 91 days using Search</li>
+                <li>Troy RMS retains Audit Log for last 12 months only</li>
+              </ul>
+            </div>
+          </mat-tab>
+          <mat-tab label="Audit Log" class="note_heading" *ngIf="roleName === 'Admin' || roleName === 'Manager' || roleName === 'Tech Support'">
+            <div class="example-container4">
+              <mat-table [dataSource]="dataSource" class="log-table" [@animateStagger]="{ value: '50' }"
+                [hidden]="isLoading">
+                <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;" class="createdByAudit">
+                  <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <span class="mobile-label">CreatedBy</span>
+                    <p class="text-truncate">{{ element.createdBy }}</p>
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="whereAriseScreen" style="text-overflow: ellipsis;">
+                  <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <span class="mobile-label">WhereArise</span>
+                    <p>{{ element.whereArise }}</p>
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="whatEnsue" style="text-overflow: ellipsis;">
+                  <mat-header-cell *matHeaderCellDef>WhatEnsue</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <span class="mobile-label">WhatEnsue</span>
+                    <p>{{ element.whatEnsue }}</p>
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
+                  <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <span class="mobile-label">WhenOccur</span>
+                    <p>{{ element.whenOccur }}</p>
+                  </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns_audit; sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns_audit" class="product"></mat-row>
+              </mat-table>
+              <div *ngIf="isLoading" class="Loading">
+                <div class="spinner-wrapper">
+                  <div class="spinner">
+                    <div class="inner">
+                      <div class="gap"></div>
+                      <div class="left">
+                        <div class="half-circle"></div>
+                      </div>
+                      <div class="right">
+                        <div class="half-circle"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <mat-paginator #paginator2 [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+              [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading" showFirstLastButtons>
+            </mat-paginator>
+            <div class="note" [hidden]="isLoading">
+              <p class="note_heading">Please Note</p>
+              <ul>
+                <li>Audit Log for recent 7 days shown upon arrival</li>
+                <li>Users can pull data for any 91 days using Search</li>
+                <li>Troy RMS retains Audit Log for last 12 months only</li>
+              </ul>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Client Machine Log" class="note_heading"
+            *ngIf="roleName === 'Admin' || roleName === 'Tech Support'">
+            <div *ngIf="isLoading" class="Loading">
+              <div class="spinner-wrapper">
+                <div class="spinner">
+                  <div class="inner">
+                    <div class="gap"></div>
+                    <div class="left">
+                      <div class="half-circle"></div>
+                    </div>
+                    <div class="right">
+                      <div class="half-circle"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="example-container5">
+              <mat-table [dataSource]="dataSource" class="log-table" [@animateStagger]="{ value: '50' }"
+                [hidden]="isLoading">
+                <ng-container matColumnDef="createdBy" style="text-overflow: ellipsis;">
+                  <mat-header-cell *matHeaderCellDef>CreatedBy</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <span class="mobile-label">CreatedBy</span>
+                    <p class="text-truncate">{{ element.createdBy }}</p>
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="whichPlace" style="text-overflow: ellipsis;">
+                  <mat-header-cell *matHeaderCellDef>Screen</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <span class="mobile-label">Screen</span>
+                    <p>{{ element.whichPlace }}</p>
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="whereAriseFunction" style="text-overflow: ellipsis;">
+                  <mat-header-cell *matHeaderCellDef>WhereArise</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <span class="mobile-label">WhereArise</span>
+                    <p>{{ element.whereArise }}</p>
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="level" style="text-overflow: ellipsis;">
+                  <mat-header-cell *matHeaderCellDef>Level</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <span class="mobile-label">Level</span>
+                    <p>{{ element.logLevel }}</p>
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="logMessage" style="text-overflow: ellipsis;">
+                  <mat-header-cell *matHeaderCellDef>Message</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <span class="mobile-label">Message</span>
+                    <p class="messagelabel">{{ element.logMessage }}</p>
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="whenOccur" style="text-overflow: ellipsis;">
+                  <mat-header-cell *matHeaderCellDef>WhenOccur</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <span class="mobile-label">WhenOccur</span>
+                    <p class="whenoccur-label">{{ element.whenOccur }}</p>
+                  </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns_client; sticky: true"></mat-header-row>
+                <mat-row id="field-row" *matRowDef="let row; columns: displayedColumns_client" class="product">
+                </mat-row>
+              </mat-table>
+            </div>
+            <mat-paginator #paginator3 [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5"
+              [pageSizeOptions]="[5, 10, 25, 100]" [hidden]="isLoading" showFirstLastButtons>
+            </mat-paginator>
+            <div class="note" [hidden]="isLoading">
+              <p class="note_heading">Please Note</p>
+              <ul>
+                <li>Client Machine Log for recent 7 days shown upon arrival</li>
+                <li>Users can pull data for any 91 days using Search</li>
+                <li>Troy RMS retains Audit Log for last 12 months only</li>
+              </ul>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+
+  
+  <fuse-sidebar class="sidebar" name="project-dashboard-right-sidebar-1" position="right"
+    style="background-color: white;">
+    <div class="content" id="cont-landscape"style="background-color: white;">
+      <div style="padding: 18px;">
+        <div class="header1" style="display: inline;">
+          <div class="title1">Filter By</div>
+          <button mat-icon-button class="sidebar-toggle"
+            (click)="toggleSidebarClosed('project-dashboard-right-sidebar-1')">
+            <mat-icon class="secondary-text">arrow_forward</mat-icon>
+          </button>
+        </div>
+        <div style="margin-top: 22px;">
+          <form fxLayout="column" name="search" fxLayoutAlign="start" fxFlex="1 0 auto" style="height: 100%;">
+            <mat-form-field appearance="outline">
+              <mat-label>Keyword</mat-label>
+              <input matInput type="text" name="keyword" id="keyword" [(ngModel)]="searchValue.keyword" />
+              <div style="float: right; margin-top: -34px;">
+                <button mat-mini-fab color="accent" aria-label="Example icon button with a home icon"
+                  (click)="searchByKeyword(searchValue)"
+                  (click)="toggleSidebarClosed('project-dashboard-right-sidebar-1')">
+                  <mat-icon color="basic">search</mat-icon>
+                </button>
+              </div>
+            </mat-form-field>
+            <p style="text-align: center; margin-top: -5px; color: #0066ff;">or</p>
+            <mat-form-field appearance="outline">
+              <mat-label>From</mat-label>
+              <input matInput [matDatepicker]="pickerA" name="fromDate" id="fromDate" [max]="maxDate"
+                [(ngModel)]="searchValue.fromDate" (dateChange)="dateChanges($event.target.value, 'from')" />
+              <mat-datepicker-toggle matSuffix [for]="pickerA"></mat-datepicker-toggle>
+              <mat-datepicker #pickerA></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>To</mat-label>
+              <input matInput [matDatepicker]="pickerB" name="toDate" id="toDate" [min]="minDate"
+                [(ngModel)]="searchValue.toDate" (dateChange)="dateChanges($event.target.value, 'to')" />
+              <mat-datepicker-toggle matSuffix [for]="pickerB"></mat-datepicker-toggle>
+              <mat-datepicker #pickerB></mat-datepicker>
+            </mat-form-field>
+
+            <button mat-raised-button color="accent" (click)="searchByDate(searchValue)">Search</button>
+            <div *ngIf="isLoading" class="Loading">
+              <div class="spinner-wrapper">
+                <div class="spinner">
+                  <div class="inner">
+                    <div class="gap"></div>
+                    <div class="left">
+                      <div class="half-circle"></div>
+                    </div>
+                    <div class="right">
+                      <div class="half-circle"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container" style="width:240px;margin-top:10px;">
+              <p>
+                <mat-error *ngIf="errorForCount" class="error-message">Users can pull data for only 91 days using Search
+                </mat-error>
+              </p>
+            </div>
+          </form>
+        </div>
+        <div></div>
+      </div>
+    </div>
+  </fuse-sidebar>
+</div>

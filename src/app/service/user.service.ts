@@ -8,6 +8,18 @@ import { BehaviorSubject, observable } from 'rxjs';
 })
 export class UserService {
   constructor(private httpClient: HttpClient) { }
-  private userProfileUpdateSub = new BehaviorSubject<any>(null);
+  userProfileUpdateSub = new BehaviorSubject<any>(null);
   userProfileUpdated$ = this.userProfileUpdateSub.asObservable();
+
+  publishUserDetail(data) {
+    this.userProfileUpdateSub.next(data);
+  }
+
 }
+export class UserDetailService {
+  constructor(private httpClient: HttpClient) { }
+  private userDetailUpdateSub = new BehaviorSubject<any>(null);
+  userDetailUpdated$ = this.userDetailUpdateSub.asObservable();
+
+}
+

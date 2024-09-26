@@ -1,126 +1,217 @@
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Contact } from 'app/main/apps/contacts/contact.model';
-import { usertype } from 'app/models/user-type';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
+import { Component, ViewEncapsulation } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { navigation } from 'app/navigation/navigation';
+import { AirmsService } from "app/service/airms.service";
+import { AuthService } from "app/service/auth.service";
+import { LogService } from "app/service/shared/log.service";
+import { LOGGED_IN_USER_INFO, LOG_LEVELS, LOG_MESSAGES } from "app/util/constants";
+import { Subscription } from "rxjs";
+import Swal from "sweetalert2";
+import { filter } from 'lodash';
+
 @Component({
-  selector: 'contacts-contact-form-dialog',
-  templateUrl: './contact-form.component.html',
-  styleUrls: ['./contact-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: "contacts-contact-form-dialog",
+  templateUrl: "./contact-form.component.html",
+  styleUrls: ["./contact-form.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 
 export class ContactsContactFormDialogComponent {
-  screens = ["dashboard", "Calander", "User Management", "Edit Profile"];
-  status: usertype[] = [
-    { value: 'employee-0', viewValue: 'Activated' },
-    { value: 'client-1', viewValue: 'Locked' }
-  ];
-  items = [];
-  selectedItems: Item[];
-  action: string;
-  contact: Contact;
-  contactForm: FormGroup;
-  dialogTitle: string;
-  labelPosition: 'before' | 'after' = 'after';
-  selected = false;
-  selectdash = false;
-  selectcal = false;
-  selectpro = false;
-  selectuser = false;
-  selectrole = false;
-  toggle1 = true;
-  toggle2 = true;
-  toggle3 = true;
-  toggle4 = true;
-  toggle5 = true;
+
+  roleMgmtForm: FormGroup;
+  roleDetails: any;
+  roleId = 0;
+  errorMessage = "";
+  userName: any;
+  unMappedScreens: any; // Unmapped
+  mappedScreens = { value: [] }; // Mapped
+  roleSubscription: Subscription;
+  updateRoleSubscription: Subscription;
+  labelPosition: "before" | "after" = "after";
 
   constructor(
-    public matDialogRef: MatDialogRef<ContactsContactFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private _data: any,
-    private _formBuilder: FormBuilder) {
-    this.action = _data.action;
-    if (this.action === 'edit') {
-      this.dialogTitle = 'Edit Role';
-      this.contact = _data.contact;
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private router: Router,
+    private airmsService: AirmsService,
+    private logService: LogService
+  ) {
+    this.userName = airmsService.getUserName();
+    this.unMappedScreens = { value: JSON.parse(JSON.stringify(navigation[0]['children'])) };
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      this.dialogTitle = 'New Role';
-      this.contact = new Contact({});
-    }
-    this.contactForm = this.createContactForm();
-  }
-
-  ngOnInit() { }
-
-  select(value: any) {
-    this.items.push(value);
-  }
-
-  unselect(item: any) {
-    this.screens.push(item);
-    item.selected = true;
-    if (this.selectedItems.length === this.screens.length) {
-      this.compareResult();
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
   }
 
-  shuffleArray(arr) {
-    for (let c = arr.length - 1; c > 0; c--) {
-      let b = Math.floor(Math.random() * (c + 1));
-      let a = arr[c];
-      arr[c] = arr[b];
-      arr[b] = a;
-    }
-    return arr;
-  }
-  compareResult() {
-    if (this.selectedItems.map(x => x.name).toString() === this.screens.toString()) {
-      alert('They are in the same order')
-    } else {
-      alert('They have different order')
-    }
-  }
-
-  selectdashboard() {
-    this.selectdash = !this.selectdash;
-    this.toggle1 = !this.toggle1;
-    // this.status = this.toggle ? 'Enable' : 'Disable';
-  }
-  selectcalander() {
-    this.selectcal = !this.selectcal;
-    this.toggle2 = !this.toggle2;
-  }
-  selectProfile() {
-    this.selectpro = !this.selectpro;
-    this.toggle3= !this.toggle3;
-  }
-  userManagement() {
-    this.selectuser = !this.selectuser;
-    this.toggle4= !this.toggle4;
-  }
-  rolemanagement() {
-    this.selectrole = !this.selectrole;
-    this.toggle5= !this.toggle5;
-  }
-  createContactForm(): FormGroup {
-    return this._formBuilder.group({
-      id: [this.contact.id],
-      name: [this.contact.name],
-      lastName: [this.contact.lastName],
-      avatar: [this.contact.avatar],
-      nickname: [this.contact.nickname], company: [this.contact.company],
-      jobTitle: [this.contact.jobTitle],
-      email: [this.contact.email],
-      phone: [this.contact.phone],
-      address: [this.contact.address],
-      birthday: [this.contact.birthday],
-      notes: [this.contact.notes],
-      rolename: [this.contact.rolename],
-      desc: [this.contact.desc],
-      status: [this.contact.status],
+  ngOnInit() {
+    this.roleMgmtForm = this.formBuilder.group({
+      roleId: [""],
+      roleName: ["", Validators.required],
+      active: ['', Validators.required],
+      roleDescription: ["", Validators.required],
+      screen: [""],
+      createdBy: [""],
+      modifiedBy: [""],
+    });
+    this.route.queryParams.subscribe((params) => {
+      if (params.roleId != undefined) {
+        this.roleId = Number(params.roleId);
+        this.getRoleInfo(Number(params.roleId));
+      } else {
+        this.roleId = 0;
+        this.unMappedScreens = { value: JSON.parse(JSON.stringify(navigation[0]['children'])) };
+        this.mappedScreens = { value: [] };
+      }
     });
   }
+  getRoleInfo(roleId) {
+    let screenMap = { newValue: [] };
+    let totalScreenMap = { data: this.unMappedScreens['value'] };
+    let filterResDone = [], filterRes = [];
+    this.roleSubscription = this.authService.getAllRolesInfo(roleId).subscribe(
+      (res) => {
+        this.roleDetails = res;
+        this.roleMgmtForm.patchValue(res);
+        if (this.roleDetails.screenMapping.length > 0) {
+          screenMap["newValue"] = this.roleDetails.screenMapping;
+          filterResDone = totalScreenMap["data"].filter( (el) => {
+            return !screenMap["newValue"].includes(el.title);
+          });
+          filterRes = totalScreenMap["data"].filter( (el) => {
+            return screenMap["newValue"].includes(el.title) ;
+          });
+          this.unMappedScreens['value'] = filterResDone;
+          this.mappedScreens['value'] = filterRes;
+        } else {
+          this.unMappedScreens = { value: JSON.parse(JSON.stringify(navigation[0]['children'])) };
+          this.mappedScreens = { value: [] };
+        }
+      },
+      (error) => {
+        this.logService.logError(LOG_LEVELS.ERROR, "Role Management", "On fetching roles", JSON.stringify(error));
+      }
+    );
+  }
+  updateRole(value) {
+    this.logUserActivity("Role Management - Save", LOG_MESSAGES.CLICK);
+    let items = [];
+    this.errorMessage = "";
+    if (this.roleMgmtForm.valid) {
+    if (this.mappedScreens['value'].length > 0) {
+      for (let m = 0; m < this.mappedScreens['value'].length; m++) {
+        items.push(this.mappedScreens['value'][m].title);
+      }
+    }
+    let updateObject = {
+      roleName: value.roleName,
+      roleDescription: value.roleDescription,
+      active: value.active,
+      roleId: this.roleId,
+      screenMapping: items,
+    };
+    if (this.roleId === 0) {
+      updateObject["createdBy"] = this.airmsService.getUserFirstLastName();
+    } else {
+      updateObject["modifiedBy"] = this.airmsService.getUserFirstLastName();
+    }
+    this.updateRoleSubscription = this.authService.updateRolesInfo(updateObject).subscribe(
+      (res) => {
+        if(res['roleId']!== undefined) {
+        Swal.fire({
+          title: "Role Saved",
+          icon: "success",
+          confirmButtonText: "Ok",
+        }).then((res) => {
+          if (res.value === true) {
+            this.cancelEdit();
+            this.router.navigate(["/apps/contacts"]);
+          }
+        });
+      } else {
+        this.errorResponse(res);
+      }
+      },
+      (error) => {
+        this.errorResponse(error.error);
+      }
+    );
+    } else {
+      this.checkForFormFields();
+    }
+  }
+  errorResponse(error) {
+    this.logService.logError(LOG_LEVELS.ERROR, "Role Management - Save", "On updating role", JSON.stringify(error));
+    if (error.resCode === "RL-AL-ET") {
+      this.errorMessage = error.message;
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: "Role already exists",
+        showConfirmButton: true,
+      });
+    }
+  }
+
+  checkForFormFields() {
+    for (const prop in this.roleMgmtForm.controls) {
+      if (Object.prototype.hasOwnProperty.call(this.roleMgmtForm.controls, prop)) {
+        if (this.roleMgmtForm.controls[prop].pristine) {
+          this.roleMgmtForm.controls[prop].markAsTouched();
+        }
+      }
+    }
+  }
+
+  cancelEdit() {
+    this.logUserActivity("Role Management - Cancel", LOG_MESSAGES.CLICK);
+    this.router.navigate(["/apps/contacts"]);
+  }
+  addAllScreenMapping() {
+    this.logUserActivity("Role Management - Add all screens for Mapping", LOG_MESSAGES.CLICK);
+    this.unMappedScreens['value'] = [];
+    this.mappedScreens['value'] = [];
+    this.mappedScreens['value'] = navigation[0]['children'];
+  }
+  removeAllScreenMapping() {
+    this.logUserActivity("Role Management - Remove all screens for Mapping", LOG_MESSAGES.CLICK);
+    this.unMappedScreens['value'] = [];
+    this.mappedScreens['value'] = [];
+    this.unMappedScreens['value'] = navigation[0]['children'];
+  }
+  logUserActivity(from, value) {
+    this.logService.logUserActivity(LOG_LEVELS.INFO, from, value);
+  }
+
+  unsubscribe(subscription: Subscription) {
+    if (subscription !== null && subscription !== undefined) {
+      subscription.unsubscribe();
+    }
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe(this.roleSubscription);
+    this.unsubscribe(this.updateRoleSubscription);
+    this.roleMgmtForm = null;
+    this.formBuilder = null;
+    this.authService = null;
+    this.router = null;
+    this.airmsService = null;
+    this.logService = null;
+    this.errorMessage = null;
+    this.roleDetails = null;
+    this.unMappedScreens = null;
+    this.mappedScreens = null;
+  }
 }
+
 interface Item {
   name: string;
   selected: boolean;

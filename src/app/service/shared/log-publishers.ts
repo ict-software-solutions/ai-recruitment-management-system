@@ -1,9 +1,9 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { environment } from 'environments/environment';
 // import 'rxjs/add/observable/of';
-import { Observable, from } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { LogLevel } from './log-level.enum';
 import { LogEntry } from './log.service';
-import { of } from 'rxjs';
 
 // import 'rxjs/add/observable/of';
 export abstract class LogPublisher {
@@ -12,6 +12,7 @@ export abstract class LogPublisher {
   abstract clear(): Observable<boolean>;
 
   postToAPI(location, entry, http) {
+    console.log('location', location);
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -87,15 +88,16 @@ export class LogLocalStorage extends LogPublisher {
 }
 
 export class LogWebApi extends LogPublisher {
-
-  constructor(private http: HttpClient, private loggerLocation) {
+  location: any;
+  constructor(private http: HttpClient, private loggerLocation: any) {
     super();
   }
 
   // Add log entry to back end data store
   log(entry: LogEntry): Observable<boolean> {
     if (entry['logErr']) {
-      super.postToAPI(this.loggerLocation, entry, this.http);
+      this.location = environment.url + this.loggerLocation;
+      super.postToAPI(this.location, entry, this.http);
     }
     return of(true);
   }
@@ -108,18 +110,40 @@ export class LogWebApi extends LogPublisher {
 
 
 export class LogAuditApi extends LogPublisher {
-
-  constructor(private http: HttpClient, private loggerLocation) {
+  location: any;
+  constructor(private http: HttpClient,private loggerLocation: any) {
     super();
   }
   // Add log entry to back end data store
   log(entry: LogEntry): Observable<boolean> {
     if (entry['logActivity']) {
-      super.postToAPI(this.loggerLocation, entry, this.http);
+      this.location = environment.url + this.loggerLocation;
+      super.postToAPI(this.location, entry, this.http);
     }
     return of(true);
   }
 
+  clear(): Observable<boolean> {
+    console.clear();
+    return of(true);
+  }
+  
+}
+
+export class LogFieldHistoryApi extends LogPublisher {
+  location: any;
+  constructor(private http: HttpClient, private loggerLocation: any) {
+    super();
+  }
+
+  //Add log entry to back end data store
+  log(entry: LogEntry): Observable<boolean> {
+    if (entry['logFieldHistory']) {
+      this.location = environment.url + this.loggerLocation;
+      super.postToAPI(this.location, entry, this.http);
+    }
+    return of(true);
+  }
   clear(): Observable<boolean> {
     console.clear();
     return of(true);

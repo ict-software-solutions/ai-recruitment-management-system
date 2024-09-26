@@ -1,0 +1,572 @@
+@import "src/@fuse/scss/fuse";
+#chat {
+  .top-bg {
+    @include media-breakpoint("lt-md") {
+      height: 256px;
+    }
+
+    > .center {
+      > .header {
+        justify-content: space-between !important;
+        .search-wrapper {
+          width: 100%;
+          max-width: 480px;
+          border-radius: 28px;
+          overflow: hidden;
+          @include mat-elevation(1);
+          background-color: white;
+          color: black;
+          @include media-breakpoint("xs") {
+            width: 100%;
+          }
+
+          .search {
+            width: 100%;
+            height: 48px;
+            line-height: 48px;
+            padding: 0 18px;
+
+            input {
+              width: 100%;
+              height: 48px;
+              min-height: 48px;
+              max-height: 48px;
+              padding: 0 16px;
+              border: none;
+              outline: none;
+            }
+          }
+        }
+
+        @include media-breakpoint("lt-md") {
+          padding: 8px 0;
+          height: 192px !important;
+          min-height: 192px !important;
+          max-height: 192px !important;
+        }
+      }
+    }
+  }
+}
+
+.mat-column-screen {
+  flex: 0 1 170px;
+}
+.mat-column-oldValue {
+  flex: 0 1 54px;
+}
+.mat-column-newValue {
+  flex: 0 1 95px;
+}
+.mat-column-level {
+  flex: 0 1 49px;
+}
+.mat-column-createdBy {
+  flex: 0 1 182px;
+}
+.mat-column-field {
+  flex: 0 1 124px;
+}
+.mat-column-whereAriseScreen {
+  flex: 1 1 143px;
+}
+.mat-column-logMessage {
+  flex: 6 1 277px;
+  
+}
+.messagelabel{
+  font-size:11px;
+}
+.mat-column-whatEnsue {
+  flex: 1 1 132px;
+}
+.mat-column-whichPlace {
+  flex: 0 1 85px;
+
+}
+.mat-column-whereAriseFunction {
+  flex: 0 1 91px;
+
+}
+.mat-column-whenOccur {
+  margin-left: 10px;
+}
+
+// .mat-column-whereArise {
+//   flex: 0 1 242px;
+// }
+// .mat-column-field {
+//   flex: 0 1 242px;
+// }
+.note {
+  margin-top: -63px;
+  margin-left: 25px;
+}
+.note_heading {
+  color: #039be5;
+}
+.mat-tab-label .mat-tab-label-content {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  margin-top: 10px;
+  color: #039be5;
+}
+
+#cont_card {
+  margin-top: -60px;
+}
+#filter_button {
+  margin-bottom: 58px;
+}
+
+.head {
+  margin-top: 27px;
+}
+.example-container3,
+.example-container4,
+.example-container5 {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  min-width: 300px;
+  overflow: auto;
+}
+.mat-paginator {
+  display: block;
+  margin-top: -14px;
+}
+
+.mobile-label {
+  display: none;
+}
+.mat-tab-labels {
+  display: flex;
+  height: 59px;
+}
+.mat-header-row {
+  height: 63px;
+}
+.mat-tab-label .mat-tab-label-content {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  margin-top: 21px;
+}
+
+.button-sm-show {
+  display: none;
+}
+.button-lg-show {
+  display: block;
+}
+
+.header-display3 {
+  display: flex;
+}
+.button-alligns1 {
+  margin-top: 10px;
+}
+.logo-display3 {
+  margin-top: -61px;
+}
+.button-list2 {
+  margin-top: -61px;
+}
+@media only screen and (max-width: 400px) {
+  .mobile-label {
+    width: 96px;
+    display: inline-block;
+    font-weight: bold;
+  }
+  .messagelabel {
+    margin-left: 37px !important;
+  }
+  .mat-header-row {
+    display: none;
+  }
+  .example-container3 {
+    .mat-row {
+      flex-direction: column;
+      align-items: start;
+      padding: 8px 24px;
+      height: 364px !important;
+    }
+  }
+  .example-container4 {
+    .mat-row {
+      flex-direction: column;
+      align-items: start;
+      padding: 8px 24px;
+      height: 206px !important;
+    }
+  }
+  .example-container5 {
+    .mat-row {
+      flex-direction: column;
+      align-items: start;
+      padding: 8px 24px;
+      height: 300px !important;
+    }
+  }
+
+  mat-cell:first-of-type,
+  mat-header-cell:first-of-type,
+  mat-footer-cell:first-of-type {
+    padding-left: 0px !important;
+  }
+  .note {
+    margin-top: -16px;
+    margin-left: 25px;
+  }
+  .long_text {
+    width: 200px !important;
+  }
+  .text-truncate {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 166px;
+  }
+
+  .logo-text3.h1 {
+    font-size: 15px;
+    margin-left: -14px;
+  }
+
+  #chat .top-bg {
+    height: 256px;
+  }
+  #chat > .center > .header {
+    height: 192px !important;
+    min-height: 192px !important;
+    max-height: 192px !important;
+    justify-content: space-between !important;
+  }
+
+  .mat-column-whenOccur {
+    margin-left: 0px;
+  }
+  .button-sm-show {
+    display: block;
+  }
+  .button-lg-show {
+    display: none;
+  }
+  .header-display3 {
+    display: block !important;
+  }
+  .logo-display3 {
+    margin-top: 20px;
+  }
+  .button-list {
+    margin-top: 0px;
+  }
+  .logo-display3 {
+    margin-top: 20px;
+    margin-left: 101px;
+  }
+  .button-list {
+    .buttons-show {
+      margin-left: 81px;
+      margin-top: -24px;
+    }
+ }
+  .messagelabel {
+    // margin-left: 63px !important;
+    font-size: 7.5px;
+
+  }
+  // .whenoccur-label{
+  //   margin-left: 63px !important;
+  // }
+}
+@media screen and (orientation: landscape) and (max-width: 959px) {
+  #cont-landscape{
+    height:300px!important;
+    overflow:scroll;
+  }
+  #chat .top-bg {
+    height: 163px;
+  }
+  #chat > .center > .header {
+    height: 102px !important;
+    min-height: 102px !important;
+    max-height: 192px !important;
+    justify-content: space-between !important;
+  }
+
+  .logo-text3.h1 {
+    font-size: 17px;
+    margin-left: -14px;
+  }
+
+  .note {
+    margin-top: -46px;
+    margin-left: 25px;
+    font-size: 8px;
+  }
+  #filter_button {
+    margin-bottom: 58px;
+  }
+
+  #cont_card {
+    margin-top: 1px !important;
+  }
+  .mat-column-screen {
+    flex: 0 1 81px;
+  }
+  .mat-column-whereArise {
+    flex: 0 1 100px;
+  }
+  .mat-column-field {
+    flex: 0 1 55px;
+  }
+  .mat-column-oldValue {
+    flex: 0 1 46px;
+  }
+  .mat-column-newValue {
+    flex: 0 1 46px;
+  }
+
+  .mat-column-level {
+    flex: 0 1 45px;
+  }
+  .mat-column-createdBy {
+    flex: 0 1 160px;
+  }
+  .mat-column-whichPlace {
+    flex: 0 1 89px;
+  }
+  .mat-column-whereAriseFunction {
+    flex: 0 1 74px;
+  }
+  .logo-display3 {
+    margin-top: 22px;
+  }
+  .button-list2 {
+    margin-top: -3px;
+  }
+  .mat-column-whereAriseScreen {
+    flex: 1 1 143px;
+  }
+  .mat-column-logMessage {
+    flex: 2 1 36px;
+    
+  }
+  .messagelabel{
+    font-size:10px;
+  }
+  .mat-column-level {
+    flex: 0 1 49px;
+  }
+}
+@media only screen and (device-width: 414px) and (device-height: 736px) and(orientation : portrait) {
+  .mobile-label {
+    width: 96px;
+    display: inline-block;
+    font-weight: bold;
+  }
+  .messagelabel {
+    margin-left: 37px !important;
+  }
+  .mat-header-row {
+    display: none;
+  }
+  .example-container3 {
+    .mat-row {
+      flex-direction: column;
+      align-items: start;
+      padding: 8px 24px;
+      height: 364px !important;
+    }
+  }
+  .example-container4 {
+    .mat-row {
+      flex-direction: column;
+      align-items: start;
+      padding: 8px 24px;
+      height: 206px !important;
+    }
+  }
+  .example-container5 {
+    .mat-row {
+      flex-direction: column;
+      align-items: start;
+      padding: 8px 24px;
+      height: 300px !important;
+    }
+  }
+  mat-cell:first-of-type,
+  mat-header-cell:first-of-type,
+  mat-footer-cell:first-of-type {
+    padding-left: 0px !important;
+  }
+  .note {
+    margin-top: -16px;
+    margin-left: 25px;
+  }
+  .long_text {
+    width: 200px !important;
+  }
+  .text-truncate {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 166px;
+  }
+
+  .logo-text3.h1 {
+    font-size: 15px;
+    margin-left: -14px;
+  }
+
+  #filter_button {
+    float: right !important;
+    margin-left: 35px !important ;
+  }
+
+  #chat .top-bg {
+    height: 256px;
+  }
+  #chat > .center > .header {
+    height: 192px !important;
+    min-height: 192px !important;
+    max-height: 192px !important;
+    justify-content: space-between !important;
+  }
+
+  .mat-column-whenOccur {
+    margin-left: 0px;
+  }
+
+  .button-sm-show {
+    display: block;
+  }
+  .button-lg-show {
+    display: none;
+  }
+  .header-display3 {
+    display: block !important;
+  }
+  .logo-display3 {
+    margin-top: 20px;
+    
+  }
+  .button-list {
+    margin-top: 0px;
+  }
+  .logo-display3 {
+    margin-top: 20px;
+    margin-left: 120px;
+  }
+  .button-list {
+    .buttons-show {
+      margin-left: 104px;
+      margin-top: -24px;
+    }
+  }
+  .messagelabel {
+    // margin-left: 63px !important;
+    font-size: 7.5px;
+
+  }
+  // .whenoccur-label{
+  //   margin-left: 63px !important;
+  // }
+}
+
+@media only screen and (device-width: 768px) and (device-height: 1024px) and(orientation : portrait) {
+  #chat > .center > .header {
+    height: 192px !important;
+    min-height: 192px !important;
+    max-height: 192px !important;
+    justify-content: space-between !important;
+  }
+  .button-list {
+    .buttons-show {
+      margin-left: 104px;
+      margin-top: -24px;
+    }
+  }
+  // .mat-column-whichPlace {
+  //   flex: 0 1 121px;
+  // }
+  .mat-column-oldValue {
+    flex: 0 1 33px;
+  }
+  .mat-column-newValue {
+    flex: 0 1 33px;
+  }
+  .logo-display3 {
+    margin-top: -40px;
+    margin-left: 10px;
+  }
+  .mat-column-whichPlace {
+    flex: 0 1 46px;
+  
+  }
+  .mat-column-whereAriseFunction {
+    flex: 0 1 70px;
+  
+  }
+  .mat-column-logMessage {
+    flex: 6 1 10px;
+  
+  }
+  .messagelabel {
+    font-size: 9px;
+}
+ 
+.mat-column-level {
+  flex: 0 1 38px;
+}
+.mat-column-createdBy {
+flex: 0 1 87px;
+}
+}
+@media only screen and (device-width: 1024px) and (device-height: 768px) and(orientation : landscape) {
+  .mat-column-whichPlace {
+    flex: 0 1 61px;
+  
+  }
+  .mat-column-whereAriseFunction {
+    flex: 0 1 77px;
+  
+  }
+  .mat-column-level {
+    flex: 0 1 135px;
+  }
+  .mat-column-createdBy {
+    flex: 0 1 168px;
+  }
+  .mat-column-logMessage {
+    flex: 2 1 431px;
+  
+  }
+.mat-column-level {
+    flex: 0 1 37px;
+}
+}
+@media only screen and (device-width: 736px) and (device-height: 414px) and(orientation : landscape) {
+
+  .mat-column-level {
+    flex: 0 1 37px;
+  }
+  .mat-column-logMessage {
+    flex: 3 1 83px;
+  }
+  .mat-column-whichPlace {
+    flex: 0 1 78px;
+  }
+  .mat-column-whereArise {
+    flex: 0 1 71px;
+  }
+  .messagelabel {
+    font-size: 8px;
+}
+}

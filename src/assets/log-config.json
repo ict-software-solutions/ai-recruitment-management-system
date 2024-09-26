@@ -11,17 +11,17 @@
   },
   {
     "loggerName": "clientlog",
-    "loggerLocation": "clientlogs",
-    "isActive": false
+    "loggerLocation": "clientLog",
+    "isActive": true
   },
   {
     "loggerName": "auditlog",
-    "loggerLocation": "auditlogs",
-    "isActive": false
+    "loggerLocation": "auditLog",
+    "isActive": true
   },
   {
     "loggerName": "fieldhistory",
-    "loggerLocation": "fieldhistories",
-    "isActive": false
+    "loggerLocation": "field-history",
+    "isActive": true
   }
 ]

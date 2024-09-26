@@ -52,7 +52,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
       // passwordConfirm: ['', [Validators.required, confirmPasswordValidator]]
     });
     this.route.queryParams.subscribe((params) => {
-      console.log(params);
       if (params.userName) {
         this.resetPasswordForm.addControl("password", new FormControl("", Validators.required));
         this.userName = params.userName;
@@ -74,7 +73,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     });
   }
   resetPassword(value) {
-    console.log(value);
     this.passwordChanged = false;
     this.logUserActivity("RESET YOUR PASSWORD", LOG_MESSAGES.CLICK);
 
@@ -99,7 +97,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     } else if (this.changePassword === false) {
       if (this.resetPasswordForm.get("password").value === this.resetPasswordForm.get("newPassword").value) {
         Swal.fire({
-          text: "New password cannot be same as Old Password",
+          title: "New password cannot be same as Old Password",
           icon: "warning",
           confirmButtonText: "OK",
         });
@@ -111,32 +109,35 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   reset(param) {
     this.authservice.resetPassword(param).subscribe(
       (res: any) => {
-        console.log("response", res.message);
         if (res.message === "your password has been changed") {
           this.passwordResetDone();
+        } else {
+          this.errorResponse(res);
         }
         this.logUserActivity("RESET YOUR PASSWORD", LOG_MESSAGES.SUCCESS);
       },
       (error) => {
-        if (error.error.message === "old password does not match") {
-          Swal.fire({
-            text: "Current password does not match",
-            icon: "warning",
-            confirmButtonText: "OK",
-          });
-          console.log(this.errorMessage);
-          this.errorMessage = "Current password does not match";
-        }
-        this.oldpassword = true;
-        this.logService.logError(LOG_LEVELS.ERROR, "Reset_Password_Page", "on Reset_Password user", JSON.stringify(error));
-        this.logUserActivity("RESET YOUR PASSWORD", LOG_MESSAGES.FAILURE);
+        this.errorResponse(error.error);
       }
     );
   }
 
+  errorResponse(error) {
+    if (error.message === "old password does not match") {
+      Swal.fire({
+        title: "Current password does not match",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      this.errorMessage = "Current password does not match";
+    }
+    this.oldpassword = true;
+    this.logService.logError(LOG_LEVELS.ERROR, "Reset_Password_Page", "on Reset_Password user", JSON.stringify(error));
+    this.logUserActivity("RESET YOUR PASSWORD", LOG_MESSAGES.FAILURE);
+  }
   passwordResetDone() {
     Swal.fire({
-      text: "Your Password has been Changed",
+      title: "Your Password has been Changed",
       icon: "success",
       confirmButtonText: "OK",
     }).then(() => {
